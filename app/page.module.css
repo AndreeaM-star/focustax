@@ -1,0 +1,57 @@
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.heroTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.wealthStyle {
+  font-family: var(--font-dancing-script), cursive;
+  color: #e9c46a;
+  text-transform: none;
+  display: block;
+  font-size: 1.2em;
+  margin-top: 10px;
+  letter-spacing: 0;
+}
+
+.heroText {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin-top: 20px;
+  animation: fadeInUp 1.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .wealthStyle {
+    font-size: 1.1em;
+  }
+}

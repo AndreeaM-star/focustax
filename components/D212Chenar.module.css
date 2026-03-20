@@ -1,0 +1,162 @@
+.chenar {
+  position: relative;
+  max-width: 1200px;
+  width: 100%;
+  border: 1px solid rgba(233, 196, 106, 0.35);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+  background: rgba(233, 196, 106, 0.05);
+}
+
+.badge {
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  background: #e9c46a;
+  color: #0f172a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.titlu {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #e9c46a;
+  margin-bottom: 8px;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+  max-width: 620px;
+  margin: 0;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pdfRow {
+  margin-bottom: 16px;
+}
+
+.pdfLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e9c46a;
+  background: rgba(233, 196, 106, 0.1);
+  border: 1px solid rgba(233, 196, 106, 0.25);
+  border-radius: 8px;
+  padding: 7px 16px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.pdfLink:hover {
+  background: rgba(233, 196, 106, 0.18);
+}
+
+.capitole {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.capitol {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.capitolBtn {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 64px 1fr 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.capitolBtn:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.capitolBtn.activ {
+  background: rgba(233, 196, 106, 0.07);
+}
+
+.capitolId {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #e9c46a;
+  letter-spacing: 0.5px;
+}
+
+.capitolTitlu {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.chevron {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.3);
+  justify-self: end;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 8px 16px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.listaItem {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.listaItem:last-child {
+  border-bottom: none;
+}
+
+.bullet {
+  color: #e9c46a;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
