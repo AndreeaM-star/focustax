@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
-  basePath: "/focustax",
-  images: {
-    unoptimized: true,
-  },
+  output: 'export',
+  trailingSlash: true,
+  images: { unoptimized: true },
 };
 
 export default nextConfig;
