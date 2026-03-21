@@ -1,7 +1,7 @@
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import D212Chenar from "@/components/D212Chenar";
+import DeclaratiiGrid from "@/components/DeclaratiiGrid";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -70,25 +70,7 @@ export default function DeclaratiiPage() {
         </p>
         <D212Chenar />
 
-        <div className={styles.grid}>
-          {categorii.map((cat) => (
-            <div key={cat.titlu} className={styles.card}>
-              <div className={styles.cardHeader} style={{ borderColor: cat.culoare }}>
-                <span className={styles.cardIcon} style={{ color: cat.culoare }}>●</span>
-                <h2 className={styles.cardTitle} style={{ color: cat.culoare }}>{cat.titlu}</h2>
-              </div>
-              <ul className={styles.list}>
-                {cat.declaratii.map((d) => (
-                  <li key={d.cod + cat.titlu} className={styles.listItem}>
-                    <span className={styles.cod}>{d.cod}</span>
-                    <Link href={d.href} className={styles.numeLink}>{d.nume}</Link>
-                    <span className={styles.periodicitate}>{d.periodicitate}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <DeclaratiiGrid categorii={categorii} />
       </main>
       <Footer />
     </>

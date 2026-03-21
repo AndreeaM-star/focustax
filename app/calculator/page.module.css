@@ -31,6 +31,13 @@
   background: #f3f4f6;
   border-radius: 12px;
   padding: 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab {
@@ -63,8 +70,11 @@
 }
 
 .calcCard {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   border-radius: 16px;
   padding: 32px;
   display: flex;
@@ -269,6 +279,6 @@
 @media (max-width: 640px) {
   .title { font-size: 1.8rem; }
   .calcCard { padding: 20px 16px; }
-  .tabs { flex-direction: column; width: 100%; }
+  .tabs { width: 100%; }
   .tab { text-align: center; }
 }

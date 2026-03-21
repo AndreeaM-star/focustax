@@ -1,14 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className={styles.navbarArea}>
+    <header className={`${styles.navbarArea} ${scrolled ? styles.navbarScrolled : ""}`}>
       <div className={styles.navbarContainer}>
         <Link href="/" className={styles.navbarLogo} onClick={() => setMenuOpen(false)}>
           Focus<span>Tax</span>

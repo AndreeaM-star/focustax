@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import ScrollToTop from "@/components/ScrollToTop";
+import ScrollProgress from "@/components/ScrollProgress";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -26,11 +28,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ro_RO",
     siteName: "FocusTax",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "FocusTax" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "FocusTax | Claritate în taxe",
     description: "Ghid complet al declarațiilor fiscale din România — gratuit.",
+    images: ["/og-image.png"],
   },
 };
 
@@ -42,7 +46,9 @@ export default function RootLayout({
   return (
     <html lang="ro" className={`${montserrat.variable} ${openSans.variable}`}>
       <body>
+        <ScrollProgress />
         {children}
+        <ScrollToTop />
         <Analytics />
         <SpeedInsights />
       </body>

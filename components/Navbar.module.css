@@ -56,22 +56,35 @@
   gap: 1rem;
 }
 
+.navbarScrolled {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+}
+
 .ctaBtn {
-  background-color: #1a1a2e;
+  background: linear-gradient(135deg, #1a1a2e 40%, #2d3a6e 50%, #1a1a2e 60%);
+  background-size: 300% 100%;
   color: #ffffff;
   font-size: 0.85rem;
   font-weight: 600;
   padding: 8px 18px;
   border-radius: 6px;
-  transition: background 0.2s;
   white-space: nowrap;
   min-height: 44px;
   display: flex;
   align-items: center;
+  animation: shimmerLoop 4s ease-in-out infinite;
 }
 
 .ctaBtn:hover {
   background-color: #2d2d4e;
+  animation: none;
+  background: #2d2d4e;
+}
+
+@keyframes shimmerLoop {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
 }
 
 /* Hamburger */
