@@ -4,13 +4,6 @@
   flex-direction: column;
   align-items: center;
   padding: 60px 20px 80px;
-  background-color: #eef2ff;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(37, 99, 235, 0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 85% 40%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
-    linear-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
 }
 
 .title {
@@ -37,9 +30,9 @@
   display: flex;
   gap: 0;
   margin-bottom: 28px;
-  background: rgba(255, 255, 255, 0.38);
-  backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
-  -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(32px) saturate(250%) brightness(1.1);
+  -webkit-backdrop-filter: blur(32px) saturate(250%) brightness(1.1);
   border: 1px solid rgba(255, 255, 255, 0.88);
   box-shadow:
     0 4px 20px rgba(37, 99, 235, 0.08),
@@ -116,9 +109,9 @@
 }
 
 .calcCard {
-  background: rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(32px) saturate(220%) brightness(1.12) contrast(1.04);
-  -webkit-backdrop-filter: blur(32px) saturate(220%) brightness(1.12) contrast(1.04);
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(48px) saturate(300%) brightness(1.18) contrast(1.1);
+  -webkit-backdrop-filter: blur(48px) saturate(300%) brightness(1.18) contrast(1.1);
   border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 2px 0 rgba(255, 255, 255, 1), inset 0 -2px 0 rgba(0, 0, 0, 0.05), inset 2px 0 0 rgba(255, 255, 255, 0.7), inset -2px 0 0 rgba(255, 255, 255, 0.7);
   border-radius: 20px;

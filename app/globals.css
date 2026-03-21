@@ -7,16 +7,24 @@
   padding: 0;
 }
 
-html {
-  position: relative;
-}
+html { position: relative; }
 
+/* ─── BODY: fundal vibrant fix — baza glassmorphism-ului ───
+   Fara fundal colorat in spate, blur-ul nu face nimic.
+   background-attachment: fixed = fundalul sta pe loc cat scrollezi
+   => cardul blur-uieste mereu culorile din spate = liquid glass real. */
 body {
   font-family: var(--font-open-sans), sans-serif;
-  background-color: #f8f9fb;
+  background-color: #dde4ff;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 0% 0%,   rgba(37, 99, 235, 0.55)  0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 0%,  rgba(124, 58, 237, 0.5)  0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 100% 100%, rgba(5, 150, 105, 0.4)   0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 0% 100%,  rgba(217, 119, 6, 0.35)  0%, transparent 50%),
+    radial-gradient(ellipse 40% 35% at 50% 50%,  rgba(239, 68, 68, 0.2)   0%, transparent 45%);
+  background-attachment: fixed;
   color: #1a1a2e;
   overflow-x: hidden;
-  position: relative;
 }
 
 a {
@@ -24,63 +32,56 @@ a {
   color: inherit;
 }
 
-/* ───── LIQUID GLASS ─────
-   3 intensities: sm (pills, badges), md (cards), lg (featured/calc)
-   Works only with colored/textured backgrounds behind elements.
-*/
+/* ─── LIQUID GLASS utilities ───────────────────────────────
+   Functioneaza acum cu fundalul colorat din body.
+   sm = pills/badges, md = carduri, lg = featured/calc/navbar  */
 
-/* Subtle — pills, badges, metaItem, cineBadge */
 .glass-sm {
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(12px) saturate(180%) brightness(1.05);
-  -webkit-backdrop-filter: blur(12px) saturate(180%) brightness(1.05);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(16px) saturate(250%) brightness(1.1) contrast(1.05);
+  -webkit-backdrop-filter: blur(16px) saturate(250%) brightness(1.1) contrast(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.glass-md {
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(32px) saturate(280%) brightness(1.12) contrast(1.06);
+  -webkit-backdrop-filter: blur(32px) saturate(280%) brightness(1.12) contrast(1.06);
   border: 1px solid rgba(255, 255, 255, 0.75);
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+    0 8px 40px rgba(0, 0, 0, 0.12),
+    0 2px 12px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
+    inset 1px 0 0 rgba(255, 255, 255, 0.55),
+    inset -1px 0 0 rgba(255, 255, 255, 0.55);
 }
 
-/* Medium — cards, sidebar, ceAfla, conexeCard */
-.glass-md {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(20px) saturate(200%) brightness(1.08) contrast(1.02);
-  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(1.08) contrast(1.02);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.05),
-    inset 1px 0 0 rgba(255, 255, 255, 0.6),
-    inset -1px 0 0 rgba(255, 255, 255, 0.6);
-}
-
-/* Strong — calcCard, navbar, modal, featured */
 .glass-lg {
-  background: rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(32px) saturate(220%) brightness(1.12) contrast(1.04);
-  -webkit-backdrop-filter: blur(32px) saturate(220%) brightness(1.12) contrast(1.04);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(48px) saturate(300%) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(48px) saturate(300%) brightness(1.15) contrast(1.08);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow:
-    0 16px 48px rgba(0, 0, 0, 0.1),
-    0 4px 16px rgba(0, 0, 0, 0.06),
+    0 16px 60px rgba(0, 0, 0, 0.15),
+    0 4px 20px rgba(0, 0, 0, 0.08),
     inset 0 2px 0 rgba(255, 255, 255, 1),
-    inset 0 -2px 0 rgba(0, 0, 0, 0.06),
-    inset 2px 0 0 rgba(255, 255, 255, 0.7),
-    inset -2px 0 0 rgba(255, 255, 255, 0.7);
+    inset 0 -2px 0 rgba(0, 0, 0, 0.07),
+    inset 2px 0 0 rgba(255, 255, 255, 0.65),
+    inset -2px 0 0 rgba(255, 255, 255, 0.65);
 }
 
-/* ───── /LIQUID GLASS ───── */
-
-/* Animație fadeInUp */
+/* ─── Animations ─────────────────────────── */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

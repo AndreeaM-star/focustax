@@ -9,14 +9,6 @@
   flex-direction: column;
   align-items: center;
   padding: 60px 20px 80px;
-  background-color: #eef2ff;
-  background-image:
-    radial-gradient(ellipse 90% 55% at 15% 0%, rgba(37, 99, 235, 0.18) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 45% at 85% 10%, rgba(124, 58, 237, 0.14) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 35% at 50% 90%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
-    linear-gradient(rgba(99, 102, 241, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.09) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
 }
 
 .hero {
@@ -70,10 +62,10 @@
 
 /* CSS animation — NO JS needed, always visible */
 .card {
-  background: rgba(255, 255, 255, 0.48);
-  backdrop-filter: blur(28px) saturate(220%) brightness(1.1) contrast(1.03);
-  -webkit-backdrop-filter: blur(28px) saturate(220%) brightness(1.1) contrast(1.03);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(40px) saturate(280%) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(40px) saturate(280%) brightness(1.15) contrast(1.08);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   box-shadow:
     0 12px 40px rgba(37, 99, 235, 0.1),
     0 4px 16px rgba(0, 0, 0, 0.06),
