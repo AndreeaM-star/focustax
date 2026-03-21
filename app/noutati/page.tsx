@@ -3,8 +3,14 @@ import Footer from "@/components/Footer";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Noutăți Fiscale | FocusTax",
-  description: "Ultimele modificări legislative și noutăți fiscale din România.",
+  title: "Noutăți Fiscale 2026 | FocusTax",
+  description:
+    "Ultimele modificări legislative și noutăți fiscale din România — termene D212, modificări Cod Fiscal, noutăți ANAF 2026.",
+  openGraph: {
+    title: "Noutăți Fiscale România 2026 | FocusTax",
+    description:
+      "Fii la curent cu modificările fiscale: noi cote, termene și obligații pentru contribuabilii din România.",
+  },
 };
 
 const noutati = [

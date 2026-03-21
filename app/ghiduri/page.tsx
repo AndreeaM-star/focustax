@@ -4,8 +4,14 @@ import GhiduriGrid from "@/components/GhiduriGrid";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Ghiduri Fiscale | FocusTax",
-  description: "Ghiduri practice pentru PFA, SRL, microîntreprinderi și persoane fizice din România.",
+  title: "Ghiduri Fiscale România | FocusTax",
+  description:
+    "Ghiduri practice complete pentru PFA, SRL, microîntreprinderi și persoane fizice din România — înregistrare PFA, contribuții, TVA, dividende și mai mult.",
+  openGraph: {
+    title: "Ghiduri Fiscale România 2026 | FocusTax",
+    description:
+      "Cum te înregistrezi ca PFA, CAS și CASS, TVA, impozit chirii — ghiduri pas cu pas, gratuit.",
+  },
 };
 
 const ghiduri = [
@@ -56,10 +62,15 @@ export default function GhiduriPage() {
     <>
       <Navbar />
       <main className={styles.page}>
-        <h1 className={styles.title}>Ghiduri Fiscale</h1>
-        <p className={styles.subtitle}>
-          Ghiduri practice pentru contribuabilii din România — PFA, SRL, microîntreprinderi și persoane fizice.
-        </p>
+        <div className={styles.hero}>
+          <span className={styles.heroIcon}>📚</span>
+          <h1 className={styles.title}>
+            Ghiduri <span className={styles.titleAccent}>Fiscale</span>
+          </h1>
+          <p className={styles.subtitle}>
+            Ghiduri practice pentru contribuabilii din România — PFA, SRL, microîntreprinderi și persoane fizice.
+          </p>
+        </div>
         <GhiduriGrid ghiduri={ghiduri} />
       </main>
       <Footer />

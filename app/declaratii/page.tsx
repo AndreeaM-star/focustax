@@ -5,8 +5,14 @@ import DeclaratiiGrid from "@/components/DeclaratiiGrid";
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Declarații | FocusTax",
-  description: "Ghid complet al declarațiilor fiscale din România.",
+  title: "Declarații Fiscale România | FocusTax",
+  description:
+    "Ghid complet al tuturor declarațiilor fiscale din România — D212, D300, D100, D101, D112 și multe altele. Termene, formulare și instrucțiuni actualizate 2026.",
+  openGraph: {
+    title: "Declarații Fiscale România 2026 | FocusTax",
+    description:
+      "Toate declarațiile fiscale: TVA, impozit venit, contribuții sociale, salarii. Ghid practic gratuit.",
+  },
 };
 
 const categorii = [
