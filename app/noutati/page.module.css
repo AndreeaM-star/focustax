@@ -4,6 +4,12 @@
   flex-direction: column;
   align-items: center;
   padding: 60px 20px 80px;
+  background-color: #f8f9fb;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(124, 58, 237, 0.05) 0%, transparent 60%),
+    linear-gradient(rgba(229, 231, 235, 0.65) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229, 231, 235, 0.65) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
 }
 
 .title {
@@ -24,7 +30,7 @@
   line-height: 1.6;
 }
 
-/* Timeline */
+/* ── Timeline ── */
 .timeline {
   position: relative;
   width: 100%;
@@ -32,67 +38,77 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  padding-bottom: 8px;
 }
 
+/* Linia centrală verticală */
 .timelineLine {
   position: absolute;
   left: 50%;
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #e5e7eb;
+  background: linear-gradient(180deg, rgba(229,231,235,0) 0%, #e5e7eb 8%, #e5e7eb 92%, rgba(229,231,235,0) 100%);
   transform: translateX(-50%);
   z-index: 0;
+  pointer-events: none;
 }
 
+/* Fiecare item ocupă 45% din lățime */
 .timelineItem {
   position: relative;
-  width: 46%;
-  margin-bottom: 32px;
+  width: 45%;
+  margin-bottom: 36px;
   z-index: 1;
 }
 
 .timelineItem.left {
   align-self: flex-start;
-  margin-right: auto;
+  padding-right: 28px;
 }
 
 .timelineItem.right {
   align-self: flex-end;
-  margin-left: auto;
+  padding-left: 28px;
 }
 
+/* Dot centrat exact pe linie */
 .timelineDot {
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: #ffffff;
   border: 2px solid;
-  top: 20px;
+  top: 22px;
   z-index: 2;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8);
 }
 
+/* Left item: dot la dreapta, centrat pe linia 50% */
 .timelineItem.left .timelineDot {
-  right: -7%;
-  transform: translateX(50%);
+  right: -7px;
 }
 
+/* Right item: dot la stânga, centrat pe linia 50% */
 .timelineItem.right .timelineDot {
-  left: -7%;
-  transform: translateX(-50%);
+  left: -7px;
 }
 
+/* Card cu glassmorphism */
 .card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px) saturate(200%) brightness(1.08) contrast(1.02);
+  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(1.08) contrast(1.02);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 1), inset 0 -1px 0 rgba(0, 0, 0, 0.04);
   border-radius: 12px;
   padding: 20px 22px;
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 1);
   transform: translateY(-2px);
 }
 
@@ -132,7 +148,7 @@
   line-height: 1.65;
 }
 
-/* Mobile — stivă simplă */
+/* Mobile — coloană unică */
 @media (max-width: 640px) {
   .title { font-size: 1.8rem; }
 
@@ -145,6 +161,8 @@
     align-self: unset;
     margin-left: 0;
     margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .timelineDot { display: none; }

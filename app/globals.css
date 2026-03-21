@@ -24,6 +24,55 @@ a {
   color: inherit;
 }
 
+/* ───── LIQUID GLASS ─────
+   3 intensities: sm (pills, badges), md (cards), lg (featured/calc)
+   Works only with colored/textured backgrounds behind elements.
+*/
+
+/* Subtle — pills, badges, metaItem, cineBadge */
+.glass-sm {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur(12px) saturate(180%) brightness(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* Medium — cards, sidebar, ceAfla, conexeCard */
+.glass-md {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px) saturate(200%) brightness(1.08) contrast(1.02);
+  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(1.08) contrast(1.02);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05),
+    inset 1px 0 0 rgba(255, 255, 255, 0.6),
+    inset -1px 0 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Strong — calcCard, navbar, modal, featured */
+.glass-lg {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(32px) saturate(220%) brightness(1.12) contrast(1.04);
+  -webkit-backdrop-filter: blur(32px) saturate(220%) brightness(1.12) contrast(1.04);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.06),
+    inset 2px 0 0 rgba(255, 255, 255, 0.7),
+    inset -2px 0 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ───── /LIQUID GLASS ───── */
+
 /* Animație fadeInUp */
 @keyframes fadeInUp {
   from {

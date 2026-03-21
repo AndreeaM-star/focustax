@@ -45,7 +45,7 @@ const ghiduri = [
     lista: [
       { titlu: "Impozit pe chirii", desc: "Calcul, declarare D212 și obligații fiscale.", slug: "impozit-chirii" },
       { titlu: "Venituri din investiții", desc: "Dividende, dobânzi și câștiguri din tranzacții bursiere.", slug: "dividende" },
-      { titlu: "Donarea a 3.5% din impozit", desc: "Ghid complet pentru formularul D230.", slug: "inregistrare-pfa" },
+      { titlu: "Donarea a 3.5% din impozit", desc: "Ghid complet pentru formularul D230.", slug: "d212-pfa" },
       { titlu: "SPV — Spațiul Privat Virtual", desc: "Creare cont, utilizare și depunere declarații online.", slug: "spv-ghid" },
     ],
   },

@@ -8,10 +8,10 @@ import styles from "./page.module.css";
 const LUNI = ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function luniActive(periodicitate: string): number[] {
-  if (periodicitate.toLowerCase().includes("lunar")) return [1,2,3,4,5,6,7,8,9,10,11,12];
-  if (periodicitate.toLowerCase().includes("trimestrial")) return [1,4,7,10];
-  if (periodicitate.toLowerCase() === "anual") return [5];
-  if (periodicitate.toLowerCase().includes("anual")) return [5];
+  const p = periodicitate.toLowerCase();
+  if (p.includes("lunar")) return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  if (p.includes("trimestrial")) return [1, 4, 7, 10];
+  if (p === "anual" || p.includes("anual")) return [5];
   return [];
 }
 
@@ -47,28 +47,201 @@ const DECLARATII_CONEXE: Record<string, { cod: string; nume: string; href: strin
     { cod: "D100", nume: "Obligații de plată", href: "/declaratii/d100" },
     { cod: "D012", nume: "Notificare sistem anticipate", href: "/declaratii/d012" },
   ],
-  d112: [
-    { cod: "D100", nume: "Obligații de plată", href: "/declaratii/d100" },
-  ],
-  d220: [
-    { cod: "D212", nume: "Declarație Unică", href: "/declaratii/d212" },
-  ],
-  d230: [
-    { cod: "D212", nume: "Declarație Unică", href: "/declaratii/d212" },
-  ],
-  d390: [
-    { cod: "D300", nume: "Decont TVA", href: "/declaratii/d300" },
-  ],
-  d394: [
-    { cod: "D300", nume: "Decont TVA", href: "/declaratii/d300" },
-  ],
-  d204: [
-    { cod: "D212", nume: "Declarație Unică", href: "/declaratii/d212" },
-  ],
-  d216: [
-    { cod: "D212", nume: "Declarație Unică", href: "/declaratii/d212" },
-  ],
+  d112: [{ cod: "D100", nume: "Obligații de plată", href: "/declaratii/d100" }],
+  d220: [{ cod: "D212", nume: "Declarație Unică", href: "/declaratii/d212" }],
+  d230: [{ cod: "D212", nume: "Declarație Unică", href: "/declaratii/d212" }],
+  d390: [{ cod: "D300", nume: "Decont TVA", href: "/declaratii/d300" }],
+  d394: [{ cod: "D300", nume: "Decont TVA", href: "/declaratii/d300" }],
+  d204: [{ cod: "D212", nume: "Declarație Unică", href: "/declaratii/d212" }],
+  d216: [{ cod: "D212", nume: "Declarație Unică", href: "/declaratii/d212" }],
 };
+
+// ─── Mini-calculatoare ────────────────────────────────────────────────
+
+function fmt(n: number) {
+  return n.toLocaleString("ro-RO", { maximumFractionDigits: 0 }) + " lei";
+}
+
+function CalcD300({ accentCuloare }: { accentCuloare: string }) {
+  const [colectata, setColectata] = useState("");
+  const [deductibila, setDeductibila] = useState("");
+  const [rezultat, setRezultat] = useState<{ plata: number; pozitiv: boolean } | null>(null);
+
+  function calculeaza() {
+    const col = parseFloat(colectata.replace(/\./g, "").replace(",", ".")) || 0;
+    const ded = parseFloat(deductibila.replace(/\./g, "").replace(",", ".")) || 0;
+    setRezultat({ plata: Math.abs(col - ded), pozitiv: col >= ded });
+  }
+
+  return (
+    <div className={styles.miniCalc}>
+      <p className={styles.miniCalcDesc}>Introdu valorile din decontul tău pentru a vedea TVA de plată sau de rambursat.</p>
+      <div className={styles.miniCalcRow}>
+        <div className={styles.miniCalcField}>
+          <label className={styles.miniCalcLabel}>TVA colectată (lei)</label>
+          <input className={styles.miniCalcInput} type="number" placeholder="ex: 19000" value={colectata} onChange={e => setColectata(e.target.value)} />
+        </div>
+        <div className={styles.miniCalcField}>
+          <label className={styles.miniCalcLabel}>TVA deductibilă (lei)</label>
+          <input className={styles.miniCalcInput} type="number" placeholder="ex: 7500" value={deductibila} onChange={e => setDeductibila(e.target.value)} />
+        </div>
+      </div>
+      <button className={styles.miniCalcBtn} style={{ background: accentCuloare }} onClick={calculeaza}>Calculează</button>
+      {rezultat !== null && (
+        <div className={`${styles.miniCalcResult} ${rezultat.pozitiv ? styles.miniCalcDePlata : styles.miniCalcDeRambursat}`}>
+          <span className={styles.miniCalcResultLabel}>{rezultat.pozitiv ? "TVA de plată" : "TVA de rambursat"}</span>
+          <span className={styles.miniCalcResultVal}>{fmt(rezultat.plata)}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CalcD212({ accentCuloare }: { accentCuloare: string }) {
+  const [venit, setVenit] = useState("");
+  const [rezultat, setRezultat] = useState<{ impozit: number; cas: number; cass: number; total: number } | null>(null);
+
+  const SMIN = 4050;
+
+  function calculeaza() {
+    const v = parseFloat(venit.replace(/\./g, "").replace(",", ".")) || 0;
+    const impozit = Math.round(v * 0.1);
+    const casBase = v >= 12 * SMIN ? Math.min(v, 24 * SMIN) : 0;
+    const cas = Math.round(casBase * 0.25);
+    let cassBase = 0;
+    if (v >= 24 * SMIN) cassBase = 24 * SMIN;
+    else if (v >= 12 * SMIN) cassBase = 12 * SMIN;
+    else if (v >= 6 * SMIN) cassBase = 6 * SMIN;
+    const cass = Math.round(cassBase * 0.1);
+    setRezultat({ impozit, cas, cass, total: impozit + cas + cass });
+  }
+
+  return (
+    <div className={styles.miniCalc}>
+      <p className={styles.miniCalcDesc}>Introdu venitul net anual pentru a estima impozitul și contribuțiile sociale.</p>
+      <div className={styles.miniCalcRow}>
+        <div className={styles.miniCalcField}>
+          <label className={styles.miniCalcLabel}>Venit net anual (lei)</label>
+          <input className={styles.miniCalcInput} type="number" placeholder="ex: 80000" value={venit} onChange={e => setVenit(e.target.value)} />
+        </div>
+      </div>
+      <button className={styles.miniCalcBtn} style={{ background: accentCuloare }} onClick={calculeaza}>Calculează</button>
+      {rezultat !== null && (
+        <div className={styles.miniCalcResultGrid}>
+          <div className={styles.miniCalcRow2}>
+            <span className={styles.miniCalcItem2}>Impozit 10%</span>
+            <span className={styles.miniCalcVal2}>{fmt(rezultat.impozit)}</span>
+          </div>
+          <div className={styles.miniCalcRow2}>
+            <span className={styles.miniCalcItem2}>CAS 25%</span>
+            <span className={styles.miniCalcVal2}>{fmt(rezultat.cas)}</span>
+          </div>
+          <div className={styles.miniCalcRow2}>
+            <span className={styles.miniCalcItem2}>CASS 10%</span>
+            <span className={styles.miniCalcVal2}>{fmt(rezultat.cass)}</span>
+          </div>
+          <div className={`${styles.miniCalcRow2} ${styles.miniCalcTotal}`}>
+            <span className={styles.miniCalcItem2}>Total obligații</span>
+            <span className={styles.miniCalcVal2} style={{ color: accentCuloare }}>{fmt(rezultat.total)}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CalcD101({ accentCuloare }: { accentCuloare: string }) {
+  const [profit, setProfit] = useState("");
+  const [rezultat, setRezultat] = useState<number | null>(null);
+
+  function calculeaza() {
+    const p = parseFloat(profit.replace(/\./g, "").replace(",", ".")) || 0;
+    setRezultat(Math.round(p * 0.16));
+  }
+
+  return (
+    <div className={styles.miniCalc}>
+      <p className={styles.miniCalcDesc}>Estimează impozitul pe profit — cota standard 16%.</p>
+      <div className={styles.miniCalcRow}>
+        <div className={styles.miniCalcField}>
+          <label className={styles.miniCalcLabel}>Profit impozabil (lei)</label>
+          <input className={styles.miniCalcInput} type="number" placeholder="ex: 50000" value={profit} onChange={e => setProfit(e.target.value)} />
+        </div>
+      </div>
+      <button className={styles.miniCalcBtn} style={{ background: accentCuloare }} onClick={calculeaza}>Calculează</button>
+      {rezultat !== null && (
+        <div className={`${styles.miniCalcResult} ${styles.miniCalcDePlata}`}>
+          <span className={styles.miniCalcResultLabel}>Impozit pe profit (16%)</span>
+          <span className={styles.miniCalcResultVal}>{fmt(rezultat)}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CalcD112({ accentCuloare }: { accentCuloare: string }) {
+  const [salariu, setSalariu] = useState("");
+  const [rezultat, setRezultat] = useState<{ cas: number; cass: number; im: number; net: number } | null>(null);
+
+  function calculeaza() {
+    const s = parseFloat(salariu.replace(/\./g, "").replace(",", ".")) || 0;
+    const cas = Math.round(s * 0.25);
+    const cass = Math.round(s * 0.1);
+    const im = Math.round((s - cas - cass) * 0.1);
+    const net = s - cas - cass - im;
+    setRezultat({ cas, cass, im, net });
+  }
+
+  return (
+    <div className={styles.miniCalc}>
+      <p className={styles.miniCalcDesc}>Calculează reținerile salariale din D112 pentru un angajat.</p>
+      <div className={styles.miniCalcRow}>
+        <div className={styles.miniCalcField}>
+          <label className={styles.miniCalcLabel}>Salariu brut (lei)</label>
+          <input className={styles.miniCalcInput} type="number" placeholder="ex: 8000" value={salariu} onChange={e => setSalariu(e.target.value)} />
+        </div>
+      </div>
+      <button className={styles.miniCalcBtn} style={{ background: accentCuloare }} onClick={calculeaza}>Calculează</button>
+      {rezultat !== null && (
+        <div className={styles.miniCalcResultGrid}>
+          <div className={styles.miniCalcRow2}><span className={styles.miniCalcItem2}>CAS angajat 25%</span><span className={styles.miniCalcVal2}>{fmt(rezultat.cas)}</span></div>
+          <div className={styles.miniCalcRow2}><span className={styles.miniCalcItem2}>CASS angajat 10%</span><span className={styles.miniCalcVal2}>{fmt(rezultat.cass)}</span></div>
+          <div className={styles.miniCalcRow2}><span className={styles.miniCalcItem2}>Impozit venit 10%</span><span className={styles.miniCalcVal2}>{fmt(rezultat.im)}</span></div>
+          <div className={`${styles.miniCalcRow2} ${styles.miniCalcTotal}`}>
+            <span className={styles.miniCalcItem2}>Salariu net</span>
+            <span className={styles.miniCalcVal2} style={{ color: accentCuloare }}>{fmt(rezultat.net)}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MiniCalculator({ cod, accentCuloare, badgeBg, badgeBorder }: {
+  cod: string; accentCuloare: string; badgeBg: string; badgeBorder: string;
+}) {
+  const map: Record<string, React.ReactNode> = {
+    d300: <CalcD300 accentCuloare={accentCuloare} />,
+    d212: <CalcD212 accentCuloare={accentCuloare} />,
+    d220: <CalcD212 accentCuloare={accentCuloare} />,
+    d204: <CalcD212 accentCuloare={accentCuloare} />,
+    d216: <CalcD212 accentCuloare={accentCuloare} />,
+    d101: <CalcD101 accentCuloare={accentCuloare} />,
+    d112: <CalcD112 accentCuloare={accentCuloare} />,
+  };
+
+  const calc = map[cod];
+  if (!calc) return null;
+
+  return (
+    <div className={styles.miniCalcWrapper} style={{ background: badgeBg, borderColor: badgeBorder }}>
+      <h2 className={styles.sectionTitle}>Exemplu numeric</h2>
+      {calc}
+    </div>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────
 
 export default function DeclaratieClient({ data }: { data: DeclaratieData }) {
   const [deschis, setDeschis] = useState<string | null>(null);
@@ -87,14 +260,7 @@ export default function DeclaratieClient({ data }: { data: DeclaratieData }) {
       </div>
 
       <div className={styles.header}>
-        <span
-          className={styles.badge}
-          style={{
-            color: data.badgeCuloare,
-            background: data.badgeBg,
-            borderColor: data.badgeBorder,
-          }}
-        >
+        <span className={styles.badge} style={{ color: data.badgeCuloare, background: data.badgeBg, borderColor: data.badgeBorder }}>
           {data.categorie}
         </span>
         <h1 className={styles.title}>{data.titlu}</h1>
@@ -140,11 +306,7 @@ export default function DeclaratieClient({ data }: { data: DeclaratieData }) {
           <h2 className={styles.sectionTitle}>Cine depune</h2>
           <div className={styles.cineBadges}>
             {cine.map((c) => (
-              <span
-                key={c}
-                className={styles.cineBadge}
-                style={{ borderColor: data.badgeBorder, color: data.accentCuloare, background: data.badgeBg }}
-              >
+              <span key={c} className={styles.cineBadge} style={{ borderColor: data.badgeBorder, color: data.accentCuloare, background: data.badgeBg }}>
                 {c}
               </span>
             ))}
@@ -152,16 +314,17 @@ export default function DeclaratieClient({ data }: { data: DeclaratieData }) {
         </div>
       )}
 
+      {/* Exemplu numeric mini-calculator */}
+      <MiniCalculator
+        cod={cod}
+        accentCuloare={data.accentCuloare}
+        badgeBg={data.badgeBg}
+        badgeBorder={data.badgeBorder}
+      />
+
       <div className={styles.legislatie}>
         <h2 className={styles.sectionTitle}>Informații oficiale</h2>
-        <div
-          className={styles.legislatieBox}
-          style={{
-            background: data.legislatieBg,
-            borderColor: data.legislatieBorder,
-            borderLeftColor: data.legislatieAccent,
-          }}
-        >
+        <div className={styles.legislatieBox} style={{ borderColor: data.legislatieBorder, borderLeftColor: data.legislatieAccent }}>
           {data.legislatie.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
