@@ -53,7 +53,7 @@ export default function D212Chenar() {
       </div>
 
       <div className={styles.pdfRow}>
-        <a href="/D_212_2736_2025.pdf" target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
+        <a href="https://static.anaf.ro/static/10/Anaf/formulare/D_212_2736_2025.pdf" target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
           📄 Descarcă formularul 212 (PDF)
         </a>
       </div>

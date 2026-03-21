@@ -52,7 +52,7 @@ const categorii = [
     titlu: "Accize",
     culoare: "#7c3aed",
     declaratii: [
-      { cod: "D100", nume: "Declarație privind accizele datorate", periodicitate: "Lunar", href: "/declaratii/d100" },
+      { cod: "D100*", nume: "Declarație privind accizele datorate", periodicitate: "Lunar", href: "/declaratii/d100" },
       { cod: "D120", nume: "Decont privind accizele", periodicitate: "Lunar", href: "/declaratii/d120" },
       { cod: "D130", nume: "Declarație privind impozitul la țițeiul din producția internă", periodicitate: "Lunar", href: "/declaratii/d130" },
     ],

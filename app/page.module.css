@@ -5,18 +5,23 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 60px 20px 40px;
+  padding: 80px 20px 40px;
   background-color: #f8f9fb;
   background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 70%),
     linear-gradient(#e5e7eb 1px, transparent 1px),
     linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: fadeInUp 0.8s ease-out;
+  background-size: 100% 100%, 40px 40px, 40px 40px;
 }
 
+/* Animații pe copii, nu pe container — fix layout shift mobil */
 .pill {
   display: inline-block;
-  border: 1px solid #d1d5db;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   color: #6b7280;
   font-size: 0.72rem;
   font-weight: 700;
@@ -25,6 +30,8 @@
   border-radius: 20px;
   margin-bottom: 28px;
   text-transform: uppercase;
+  will-change: opacity, transform;
+  animation: fadeInUp 0.5s ease-out 0s both;
 }
 
 .heroTitle {
@@ -34,6 +41,8 @@
   line-height: 1.1;
   color: #1a1a2e;
   margin-bottom: 4px;
+  will-change: opacity, transform;
+  animation: fadeInUp 0.5s ease-out 0.1s both;
 }
 
 .heroItalic {
@@ -50,6 +59,8 @@
   max-width: 540px;
   margin: 20px auto 32px;
   line-height: 1.7;
+  will-change: opacity, transform;
+  animation: fadeInUp 0.5s ease-out 0.2s both;
 }
 
 .heroCTA {
@@ -58,9 +69,13 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 24px;
+  will-change: opacity, transform;
+  animation: fadeInUp 0.5s ease-out 0.3s both;
 }
 
 .btnPrimary {
+  position: relative;
+  overflow: hidden;
   background-color: #1a1a2e;
   color: #ffffff;
   font-size: 0.95rem;
@@ -73,8 +88,21 @@
   align-items: center;
 }
 
+.btnPrimary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.45s ease;
+}
+
 .btnPrimary:hover {
   background-color: #2d2d4e;
+}
+
+.btnPrimary:hover::after {
+  transform: translateX(100%);
 }
 
 .btnSecondary {
@@ -102,6 +130,8 @@
   letter-spacing: 2px;
   color: #9ca3af;
   text-transform: uppercase;
+  will-change: opacity, transform;
+  animation: fadeInUp 0.5s ease-out 0.4s both;
 }
 
 /* Sistem fiscal section */
@@ -140,17 +170,33 @@
   gap: 24px;
 }
 
+/* Card initial ascuns — devine vizibil via IntersectionObserver */
 .sistemCard {
-  background: #f8f9fb;
-  border: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
   padding: 24px;
-  transition: box-shadow 0.2s, transform 0.2s;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.2s;
+  will-change: opacity, transform;
+}
+
+.sistemCard.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .sistemCard:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
-  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.sistemCard.visible:hover {
+  transform: translateY(-3px);
 }
 
 .sistemCardIcon {
@@ -175,7 +221,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -184,6 +230,10 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding-top: 80px;
+  }
+
   .heroTitle {
     font-size: 2.5rem;
   }

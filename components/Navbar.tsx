@@ -10,7 +10,7 @@ export default function Navbar() {
   return (
     <header className={styles.navbarArea}>
       <div className={styles.navbarContainer}>
-        <Link href="/" className={styles.navbarLogo}>
+        <Link href="/" className={styles.navbarLogo} onClick={() => setMenuOpen(false)}>
           Focus<span>Tax</span>
         </Link>
 

@@ -1,13 +1,24 @@
+"use client";
+
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
 
-export const metadata = {
-  title: "Contact | FocusTax",
-  description: "Contactează echipa FocusTax pentru întrebări fiscale și sugestii.",
-};
-
 export default function ContactPage() {
+  const [nume, setNume] = useState("");
+  const [email, setEmail] = useState("");
+  const [mesaj, setMesaj] = useState("");
+  const [trimis, setTrimis] = useState(false);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Mesaj FocusTax de la ${nume}`);
+    const body = encodeURIComponent(`Nume: ${nume}\nEmail: ${email}\n\nMesaj:\n${mesaj}`);
+    window.location.href = `mailto:contact@focustax.ro?subject=${subject}&body=${body}`;
+    setTrimis(true);
+  }
+
   return (
     <>
       <Navbar />
@@ -42,21 +53,51 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <form className={styles.form}>
-            <div className={styles.formGroup}>
-              <label htmlFor="nume">Nume</label>
-              <input id="nume" type="text" placeholder="Numele tău" />
+          {trimis ? (
+            <div className={styles.confirmare}>
+              <span className={styles.confirmareIcon}>✅</span>
+              <h2>Clientul de email s-a deschis!</h2>
+              <p>Mesajul a fost pregătit. Trimite-l din aplicația ta de email pentru a ne contacta.</p>
+              <button className={styles.btn} onClick={() => setTrimis(false)}>Trimite alt mesaj</button>
             </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="email">Email</label>
-              <input id="email" type="email" placeholder="email@exemplu.ro" />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="mesaj">Mesaj</label>
-              <textarea id="mesaj" rows={5} placeholder="Scrie mesajul tău aici..." />
-            </div>
-            <button type="submit" className={styles.btn}>Trimite mesajul</button>
-          </form>
+          ) : (
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.formGroup}>
+                <label htmlFor="nume">Nume</label>
+                <input
+                  id="nume"
+                  type="text"
+                  placeholder="Numele tău"
+                  value={nume}
+                  onChange={e => setNume(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="email@exemplu.ro"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="mesaj">Mesaj</label>
+                <textarea
+                  id="mesaj"
+                  rows={5}
+                  placeholder="Scrie mesajul tău aici..."
+                  value={mesaj}
+                  onChange={e => setMesaj(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className={styles.btn}>Trimite mesajul</button>
+            </form>
+          )}
         </div>
       </main>
       <Footer />

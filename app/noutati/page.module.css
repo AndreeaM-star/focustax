@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 20px;
+  padding: 60px 20px 80px;
 }
 
 .title {
@@ -20,40 +20,91 @@
   color: #6b7280;
   max-width: 600px;
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 64px;
   line-height: 1.6;
 }
 
-.lista {
+/* Timeline */
+.timeline {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 100%;
-  max-width: 800px;
+  gap: 0;
+}
+
+.timelineLine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e5e7eb;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.timelineItem {
+  position: relative;
+  width: 46%;
+  margin-bottom: 32px;
+  z-index: 1;
+}
+
+.timelineItem.left {
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.timelineItem.right {
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.timelineDot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid;
+  top: 20px;
+  z-index: 2;
+}
+
+.timelineItem.left .timelineDot {
+  right: -7%;
+  transform: translateX(50%);
+}
+
+.timelineItem.right .timelineDot {
+  left: -7%;
+  transform: translateX(-50%);
 }
 
 .card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  padding: 24px;
+  padding: 20px 22px;
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
   transform: translateY(-2px);
 }
 
 .cardMeta {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .tag {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -63,24 +114,38 @@
 }
 
 .data {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #9ca3af;
 }
 
 .cardTitlu {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #1a1a2e;
   margin-bottom: 8px;
 }
 
 .cardDesc {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: #6b7280;
   line-height: 1.65;
 }
 
-@media (max-width: 768px) {
+/* Mobile — stivă simplă */
+@media (max-width: 640px) {
   .title { font-size: 1.8rem; }
+
+  .timelineLine { display: none; }
+
+  .timelineItem,
+  .timelineItem.left,
+  .timelineItem.right {
+    width: 100%;
+    align-self: unset;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .timelineDot { display: none; }
 }

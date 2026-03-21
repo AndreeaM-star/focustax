@@ -1,9 +1,67 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
 
+const carduri = [
+  {
+    icon: "💼",
+    titlu: "Impozit pe Venit",
+    text: "Persoanele fizice plătesc 10% impozit pe venit din activități independente, chirii, dividende și alte surse. Declarația Unică (D212) se depune anual până pe 25 mai.",
+  },
+  {
+    icon: "🏢",
+    titlu: "Impozit pe Profit",
+    text: "Societățile comerciale (SRL, SA) plătesc 16% impozit pe profit. Microîntreprinderile pot opta pentru impozit pe cifra de afaceri de 1% sau 3%.",
+  },
+  {
+    icon: "🧾",
+    titlu: "TVA",
+    text: "Cota standard de TVA este 19%. Există cote reduse de 9% (alimente, medicamente, turism) și 5% (cărți, locuințe sociale). Înregistrarea este obligatorie peste 300.000 lei.",
+  },
+  {
+    icon: "🛡️",
+    titlu: "Contribuții Sociale",
+    text: "CAS (pensii) — 25% și CASS (sănătate) — 10% se aplică veniturilor din muncă și activități independente. PFA-urile le declară prin D212 și D112.",
+  },
+  {
+    icon: "📅",
+    titlu: "Termene de Plată",
+    text: "Obligațiile fiscale au termene stricte: lunar (TVA, salarii), trimestrial (microîntreprinderi) sau anual (impozit profit, D212). Întârzierile atrag penalități.",
+  },
+  {
+    icon: "⚖️",
+    titlu: "ANAF & Conformare",
+    text: "ANAF administrează toate obligațiile fiscale. Declarațiile se depun online prin SPV (Spațiul Privat Virtual) sau fizic la ghișeu. Neconformarea atrage amenzi și dobânzi.",
+  },
+];
+
 export default function HomePage() {
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(styles.visible);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    cardRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -37,54 +95,18 @@ export default function HomePage() {
               Principalele obligații fiscale sunt gestionate de ANAF (Agenția Națională de Administrare Fiscală).
             </p>
             <div className={styles.sistemGrid}>
-              <div className={styles.sistemCard}>
-                <div className={styles.sistemCardIcon}>💼</div>
-                <h3>Impozit pe Venit</h3>
-                <p>
-                  Persoanele fizice plătesc 10% impozit pe venit din activități independente, chirii,
-                  dividende și alte surse. Declarația Unică (D212) se depune anual până pe 25 mai.
-                </p>
-              </div>
-              <div className={styles.sistemCard}>
-                <div className={styles.sistemCardIcon}>🏢</div>
-                <h3>Impozit pe Profit</h3>
-                <p>
-                  Societățile comerciale (SRL, SA) plătesc 16% impozit pe profit. Microîntreprinderile
-                  pot opta pentru impozit pe cifra de afaceri de 1% sau 3%.
-                </p>
-              </div>
-              <div className={styles.sistemCard}>
-                <div className={styles.sistemCardIcon}>🧾</div>
-                <h3>TVA</h3>
-                <p>
-                  Cota standard de TVA este 19%. Există cote reduse de 9% (alimente, medicamente,
-                  turism) și 5% (cărți, locuințe sociale). Înregistrarea este obligatorie peste 300.000 lei.
-                </p>
-              </div>
-              <div className={styles.sistemCard}>
-                <div className={styles.sistemCardIcon}>🛡️</div>
-                <h3>Contribuții Sociale</h3>
-                <p>
-                  CAS (pensii) — 25% și CASS (sănătate) — 10% se aplică veniturilor din muncă
-                  și activități independente. PFA-urile le declară prin D212 și D112.
-                </p>
-              </div>
-              <div className={styles.sistemCard}>
-                <div className={styles.sistemCardIcon}>📅</div>
-                <h3>Termene de Plată</h3>
-                <p>
-                  Obligațiile fiscale au termene stricte: lunar (TVA, salarii), trimestrial
-                  (microîntreprinderi) sau anual (impozit profit, D212). Întârzierile atrag penalități.
-                </p>
-              </div>
-              <div className={styles.sistemCard}>
-                <div className={styles.sistemCardIcon}>⚖️</div>
-                <h3>ANAF & Conformare</h3>
-                <p>
-                  ANAF administrează toate obligațiile fiscale. Declarațiile se depun online prin
-                  SPV (Spațiul Privat Virtual) sau fizic la ghișeu. Neconformarea atrage amenzi și dobânzi.
-                </p>
-              </div>
+              {carduri.map((card, i) => (
+                <div
+                  key={card.titlu}
+                  className={styles.sistemCard}
+                  ref={(el) => { cardRefs.current[i] = el; }}
+                  style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
+                >
+                  <div className={styles.sistemCardIcon}>{card.icon}</div>
+                  <h3>{card.titlu}</h3>
+                  <p>{card.text}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
