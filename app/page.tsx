@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -40,28 +39,6 @@ const carduri = [
 ];
 
 export default function HomePage() {
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(styles.visible);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-
-    cardRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <>
       <Navbar />
@@ -99,8 +76,7 @@ export default function HomePage() {
                 <div
                   key={card.titlu}
                   className={styles.sistemCard}
-                  ref={(el) => { cardRefs.current[i] = el; }}
-                  style={{ transitionDelay: `${(i % 3) * 0.1}s` }}
+                  style={{ animationDelay: `${i * 80}ms` }}
                 >
                   <div className={styles.sistemCardIcon}>{card.icon}</div>
                   <h3>{card.titlu}</h3>

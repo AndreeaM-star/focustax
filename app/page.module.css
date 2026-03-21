@@ -1,3 +1,19 @@
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ── Hero ─────────────────────────────────── */
 .hero {
   min-height: 90dvh;
   display: flex;
@@ -6,61 +22,63 @@
   align-items: center;
   text-align: center;
   padding: 80px 20px 40px;
-  background-color: #f8f9fb;
+  background-color: #eef2ff;
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 70%),
-    linear-gradient(#e5e7eb 1px, transparent 1px),
-    linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
-  background-size: 100% 100%, 40px 40px, 40px 40px;
+    radial-gradient(ellipse 90% 60% at 50% -5%, rgba(37, 99, 235, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 10% 50%, rgba(124, 58, 237, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 35% at 90% 60%, rgba(5, 150, 105, 0.09) 0%, transparent 50%),
+    linear-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
 }
 
-/* Animații pe copii, nu pe container — fix layout shift mobil */
 .pill {
   display: inline-block;
   background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px) saturate(180%) brightness(1.1);
-  -webkit-backdrop-filter: blur(16px) saturate(180%) brightness(1.1);
+  backdrop-filter: blur(20px) saturate(200%) brightness(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(1.1);
   border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1), inset 0 1px 0 rgba(255, 255, 255, 1);
   color: #6b7280;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 2px;
-  padding: 5px 14px;
+  padding: 5px 16px;
   border-radius: 20px;
   margin-bottom: 28px;
   text-transform: uppercase;
-  will-change: opacity, transform;
-  animation: fadeInUp 0.5s ease-out 0s both;
+  animation: fadeInUp 0.5s ease-out both;
 }
 
 .heroTitle {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 4rem;
+  font-size: 4.2rem;
   font-weight: 700;
   line-height: 1.1;
   color: #1a1a2e;
   margin-bottom: 4px;
-  will-change: opacity, transform;
-  animation: fadeInUp 0.5s ease-out 0.1s both;
+  letter-spacing: -1px;
+  animation: fadeInUp 0.5s ease-out 0.08s both;
 }
 
 .heroItalic {
   display: block;
   font-style: italic;
   font-weight: 700;
-  color: #2563eb;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 1em;
 }
 
 .heroText {
   font-size: 1.15rem;
   color: #6b7280;
-  max-width: 540px;
+  max-width: 520px;
   margin: 20px auto 32px;
   line-height: 1.7;
-  will-change: opacity, transform;
-  animation: fadeInUp 0.5s ease-out 0.2s both;
+  animation: fadeInUp 0.5s ease-out 0.16s both;
 }
 
 .heroCTA {
@@ -69,62 +87,65 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 24px;
-  will-change: opacity, transform;
-  animation: fadeInUp 0.5s ease-out 0.3s both;
+  animation: fadeInUp 0.5s ease-out 0.24s both;
 }
 
 .btnPrimary {
   position: relative;
   overflow: hidden;
-  background-color: #1a1a2e;
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4e 100%);
   color: #ffffff;
   font-size: 0.95rem;
   font-weight: 600;
   padding: 14px 28px;
-  border-radius: 8px;
-  transition: background 0.2s;
-  min-height: 44px;
+  border-radius: 10px;
+  min-height: 48px;
   display: flex;
   align-items: center;
+  box-shadow: 0 4px 20px rgba(26, 26, 46, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .btnPrimary::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
   transform: translateX(-100%);
-  transition: transform 0.45s ease;
+  animation: shimmer 2.4s ease-in-out 1.2s infinite;
 }
 
 .btnPrimary:hover {
-  background-color: #2d2d4e;
-}
-
-.btnPrimary:hover::after {
-  transform: translateX(100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(26, 26, 46, 0.4);
 }
 
 .btnSecondary {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(20px) saturate(200%) brightness(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
   color: #1a1a2e;
   font-size: 0.95rem;
   font-weight: 600;
   padding: 14px 28px;
-  border-radius: 8px;
-  transition: box-shadow 0.2s, background 0.2s;
-  min-height: 44px;
+  border-radius: 10px;
+  min-height: 48px;
   display: flex;
   align-items: center;
+  transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
 }
 
 .btnSecondary:hover {
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.72);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 .noCost {
@@ -133,20 +154,19 @@
   letter-spacing: 2px;
   color: #9ca3af;
   text-transform: uppercase;
-  will-change: opacity, transform;
-  animation: fadeInUp 0.5s ease-out 0.4s both;
+  animation: fadeInUp 0.5s ease-out 0.32s both;
 }
 
-/* Sistem fiscal section */
+/* ── Sistem Fiscal ────────────────────────── */
 .sistemFiscal {
   background-color: #f0f4ff;
   background-image:
-    linear-gradient(135deg, rgba(224, 231, 255, 0.85) 0%, rgba(240, 253, 244, 0.75) 50%, rgba(254, 252, 232, 0.7) 100%),
-    linear-gradient(rgba(203, 213, 225, 0.4) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+    linear-gradient(135deg, rgba(224, 231, 255, 0.9) 0%, rgba(240, 253, 244, 0.8) 50%, rgba(254, 252, 232, 0.75) 100%),
+    linear-gradient(rgba(99, 102, 241, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.07) 1px, transparent 1px);
   background-size: 100% 100%, 40px 40px, 40px 40px;
-  border-top: 1px solid rgba(229, 231, 235, 0.6);
-  padding: 80px 20px;
+  border-top: 1px solid rgba(199, 210, 254, 0.5);
+  padding: 80px 20px 100px;
 }
 
 .sistemFiscalInner {
@@ -156,18 +176,19 @@
 
 .sistemTitlu {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: #1a1a2e;
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  letter-spacing: -0.3px;
 }
 
 .sistemIntro {
   font-size: 1rem;
   color: #6b7280;
-  max-width: 680px;
-  margin: 0 auto 48px;
+  max-width: 640px;
+  margin: 0 auto 52px;
   text-align: center;
   line-height: 1.7;
 }
@@ -175,41 +196,40 @@
 .sistemGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
-/* Card initial ascuns — devine vizibil via IntersectionObserver */
+/* CSS animation — no JS needed */
 .sistemCard {
-  background: rgba(255, 255, 255, 0.48);
-  backdrop-filter: blur(20px) saturate(200%) brightness(1.08);
-  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(1.08);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 1), inset 0 -1px 0 rgba(0, 0, 0, 0.04);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(28px) saturate(220%) brightness(1.1) contrast(1.03);
+  -webkit-backdrop-filter: blur(28px) saturate(220%) brightness(1.1) contrast(1.03);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 12px 40px rgba(99, 102, 241, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.05),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.04),
+    inset 2px 0 0 rgba(255, 255, 255, 0.6),
+    inset -2px 0 0 rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
   padding: 24px;
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.2s;
-  will-change: opacity, transform;
-}
-
-.sistemCard.visible {
-  opacity: 1;
-  transform: translateY(0);
+  animation: cardIn 0.5s ease-out both;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .sistemCard:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  transform: translateY(-3px);
-}
-
-.sistemCard.visible:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px) scale(1.01);
+  box-shadow:
+    0 24px 60px rgba(99, 102, 241, 0.16),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.04);
 }
 
 .sistemCardIcon {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
+  font-size: 2rem;
+  margin-bottom: 14px;
 }
 
 .sistemCard h3 {
@@ -226,33 +246,12 @@
   line-height: 1.65;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @media (max-width: 768px) {
-  .hero {
-    padding-top: 80px;
-  }
-
-  .heroTitle {
-    font-size: 2.5rem;
-  }
-
-  .sistemGrid {
-    grid-template-columns: 1fr;
-  }
+  .hero { padding-top: 80px; }
+  .heroTitle { font-size: 2.8rem; }
+  .sistemGrid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
-  .heroTitle {
-    font-size: 1.8rem;
-  }
+  .heroTitle { font-size: 2rem; }
 }

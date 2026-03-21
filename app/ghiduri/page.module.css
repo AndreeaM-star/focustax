@@ -1,16 +1,21 @@
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .page {
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 60px 20px 80px;
-  background-color: #f0f4ff;
+  background-color: #eef2ff;
   background-image:
-    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(37, 99, 235, 0.12) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 10%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 30% at 50% 80%, rgba(5, 150, 105, 0.06) 0%, transparent 50%),
-    linear-gradient(rgba(99, 102, 241, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.07) 1px, transparent 1px);
+    radial-gradient(ellipse 90% 55% at 15% 0%, rgba(37, 99, 235, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 45% at 85% 10%, rgba(124, 58, 237, 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 35% at 50% 90%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
+    linear-gradient(rgba(99, 102, 241, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.09) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
 }
 
@@ -21,10 +26,11 @@
 }
 
 .heroIcon {
-  font-size: 2.8rem;
+  font-size: 3rem;
   margin-bottom: 16px;
   display: block;
-  filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.3));
+  filter: drop-shadow(0 4px 16px rgba(37, 99, 235, 0.35));
+  animation: cardIn 0.5s ease-out both;
 }
 
 .title {
@@ -35,6 +41,7 @@
   margin-bottom: 14px;
   line-height: 1.15;
   letter-spacing: -0.5px;
+  animation: cardIn 0.5s ease-out 0.05s both;
 }
 
 .titleAccent {
@@ -50,43 +57,43 @@
   max-width: 560px;
   text-align: center;
   line-height: 1.7;
+  animation: cardIn 0.5s ease-out 0.1s both;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 24px;
+  gap: 20px;
   width: 100%;
   max-width: 1200px;
 }
 
+/* CSS animation — NO JS needed, always visible */
 .card {
-  background: rgba(255, 255, 255, 0.52);
-  backdrop-filter: blur(20px) saturate(200%) brightness(1.08);
-  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(1.08);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.48);
+  backdrop-filter: blur(28px) saturate(220%) brightness(1.1) contrast(1.03);
+  -webkit-backdrop-filter: blur(28px) saturate(220%) brightness(1.1) contrast(1.03);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
-  border-radius: 16px;
+    0 12px 40px rgba(37, 99, 235, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.04),
+    inset 2px 0 0 rgba(255, 255, 255, 0.7),
+    inset -2px 0 0 rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(28px);
-}
-
-.card.visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.25s ease;
+  animation: cardIn 0.5s ease-out both;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .card:hover {
+  transform: translateY(-4px) scale(1.005);
   box-shadow:
-    0 16px 48px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
-  transform: translateY(-2px);
+    0 20px 56px rgba(37, 99, 235, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    inset 0 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.04);
 }
 
 .cardHeader {
@@ -94,8 +101,10 @@
   align-items: center;
   gap: 10px;
   padding: 18px 20px 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  background: rgba(248, 249, 251, 0.7);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .cardDot {
@@ -103,7 +112,6 @@
   height: 9px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 0 8px currentColor;
 }
 
 .cardTitle {
@@ -123,7 +131,7 @@
 .listItem {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid rgba(243, 244, 246, 0.8);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.5);
 }
 
 .listItem:last-child {
@@ -140,23 +148,23 @@
   position: relative;
 }
 
-.listItemLink::before {
+.listItemLink::after {
   content: "→";
   position: absolute;
   right: 20px;
   top: 50%;
-  transform: translateY(-50%) translateX(4px);
+  transform: translateY(-50%) translateX(6px);
   font-size: 0.8rem;
   opacity: 0;
   transition: opacity 0.15s, transform 0.15s;
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 .listItemLink:hover {
-  background: rgba(239, 246, 255, 0.7);
+  background: rgba(239, 246, 255, 0.65);
 }
 
-.listItemLink:hover::before {
+.listItemLink:hover::after {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
 }
@@ -177,9 +185,9 @@
 @media (max-width: 768px) {
   .title { font-size: 2rem; }
   .grid { grid-template-columns: 1fr; }
-  .hero { margin-bottom: 40px; }
+  .hero { margin-bottom: 36px; }
 }
 
 @media (max-width: 480px) {
-  .title { font-size: 1.7rem; }
+  .title { font-size: 1.65rem; }
 }
