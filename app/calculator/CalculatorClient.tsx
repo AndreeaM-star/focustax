@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
@@ -342,6 +342,19 @@ function Row({ label, val, neg, pos, bold, green }: {
 /* ── Main ─────────────────────────────────── */
 export default function CalculatorClient() {
   const [tab, setTab] = useState<Tab>("salariu");
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+
+  // Slide the glass pill to the active tab
+  useEffect(() => {
+    const container = tabsRef.current;
+    const pill = pillRef.current;
+    if (!container || !pill) return;
+    const activeBtn = container.querySelector(`.${styles.tabActiv}`) as HTMLElement;
+    if (!activeBtn) return;
+    pill.style.left = `${activeBtn.offsetLeft}px`;
+    pill.style.width = `${activeBtn.offsetWidth}px`;
+  }, [tab]);
 
   return (
     <>
@@ -352,7 +365,8 @@ export default function CalculatorClient() {
           Calculează impozitele și contribuțiile pentru salariu, PFA sau firmă — conform legislației fiscale 2025.
         </p>
 
-        <div className={styles.tabs}>
+        <div className={styles.tabs} ref={tabsRef}>
+          <span className={styles.tabPill} ref={pillRef} />
           {(["salariu", "pfa", "firma"] as Tab[]).map(t => (
             <button key={t} className={`${styles.tab} ${tab === t ? styles.tabActiv : ""}`}
               onClick={() => setTab(t)}>
