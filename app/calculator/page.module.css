@@ -1,0 +1,231 @@
+.page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.title {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  max-width: 560px;
+  text-align: center;
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 36px;
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formGroup label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.tipGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.tipBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f8f9fb;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  min-height: 44px;
+}
+
+.tipBtn:hover {
+  border-color: #9ca3af;
+  background: #f3f4f6;
+}
+
+.tipBtnActiv {
+  border-color: #1a1a2e;
+  background: #1a1a2e;
+}
+
+.tipBtnActiv .tipLabel,
+.tipBtnActiv .tipDesc {
+  color: #ffffff;
+}
+
+.tipLabel {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.tipDesc {
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.input {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: var(--font-open-sans), sans-serif;
+  color: #1a1a2e;
+  background: #f8f9fb;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.input:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+}
+
+.btnRow {
+  display: flex;
+  gap: 12px;
+}
+
+.btnCalc {
+  flex: 1;
+  background-color: #1a1a2e;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 13px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-height: 44px;
+}
+
+.btnCalc:hover:not(:disabled) {
+  background-color: #2d2d4e;
+}
+
+.btnCalc:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.btnReset {
+  background-color: #f3f4f6;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 13px 20px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: background 0.15s;
+  min-height: 44px;
+}
+
+.btnReset:hover {
+  background-color: #e5e7eb;
+}
+
+.rezultat {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 24px;
+}
+
+.rezultatTitlu {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 16px;
+}
+
+.rezultatGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rezultatRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.valoare {
+  font-weight: 600;
+  color: #374151;
+}
+
+.totalRow {
+  border-bottom: 2px solid #e5e7eb;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 4px;
+}
+
+.totalValoare {
+  font-weight: 700;
+  color: #dc2626;
+  font-size: 1rem;
+}
+
+.netRow {
+  border-bottom: none;
+  font-weight: 600;
+  color: #374151;
+}
+
+.netValoare {
+  font-weight: 700;
+  color: #059669;
+  font-size: 1.05rem;
+}
+
+.disclaimer {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .card { padding: 24px 16px; }
+  .title { font-size: 1.8rem; }
+  .tipGrid { grid-template-columns: 1fr; }
+}

@@ -1,16 +1,16 @@
 .navbarArea {
-  background-color: #0f172a;
+  background-color: #ffffff;
   position: sticky;
   top: 0;
   width: 100%;
   z-index: 999;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .navbarContainer {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 0.85rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,54 +18,131 @@
 
 .navbarLogo {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #1a1a2e;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .navbarLogo span {
-  color: #e9c46a;
+  color: #2563eb;
 }
 
 .navbarMenu {
   display: flex;
   gap: 2rem;
+  align-items: center;
 }
 
 .navbarMenu a {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  color: #ffffff;
-  letter-spacing: 1px;
-  transition: color 0.3s ease;
+  font-size: 0.88rem;
   font-weight: 600;
+  text-transform: uppercase;
+  color: #374151;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
 }
 
 .navbarMenu a:hover {
-  color: #e9c46a;
+  color: #1a1a2e;
 }
 
-.navbarRight button {
-  background-color: transparent;
-  border: 1px solid #e9c46a;
-  color: #e9c46a;
+.navbarRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ctaBtn {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  font-size: 0.85rem;
   font-weight: 600;
-  padding: 6px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s;
+  padding: 8px 18px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  white-space: nowrap;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
-.navbarRight button:hover {
-  background-color: #e9c46a;
-  color: #0f172a;
+.ctaBtn:hover {
+  background-color: #2d2d4e;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: #1a1a2e;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.barOpen1 {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.barOpen2 {
+  opacity: 0;
+}
+
+.barOpen3 {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 @media (max-width: 768px) {
-  .navbarMenu,
-  .navbarRight {
+  .navbarMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 8px 0;
+  }
+
+  .navbarMenu.open {
+    display: flex;
+  }
+
+  .navbarMenu a {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .navbarMenu a:last-child {
+    border-bottom: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .ctaBtn {
     display: none;
   }
 }

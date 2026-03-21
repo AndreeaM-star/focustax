@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Open_Sans, Dancing_Script } from "next/font/google";
+import { Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -13,16 +13,23 @@ const openSans = Open_Sans({
   variable: "--font-open-sans",
 });
 
-const dancingScript = Dancing_Script({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-dancing-script",
-});
-
 export const metadata: Metadata = {
   title: "FocusTax | Claritate în taxe",
   description:
-    "Vrei claritate în taxe? Alege FocusTax – Ghid complet al declarațiilor fiscale din România.",
+    "Înțelege ce declarații trebuie să depui și când. Ghid complet al declarațiilor fiscale din România — gratuit.",
+  openGraph: {
+    title: "FocusTax | Claritate în taxe",
+    description:
+      "Înțelege ce declarații trebuie să depui și când. Ghid complet al declarațiilor fiscale din România.",
+    type: "website",
+    locale: "ro_RO",
+    siteName: "FocusTax",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FocusTax | Claritate în taxe",
+    description: "Ghid complet al declarațiilor fiscale din România — gratuit.",
+  },
 };
 
 export default function RootLayout({
@@ -31,10 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="ro"
-      className={`${montserrat.variable} ${openSans.variable} ${dancingScript.variable}`}
-    >
+    <html lang="ro" className={`${montserrat.variable} ${openSans.variable}`}>
       <body>{children}</body>
     </html>
   );

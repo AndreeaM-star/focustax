@@ -1,0 +1,132 @@
+.page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.title {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  max-width: 560px;
+  text-align: center;
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.infoCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.infoCard h3 {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.infoCard p {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.formGroup input,
+.formGroup textarea {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-family: var(--font-open-sans), sans-serif;
+  color: #1a1a2e;
+  background: #f8f9fb;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+}
+
+.btn {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+  min-height: 44px;
+}
+
+.btn:hover {
+  background-color: #2d2d4e;
+}
+
+@media (max-width: 768px) {
+  .title { font-size: 1.8rem; }
+  .container { grid-template-columns: 1fr; }
+}

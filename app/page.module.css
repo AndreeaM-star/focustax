@@ -1,11 +1,30 @@
 .hero {
-  height: 90vh;
+  min-height: 90dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 0 20px;
+  padding: 60px 20px 40px;
+  background-color: #f8f9fb;
+  background-image:
+    linear-gradient(#e5e7eb 1px, transparent 1px),
+    linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.pill {
+  display: inline-block;
+  border: 1px solid #d1d5db;
+  color: #6b7280;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 28px;
+  text-transform: uppercase;
 }
 
 .heroTitle {
@@ -13,26 +32,144 @@
   font-size: 4rem;
   font-weight: 700;
   line-height: 1.1;
-  margin-bottom: 10px;
-  animation: fadeInUp 1s ease-out;
+  color: #1a1a2e;
+  margin-bottom: 4px;
 }
 
-.wealthStyle {
-  font-family: var(--font-dancing-script), cursive;
-  color: #e9c46a;
-  text-transform: none;
+.heroItalic {
   display: block;
-  font-size: 1.2em;
-  margin-top: 10px;
-  letter-spacing: 0;
+  font-style: italic;
+  font-weight: 700;
+  color: #2563eb;
+  font-size: 1em;
 }
 
 .heroText {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
-  max-width: 600px;
-  margin-top: 20px;
-  animation: fadeInUp 1.5s ease-out;
+  font-size: 1.15rem;
+  color: #6b7280;
+  max-width: 540px;
+  margin: 20px auto 32px;
+  line-height: 1.7;
+}
+
+.heroCTA {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.btnPrimary {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.btnPrimary:hover {
+  background-color: #2d2d4e;
+}
+
+.btnSecondary {
+  background-color: #ffffff;
+  color: #1a1a2e;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  transition: border-color 0.2s, background 0.2s;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.btnSecondary:hover {
+  border-color: #9ca3af;
+  background-color: #f3f4f6;
+}
+
+.noCost {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #9ca3af;
+  text-transform: uppercase;
+}
+
+/* Sistem fiscal section */
+.sistemFiscal {
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  padding: 80px 20px;
+}
+
+.sistemFiscalInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sistemTitlu {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.sistemIntro {
+  font-size: 1rem;
+  color: #6b7280;
+  max-width: 680px;
+  margin: 0 auto 48px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.sistemGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.sistemCard {
+  background: #f8f9fb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.sistemCard:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  transform: translateY(-2px);
+}
+
+.sistemCardIcon {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.sistemCard h3 {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+}
+
+.sistemCard p {
+  font-size: 0.88rem;
+  color: #6b7280;
+  line-height: 1.65;
 }
 
 @keyframes fadeInUp {
@@ -51,7 +188,13 @@
     font-size: 2.5rem;
   }
 
-  .wealthStyle {
-    font-size: 1.1em;
+  .sistemGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 1.8rem;
   }
 }

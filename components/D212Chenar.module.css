@@ -2,19 +2,20 @@
   position: relative;
   max-width: 1200px;
   width: 100%;
-  border: 1px solid rgba(233, 196, 106, 0.35);
+  border: 1px solid #e5e7eb;
   border-radius: 14px;
-  padding: 24px 28px;
+  padding: 28px 28px 24px;
   margin-bottom: 40px;
-  background: rgba(233, 196, 106, 0.05);
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 .badge {
   position: absolute;
   top: -12px;
   left: 24px;
-  background: #e9c46a;
-  color: #0f172a;
+  background: #1a1a2e;
+  color: #ffffff;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -33,15 +34,16 @@
 }
 
 .titlu {
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
-  color: #e9c46a;
+  color: #1a1a2e;
   margin-bottom: 8px;
 }
 
 .desc {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: #6b7280;
   line-height: 1.6;
   max-width: 620px;
   margin: 0;
@@ -52,13 +54,13 @@
   flex-direction: column;
   gap: 8px;
   font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: #9ca3af;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .pdfRow {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .pdfLink {
@@ -67,17 +69,19 @@
   gap: 8px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #e9c46a;
-  background: rgba(233, 196, 106, 0.1);
-  border: 1px solid rgba(233, 196, 106, 0.25);
+  color: #1a1a2e;
+  background: #f8f9fb;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
-  padding: 7px 16px;
+  padding: 8px 16px;
   text-decoration: none;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s;
+  min-height: 44px;
 }
 
 .pdfLink:hover {
-  background: rgba(233, 196, 106, 0.18);
+  background: #f3f4f6;
+  border-color: #d1d5db;
 }
 
 .capitole {
@@ -87,7 +91,7 @@
 }
 
 .capitol {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -99,37 +103,38 @@
   align-items: center;
   gap: 10px;
   padding: 13px 16px;
-  background: rgba(255, 255, 255, 0.03);
+  background: #f8f9fb;
   border: none;
   cursor: pointer;
   text-align: left;
   transition: background 0.15s;
+  min-height: 44px;
 }
 
 .capitolBtn:hover {
-  background: rgba(255, 255, 255, 0.07);
+  background: #f3f4f6;
 }
 
 .capitolBtn.activ {
-  background: rgba(233, 196, 106, 0.07);
+  background: #eff6ff;
 }
 
 .capitolId {
   font-size: 0.72rem;
   font-weight: 700;
-  color: #e9c46a;
+  color: #2563eb;
   letter-spacing: 0.5px;
 }
 
 .capitolTitlu {
   font-size: 0.9rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+  color: #374151;
 }
 
 .chevron {
   font-size: 0.6rem;
-  color: rgba(255, 255, 255, 0.3);
+  color: #9ca3af;
   justify-self: end;
 }
 
@@ -137,8 +142,8 @@
   list-style: none;
   margin: 0;
   padding: 8px 16px 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(0, 0, 0, 0.12);
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
 }
 
 .listaItem {
@@ -146,9 +151,9 @@
   gap: 10px;
   padding: 7px 0;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: #6b7280;
   line-height: 1.5;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid #f3f4f6;
 }
 
 .listaItem:last-child {
@@ -156,7 +161,7 @@
 }
 
 .bullet {
-  color: #e9c46a;
-  opacity: 0.5;
+  color: #2563eb;
+  opacity: 0.6;
   flex-shrink: 0;
 }
