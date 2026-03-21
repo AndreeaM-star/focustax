@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 20px;
+  padding: 60px 20px 80px;
 }
 
 .title {
@@ -18,87 +18,83 @@
 .subtitle {
   font-size: 1rem;
   color: #6b7280;
-  max-width: 560px;
+  max-width: 580px;
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
   line-height: 1.6;
 }
 
-.card {
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.tab {
+  padding: 10px 22px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: #1a1a2e;
+}
+
+.tabActiv {
+  background: #ffffff;
+  color: #1a1a2e;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.tabContent {
+  width: 100%;
+  max-width: 620px;
+}
+
+.calcCard {
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 16px;
-  padding: 36px;
-  width: 100%;
-  max-width: 580px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 22px;
 }
 
-.formGroup {
+.calcSection {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
-.formGroup label {
+.label {
   font-size: 0.88rem;
   font-weight: 600;
   color: #374151;
 }
 
-.tipGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.tipBtn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 14px 8px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  background: #f8f9fb;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-  min-height: 44px;
-}
-
-.tipBtn:hover {
-  border-color: #9ca3af;
-  background: #f3f4f6;
-}
-
-.tipBtnActiv {
-  border-color: #1a1a2e;
-  background: #1a1a2e;
-}
-
-.tipBtnActiv .tipLabel,
-.tipBtnActiv .tipDesc {
-  color: #ffffff;
-}
-
-.tipLabel {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #1a1a2e;
-}
-
-.tipDesc {
-  font-size: 0.72rem;
+.optional {
+  font-weight: 400;
   color: #9ca3af;
+  font-size: 0.8rem;
+  margin-left: 6px;
 }
 
 .input {
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 11px 14px;
   font-size: 1rem;
   font-family: var(--font-open-sans), sans-serif;
   color: #1a1a2e;
@@ -113,13 +109,58 @@
   background: #ffffff;
 }
 
-.btnRow {
+.btnGroup {
   display: flex;
-  gap: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btnOption {
+  padding: 8px 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f8f9fb;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-height: 44px;
+}
+
+.btnOption:hover {
+  border-color: #9ca3af;
+}
+
+.btnOption.activ {
+  background: #1a1a2e;
+  color: #ffffff;
+  border-color: #1a1a2e;
+}
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #374151;
+}
+
+.checkRow input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #1a1a2e;
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  line-height: 1.4;
+  margin-top: 2px;
 }
 
 .btnCalc {
-  flex: 1;
   background-color: #1a1a2e;
   color: #ffffff;
   font-size: 0.95rem;
@@ -130,6 +171,7 @@
   cursor: pointer;
   transition: background 0.2s;
   min-height: 44px;
+  width: 100%;
 }
 
 .btnCalc:hover:not(:disabled) {
@@ -141,91 +183,92 @@
   cursor: not-allowed;
 }
 
-.btnReset {
-  background-color: #f3f4f6;
-  color: #374151;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 13px 20px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  cursor: pointer;
-  transition: background 0.15s;
-  min-height: 44px;
-}
-
-.btnReset:hover {
-  background-color: #e5e7eb;
-}
-
-.rezultat {
+/* Rezultate */
+.rezultate {
   border-top: 1px solid #e5e7eb;
-  padding-top: 24px;
-}
-
-.rezultatTitlu {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin-bottom: 16px;
-}
-
-.rezultatGrid {
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.rezultatRow {
+.rezSectionLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  margin: 8px 0 6px;
+}
+
+.row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 8px 0;
   border-bottom: 1px solid #f3f4f6;
   font-size: 0.9rem;
   color: #6b7280;
 }
 
-.valoare {
-  font-weight: 600;
-  color: #374151;
+.row:last-of-type {
+  border-bottom: none;
 }
 
-.totalRow {
-  border-bottom: 2px solid #e5e7eb;
+.rowBold {
+  color: #1a1a2e;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.rowLabel {
+  flex: 1;
+}
+
+.rowVal {
   font-weight: 600;
   color: #374151;
+  text-align: right;
+}
+
+.red { color: #dc2626; }
+.green { color: #059669; }
+
+.separator {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 6px 0;
+}
+
+.declaratiiList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: 4px;
 }
 
-.totalValoare {
-  font-weight: 700;
-  color: #dc2626;
-  font-size: 1rem;
-}
-
-.netRow {
-  border-bottom: none;
+.decTag {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 20px;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: #374151;
-}
-
-.netValoare {
-  font-weight: 700;
-  color: #059669;
-  font-size: 1.05rem;
+  padding: 4px 12px;
 }
 
 .disclaimer {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: #9ca3af;
-  margin-top: 16px;
+  max-width: 620px;
+  text-align: center;
+  margin-top: 28px;
   line-height: 1.5;
 }
 
-@media (max-width: 480px) {
-  .card { padding: 24px 16px; }
+@media (max-width: 640px) {
   .title { font-size: 1.8rem; }
-  .tipGrid { grid-template-columns: 1fr; }
+  .calcCard { padding: 20px 16px; }
+  .tabs { flex-direction: column; width: 100%; }
+  .tab { text-align: center; }
 }
