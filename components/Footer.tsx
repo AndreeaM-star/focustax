@@ -27,8 +27,8 @@ export default function Footer() {
             <h4 className={styles.colTitle}>Contact</h4>
             <div className={styles.links}>
               <Link href="/contact">Formular contact</Link>
-              <a href="mailto:contact@focustax.ro">contact@focustax.ro</a>
-              <span>Luni – Vineri, 9:00–18:00</span>
+              <a href="mailto:focustaxro@gmail.com">focustaxro@gmail.com</a>
+              <span>Luni – Duminică, 9:00–21:00</span>
             </div>
           </div>
         </div>

@@ -34,14 +34,14 @@ export default function ContactPage() {
               <span className={styles.icon}>📧</span>
               <div>
                 <h3>Email</h3>
-                <p>contact@focustax.ro</p>
+                <p>focustaxro@gmail.com</p>
               </div>
             </div>
             <div className={styles.infoCard}>
               <span className={styles.icon}>⏰</span>
               <div>
                 <h3>Program răspuns</h3>
-                <p>Luni – Vineri, 9:00 – 18:00</p>
+                <p>Luni – Duminică, 9:00 – 21:00</p>
               </div>
             </div>
             <div className={styles.infoCard}>
