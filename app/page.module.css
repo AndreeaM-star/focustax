@@ -23,6 +23,10 @@
   text-align: center;
   padding: 80px 20px 40px;
   /* transparent — body background shows through for real glass effect */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 .pill {
@@ -195,6 +199,10 @@
   padding: 80px 20px 100px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   /* transparent — body background shows through */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 .sistemFiscalInner {
