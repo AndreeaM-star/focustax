@@ -10,11 +10,12 @@ import {
   Legend,
   type TooltipItem,
 } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Bar } from "react-chartjs-2";
 import type { TipComparatie } from "./data";
 import styles from "./comparatii.module.css";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, ChartDataLabels);
 
 export default function ComparatiiClient({ date }: { date: TipComparatie }) {
   const sorted = [...date.tari].sort((a, b) => b.cotaStandard - a.cotaStandard);
@@ -47,6 +48,20 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
+      datalabels: {
+        anchor: "end" as const,
+        align: "end" as const,
+        formatter: (value: number) => `${value}%`,
+        color: (ctx: { dataIndex: number }) => {
+          const t = sorted[ctx.dataIndex];
+          return t.esteRomania ? date.culoare.replace("0.85", "1") : "#374151";
+        },
+        font: (ctx: { dataIndex: number }) => {
+          const t = sorted[ctx.dataIndex];
+          return { size: 11, weight: t.esteRomania ? ("bold" as const) : ("normal" as const) };
+        },
+        padding: { left: 4 },
+      },
       tooltip: {
         callbacks: {
           label: (ctx: TooltipItem<"bar">) => {
@@ -64,6 +79,9 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
         borderWidth: 1,
         padding: 10,
       },
+    },
+    layout: {
+      padding: { right: 48 },
     },
     scales: {
       x: {
