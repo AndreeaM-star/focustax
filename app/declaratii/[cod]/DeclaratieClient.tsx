@@ -360,6 +360,34 @@ export default function DeclaratieClient({ data }: { data: DeclaratieData }) {
         </div>
       </div>
 
+      {/* Butoane formular */}
+      {(data.linkDescarcare || data.linkWebFormular) && (
+        <div className={styles.formularButoane}>
+          {data.linkDescarcare && (
+            <a
+              href={data.linkDescarcare}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.btnDescarcare}
+              style={{ borderColor: data.badgeBorder, color: data.accentCuloare, background: data.badgeBg }}
+            >
+              ⬇ Descarcă formularul (PDF)
+            </a>
+          )}
+          {data.linkWebFormular && (
+            <a
+              href={data.linkWebFormular}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.btnWebFormular}
+              style={{ background: data.accentCuloare }}
+            >
+              🌐 Completează web formularul
+            </a>
+          )}
+        </div>
+      )}
+
       {/* Calendar vizual */}
       {luni.length > 0 && (
         <div className={styles.calendarSection}>

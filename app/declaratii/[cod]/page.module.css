@@ -34,7 +34,55 @@
 .header {
   max-width: 860px;
   width: 100%;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
+}
+
+.formularButoane {
+  max-width: 860px;
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+}
+
+.btnDescarcare {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1.5px solid;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.btnDescarcare:hover {
+  opacity: 0.8;
+}
+
+.btnWebFormular {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.btnWebFormular:hover {
+  opacity: 0.85;
 }
 
 .badge {

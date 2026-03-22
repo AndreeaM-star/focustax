@@ -22,6 +22,8 @@ export type DeclaratieData = {
   legislatie: string[];
   durata: string;
   capitole: Capitol[];
+  linkDescarcare?: string;
+  linkWebFormular?: string;
 };
 
 export const declaratii: Record<string, DeclaratieData> = {
@@ -459,6 +461,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 120–122 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "15–30 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/D_212_2024.pdf",
+    linkWebFormular: "https://www.anaf.ro/declaratii/duf",
     capitole: [
       {
         id: "CAP I",
