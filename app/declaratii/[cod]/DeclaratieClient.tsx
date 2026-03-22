@@ -5,6 +5,94 @@ import Link from "next/link";
 import type { DeclaratieData } from "./data";
 import styles from "./page.module.css";
 
+// Mapping declarație → tip comparatie + preview țări
+const CONTEXT_EUROPEAN: Record<
+  string,
+  {
+    tip: string;
+    titlu: string;
+    tari: { nume: string; cota: number; flag: string }[];
+  }
+> = {
+  d300: {
+    tip: "tva",
+    titlu: "TVA în Europa",
+    tari: [
+      { nume: "Ungaria", cota: 27, flag: "🇭🇺" },
+      { nume: "Polonia", cota: 23, flag: "🇵🇱" },
+      { nume: "România", cota: 19, flag: "🇷🇴" },
+      { nume: "Germania", cota: 19, flag: "🇩🇪" },
+      { nume: "Luxemburg", cota: 17, flag: "🇱🇺" },
+    ],
+  },
+  d212: {
+    tip: "impozit-venit",
+    titlu: "Impozit pe venit în Europa",
+    tari: [
+      { nume: "Danemarca", cota: 56, flag: "🇩🇰" },
+      { nume: "Germania", cota: 45, flag: "🇩🇪" },
+      { nume: "Polonia", cota: 32, flag: "🇵🇱" },
+      { nume: "România", cota: 10, flag: "🇷🇴" },
+      { nume: "Bulgaria", cota: 10, flag: "🇧🇬" },
+    ],
+  },
+  d220: {
+    tip: "impozit-venit",
+    titlu: "Impozit pe venit în Europa",
+    tari: [
+      { nume: "Danemarca", cota: 56, flag: "🇩🇰" },
+      { nume: "Germania", cota: 45, flag: "🇩🇪" },
+      { nume: "Polonia", cota: 32, flag: "🇵🇱" },
+      { nume: "România", cota: 10, flag: "🇷🇴" },
+      { nume: "Bulgaria", cota: 10, flag: "🇧🇬" },
+    ],
+  },
+  d204: {
+    tip: "impozit-venit",
+    titlu: "Impozit pe venit în Europa",
+    tari: [
+      { nume: "Danemarca", cota: 56, flag: "🇩🇰" },
+      { nume: "Germania", cota: 45, flag: "🇩🇪" },
+      { nume: "Polonia", cota: 32, flag: "🇵🇱" },
+      { nume: "România", cota: 10, flag: "🇷🇴" },
+      { nume: "Bulgaria", cota: 10, flag: "🇧🇬" },
+    ],
+  },
+  d216: {
+    tip: "impozit-venit",
+    titlu: "Impozit pe venit în Europa",
+    tari: [
+      { nume: "Danemarca", cota: 56, flag: "🇩🇰" },
+      { nume: "Germania", cota: 45, flag: "🇩🇪" },
+      { nume: "Ungaria", cota: 15, flag: "🇭🇺" },
+      { nume: "România", cota: 10, flag: "🇷🇴" },
+      { nume: "Bulgaria", cota: 10, flag: "🇧🇬" },
+    ],
+  },
+  d101: {
+    tip: "impozit-profit",
+    titlu: "Impozit pe profit în Europa",
+    tari: [
+      { nume: "Franța", cota: 25, flag: "🇫🇷" },
+      { nume: "Germania", cota: 30, flag: "🇩🇪" },
+      { nume: "România", cota: 16, flag: "🇷🇴" },
+      { nume: "Irlanda", cota: 12.5, flag: "🇮🇪" },
+      { nume: "Ungaria", cota: 9, flag: "🇭🇺" },
+    ],
+  },
+  d112: {
+    tip: "contributii-sociale",
+    titlu: "Contribuții sociale în Europa",
+    tari: [
+      { nume: "Franța", cota: 68, flag: "🇫🇷" },
+      { nume: "Germania", cota: 40, flag: "🇩🇪" },
+      { nume: "România", cota: 35, flag: "🇷🇴" },
+      { nume: "Elveția", cota: 25.15, flag: "🇨🇭" },
+      { nume: "Irlanda", cota: 15.15, flag: "🇮🇪" },
+    ],
+  },
+};
+
 const LUNI = ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function luniActive(periodicitate: string): number[] {
@@ -374,6 +462,50 @@ export default function DeclaratieClient({ data }: { data: DeclaratieData }) {
                 <span className={styles.conexeArrow}>→</span>
               </Link>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* România în context european */}
+      {CONTEXT_EUROPEAN[cod] && (
+        <div className={styles.conexeSection} style={{ marginTop: 40 }}>
+          <h2 className={styles.sectionTitle}>România în context european</h2>
+          <div
+            className={styles.contextEuCard}
+            style={{ borderColor: data.badgeBorder, background: data.badgeBg }}
+          >
+            <div className={styles.contextEuHeader}>
+              <span className={styles.contextEuIcon}>🌍</span>
+              <div>
+                <p className={styles.contextEuTitlu}>{CONTEXT_EUROPEAN[cod].titlu}</p>
+                <p className={styles.contextEuDesc}>Câteva țări europene pentru comparație rapidă</p>
+              </div>
+            </div>
+            <div className={styles.contextEuTari}>
+              {CONTEXT_EUROPEAN[cod].tari.map((t) => (
+                <div
+                  key={t.nume}
+                  className={`${styles.contextEuTara} ${t.nume === "România" ? styles.contextEuRo : ""}`}
+                  style={t.nume === "România" ? { borderColor: data.badgeBorder, background: "rgba(255,255,255,0.7)" } : {}}
+                >
+                  <span className={styles.contextEuFlag}>{t.flag}</span>
+                  <span className={styles.contextEuNume}>{t.nume}</span>
+                  <span
+                    className={styles.contextEuCota}
+                    style={t.nume === "România" ? { color: data.accentCuloare } : {}}
+                  >
+                    {t.cota}%
+                  </span>
+                </div>
+              ))}
+            </div>
+            <Link
+              href={`/comparatii/${CONTEXT_EUROPEAN[cod].tip}`}
+              className={styles.contextEuLink}
+              style={{ color: data.accentCuloare, borderColor: data.badgeBorder }}
+            >
+              Vezi comparație completă cu grafice →
+            </Link>
           </div>
         </div>
       )}

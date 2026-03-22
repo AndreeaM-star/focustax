@@ -24,6 +24,7 @@ export default function Navbar() {
         <nav className={`${styles.navbarMenu} ${menuOpen ? styles.open : ""}`} aria-label="Navigare principală">
           <Link href="/declaratii" onClick={() => setMenuOpen(false)}>Declarații</Link>
           <Link href="/ghiduri" onClick={() => setMenuOpen(false)}>Ghiduri</Link>
+          <Link href="/comparatii" onClick={() => setMenuOpen(false)}>Comparații</Link>
           <Link href="/noutati" onClick={() => setMenuOpen(false)}>Noutăți</Link>
           <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
         </nav>

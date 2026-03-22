@@ -474,6 +474,100 @@
   flex-shrink: 0;
 }
 
+/* ─── Context European card ─── */
+.contextEuCard {
+  border-radius: 14px;
+  border: 1px solid;
+  padding: 20px 24px;
+  backdrop-filter: blur(32px) saturate(250%) brightness(1.12);
+  -webkit-backdrop-filter: blur(32px) saturate(250%) brightness(1.12);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.contextEuHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.contextEuIcon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.contextEuTitlu {
+  font-size: 0.93rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 2px;
+}
+
+.contextEuDesc {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.contextEuTari {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.contextEuTara {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.4);
+  border: 1px solid rgba(229,231,235,0.6);
+}
+
+.contextEuRo {
+  font-weight: 600;
+}
+
+.contextEuFlag {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.contextEuNume {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+.contextEuCota {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.contextEuLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.15s;
+}
+
+.contextEuLink:hover {
+  background: rgba(255,255,255,0.8);
+}
+
 @media (max-width: 768px) {
   .title { font-size: 1.8rem; }
   .meta { flex-direction: column; }
