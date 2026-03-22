@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -22,11 +24,11 @@ export default function Navbar() {
         </Link>
 
         <nav className={`${styles.navbarMenu} ${menuOpen ? styles.open : ""}`} aria-label="Navigare principală">
-          <Link href="/declaratii" onClick={() => setMenuOpen(false)}>Declarații</Link>
-          <Link href="/ghiduri" onClick={() => setMenuOpen(false)}>Ghiduri</Link>
-          <Link href="/comparatii" onClick={() => setMenuOpen(false)}>Comparații</Link>
-          <Link href="/noutati" onClick={() => setMenuOpen(false)}>Noutăți</Link>
-          <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+          <Link href="/declaratii" onClick={() => setMenuOpen(false)} className={pathname.startsWith("/declaratii") ? styles.activ : ""}>Declarații</Link>
+          <Link href="/ghiduri" onClick={() => setMenuOpen(false)} className={pathname.startsWith("/ghiduri") ? styles.activ : ""}>Ghiduri</Link>
+          <Link href="/comparatii" onClick={() => setMenuOpen(false)} className={pathname.startsWith("/comparatii") ? styles.activ : ""}>Comparații</Link>
+          <Link href="/noutati" onClick={() => setMenuOpen(false)} className={pathname === "/noutati" ? styles.activ : ""}>Noutăți</Link>
+          <Link href="/contact" onClick={() => setMenuOpen(false)} className={pathname === "/contact" ? styles.activ : ""}>Contact</Link>
         </nav>
 
         <div className={styles.navbarRight}>

@@ -95,6 +95,7 @@ export default function ContactPage() {
                   required
                 />
               </div>
+              <p className={styles.mailtoNote}>* Apăsând Trimite se va deschide aplicația ta de email.</p>
               <button type="submit" className={styles.btn}>Trimite mesajul</button>
             </form>
           )}

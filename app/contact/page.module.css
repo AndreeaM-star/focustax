@@ -118,6 +118,12 @@
   background: rgba(255, 255, 255, 0.9);
 }
 
+.mailtoNote {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
 .btn {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: #ffffff;

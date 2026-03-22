@@ -13,7 +13,10 @@ export default function NotFound() {
         <p className={styles.desc}>
           Pagina pe care o cauți nu există sau a fost mutată.
         </p>
-        <Link href="/" className={styles.btn}>← Înapoi la pagina principală</Link>
+        <div className={styles.butoane}>
+          <Link href="/" className={styles.btn}>← Înapoi la pagina principală</Link>
+          <Link href="/calculator" className={styles.btnSecundar}>→ Calculator Taxe</Link>
+        </div>
       </main>
       <Footer />
     </>

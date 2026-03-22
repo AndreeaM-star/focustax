@@ -29,20 +29,15 @@ const ghiduri = [
     categorie: "SRL & Microîntreprinderi",
     culoare: "#059669",
     lista: [
-      { titlu: "SRL vs Microîntreprindere", desc: "Diferențe de impozitare și condiții de încadrare.", slug: "srl-vs-micro" },
-      { titlu: "Impozit 1% sau 3% pe cifra de afaceri", desc: "Criterii de aplicare și exemple practice.", slug: "srl-vs-micro" },
+      { titlu: "SRL vs Microîntreprindere", desc: "Diferențe de impozitare, condiții de încadrare și trecere la impozit pe profit.", slug: "srl-vs-micro" },
       { titlu: "Dividende: cum se impozitează", desc: "Impozit 8%, declarare și plată la ANAF.", slug: "dividende" },
-      { titlu: "Trecerea la impozit pe profit", desc: "Când și cum faci trecerea obligatorie.", slug: "srl-vs-micro" },
     ],
   },
   {
     categorie: "TVA",
     culoare: "#d97706",
     lista: [
-      { titlu: "Când te înregistrezi în scopuri de TVA", desc: "Plafon 300.000 lei și înregistrare voluntară.", slug: "inregistrare-tva" },
-      { titlu: "Cote TVA aplicabile în România", desc: "19%, 9% și 5% — ce se aplică unde.", slug: "inregistrare-tva" },
-      { titlu: "Decontul D300 — ghid de completare", desc: "Cum completezi și depui decontul lunar/trimestrial.", slug: "inregistrare-tva" },
-      { titlu: "TVA la încasare", desc: "Sistem special pentru firme mici — avantaje și obligații.", slug: "inregistrare-tva" },
+      { titlu: "Ghid complet TVA", desc: "Înregistrare (plafon 300.000 lei), cote 19%/9%/5%, decontul D300 și TVA la încasare.", slug: "inregistrare-tva" },
     ],
   },
   {
@@ -50,8 +45,6 @@ const ghiduri = [
     culoare: "#7c3aed",
     lista: [
       { titlu: "Impozit pe chirii", desc: "Calcul, declarare D212 și obligații fiscale.", slug: "impozit-chirii" },
-      { titlu: "Venituri din investiții", desc: "Dividende, dobânzi și câștiguri din tranzacții bursiere.", slug: "dividende" },
-      { titlu: "Donarea a 3.5% din impozit", desc: "Ghid complet pentru formularul D230.", slug: "d212-pfa" },
       { titlu: "SPV — Spațiul Privat Virtual", desc: "Creare cont, utilizare și depunere declarații online.", slug: "spv-ghid" },
     ],
   },
