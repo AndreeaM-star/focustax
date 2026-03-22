@@ -24,6 +24,23 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
   const top5mic = [...date.tari].sort((a, b) => a.cotaStandard - b.cotaStandard).slice(0, 5);
   const top5mare = [...date.tari].sort((a, b) => b.cotaStandard - a.cotaStandard).slice(0, 5);
 
+  const esTVA = date.id === "tva";
+  const sistemHeader = esTVA ? "Cote reduse" : "Sistem";
+  const sistemLabel: Record<string, string> = {
+    flat: "Cotă unică",
+    progresiv: "Progresiv",
+    distributie: "Pe profit distribuit",
+    proporțional: "Proporțional",
+  };
+  const formatSistem = (t: (typeof sorted)[0]) => {
+    if (esTVA) {
+      return t.coteReduse && t.coteReduse.length > 0
+        ? t.coteReduse.map((c) => `${c}%`).join(" / ")
+        : "—";
+    }
+    return sistemLabel[t.sistem] ?? t.sistem;
+  };
+
   const chartData = {
     labels: sorted.map((t) => t.nume),
     datasets: [
@@ -203,7 +220,7 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
                   <th>#</th>
                   <th>Țară</th>
                   <th>Cotă</th>
-                  <th>Sistem</th>
+                  <th>{sistemHeader}</th>
                 </tr>
               </thead>
               <tbody>
@@ -216,7 +233,7 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
                     <td className={styles.tdCota} style={t.esteRomania ? { color: date.culoare.replace("0.85", "1"), fontWeight: 700 } : {}}>
                       {t.cotaStandard}%
                     </td>
-                    <td className={styles.tdSistem}>{t.sistem}</td>
+                    <td className={styles.tdSistem}>{formatSistem(t)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -230,7 +247,7 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
                   <th>#</th>
                   <th>Țară</th>
                   <th>Cotă</th>
-                  <th>Sistem</th>
+                  <th>{sistemHeader}</th>
                 </tr>
               </thead>
               <tbody>
@@ -243,7 +260,7 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
                     <td className={styles.tdCota} style={t.esteRomania ? { color: date.culoare.replace("0.85", "1"), fontWeight: 700 } : {}}>
                       {t.cotaStandard}%
                     </td>
-                    <td className={styles.tdSistem}>{t.sistem}</td>
+                    <td className={styles.tdSistem}>{formatSistem(t)}</td>
                   </tr>
                 ))}
               </tbody>
