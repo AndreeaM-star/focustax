@@ -41,6 +41,7 @@ const carduri = [
 export default function HomePage() {
   return (
     <>
+    <meta name="google-site-verification" content="9PnZsz6ym-EjUnJQS_yoiWvfS09ZC-4RwrOEcCPTZQg" />
       <Navbar />
       <main>
         <section className={styles.hero}>
