@@ -81,6 +81,54 @@
   padding: 6px 14px;
 }
 
+.formularButoane {
+  max-width: 860px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.btnDescarcare {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1.5px solid #fde68a;
+  background: #fef3c7;
+  color: #d97706;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btnDescarcare:hover {
+  background: #fde68a;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2);
+}
+
+.btnWebFormular {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #d97706;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btnWebFormular:hover {
+  background: #b45309;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+}
+
 .legislatie {
   max-width: 860px;
   width: 100%;

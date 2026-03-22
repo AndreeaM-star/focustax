@@ -49,6 +49,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 326 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "5 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/301_OPANAF_779_2024.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/301.html",
     capitole: [
       {
         id: "A",
@@ -112,6 +114,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 325 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "10 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/390_OPANAF_592_2017.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/390.html",
     capitole: [
       {
         id: "A",
@@ -174,6 +178,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: OPANAF nr. 3769/2015, cu modificările ulterioare.",
     ],
     durata: "15–30 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/transparenta/Declaratie394/formular394.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/394.html",
     capitole: [
       {
         id: "A",
@@ -232,6 +238,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: Titlul II din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "20–40 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/101_OPANAF_206_2025.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/101.html",
     capitole: [
       {
         id: "A",
@@ -298,6 +306,7 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 41 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "5 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/Not_012_OPANAF_726_2016.pdf",
     capitole: [
       {
         id: "A",
@@ -342,6 +351,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: OPANAF privind declarațiile fiscale, Legea nr. 227/2015 Cod fiscal.",
     ],
     durata: "5–10 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/D_100_OPANAF_172_2024.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/100.html",
     capitole: [
       {
         id: "A",
@@ -397,6 +408,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: Titlul IV din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "15–20 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/dec_200_2011.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/200.html",
     capitole: [
       {
         id: "I",
@@ -512,6 +525,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 120 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "10 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/D220_A1_OPANAF_3780_2017.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/220.html",
     capitole: [
       {
         id: "A",
@@ -559,6 +574,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 123^1 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "5 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/230_OPANAF_103_2025.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/230.html",
     capitole: [
       {
         id: "A",
@@ -604,6 +621,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: Legea nr. 227/2015 Cod fiscal, Titlul V — Contribuții sociale obligatorii.",
     ],
     durata: "10–30 minute (în funcție de numărul de angajați)",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/D112_OPANAF_299_2025.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/112.html",
     capitole: [
       {
         id: "A",
@@ -661,6 +680,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 148–153 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "10 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/D204_OPANAF_470_2021.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/204.html",
     capitole: [
       {
         id: "A",
@@ -707,6 +728,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 168–174 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "10 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/D216_OPANAF_3738_2024.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/216.html",
     capitole: [
       {
         id: "A",
@@ -754,6 +777,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: Titlul VIII din Legea nr. 227/2015 privind Codul fiscal — Accize și alte taxe speciale.",
     ],
     durata: "15–20 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/120_A2_OPANAF_1330_2024.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/120.html",
     capitole: [
       {
         id: "A",
@@ -818,6 +843,8 @@ export const declaratii: Record<string, DeclaratieData> = {
       "Baza legală: art. 424–425 din Legea nr. 227/2015 privind Codul fiscal.",
     ],
     durata: "10 minute",
+    linkDescarcare: "https://static.anaf.ro/static/10/Anaf/formulare/decl130.pdf",
+    linkWebFormular: "https://static.anaf.ro/static/10/Anaf/Declaratii_R/130.html",
     capitole: [
       {
         id: "A",

@@ -101,6 +101,25 @@ export default function D300Page() {
           </div>
         </div>
 
+        <div className={styles.formularButoane}>
+          <a
+            href="https://static.anaf.ro/static/10/Anaf/formulare/D300_OPANAF_2131_2025.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.btnDescarcare}
+          >
+            ⬇ Descarcă formularul (PDF)
+          </a>
+          <a
+            href="https://static.anaf.ro/static/10/Anaf/Declaratii_R/300.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.btnWebFormular}
+          >
+            🌐 Completează web formularul
+          </a>
+        </div>
+
         <div className={styles.legislatie}>
           <h2 className={styles.sectionTitle}>Informații oficiale</h2>
           <div className={styles.legislatieBox}>
