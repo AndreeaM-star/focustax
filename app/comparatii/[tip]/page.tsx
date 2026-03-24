@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { COMPARATII, COMPARATII_IDS } from "./data";
 import ComparatiiClient from "./ComparatiiClient";
 
@@ -29,5 +31,11 @@ export default async function ComparatieTipPage({
   const { tip } = await params;
   const date = COMPARATII[tip];
   if (!date) notFound();
-  return <ComparatiiClient date={date} />;
+  return (
+    <>
+      <Navbar />
+      <ComparatiiClient date={date} />
+      <Footer />
+    </>
+  );
 }

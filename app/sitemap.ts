@@ -21,6 +21,20 @@ const comparatiiIds = [
   "impozit-venit",
   "impozit-profit",
   "contributii-sociale",
+  "dividende",
+  "prag-tva",
+  "impozit-avere",
+];
+
+const sistemeSlugs = [
+  "ro-e-factura",
+  "spv",
+  "ro-e-tva",
+  "ro-e-transport",
+  "one-stop-shop",
+  "sme-ss",
+  "e-filing",
+  "ro-e-sigiliu",
 ];
 
 const declaratiiCoduri = [
@@ -36,6 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/declaratii`, lastModified: new Date(), priority: 0.9 },
     { url: `${BASE_URL}/ghiduri`, lastModified: new Date(), priority: 0.9 },
     { url: `${BASE_URL}/comparatii`, lastModified: new Date(), priority: 0.85 },
+    { url: `${BASE_URL}/sisteme`, lastModified: new Date(), priority: 0.85 },
     { url: `${BASE_URL}/calculator`, lastModified: new Date(), priority: 0.85 },
     { url: `${BASE_URL}/noutati`, lastModified: new Date(), priority: 0.8 },
     { url: `${BASE_URL}/contact`, lastModified: new Date(), priority: 0.6 },
@@ -59,5 +74,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  return [...staticRoutes, ...declaratiiRoutes, ...ghiduriRoutes, ...comparatiiRoutes];
+  const sistemeRoutes: MetadataRoute.Sitemap = sistemeSlugs.map((slug) => ({
+    url: `${BASE_URL}/sisteme/${slug}`,
+    lastModified: new Date(),
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...declaratiiRoutes, ...ghiduriRoutes, ...comparatiiRoutes, ...sistemeRoutes];
 }

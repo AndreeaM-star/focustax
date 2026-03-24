@@ -27,6 +27,7 @@ export default function Navbar() {
           <Link href="/declaratii" onClick={() => setMenuOpen(false)} className={pathname.startsWith("/declaratii") ? styles.activ : ""}>Declarații</Link>
           <Link href="/ghiduri" onClick={() => setMenuOpen(false)} className={pathname.startsWith("/ghiduri") ? styles.activ : ""}>Ghiduri</Link>
           <Link href="/comparatii" onClick={() => setMenuOpen(false)} className={pathname.startsWith("/comparatii") ? styles.activ : ""}>Comparații</Link>
+          <Link href="/sisteme" onClick={() => setMenuOpen(false)} className={pathname.startsWith("/sisteme") ? styles.activ : ""}>Sisteme</Link>
           <Link href="/noutati" onClick={() => setMenuOpen(false)} className={pathname === "/noutati" ? styles.activ : ""}>Noutăți</Link>
           <Link href="/contact" onClick={() => setMenuOpen(false)} className={pathname === "/contact" ? styles.activ : ""}>Contact</Link>
         </nav>

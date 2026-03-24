@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { COMPARATII } from "./[tip]/data";
 import styles from "./page.module.css";
 
@@ -39,10 +41,33 @@ const CARDURI = [
     culoareBorder: "rgba(217,119,6,0.35)",
     culoareGlow: "rgba(217,119,6,0.25)",
   },
+  {
+    id: "dividende",
+    culoare: "#dc2626",
+    culoareBg: "rgba(220,38,38,0.15)",
+    culoareBorder: "rgba(220,38,38,0.35)",
+    culoareGlow: "rgba(220,38,38,0.25)",
+  },
+  {
+    id: "prag-tva",
+    culoare: "#059669",
+    culoareBg: "rgba(5,150,105,0.15)",
+    culoareBorder: "rgba(5,150,105,0.35)",
+    culoareGlow: "rgba(5,150,105,0.25)",
+  },
+  {
+    id: "impozit-avere",
+    culoare: "#7c3aed",
+    culoareBg: "rgba(124,58,237,0.15)",
+    culoareBorder: "rgba(124,58,237,0.35)",
+    culoareGlow: "rgba(124,58,237,0.25)",
+  },
 ];
 
 export default function ComparatiiPage() {
   return (
+    <>
+    <Navbar />
     <main className={styles.page}>
       <div className={styles.hero}>
         <span className={styles.heroIcon}>🌍</span>
@@ -110,5 +135,7 @@ export default function ComparatiiPage() {
         </p>
       </div>
     </main>
+    <Footer />
+    </>
   );
 }

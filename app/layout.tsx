@@ -18,6 +18,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://focustax.ro"),
   title: "FocusTax | Claritate în taxe",
   description:
     "Înțelege ce declarații trebuie să depui și când. Ghid complet al declarațiilor fiscale din România — gratuit.",

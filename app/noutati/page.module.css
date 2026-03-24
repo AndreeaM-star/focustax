@@ -151,6 +151,16 @@
   line-height: 1.65;
 }
 
+.cardLink {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+}
+.cardLink:hover { text-decoration: underline; }
+
 /* Mobile — coloană unică */
 @media (max-width: 640px) {
   .title { font-size: 1.8rem; }
