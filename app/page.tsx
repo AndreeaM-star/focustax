@@ -41,7 +41,6 @@ const carduri = [
 export default function HomePage() {
   return (
     <>
-    <meta name="google-site-verification" content="9PnZsz6ym-EjUnJQS_yoiWvfS09ZC-4RwrOEcCPTZQg" />
       <Navbar />
       <main>
         <section className={styles.hero}>
@@ -61,6 +60,24 @@ export default function HomePage() {
             <Link href="/calculator" className={styles.btnSecondary}>
               Calculator Taxe →
             </Link>
+          </div>
+          <div className={styles.statsStrip}>
+            <div className={styles.statItem}>
+              <span className={styles.statNum}>10%</span>
+              <span className={styles.statDesc}>Impozit venit</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statNum}>19%</span>
+              <span className={styles.statDesc}>TVA standard</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statNum}>25%</span>
+              <span className={styles.statDesc}>CAS pensii</span>
+            </div>
+            <div className={styles.statItem}>
+              <span className={styles.statNum}>300k</span>
+              <span className={styles.statDesc}>Prag TVA (lei)</span>
+            </div>
           </div>
           <span className={styles.noCost}>FĂRĂ CONT NECESAR</span>
         </section>
@@ -84,6 +101,10 @@ export default function HomePage() {
                   <p>{card.text}</p>
                 </div>
               ))}
+            </div>
+            <div className={styles.sistemActions}>
+              <Link href="/calculator" className={styles.sistemLink}>→ Calculator Taxe</Link>
+              <Link href="/ghiduri/impozit-profit-europa" className={styles.sistemLink}>→ Compară cu Europa</Link>
             </div>
           </div>
         </section>

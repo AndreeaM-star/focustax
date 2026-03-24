@@ -35,7 +35,15 @@ function BarChart({ bare, titlu, unitate }: { bare: ChartBar[]; titlu: string; u
 }
 
 export default function GhidClient({ data }: { data: GhidData }) {
-  const [deschis, setDeschis] = useState<number | null>(0);
+  const [deschise, setDeschise] = useState<Set<number>>(new Set([0]));
+  function toggle(i: number) {
+    setDeschise(prev => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  }
 
   return (
     <main className={styles.page}>
@@ -66,7 +74,7 @@ export default function GhidClient({ data }: { data: GhidData }) {
             <h2 className={styles.sectionTitle}>Ce vei afla din acest ghid</h2>
             <ul className={styles.ceAflaList}>
               {data.ceFaciAfla.map((item, i) => (
-                <li key={i} className={styles.ceAflaItem}>
+                <li key={i} className={styles.ceAflaItem} style={{ animationDelay: `${i * 60}ms` }}>
                   <span className={styles.ceAflaCheck} style={{ color: data.culoare }}>✓</span>
                   {item}
                 </li>
@@ -80,15 +88,15 @@ export default function GhidClient({ data }: { data: GhidData }) {
             {data.sectiuni.map((sec, i) => (
               <div key={i} className={styles.sectiune}>
                 <button
-                  className={`${styles.sectiuneHeader} ${deschis === i ? styles.activ : ""}`}
-                  onClick={() => setDeschis(deschis === i ? null : i)}
-                  style={deschis === i ? { borderLeftColor: data.culoare } : undefined}
+                  className={`${styles.sectiuneHeader} ${deschise.has(i) ? styles.activ : ""}`}
+                  onClick={() => toggle(i)}
+                  style={deschise.has(i) ? { borderLeftColor: data.culoare } : undefined}
                 >
                   <span className={styles.sectiuneNr} style={{ color: data.culoare }}>0{i + 1}</span>
                   <span className={styles.sectiuneTitlu}>{sec.titlu}</span>
-                  <span className={styles.chevron}>{deschis === i ? "▲" : "▼"}</span>
+                  <span className={styles.chevron}>{deschise.has(i) ? "▲" : "▼"}</span>
                 </button>
-                {deschis === i && (
+                {deschise.has(i) && (
                   <div className={styles.sectiuneContinut}>
                     {sec.continut.map((p, j) => (
                       <p key={j} className={styles.sectiuneP}>{p}</p>
@@ -158,6 +166,16 @@ export default function GhidClient({ data }: { data: GhidData }) {
               ))}
             </div>
           </div>
+
+          {/* Calcul rapid */}
+          <a href="/calculator" className={styles.calcCard}>
+            <span className={styles.calcCardIcon}>🧮</span>
+            <div>
+              <span className={styles.calcCardTitle}>Calculator Taxe</span>
+              <span className={styles.calcCardDesc}>Calculează impozitele pentru situația ta</span>
+            </div>
+            <span className={styles.calcCardArrow}>→</span>
+          </a>
 
           {/* Atenție! */}
           {data.atentie.length > 0 && (

@@ -505,3 +505,25 @@
   .chartBars { gap: 6px; }
   .chartBar { max-width: 40px; }
 }
+
+.ceAflaItem {
+  animation: fadeInUp 0.4s ease-out both;
+}
+.calcCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(37,99,235,0.03) 100%);
+  border: 1px solid rgba(37,99,235,0.2);
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s, box-shadow 0.15s;
+  margin-bottom: 12px;
+}
+.calcCard:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.15); }
+.calcCardIcon { font-size: 1.5rem; flex-shrink: 0; }
+.calcCardTitle { display: block; font-size: 0.88rem; font-weight: 700; color: #1a1a2e; }
+.calcCardDesc { display: block; font-size: 0.78rem; color: #6b7280; margin-top: 2px; }
+.calcCardArrow { margin-left: auto; color: #2563eb; font-size: 1rem; flex-shrink: 0; }
