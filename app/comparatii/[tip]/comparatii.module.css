@@ -421,3 +421,131 @@
   .contextStats { gap: 16px; }
   .contextStatVal { font-size: 1.6rem; }
 }
+
+/* ─── Search Bar ─── */
+.searchWrap {
+  max-width: 920px;
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.searchInputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 13px 44px 13px 44px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  font-size: 0.95rem;
+  color: #1a1a2e;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+}
+
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.searchInput:focus {
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.09), 0 2px 16px rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.searchClear {
+  position: absolute;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.08);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.searchClear:hover {
+  background: rgba(0, 0, 0, 0.15);
+  color: #374151;
+}
+
+.searchCount {
+  font-size: 0.8rem;
+  color: #6b7280;
+  padding-left: 6px;
+  font-weight: 500;
+}
+
+/* ─── No results ─── */
+.noResults {
+  max-width: 920px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 56px 20px;
+  color: #9ca3af;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.noResults p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.searchClearBtn {
+  margin-top: 4px;
+  padding: 8px 20px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(37, 99, 235, 0.3);
+  background: rgba(37, 99, 235, 0.06);
+  color: #2563eb;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.searchClearBtn:hover {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+/* ─── Chart top-N note ─── */
+.chartNote {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: right;
+  margin-top: 8px;
+  font-style: italic;
+}

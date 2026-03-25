@@ -29,7 +29,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
     id: "tva",
     titlu: "TVA — Taxa pe Valoare Adăugată",
     descriere:
-      "Comparație internațională a cotelor standard de TVA în Europa. România aplică o cotă de 19%, sub media europeană de ~21%.",
+      "Comparație internațională a cotelor standard de TVA. România aplică 21% din ianuarie 2026 — la media europeană.",
     unitateMasura: "%",
     culoare: "rgba(37, 99, 235, 0.85)",
     culoareSecundara: "rgba(37, 99, 235, 0.18)",
@@ -69,7 +69,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Estonia", codISO: "EE", cotaStandard: 22, coteReduse: [9], sistem: "cote-multiple" },
       { nume: "Slovenia", codISO: "SI", cotaStandard: 22, coteReduse: [5, 9.5], sistem: "cote-multiple" },
       { nume: "Italia", codISO: "IT", cotaStandard: 22, coteReduse: [4, 5, 10], sistem: "cote-multiple" },
-      { nume: "România", codISO: "RO", cotaStandard: 19, coteReduse: [5, 9], sistem: "cote-multiple", esteRomania: true },
+      { nume: "România", codISO: "RO", cotaStandard: 21, coteReduse: [5, 9], sistem: "cote-multiple", esteRomania: true, detalii: "Majorat de la 19% în ian. 2026" },
       { nume: "Germania", codISO: "DE", cotaStandard: 19, coteReduse: [7], sistem: "cote-multiple" },
       { nume: "Cipru", codISO: "CY", cotaStandard: 19, coteReduse: [5, 9], sistem: "cote-multiple" },
       { nume: "Georgia", codISO: "GE", cotaStandard: 18, coteReduse: [], sistem: "cotă-standard" },
@@ -232,10 +232,10 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Nauru", codISO: "NR", cotaStandard: 0, sistem: "flat", detalii: "Fără TVA", zona: "extra-europa" },
     ],
     contextRomania:
-      "România aplică o cotă de TVA de 19%, sub media UE de ~21%. Față de vecinii săi, România se situează la același nivel cu Germania și Cipru. Cota redusă de 9% se aplică pentru alimente, medicamente și servicii de turism, iar 5% pentru locuințe sociale și produse ecologice.",
+      "România a majorat TVA de la 19% la 21% începând cu 1 ianuarie 2026, în contextul consolidării fiscale. Se situează acum la media UE (~21%). Cota redusă de 9% se aplică pentru alimente, medicamente și servicii de turism, iar 5% pentru locuințe sociale și produse ecologice. TVA la încasare rămâne disponibilă pentru contribuabilii sub 4.500.000 lei.",
     mediuEuropean: 21,
     istorie:
-      "TVA a fost inventată în Franța în 1954 de către Maurice Lauré, director adjunct al administrației fiscale franceze. Ideea revoluționară a fost că fiecare verigă din lanțul de producție și distribuție plătește impozit doar pe valoarea adăugată de ea, nu pe valoarea totală a tranzacției. România a introdus TVA în 1993, la scurt timp după tranziția la economia de piață, cu o cotă inițială de 18%. Cota a crescut la 19% în 1998, a urcat la 24% în 2010 (în contextul crizei economice și al acordului cu FMI), a scăzut la 20% în 2016 și la 19% în 2017. Uniunea Europeană impune statelor membre o cotă minimă de TVA de 15%, dar fiecare stat are libertatea să stabilească propria cotă standard.",
+      "TVA a fost inventată în Franța în 1954 de către Maurice Lauré, director adjunct al administrației fiscale franceze. Ideea revoluționară a fost că fiecare verigă din lanțul de producție și distribuție plătește impozit doar pe valoarea adăugată de ea, nu pe valoarea totală a tranzacției. România a introdus TVA în 1993, la scurt timp după tranziția la economia de piață, cu o cotă inițială de 18%. Cota a crescut la 19% în 1998, a urcat la 24% în 2010 (în contextul crizei economice și al acordului cu FMI), a scăzut la 20% în 2016 și la 19% în 2017, apoi a crescut din nou la 21% în ianuarie 2026 ca parte din măsurile de consolidare fiscală. Uniunea Europeană impune statelor membre o cotă minimă de TVA de 15%, dar fiecare stat are libertatea să stabilească propria cotă standard.",
     fapteInteresante: [
       "Ungaria are cea mai mare cotă de TVA din lume — 27% — mai mare decât orice altă țară OCDE.",
       "Luxemburg, deși are cea mai mică cotă din UE (17%), găzduiește sediile multor companii tech datorită avantajelor fiscale.",

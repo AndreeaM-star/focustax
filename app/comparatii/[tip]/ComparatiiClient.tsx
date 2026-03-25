@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import {
   Chart as ChartJS,
@@ -20,11 +20,23 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, ChartD
 
 export default function ComparatiiClient({ date }: { date: TipComparatie }) {
   const [zona, setZona] = useState<"europa" | "global">("europa");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const tariAfisate =
     zona === "global" ? date.tari : date.tari.filter((t) => t.zona !== "extra-europa");
 
-  const sorted = [...tariAfisate].sort((a, b) => b.cotaStandard - a.cotaStandard);
+  const tariCautate = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return tariAfisate;
+    return tariAfisate.filter(
+      (t) =>
+        t.nume.toLowerCase().includes(q) ||
+        t.cotaStandard.toString().includes(q) ||
+        (t.detalii && t.detalii.toLowerCase().includes(q))
+    );
+  }, [tariAfisate, searchQuery]);
+
+  const sorted = [...tariCautate].sort((a, b) => b.cotaStandard - a.cotaStandard);
   const romania = sorted.find((t) => t.esteRomania);
   const pozitieRo = sorted.findIndex((t) => t.esteRomania) + 1;
   const top5mic = [...tariAfisate].sort((a, b) => a.cotaStandard - b.cotaStandard).slice(0, 5);
@@ -47,19 +59,22 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
     return sistemLabel[t.sistem] ?? t.sistem;
   };
 
+  // Limit chart to max 120 rows for performance; search shows exact matches
+  const sortedForChart = sorted.length > 120 && !searchQuery ? sorted.slice(0, 120) : sorted;
+
   const chartData = {
-    labels: sorted.map((t) => t.nume),
+    labels: sortedForChart.map((t) => t.nume),
     datasets: [
       {
         label: date.unitateMasura,
-        data: sorted.map((t) => t.cotaStandard),
-        backgroundColor: sorted.map((t) =>
+        data: sortedForChart.map((t) => t.cotaStandard),
+        backgroundColor: sortedForChart.map((t) =>
           t.esteRomania ? date.culoare : date.culoareSecundara.replace("0.18)", "0.5)")
         ),
-        borderColor: sorted.map((t) =>
+        borderColor: sortedForChart.map((t) =>
           t.esteRomania ? date.culoare : date.culoareSecundara.replace("0.18)", "0.8)")
         ),
-        borderWidth: sorted.map((t) => (t.esteRomania ? 2 : 1)),
+        borderWidth: sortedForChart.map((t) => (t.esteRomania ? 2 : 1)),
         borderRadius: 6,
       },
     ],
@@ -76,11 +91,11 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
         align: "end" as const,
         formatter: (value: number) => `${value}%`,
         color: (ctx: { dataIndex: number }) => {
-          const t = sorted[ctx.dataIndex];
+          const t = sortedForChart[ctx.dataIndex];
           return t.esteRomania ? date.culoare.replace("0.85", "1") : "#374151";
         },
         font: (ctx: { dataIndex: number }) => {
-          const t = sorted[ctx.dataIndex];
+          const t = sortedForChart[ctx.dataIndex];
           return { size: 11, weight: t.esteRomania ? ("bold" as const) : ("normal" as const) };
         },
         padding: { left: 4 },
@@ -88,7 +103,7 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
       tooltip: {
         callbacks: {
           label: (ctx: TooltipItem<"bar">) => {
-            const tara = sorted[ctx.dataIndex];
+            const tara = sortedForChart[ctx.dataIndex];
             const val = ctx.parsed.x ?? 0;
             let label = ` ${val}${date.unitateMasura === "%" ? "%" : ` ${date.unitateMasura}`}`;
             if (tara.detalii) label += ` — ${tara.detalii}`;
@@ -115,11 +130,11 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
         grid: { display: false },
         ticks: {
           color: (ctx: { index: number }) => {
-            const t = sorted[ctx.index];
+            const t = sortedForChart[ctx.index];
             return t.esteRomania ? date.culoare.replace("0.85", "1") : "#374151";
           },
           font: (ctx: { index: number }) => {
-            const t = sorted[ctx.index];
+            const t = sortedForChart[ctx.index];
             return { size: 12, weight: t.esteRomania ? ("bold" as const) : ("normal" as const) };
           },
         },
@@ -175,9 +190,52 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
           </button>
         </div>
 
+        {/* Search Bar */}
+        <div className={styles.searchWrap}>
+          <div className={styles.searchInputWrap}>
+            <span className={styles.searchIcon}>🔍</span>
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="Caută țară sau cotă... (ex: România, 21)"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Caută țară"
+            />
+            {searchQuery && (
+              <button
+                className={styles.searchClear}
+                onClick={() => setSearchQuery("")}
+                aria-label="Șterge căutarea"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          {searchQuery && (
+            <span className={styles.searchCount}>
+              {sorted.length === 0
+                ? "Nicio țară găsită"
+                : `${sorted.length} ${sorted.length === 1 ? "țară" : "țări"} găsite`}
+            </span>
+          )}
+        </div>
+
         <h2 className={styles.sectionTitle}>
-          Comparație vizuală — {sorted.length} țări {zona === "global" ? "(întreaga lume)" : "(Europa)"}
+          Comparație vizuală — {sorted.length} {sorted.length === 1 ? "țară" : "țări"}{" "}
+          {searchQuery ? `pentru „${searchQuery}"` : zona === "global" ? "(întreaga lume)" : "(Europa)"}
         </h2>
+        {sorted.length === 0 && (
+          <div className={styles.noResults}>
+            <span style={{ fontSize: "2rem" }}>🔍</span>
+            <p>Nicio țară nu corespunde căutării <strong>„{searchQuery}"</strong>.</p>
+            <button className={styles.searchClearBtn} onClick={() => setSearchQuery("")}>
+              Șterge căutarea
+            </button>
+          </div>
+        )}
+
+        {sorted.length > 0 && (
         <div
           className={styles.chartCard}
           style={{
@@ -200,10 +258,16 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
             />
             <span className={styles.legendText}>Alte țări</span>
           </div>
-          <div className={styles.chartWrap} style={{ height: `${sorted.length * 34 + 40}px` }}>
+          <div className={styles.chartWrap} style={{ height: `${sortedForChart.length * 34 + 40}px` }}>
             <Bar data={chartData} options={chartOptions} />
           </div>
+          {sorted.length > 120 && !searchQuery && (
+            <p className={styles.chartNote}>
+              Grafic afișează primele 120 țări. Caută o țară specifică pentru a o vedea în grafic.
+            </p>
+          )}
         </div>
+        )}
       </section>
 
       {/* România în context */}
