@@ -6,6 +6,7 @@ export type Tara = {
   sistem: "flat" | "progresiv" | "distributie" | "cotă-standard" | "cote-multiple" | "proporțional";
   detalii?: string;
   esteRomania?: boolean;
+  zona?: "europa" | "extra-europa";
 };
 
 export type TipComparatie = {

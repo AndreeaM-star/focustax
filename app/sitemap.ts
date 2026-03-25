@@ -14,6 +14,8 @@ const ghiduriSlugs = [
   "inregistrare-tva",
   "impozit-chirii",
   "spv-ghid",
+  "salarii-retineri",
+  "sponsorizari",
 ];
 
 const comparatiiIds = [

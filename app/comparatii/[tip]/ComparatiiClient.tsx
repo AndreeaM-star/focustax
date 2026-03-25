@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   Chart as ChartJS,
@@ -18,11 +19,16 @@ import styles from "./comparatii.module.css";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, ChartDataLabels);
 
 export default function ComparatiiClient({ date }: { date: TipComparatie }) {
-  const sorted = [...date.tari].sort((a, b) => b.cotaStandard - a.cotaStandard);
+  const [zona, setZona] = useState<"europa" | "global">("europa");
+
+  const tariAfisate =
+    zona === "global" ? date.tari : date.tari.filter((t) => t.zona !== "extra-europa");
+
+  const sorted = [...tariAfisate].sort((a, b) => b.cotaStandard - a.cotaStandard);
   const romania = sorted.find((t) => t.esteRomania);
   const pozitieRo = sorted.findIndex((t) => t.esteRomania) + 1;
-  const top5mic = [...date.tari].sort((a, b) => a.cotaStandard - b.cotaStandard).slice(0, 5);
-  const top5mare = [...date.tari].sort((a, b) => b.cotaStandard - a.cotaStandard).slice(0, 5);
+  const top5mic = [...tariAfisate].sort((a, b) => a.cotaStandard - b.cotaStandard).slice(0, 5);
+  const top5mare = [...tariAfisate].sort((a, b) => b.cotaStandard - a.cotaStandard).slice(0, 5);
 
   const esTVA = date.id === "tva";
   const sistemHeader = esTVA ? "Cote reduse" : "Sistem";
@@ -84,7 +90,7 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
           label: (ctx: TooltipItem<"bar">) => {
             const tara = sorted[ctx.dataIndex];
             const val = ctx.parsed.x ?? 0;
-            let label = ` ${val}%`;
+            let label = ` ${val}${date.unitateMasura === "%" ? "%" : ` ${date.unitateMasura}`}`;
             if (tara.detalii) label += ` — ${tara.detalii}`;
             return label;
           },
@@ -145,7 +151,33 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
 
       {/* Chart */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Comparație vizuală — {date.tari.length} țări</h2>
+        {/* Filter buttons */}
+        <div className={styles.zonaFilter}>
+          <button
+            className={`${styles.zonaBtn} ${zona === "europa" ? styles.zonaBtnActiv : ""}`}
+            style={zona === "europa" ? { background: date.culoare, borderColor: date.culoare } : {}}
+            onClick={() => setZona("europa")}
+          >
+            🌍 Europa
+            <span className={styles.zonaBtnCount}>
+              {date.tari.filter((t) => !t.zona).length} țări
+            </span>
+          </button>
+          <button
+            className={`${styles.zonaBtn} ${zona === "global" ? styles.zonaBtnActiv : ""}`}
+            style={zona === "global" ? { background: date.culoare, borderColor: date.culoare } : {}}
+            onClick={() => setZona("global")}
+          >
+            🌐 Global
+            <span className={styles.zonaBtnCount}>
+              {date.tari.length} țări
+            </span>
+          </button>
+        </div>
+
+        <h2 className={styles.sectionTitle}>
+          Comparație vizuală — {sorted.length} țări {zona === "global" ? "(întreaga lume)" : "(Europa)"}
+        </h2>
         <div
           className={styles.chartCard}
           style={{
@@ -176,7 +208,9 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
 
       {/* România în context */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>România în context european</h2>
+        <h2 className={styles.sectionTitle}>
+          România în context {zona === "global" ? "mondial" : "european"}
+        </h2>
         <div
           className={styles.contextCard}
           style={{
@@ -187,7 +221,7 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
           <div className={styles.contextStats}>
             <div className={styles.contextStat}>
               <span className={styles.contextStatVal} style={{ color: date.culoare.replace("0.85", "1") }}>
-                {romania?.cotaStandard}%
+                {romania?.cotaStandard}{date.unitateMasura === "%" ? "%" : ` ${date.unitateMasura}`}
               </span>
               <span className={styles.contextStatLabel}>Cota României</span>
             </div>
@@ -201,7 +235,9 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
               <span className={styles.contextStatVal} style={{ color: date.culoare.replace("0.85", "1") }}>
                 #{pozitieRo}/{sorted.length}
               </span>
-              <span className={styles.contextStatLabel}>Poziție (desc.)</span>
+              <span className={styles.contextStatLabel}>
+                Poziție {zona === "global" ? "mondial" : "european"} (desc.)
+              </span>
             </div>
           </div>
           <p className={styles.contextText}>{date.contextRomania}</p>
@@ -210,7 +246,9 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
 
       {/* Tabel Top 5 mic + mare */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Extremele europene</h2>
+        <h2 className={styles.sectionTitle}>
+          Extremele {zona === "global" ? "mondiale" : "europene"}
+        </h2>
         <div className={styles.tabele}>
           <div className={styles.tabelCard}>
             <h3 className={styles.tabelTitlu}>Top 5 — Cele mai mici cote</h3>
@@ -228,10 +266,17 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
                   <tr key={t.codISO} className={t.esteRomania ? styles.rowRomania : ""}>
                     <td className={styles.tdRank}>{i + 1}</td>
                     <td className={styles.tdTara}>
-                      {t.esteRomania ? <strong style={{ color: date.culoare.replace("0.85", "1") }}>{t.nume} 🇷🇴</strong> : t.nume}
+                      {t.esteRomania ? (
+                        <strong style={{ color: date.culoare.replace("0.85", "1") }}>{t.nume} 🇷🇴</strong>
+                      ) : (
+                        t.nume
+                      )}
                     </td>
-                    <td className={styles.tdCota} style={t.esteRomania ? { color: date.culoare.replace("0.85", "1"), fontWeight: 700 } : {}}>
-                      {t.cotaStandard}%
+                    <td
+                      className={styles.tdCota}
+                      style={t.esteRomania ? { color: date.culoare.replace("0.85", "1"), fontWeight: 700 } : {}}
+                    >
+                      {t.cotaStandard}{date.unitateMasura === "%" ? "%" : ` ${date.unitateMasura}`}
                     </td>
                     <td className={styles.tdSistem}>{formatSistem(t)}</td>
                   </tr>
@@ -255,10 +300,17 @@ export default function ComparatiiClient({ date }: { date: TipComparatie }) {
                   <tr key={t.codISO} className={t.esteRomania ? styles.rowRomania : ""}>
                     <td className={styles.tdRank}>{i + 1}</td>
                     <td className={styles.tdTara}>
-                      {t.esteRomania ? <strong style={{ color: date.culoare.replace("0.85", "1") }}>{t.nume} 🇷🇴</strong> : t.nume}
+                      {t.esteRomania ? (
+                        <strong style={{ color: date.culoare.replace("0.85", "1") }}>{t.nume} 🇷🇴</strong>
+                      ) : (
+                        t.nume
+                      )}
                     </td>
-                    <td className={styles.tdCota} style={t.esteRomania ? { color: date.culoare.replace("0.85", "1"), fontWeight: 700 } : {}}>
-                      {t.cotaStandard}%
+                    <td
+                      className={styles.tdCota}
+                      style={t.esteRomania ? { color: date.culoare.replace("0.85", "1"), fontWeight: 700 } : {}}
+                    >
+                      {t.cotaStandard}{date.unitateMasura === "%" ? "%" : ` ${date.unitateMasura}`}
                     </td>
                     <td className={styles.tdSistem}>{formatSistem(t)}</td>
                   </tr>

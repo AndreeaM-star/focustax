@@ -740,4 +740,204 @@ export const ghiduri: Record<string, GhidData> = {
       "Declarațiile depuse în SPV au același efect juridic ca cele depuse la ghișeu.",
     ],
   },
+
+  "salarii-retineri": {
+    slug: "salarii-retineri",
+    titlu: "Salarii — de la brut la net",
+    categorie: "SRL & Microîntreprinderi",
+    culoare: "#059669",
+    badgeBg: "#ecfdf5",
+    desc: "Ghid complet pentru calculul salariului net din brut — CAS 25%, CASS 10%, impozit 10% — cu exemplu numeric detaliat și contribuțiile angajatorului.",
+    ceFaciAfla: [
+      "Formula completă brut → net pas cu pas",
+      "CAS 25% și CASS 10% reținute din salariul brut",
+      "Impozitul pe venit 10% calculat corect",
+      "CAM (contribuția angajatorului) de 2.25%",
+      "Exemplu numeric cu salariu brut 5.000 lei",
+      "Tichete de masă — cum afectează impozitarea",
+    ],
+    sectiuni: [
+      {
+        titlu: "Formula salariului net",
+        continut: [
+          "CAS (pensie) = Brut × 25% — reținută din salariul angajatului.",
+          "CASS (sănătate) = Brut × 10% — reținută din salariul angajatului.",
+          "Baza de impozit = Brut − CAS − CASS (dacă nu sunt alte deduceri).",
+          "Impozit venit = Baza × 10%.",
+          "Salariu NET = Brut − CAS − CASS − Impozit.",
+          "Exemplu (5.000 lei brut): CAS=1.250, CASS=500, Baza=3.250, Impozit=325 → NET = 2.925 lei.",
+        ],
+      },
+      {
+        titlu: "Contribuțiile angajatorului",
+        continut: [
+          "CAM (Contribuția Asiguratorie pentru Muncă) = 2.25% din salariul brut.",
+          "CAM se plătește de angajator suplimentar față de salariul brut — nu se reține din salariul angajatului.",
+          "Cost total angajator = Brut + CAM = Brut × 1.0225.",
+          "Exemplu: 5.000 lei brut → CAM = 112,5 lei → cost total angajator = 5.112,5 lei.",
+          "Angajatorul nu mai plătește CAS sau CASS — acestea sunt integral în sarcina angajatului din 2018.",
+        ],
+      },
+      {
+        titlu: "Tichete de masă",
+        continut: [
+          "Valoarea maximă legală a unui tichet de masă în 2026: 40 lei/zi lucrătoare.",
+          "Tichetele de masă sunt scutite de impozit pe venit și CASS, dar NU de CAS.",
+          "Angajatorul deduce costul tichetelor ca și cheltuială.",
+          "Exemplu: 21 zile lucrătoare × 40 lei = 840 lei/lună în tichete de masă, netaxabile cu impozit.",
+          "Tichetele se acordă SUPLIMENTAR față de salariul net — cresc puterea de cumpărare efectivă.",
+        ],
+      },
+      {
+        titlu: "Salariul minim și implicații",
+        continut: [
+          "Salariul minim brut 2026: 4.050 lei/lună (HG 1200/2023).",
+          "Salariu net minim: 4.050 − (4.050×25%) − (4.050×10%) − (4.050×65%×10%) ≈ 2.370 lei.",
+          "Angajatorii nu pot plăti sub salariul minim brut pentru 8 ore/zi, 5 zile/săptămână.",
+          "Salariul minim în construcții: 4.582 lei brut/lună (regim special).",
+          "La salariul minim, CAS și CASS se calculează la cel puțin salariul minim, chiar dacă angajatul lucrează part-time sub acest prag.",
+        ],
+      },
+      {
+        titlu: "Deducerea personală",
+        continut: [
+          "Persoanele cu venituri lunare sub 3.600 lei brut beneficiază de o deducere personală care reduce baza de impozitare.",
+          "Deducerea personală de bază: 300-500 lei/lună în funcție de venit (pentru venituri sub 3.600 lei).",
+          "Persoanele cu copii în întreținere beneficiază de deduceri suplimentare.",
+          "Deducerile se acordă DOAR dacă salariatul declară în scris că nu le obține de la alt angajator (formular 010).",
+          "Exemplu: angajat cu 2 copii, brut 2.500 lei → deducere personală suplimentară reduce impozitul efectiv.",
+        ],
+      },
+      {
+        titlu: "Declararea și plata",
+        continut: [
+          "Angajatorul depune D112 lunar (până în 25 ale lunii următoare) cu toate reținute și contribuțiile.",
+          "D112 se depune prin SPV — obligatoriu electronic pentru toți angajatorii.",
+          "CAS, CASS și impozitul pe venit se plătesc tot până pe 25 ale lunii.",
+          "Angajatorul emite fișa fiscală anuală (adeverință de venit) — necesară pentru D212 al angajatului.",
+          "La ieșirea din angajare, angajatorul emite adeverință de venit și contribuții pentru CAS (necesar la pensionare).",
+        ],
+      },
+    ],
+    chart: {
+      tip: "bar",
+      titlu: "Repartizarea salariului brut de 5.000 lei",
+      bare: [
+        { label: "Salariu net", value: 2925, color: "#059669" },
+        { label: "CAS 25%", value: 1250, color: "#6ee7b7" },
+        { label: "CASS 10%", value: 500, color: "#a7f3d0" },
+        { label: "Impozit 10%", value: 325, color: "#d1fae5" },
+      ],
+      unitate: "lei/lună",
+    },
+    declaratiiAferente: [
+      { cod: "D112", nume: "Declarație privind obligațiile sociale și impozitul reținut", href: "/declaratii/d112" },
+      { cod: "D205", nume: "Declarație privind impozitul reținut la sursă", href: "/declaratii/d212" },
+    ],
+    atentie: [
+      "CAS și CASS se calculează la cel puțin salariul minim brut, chiar dacă salariul contractual e mai mic.",
+      "Tichetele de masă NU sunt scutite de CAS — angajatorul reține CAS și din valoarea tichetelor.",
+      "Angajatorul răspunde solidar pentru neplata obligațiilor sociale la termen.",
+    ],
+  },
+
+  "sponsorizari": {
+    slug: "sponsorizari",
+    titlu: "Sponsorizări — reducere din impozit",
+    categorie: "SRL & Microîntreprinderi",
+    culoare: "#d97706",
+    badgeBg: "#fef3c7",
+    desc: "Ghid complet pentru reducerea impozitului prin sponsorizări — 20% din impozit (max 0.75% CA) pentru microîntreprinderi și persoane juridice plătitoare de impozit pe profit.",
+    ceFaciAfla: [
+      "Cum funcționează deducerea sponsorizărilor din impozit",
+      "Limita de 20% din impozit și max 0.75% din cifra de afaceri",
+      "Cine poate primi sponsorizare (entități eligibile)",
+      "Documentele necesare — contractul de sponsorizare",
+      "Exemplu numeric pentru microîntreprindere și impozit pe profit",
+      "Cum se raportează sponsorizarea în declarații fiscale",
+    ],
+    sectiuni: [
+      {
+        titlu: "Ce este sponsorizarea fiscală",
+        continut: [
+          "Sponsorizarea permite firmelor să direcționeze o parte din impozit către organizații non-profit, culte, sport, cultură.",
+          "NU este o cheltuială suplimentară — reduci impozitul datorat cu suma sponsorizată.",
+          "Limita: MINIM dintre (20% din impozitul datorat) și (0.75% din cifra de afaceri anuală).",
+          "Dacă suma sponsorizată e mai mică decât limita, reduci impozitul cu suma exactă sponsorizată.",
+          "Dacă suma sponsorizată depășește limita, diferența se reportează în următorii 7 ani fiscali.",
+        ],
+      },
+      {
+        titlu: "Exemplu microîntreprindere",
+        continut: [
+          "Firmă cu CA = 500.000 lei și impozit micro 1% = 5.000 lei.",
+          "Limita sponsorizare: min(20% × 5.000 lei; 0.75% × 500.000 lei) = min(1.000 lei; 3.750 lei) = 1.000 lei.",
+          "Dacă sponsorizezi cu 1.000 lei: impozit de plată = 5.000 − 1.000 = 4.000 lei.",
+          "Ai cheltuit 1.000 lei efectiv dar ai economisit 1.000 lei din impozit → cost net zero!",
+          "Practic: dai 1.000 lei organizației, ANAF acceptă să scadă 1.000 lei din impozit.",
+        ],
+      },
+      {
+        titlu: "Exemplu impozit pe profit",
+        continut: [
+          "Firmă cu profit impozabil 600.000 lei → impozit profit 16% = 96.000 lei.",
+          "CA = 2.000.000 lei.",
+          "Limita: min(20% × 96.000; 0.75% × 2.000.000) = min(19.200; 15.000) = 15.000 lei.",
+          "Poți sponsoriza max 15.000 lei și reduce impozitul cu aceeași sumă.",
+          "Impozit de plată: 96.000 − 15.000 = 81.000 lei.",
+          "Diferența față de limita de 20% (19.200 lei) = 4.200 lei reportați în anii următori.",
+        ],
+      },
+      {
+        titlu: "Entități eligibile să primească sponsorizare",
+        continut: [
+          "Organizații non-profit (ONG) înregistrate legal cu cod fiscal propriu.",
+          "Culte religioase recunoscute oficial în România.",
+          "Cluburi și asociații sportive (inclusiv școli de sport).",
+          "Instituții de cultură și artă (teatre, muzee, orchestre).",
+          "IMPORTANT: Entitatea trebuie să fie înscrisă în Registrul Entităților/Unităților de Cult (REUC) pe site-ul ANAF.",
+          "Nu poți sponsoriza persoane fizice sau firme comerciale.",
+        ],
+      },
+      {
+        titlu: "Documentele necesare",
+        continut: [
+          "Contract de sponsorizare semnat de ambele părți — stipulează suma, destinația și scopul.",
+          "Factura sau chitanța de la beneficiar (confirmare de primire a sumei).",
+          "Verificarea că entitatea beneficiară e înscrisă în REUC pe anaf.ro.",
+          "Declarație pe proprie răspundere a beneficiarului că a utilizat suma în scopul declarat.",
+          "Toate documentele se păstrează minim 5 ani pentru inspecție fiscală.",
+        ],
+      },
+      {
+        titlu: "Raportarea în declarații fiscale",
+        continut: [
+          "Microîntreprinderi: se declară în D100 (declarație trimestrială de impozit micro).",
+          'Impozit pe profit: se declară în D101 la rubrica „Reduceri de impozit — sponsorizări".',
+          "PFA-uri cu impozit pe venit: NU beneficiază de această facilitate.",
+          "Suma reportată (dacă depășește limita) se deduce în anii următori tot prin D100/D101.",
+          "Sancțiune: dacă beneficiarul NU e în REUC, sponsorizarea nu e acceptată fiscal — impozit + penalități.",
+        ],
+      },
+    ],
+    chart: {
+      tip: "bar",
+      titlu: "Beneficiu sponsorizare (microîntreprindere, CA 500k lei)",
+      bare: [
+        { label: "Impozit inițial", value: 5000, color: "#d97706" },
+        { label: "Limită sponsorizare", value: 1000, color: "#fbbf24" },
+        { label: "Impozit final", value: 4000, color: "#fef3c7" },
+      ],
+      unitate: "lei",
+    },
+    declaratiiAferente: [
+      { cod: "D100", nume: "Declarație privind obligațiile de plată (micro)", href: "/declaratii/d100" },
+      { cod: "D101", nume: "Declarație privind impozitul pe profit", href: "/declaratii/d101" },
+    ],
+    atentie: [
+      "Verifică OBLIGATORIU că entitatea beneficiară e în REUC pe anaf.ro înainte de a sponsoriza.",
+      "Contractul de sponsorizare trebuie semnat ÎNAINTE de plată — nu retroactiv.",
+      "Limita se calculează la impozitul datorat ÎNAINTE de deducerea sponsorizărilor.",
+    ],
+  },
 };

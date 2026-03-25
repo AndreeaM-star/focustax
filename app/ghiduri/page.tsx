@@ -31,6 +31,8 @@ const ghiduri = [
     lista: [
       { titlu: "SRL vs Microîntreprindere", desc: "Diferențe de impozitare, condiții de încadrare și trecere la impozit pe profit.", slug: "srl-vs-micro" },
       { titlu: "Dividende: cum se impozitează", desc: "Impozit 8%, declarare și plată la ANAF.", slug: "dividende" },
+      { titlu: "Salarii — de la brut la net", desc: "CAS 25%, CASS 10%, impozit 10% — formulă completă și exemplu numeric.", slug: "salarii-retineri" },
+      { titlu: "Sponsorizări — reducere din impozit", desc: "20% din impozit (max 0.75% CA) — cum funcționează și cum se declară.", slug: "sponsorizari" },
     ],
   },
   {
