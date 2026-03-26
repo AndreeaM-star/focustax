@@ -99,8 +99,9 @@ create policy "allow_all_angajati"   on public.angajati   for all using (true) w
 create policy "allow_all_tranzactii" on public.tranzactii for all using (true) with check (true);
 create policy "allow_all_tokens"     on public.anaf_tokens for all using (true) with check (true);
 
--- ── Seed data — Demo Company ─────────────────────────────
-insert into public.companies (nume, cui, forma_juridica, capital_social, adresa, email, banca_principala, contact_nume, contact_email)
-values
-  ('Demo SRL', 'RO12345678', 'SRL', 10000, 'Str. Demo 1, București', 'contact@demo.ro', 'BT', 'Ion Manager', 'manager@demo.ro')
-on conflict (cui) do nothing;
+-- ── Seed data removal: demo records removed from schema (no default demo)
+-- insert into public.companies (nume, cui, forma_juridica, capital_social, adresa, email, banca_principala, contact_nume, contact_email)
+-- values
+--   ('Demo SRL', 'RO12345678', 'SRL', 10000, 'Str. Demo 1, București', 'contact@demo.ro', 'BT', 'Ion Manager', 'manager@demo.ro')
+-- on conflict (cui) do nothing;
+

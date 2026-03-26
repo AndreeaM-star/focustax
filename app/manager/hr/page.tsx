@@ -2,59 +2,17 @@
 
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
+import { calcSalariu } from "@/lib/salary";
 
 interface Angajat {
   id: string;
   nume: string;
   functie: string;
-  brutLunar: number;
-  dataAngajare: string;
-  nrCopii: number;
-  pontaj: number; // zile lucrate din 21
-}
-
-const seedAngajati: Angajat[] = [
-  { id: "1", nume: "Ion Popescu", functie: "Developer Senior", brutLunar: 8500, dataAngajare: "2023-03-01", nrCopii: 1, pontaj: 21 },
-  { id: "2", nume: "Maria Ionescu", functie: "Project Manager", brutLunar: 9200, dataAngajare: "2022-06-15", nrCopii: 2, pontaj: 20 },
-  { id: "3", nume: "Andrei Georgescu", functie: "Designer UX", brutLunar: 6800, dataAngajare: "2024-01-10", nrCopii: 0, pontaj: 21 },
-  { id: "4", nume: "Elena Dumitrescu", functie: "Account Manager", brutLunar: 5500, dataAngajare: "2023-09-01", nrCopii: 0, pontaj: 19 },
-  { id: "5", nume: "Mihai Stanescu", functie: "DevOps Engineer", brutLunar: 10200, dataAngajare: "2021-11-20", nrCopii: 3, pontaj: 21 },
-];
-
-// Romanian salary calculation 2026
-function calcSalariu(brutBaza: number, nrCopii: number, pontaj: number = 21) {
-  const zileTotale = 21;
-  const brut = Math.round(brutBaza * (pontaj / zileTotale));
-
-  // CAS 25% angajat
-  const cas = Math.round(brut * 0.25);
-
-  // CASS 10% angajat
-  const cass = Math.round(brut * 0.10);
-
-  // Deducere personala (simplificata 2026)
-  let deducere = 0;
-  if (brut <= 1957) { // salariul minim 2026 estimat
-    deducere = 460;
-  } else if (brut <= 3600) {
-    deducere = Math.max(0, 460 - Math.round(0.2 * (brut - 1957)));
-  }
-  // Supliment copii
-  deducere += nrCopii * 200;
-
-  // Baza impozit
-  const bazaImpozit = Math.max(0, brut - cas - cass - deducere);
-
-  // Impozit venit 10%
-  const impozit = Math.round(bazaImpozit * 0.10);
-
-  const net = brut - cas - cass - impozit;
-
-  // Costuri angajator
-  const casAngajator    = Math.round(brut * 0.04); // CAM 4%
-  const totalAngajator  = brut + casAngajator;
-
-  return { brut, cas, cass, deducere, impozit, net, casAngajator, totalAngajator };
+  brut_lunar: number;
+  data_angajare: string;
+  nr_copii: number;
+  pontaj: number;
+  activ?: boolean;
 }
 
 const emptyAngajat = {
@@ -75,7 +33,7 @@ export default function HRPage() {
     try {
       const res = await fetch("/api/angajati");
       const data = await res.json();
-      setAngajati(data);
+      setAngajati(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching angajati:", error);
     } finally {
@@ -83,9 +41,7 @@ export default function HRPage() {
     }
   };
 
-  useEffect(() => {
-    fetchAngajati();
-  }, []);
+  useEffect(() => { fetchAngajati(); }, []);
 
   const addAngajat = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,20 +76,12 @@ export default function HRPage() {
     }
   };
 
-  if (loading) {
-    return <div className={styles.page}>Se încarcă angajații...</div>;
-  }
+  if (loading) return <div className={styles.page}>Se încarcă angajații...</div>;
 
-  const totalBrut  = angajati.reduce((s, a) => s + calcSalariu(a.brutLunar, a.nrCopii, a.pontaj).brut, 0);
-  const totalNet   = angajati.reduce((s, a) => s + calcSalariu(a.brutLunar, a.nrCopii, a.pontaj).net, 0);
-  const totalAngaj = angajati.reduce((s, a) => s + calcSalariu(a.brutLunar, a.nrCopii, a.pontaj).totalAngajator, 0);
+  const totalBrut  = angajati.reduce((s, a) => s + calcSalariu(a.brut_lunar, a.nr_copii, a.pontaj).brut, 0);
+  const totalNet   = angajati.reduce((s, a) => s + calcSalariu(a.brut_lunar, a.nr_copii, a.pontaj).net, 0);
+  const totalAngaj = angajati.reduce((s, a) => s + calcSalariu(a.brut_lunar, a.nr_copii, a.pontaj).totalAngajator, 0);
 
-  const selectedAngajat = angajati.find((a) => a.id === selected);
-  const calcSelected = selectedAngajat
-    ? calcSalariu(selectedAngajat.brutLunar, selectedAngajat.nrCopii, selectedAngajat.pontaj)
-    : null;
-
-  // Quick calculator
   const calcResult = calcSalariu(Number(calcBrut) || 0, calcCopii);
 
   return (
@@ -162,24 +110,13 @@ export default function HRPage() {
           <div className={styles.calcRow}>
             <label className={styles.calcLabel}>
               Salariu brut (lei)
-              <input
-                className={styles.calcInput}
-                type="number"
-                value={calcBrut}
-                onChange={(e) => setCalcBrut(e.target.value)}
-                min="0"
-              />
+              <input className={styles.calcInput} type="number" value={calcBrut}
+                onChange={(e) => setCalcBrut(e.target.value)} min="0" />
             </label>
             <label className={styles.calcLabel}>
               Nr. copii în întreținere
-              <input
-                className={styles.calcInput}
-                type="number"
-                value={calcCopii}
-                onChange={(e) => setCalcCopii(Number(e.target.value))}
-                min="0"
-                max="10"
-              />
+              <input className={styles.calcInput} type="number" value={calcCopii}
+                onChange={(e) => setCalcCopii(Number(e.target.value))} min="0" max="10" />
             </label>
           </div>
           {calcBrut && Number(calcBrut) > 0 && (
@@ -237,8 +174,14 @@ export default function HRPage() {
 
       {/* Employees */}
       <div className={styles.employeeList}>
+        {angajati.length === 0 && (
+          <div className={styles.emptyState ?? ""} style={{ textAlign: "center", padding: "2rem", opacity: 0.6 }}>
+            <span>👥</span>
+            <p>Niciun angajat. Adaugă primul angajat.</p>
+          </div>
+        )}
         {angajati.map((a) => {
-          const calc = calcSalariu(a.brutLunar, a.nrCopii, a.pontaj);
+          const calc = calcSalariu(a.brut_lunar, a.nr_copii, a.pontaj);
           const isSelected = selected === a.id;
           return (
             <div key={a.id} className={`${styles.employeeCard} ${isSelected ? styles.employeeCardSelected : ""}`}>
@@ -279,7 +222,7 @@ export default function HRPage() {
                     </div>
                     {calc.deducere > 0 && (
                       <div className={`${styles.salaryRow} ${styles.deductRow} ${styles.benefitRow}`}>
-                        <span>Deducere personală{a.nrCopii > 0 ? ` (+${a.nrCopii} copii)` : ""}</span>
+                        <span>Deducere personală{a.nr_copii > 0 ? ` (+${a.nr_copii} copii)` : ""}</span>
                         <span>−{calc.deducere.toLocaleString("ro-RO")} lei (din baza)</span>
                       </div>
                     )}
@@ -298,7 +241,7 @@ export default function HRPage() {
                   </div>
                   <div className={styles.employeeActions}>
                     <span className={styles.employeeMeta}>
-                      Angajat din: {a.dataAngajare} · Pontaj: {a.pontaj}/21 zile
+                      Angajat din: {a.data_angajare} · Pontaj: {a.pontaj}/21 zile
                     </span>
                     <button className={styles.deleteBtn} onClick={() => removeAngajat(a.id)}>
                       🗑 Elimină

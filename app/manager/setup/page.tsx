@@ -233,9 +233,9 @@ export default function SetupPage() {
           </div>
 
           <div className={styles.skipText}>
-            Vrei să incepi cu date demo?{" "}
+            Dacă nu ai date de firmă gata, continuă cu detaliile companiei tale mai jos.
             <span className={styles.skipLink} onClick={handleSkip}>
-              Skip Setup
+              Setez temporar și termin mai târziu
             </span>
           </div>
         </form>

@@ -32,7 +32,17 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
     if (companyname) setCompanyName(companyname);
     if (companycui) setCompanyCui(companycui);
 
-    if (!companyId) {
+    // Prevent fallback to demo value
+    const shouldReset =
+      !companyId ||
+      companyId === "demo" ||
+      companyId === "temp" ||
+      (companyname && companyname.toLowerCase().includes("demo"));
+
+    if (shouldReset) {
+      localStorage.removeItem("focustax_company_id");
+      localStorage.removeItem("focustax_company_name");
+      localStorage.removeItem("focustax_company_cui");
       router.push("/manager/setup");
       return;
     }
