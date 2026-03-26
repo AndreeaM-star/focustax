@@ -9,13 +9,13 @@ interface Factura {
   id: string;
   numar: string;
   client: string;
-  cuiClient: string;
+  cui_client?: string;
   valoare: number;
   tva: number;
   data: string;
-  scadenta: string;
+  scadenta?: string;
   status: Status;
-  descriere: string;
+  descriere?: string;
 }
 
 const seed: Factura[] = [
@@ -37,48 +37,58 @@ const coteTV = [{ label: "19% standard", val: 19 }, { label: "9% redusă (alim.)
 
 function useInvoices() {
   const [facturi, setFacturi] = useState<Factura[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchFacturi = async () => {
+    try {
+      const res = await fetch("/api/facturi");
+      const data = await res.json();
+      setFacturi(data);
+    } catch (error) {
+      console.error("Error fetching facturi:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("ft_facturi");
-      if (saved) setFacturi(JSON.parse(saved));
-      else setFacturi(seed);
-    } catch {
-      setFacturi(seed);
-    }
+    fetchFacturi();
   }, []);
 
-  const save = (list: Factura[]) => {
-    setFacturi(list);
-    localStorage.setItem("ft_facturi", JSON.stringify(list));
-  };
-
-  const add = (f: Omit<Factura, "id" | "numar" | "status">) => {
-    const nextNum = (facturi.length + 848).toString().padStart(4, "0");
-    const newF: Factura = {
-      ...f,
-      id: Date.now().toString(),
-      numar: `F2026-${nextNum}`,
-      status: "in_asteptare",
-    };
-    const next = [newF, ...facturi];
-    save(next);
-    // Simulate ANAF validation after 3 seconds
-    setTimeout(() => {
-      setFacturi((prev) => {
-        const updated = prev.map((x) =>
-          x.id === newF.id ? { ...x, status: "validata" as Status } : x
-        );
-        localStorage.setItem("ft_facturi", JSON.stringify(updated));
-        return updated;
+  const add = async (f: Omit<Factura, "id" | "numar" | "status">) => {
+    try {
+      const res = await fetch("/api/facturi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          client: f.client,
+          cuiClient: f.cui_client,
+          valoare: f.valoare,
+          tva: f.tva,
+          data: f.data,
+          scadenta: f.scadenta,
+          descriere: f.descriere,
+        }),
       });
-    }, 3000);
-    return newF;
+      const newFactura = await res.json();
+      setFacturi((prev) => [newFactura, ...prev]);
+      return newFactura;
+    } catch (error) {
+      console.error("Error adding factura:", error);
+      throw error;
+    }
   };
 
-  const remove = (id: string) => save(facturi.filter((f) => f.id !== id));
+  const remove = async (id: string) => {
+    try {
+      await fetch(`/api/facturi?id=${id}`, { method: "DELETE" });
+      setFacturi((prev) => prev.filter((f) => f.id !== id));
+    } catch (error) {
+      console.error("Error removing factura:", error);
+    }
+  };
 
-  return { facturi, add, remove };
+  return { facturi, add, remove, loading, refetch: fetchFacturi };
 }
 
 const emptyForm = {
@@ -92,7 +102,7 @@ const emptyForm = {
 };
 
 export default function FacturiPage() {
-  const { facturi, add, remove } = useInvoices();
+  const { facturi, add, remove, loading } = useInvoices();
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [filterStatus, setFilterStatus] = useState<Status | "toate">("toate");
@@ -106,25 +116,33 @@ export default function FacturiPage() {
     ? facturi
     : facturi.filter((f) => f.status === filterStatus);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const val = parseFloat(form.valoare) || 0;
     const tva = val * (form.cotaTVA / 100);
     const scadenta = form.scadenta || new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
-    const nf = add({
-      client: form.client,
-      cuiClient: form.cuiClient,
-      valoare: val,
-      tva,
-      data: form.data,
-      scadenta,
-      descriere: form.descriere,
-    });
-    setNewlyAdded(nf.id);
-    setShowForm(false);
-    setForm(emptyForm);
-    setTimeout(() => setNewlyAdded(null), 4000);
+    try {
+      const nf = await add({
+        client: form.client,
+        cui_client: form.cuiClient,
+        valoare: val,
+        tva,
+        data: form.data,
+        scadenta,
+        descriere: form.descriere,
+      });
+      setNewlyAdded(nf.id);
+      setShowForm(false);
+      setForm(emptyForm);
+      setTimeout(() => setNewlyAdded(null), 4000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
+
+  if (loading) {
+    return <div className={styles.page}>Se încarcă facturile...</div>;
+  }
 
   return (
     <div className={styles.page}>

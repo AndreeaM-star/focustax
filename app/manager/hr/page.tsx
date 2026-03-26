@@ -63,6 +63,7 @@ const emptyAngajat = {
 
 export default function HRPage() {
   const [angajati, setAngajati] = useState<Angajat[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(emptyAngajat);
   const [selected, setSelected] = useState<string | null>(null);
@@ -70,38 +71,58 @@ export default function HRPage() {
   const [calcBrut, setCalcBrut] = useState("5000");
   const [calcCopii, setCalcCopii] = useState(0);
 
-  useEffect(() => {
+  const fetchAngajati = async () => {
     try {
-      const saved = localStorage.getItem("ft_angajati");
-      setAngajati(saved ? JSON.parse(saved) : seedAngajati);
-    } catch { setAngajati(seedAngajati); }
+      const res = await fetch("/api/angajati");
+      const data = await res.json();
+      setAngajati(data);
+    } catch (error) {
+      console.error("Error fetching angajati:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAngajati();
   }, []);
 
-  const saveAngajati = (list: Angajat[]) => {
-    setAngajati(list);
-    localStorage.setItem("ft_angajati", JSON.stringify(list));
-  };
-
-  const addAngajat = (e: React.FormEvent) => {
+  const addAngajat = async (e: React.FormEvent) => {
     e.preventDefault();
-    const nou: Angajat = {
-      id: Date.now().toString(),
-      nume: form.nume,
-      functie: form.functie,
-      brutLunar: Number(form.brutLunar),
-      dataAngajare: form.dataAngajare,
-      nrCopii: form.nrCopii,
-      pontaj: form.pontaj,
-    };
-    saveAngajati([nou, ...angajati]);
-    setShowForm(false);
-    setForm(emptyAngajat);
+    try {
+      const res = await fetch("/api/angajati", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nume: form.nume,
+          functie: form.functie,
+          brutLunar: Number(form.brutLunar),
+          dataAngajare: form.dataAngajare,
+          nrCopii: form.nrCopii,
+          pontaj: form.pontaj,
+        }),
+      });
+      const nou = await res.json();
+      setAngajati((prev) => [nou, ...prev]);
+      setShowForm(false);
+      setForm(emptyAngajat);
+    } catch (error) {
+      console.error("Error adding angajat:", error);
+    }
   };
 
-  const removeAngajat = (id: string) => {
-    saveAngajati(angajati.filter((a) => a.id !== id));
-    if (selected === id) setSelected(null);
+  const removeAngajat = async (id: string) => {
+    try {
+      await fetch(`/api/angajati?id=${id}`, { method: "DELETE" });
+      setAngajati((prev) => prev.filter((a) => a.id !== id));
+    } catch (error) {
+      console.error("Error removing angajat:", error);
+    }
   };
+
+  if (loading) {
+    return <div className={styles.page}>Se încarcă angajații...</div>;
+  }
 
   const totalBrut  = angajati.reduce((s, a) => s + calcSalariu(a.brutLunar, a.nrCopii, a.pontaj).brut, 0);
   const totalNet   = angajati.reduce((s, a) => s + calcSalariu(a.brutLunar, a.nrCopii, a.pontaj).net, 0);

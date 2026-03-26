@@ -122,24 +122,45 @@ export default function AIPage() {
   const now = () =>
     new Date().toLocaleTimeString("ro-RO", { hour: "2-digit", minute: "2-digit" });
 
-  const send = (text: string) => {
+  const send = async (text: string) => {
     if (!text.trim()) return;
     const userMsg: Message = { id: Date.now().toString(), role: "user", text, time: now() };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const response = getAnaResponse(text);
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [
+            ...messages.slice(-5).map(m => ({ role: m.role === "ana" ? "assistant" : "user", content: m.text })),
+            { role: "user", content: text }
+          ]
+        }),
+      });
+      const data = await res.json();
+
       const anaMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "ana",
-        text: response,
+        text: data.message || "Scuze, am întâmpinat o eroare. Încearcă din nou.",
         time: now(),
       };
       setMessages((prev) => [...prev, anaMsg]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      const errorMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "ana",
+        text: "Scuze, am întâmpinat o eroare de conexiune. Verifică internetul și încearcă din nou.",
+        time: now(),
+      };
+      setMessages((prev) => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 800 + Math.random() * 600);
+    }
   };
 
   const handleKey = (e: React.KeyboardEvent) => {
