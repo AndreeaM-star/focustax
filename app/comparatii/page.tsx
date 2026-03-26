@@ -131,7 +131,7 @@ export default function ComparatiiPage() {
 
       <div className={styles.footer}>
         <p className={styles.footerText}>
-          Datele sunt actualizate pentru 2024–2025. Cotele pot varia în funcție de regimul fiscal ales și de situația specifică a contribuabilului.
+          Datele sunt actualizate pentru martie 2026. Cotele pot varia în funcție de regimul fiscal ales și de situația specifică a contribuabilului. Informații confirmate pe 25 martie 2026.
         </p>
       </div>
     </main>

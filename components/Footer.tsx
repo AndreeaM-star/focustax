@@ -35,7 +35,7 @@ export default function Footer() {
 
         <div className={styles.bottom}>
           <span>© {new Date().getFullYear()} FocusTax.ro — Claritate fiscală și profesionalism</span>
-          <span className={styles.disclaimer}>Informativ. Nu substituie consultanță fiscală autorizată.</span>
+          <span className={styles.disclaimer}>Informativ. Nu substituie consultanță fiscală autorizată. | Informații actualizate: martie 2026</span>
         </div>
       </div>
     </footer>

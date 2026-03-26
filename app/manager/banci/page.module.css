@@ -1,0 +1,415 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pageTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: -0.5px;
+}
+
+.pageSubtitle {
+  font-size: 0.87rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.syncBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #059669;
+}
+
+.syncDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+/* ── Total Card ──────────────────────────────────────────── */
+.totalCard {
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(40px) saturate(280%);
+  -webkit-backdrop-filter: blur(40px) saturate(280%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.09);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.totalLeft {}
+
+.totalLabel {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.totalValue {
+  display: block;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.totalMeta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.reconcilatPill {
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.2);
+  color: #059669;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.nerecilatPill {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  color: #d97706;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.totalRight {
+  min-width: 240px;
+  flex: 1;
+  max-width: 320px;
+}
+
+.miniBar {
+  display: flex;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+
+.miniBarSegment {
+  border-radius: 4px;
+  transition: flex 0.3s;
+}
+
+.miniLegend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* ── Bank Cards Grid ─────────────────────────────────────── */
+.banciGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.bancaCard {
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(32px) saturate(280%);
+  -webkit-backdrop-filter: blur(32px) saturate(280%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.bancaCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+}
+
+.bancaCardSelected {
+  border-color: var(--accent, #2563eb);
+  background: rgba(255,255,255,0.38);
+}
+
+.bancaAccentBar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent, #2563eb);
+}
+
+.bancaTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.bancaLogo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bancaName {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.bancaTip {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-top: 1px;
+}
+
+.bancaSold {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+}
+
+.bancaIban {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-family: monospace;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bancaSync {
+  font-size: 0.72rem;
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* ── Transactions ────────────────────────────────────────── */
+.tranzSection {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(32px) saturate(280%);
+  -webkit-backdrop-filter: blur(32px) saturate(280%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.tranzHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.bankFilter {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.filterBtns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  padding: 5px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.4);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filterBtn:hover { background: rgba(255,255,255,0.65); color: #1a1a2e; }
+
+.filterBtnActive {
+  background: rgba(37,99,235,0.1);
+  border-color: rgba(37,99,235,0.3);
+  color: #2563eb;
+}
+
+.tranzList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tranzRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tranzRow:last-child { border-bottom: none; }
+
+.tranzLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tranzIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.credit {
+  background: rgba(16,185,129,0.1);
+  color: #059669;
+  border: 1px solid rgba(16,185,129,0.2);
+}
+
+.debit {
+  background: rgba(239,68,68,0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239,68,68,0.2);
+}
+
+.tranzDesc {
+  font-size: 0.87rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 3px;
+}
+
+.tranzMeta {
+  font-size: 0.76rem;
+  color: #9ca3af;
+}
+
+.tranzFactura {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.tranzRight {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.tranzSuma {
+  display: block;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.creditText { color: #059669; }
+.debitText  { color: #dc2626; }
+
+.tranzStatus {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.reconciliat {
+  background: rgba(16,185,129,0.1);
+  color: #059669;
+}
+
+.nereconciliat {
+  background: rgba(245,158,11,0.1);
+  color: #d97706;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .banciGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 500px) {
+  .banciGrid { grid-template-columns: 1fr; }
+  .totalCard { flex-direction: column; }
+  .totalRight { width: 100%; max-width: 100%; }
+}

@@ -1,0 +1,409 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pageTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: -0.5px;
+}
+
+.pageSubtitle {
+  font-size: 0.87rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.anafSync {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.2);
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #059669;
+}
+
+.syncDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+/* ── Alert ───────────────────────────────────────────────── */
+.alertBox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+
+.alertIcon { font-size: 1.4rem; flex-shrink: 0; }
+
+.alertBox strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #92400e;
+  margin-bottom: 3px;
+}
+
+.alertBox p {
+  font-size: 0.83rem;
+  color: #b45309;
+  margin: 0;
+}
+
+.alertBtn {
+  margin-left: auto;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: #d97706;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.alertBtn:hover { background: rgba(245,158,11,0.25); }
+
+/* ── Stats ───────────────────────────────────────────────── */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.statCard {
+  background: rgba(255,255,255,0.28);
+  backdrop-filter: blur(32px) saturate(280%);
+  -webkit-backdrop-filter: blur(32px) saturate(280%);
+  border: 1px solid rgba(255,255,255,0.75);
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statCardWarning {
+  background: rgba(245,158,11,0.08);
+  border-color: rgba(245,158,11,0.25);
+}
+
+.statIcon { font-size: 1.3rem; margin-bottom: 4px; }
+
+.statLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1;
+}
+
+.statMeta {
+  font-size: 0.76rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* ── Plafon Card ─────────────────────────────────────────── */
+.plafonCard {
+  background: rgba(255,255,255,0.28);
+  backdrop-filter: blur(40px) saturate(280%);
+  -webkit-backdrop-filter: blur(40px) saturate(280%);
+  border: 1px solid rgba(255,255,255,0.75);
+  border-radius: 20px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 36px rgba(0,0,0,0.09);
+}
+
+.plafonHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.plafonTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+}
+
+.plafonSubtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.plafonPct {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.plafonWarn { color: #d97706; }
+
+.progressBar {
+  height: 14px;
+  background: rgba(0,0,0,0.06);
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 7px;
+  transition: width 1s ease-out;
+  position: relative;
+}
+
+.progressOk     { background: linear-gradient(90deg, #10b981, #34d399); }
+.progressWarn   { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.progressDanger { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+.plafonFooter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.83rem;
+  color: #6b7280;
+}
+
+.plafonAlert {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.btnPrimary {
+  margin-left: auto;
+  background: rgba(37,99,235,0.82);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btnPrimary:hover { transform: translateY(-2px); }
+
+/* ── Sections ────────────────────────────────────────────── */
+.section {
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(32px) saturate(280%);
+  -webkit-backdrop-filter: blur(32px) saturate(280%);
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+
+.sectionTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 18px;
+}
+
+/* ── Month grid ──────────────────────────────────────────── */
+.monthGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.monthCard {
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 14px;
+  padding: 16px;
+  position: relative;
+}
+
+.monthCardCurrent {
+  background: rgba(37,99,235,0.06);
+  border-color: rgba(37,99,235,0.2);
+}
+
+.monthCardTotal {
+  background: rgba(37,99,235,0.06);
+  border-color: rgba(37,99,235,0.2);
+}
+
+.currentBadge {
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  background: rgba(37,99,235,0.15);
+  border: 1px solid rgba(37,99,235,0.3);
+  color: #2563eb;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.monthName {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+}
+
+.monthRows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.monthRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.monthTotal {
+  border-top: 1px solid rgba(255,255,255,0.6);
+  padding-top: 6px;
+  margin-top: 4px;
+  color: #1a1a2e;
+}
+
+.green { color: #059669; font-weight: 600; }
+.red   { color: #dc2626; font-weight: 600; }
+
+/* ── Declarations ────────────────────────────────────────── */
+.declaratiiList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.declaratieRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  flex-wrap: wrap;
+}
+
+.declaratieRow:last-child { border-bottom: none; }
+
+.declLeft { flex: 1; }
+
+.declLuna {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 2px;
+}
+
+.declData {
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+.declSuma {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  min-width: 120px;
+  text-align: right;
+}
+
+.declStatus {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.status_confirmata {
+  background: rgba(16,185,129,0.1);
+  color: #059669;
+  border: 1px solid rgba(16,185,129,0.2);
+}
+
+.status_in_pregatire {
+  background: rgba(245,158,11,0.1);
+  color: #d97706;
+  border: 1px solid rgba(245,158,11,0.2);
+}
+
+.depuneBtn {
+  background: rgba(37,99,235,0.1);
+  border: 1px solid rgba(37,99,235,0.25);
+  color: #2563eb;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.depuneBtn:hover { background: rgba(37,99,235,0.18); }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .statsGrid  { grid-template-columns: repeat(2, 1fr); }
+  .monthGrid  { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 500px) {
+  .statsGrid  { grid-template-columns: 1fr; }
+  .monthGrid  { grid-template-columns: 1fr; }
+}
