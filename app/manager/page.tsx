@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
 import styles from "./page.module.css";
 
 interface Factura {
@@ -29,6 +28,12 @@ interface Tranzactie {
   data: string;
 }
 
+interface Company {
+  id: string;
+  nume: string;
+  cui: string;
+}
+
 const quickActions = [
   { label: "Emite Factură", icon: "🧾", href: "/manager/facturi" },
   { label: "Calculează Salariu", icon: "👥", href: "/manager/hr" },
@@ -41,66 +46,38 @@ const anafSystems = [
   { name: "e-Factura", status: "activ", dot: "green" },
   { name: "e-VAT", status: "activ", dot: "green" },
   { name: "e-Transport", status: "activ", dot: "green" },
-  { name: "SPV", status: "2 mesaje noi", dot: "amber" },
-  { name: "Open Banking", status: "sincronizat", dot: "green" },
+  { name: "SPV", status: "luat în considerare", dot: "amber" },
+  { name: "Open Banking", status: "conectat", dot: "green" },
 ];
 
 export default function Dashboard() {
   const [facturi, setFacturi] = useState<Factura[]>([]);
   const [angajati, setAngajati] = useState<Angajat[]>([]);
-  const [tranzactii, setTranzactii] = useState<Tranzactie[]>([]);
-  const [anafConnected, setAnafConnected] = useState(false);
+  const [company, setCompany] = useState<Company | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Handle ANAF OAuth callback
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-    if (code) {
-      // Exchange code for token
-      fetch("/api/anaf/exchange", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.ok) {
-            setAnafConnected(true);
-            // Remove code from URL
-            window.history.replaceState({}, "", "/manager");
-          }
-        })
-        .catch(console.error);
-    }
-  }, []);
-
-  // Fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Get company from localStorage
+        const companyName = localStorage.getItem("focustax_company_name") || "Compania ta";
+        const companyCui = localStorage.getItem("focustax_company_id") || "RO123456";
+
+        setCompany({
+          id: companyCui,
+          nume: companyName,
+          cui: companyCui,
+        });
+
         // Facturi
         const facturiRes = await fetch("/api/facturi");
         const facturiData = await facturiRes.json();
-        setFacturi(facturiData);
+        setFacturi(facturiData.slice(0, 5)); // Show last 5
 
         // Angajati
         const angajatiRes = await fetch("/api/angajati");
         const angajatiData = await angajatiRes.json();
         setAngajati(angajatiData);
-
-        // Tranzactii
-        const { data: tranzData } = await supabase
-          .from("tranzactii")
-          .select("*")
-          .order("data", { ascending: false })
-          .limit(10);
-        setTranzactii(tranzData || []);
-
-        // ANAF status
-        const anafRes = await fetch("/api/anaf/exchange");
-        const anafData = await anafRes.json();
-        setAnafConnected(anafData.connected);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -115,84 +92,81 @@ export default function Dashboard() {
   const totalValoare = facturi.reduce((s, f) => s + f.valoare, 0);
   const totalTVA = facturi.reduce((s, f) => s + f.tva, 0);
   const validate = facturi.filter((f) => f.status === "validata").length;
-  const soldBanci = tranzactii.reduce((s, t) => s + (t.tip === "credit" ? t.suma : -t.suma), 0);
 
   const stats = [
     {
-      label: "Sold Consolidat",
-      value: `${soldBanci.toLocaleString()} lei`,
-      meta: "BT · BCR · Revolut",
-      icon: "🏦",
-      trend: "+2.3%",
-      up: true,
-      href: "/manager/banci",
-    },
-    {
-      label: "Facturi Emise (Mar)",
-      value: `${validate} validate`,
-      meta: `${facturi.length} totale · 0 erori`,
+      label: "Facturi Emise",
+      value: `${facturi.length} documente`,
+      meta: `${validate} validate`,
       icon: "🧾",
       trend: "+8%",
       up: true,
       href: "/manager/facturi",
     },
     {
-      label: "TVA Colectat (Mar)",
+      label: "TVA Total",
       value: `${totalTVA.toLocaleString()} lei`,
-      meta: "Plată până pe 25 Apr",
+      meta: "Colectat în luna curentă",
       icon: "📊",
       trend: "+12%",
       up: true,
       href: "/manager/tva",
     },
     {
-      label: "Profit Net (Mar)",
-      value: `${(totalValoare * 0.15).toLocaleString()} lei`,
-      meta: "Forecast Apr: ~48.000 lei",
+      label: "Angajati Activi",
+      value: `${angajati.length} pers.`,
+      meta: angajati.length > 0 ? `Salariu total: ${(angajati.reduce((s, a) => s + a.brut_lunar, 0)).toLocaleString()} lei` : "Adaugă angajați",
+      icon: "👥",
+      trend: "0%",
+      up: false,
+      href: "/manager/hr",
+    },
+    {
+      label: "Venituri (Mar)",
+      value: `${totalValoare.toLocaleString()} lei`,
+      meta: "Total nefacturate",
       icon: "📈",
-      trend: "+8%",
+      trend: "+5%",
       up: true,
       href: null,
     },
   ];
 
-  const activities = [
-    { time: "08:02", icon: "🧾", text: `Factura #${facturi[0]?.numar || "F2026-0847"} (${facturi[0]?.valoare || 3200} lei) validată de ANAF`, type: "success" },
-    { time: "07:55", icon: "🏦", text: `Plată primită: ${tranzactii[0]?.suma || 12450} lei — reconciliată automat`, type: "success" },
-    { time: "07:30", icon: "📊", text: "Decontul TVA Februarie precomplet disponibil pe e-VAT", type: "info" },
-    { time: "07:00", icon: "🤖", text: "Executive Summary generat și trimis pe email", type: "muted" },
-    { time: "Ieri 22:14", icon: "🚛", text: "UIT-2026-4421 generat pentru transportul de mâine", type: "muted" },
-    { time: "Ieri 18:30", icon: "📬", text: "Mesaj nou în SPV: Confirmare solicitare rambursare TVA", type: "info" },
-    { time: "Ieri 15:10", icon: "👥", text: `Pontaj luna curentă procesat — ${angajati.length} angajați`, type: "success" },
-    { time: "Ieri 09:00", icon: "💡", text: "Agent Achiziții: găsit furnizor curent 15% mai ieftin", type: "info" },
-  ];
-
   const alerts = [
     {
-      type: "success",
-      icon: "✅",
-      msg: `${validate} facturi validate de ANAF azi — 0 erori, 0 respingeri`,
+      type: "info",
+      icon: "👋",
+      msg: `Bine ai venit, ${company?.nume || "Manager"}! Configurația inițială e completă.`,
       action: null,
+    },
+    facturi.length === 0 && {
+      type: "warning",
+      icon: "💡",
+      msg: "Nicio factură încă. Începe prin a emite prima factură.",
+      action: "Emite factură",
     },
     {
       type: "info",
-      icon: "💡",
-      msg: "Am găsit un furnizor de curent electric cu 15% mai ieftin. Inițiez negocierea?",
-      action: "Aprobă negocierea",
-    },
-    {
-      type: "warning",
-      icon: "⚠️",
-      msg: "Risc depășire prag TVA în ~45 zile la ritmul actual — recomand înregistrare voluntară",
-      action: "Înregistrează TVA",
-    },
-    {
-      type: "success",
       icon: "🤖",
-      msg: "D112 pregătit și gata de transmis. Salariile se procesează vineri automat.",
+      msg: "ANA AI e gata să te ajute. Întreabă orice despre Codul Fiscal.",
       action: null,
     },
-  ];
+  ].filter(Boolean);
+
+  const activities = [
+    facturi[0] && {
+      time: new Date().toLocaleTimeString("ro-RO", { hour: "2-digit", minute: "2-digit" }),
+      icon: "🧾",
+      text: `Ultimă factură: ${facturi[0]?.numar} (${facturi[0]?.valoare} lei)`,
+      type: "success",
+    },
+    {
+      time: "Setup completat",
+      icon: "✅",
+      text: "Compania ta a fost configurată cu succes!",
+      type: "success",
+    },
+  ].filter(Boolean);
 
   if (loading) {
     return <div className={styles.page}>Se încarcă...</div>;
@@ -200,18 +174,14 @@ export default function Dashboard() {
 
   return (
     <div className={styles.page}>
-
-      {/* Header */}
       <div className={styles.pageHeader}>
         <div>
-          <p className={styles.pageDate}>Joi, 26 Martie 2026 · 08:00</p>
-          <h1 className={styles.pageTitle}>Bună dimineața, Demo SRL</h1>
+          <p className={styles.pageDate}>{new Date().toLocaleDateString("ro-RO", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} · {new Date().toLocaleTimeString("ro-RO", { hour: "2-digit", minute: "2-digit" })}</p>
+          <h1 className={styles.pageTitle}>Bună, {company?.nume || "Manager"}</h1>
         </div>
         <div className={styles.headerStatus}>
           <span className={styles.statusPulse} />
-          <span className={styles.statusText}>
-            {anafConnected ? "Conectat la ANAF" : "Sistemele active"}
-          </span>
+          <span className={styles.statusText}>Sisteme active</span>
         </div>
       </div>
 
@@ -219,12 +189,12 @@ export default function Dashboard() {
       <div className={styles.briefingBox}>
         <div className={styles.briefingHeader}>
           <div className={styles.briefingDots}>
-            <span className={`${styles.dot} ${styles.dotRed}`} />
-            <span className={`${styles.dot} ${styles.dotAmber}`} />
+            <span className={`${styles.dot} ${styles.dotGreen}`} />
+            <span className={`${styles.dot} ${styles.dotGreen}`} />
             <span className={`${styles.dot} ${styles.dotGreen}`} />
           </div>
-          <span className={styles.briefingLabel}>Executive Summary · 26 Mar 2026</span>
-          <span className={styles.briefingAI}>generat de ANA AI</span>
+          <span className={styles.briefingLabel}>Status Companie</span>
+          <span className={styles.briefingAI}>configurat</span>
         </div>
         <div className={styles.alertsList}>
           {alerts.map((a, i) => (
@@ -235,7 +205,9 @@ export default function Dashboard() {
               <span className={styles.alertIcon}>{a.icon}</span>
               <span className={styles.alertMsg}>{a.msg}</span>
               {a.action && (
-                <button className={styles.alertBtn}>{a.action}</button>
+                <Link href="/manager/facturi" className={styles.alertBtn}>
+                  {a.action}
+                </Link>
               )}
             </div>
           ))}
@@ -281,7 +253,6 @@ export default function Dashboard() {
 
       {/* Main content: activity + sidebar */}
       <div className={styles.mainGrid}>
-
         {/* Activity Feed */}
         <div className={styles.activitySection}>
           <h2 className={styles.sectionTitle}>Activitate recentă</h2>
@@ -298,7 +269,6 @@ export default function Dashboard() {
 
         {/* Right column */}
         <div className={styles.rightCol}>
-
           {/* Quick Actions */}
           <div className={styles.widget}>
             <h3 className={styles.widgetTitle}>Acțiuni rapide</h3>
@@ -336,201 +306,7 @@ export default function Dashboard() {
             <span className={styles.anaHintIcon}>🤖</span>
             <div>
               <strong>ANA AI</strong>
-              <p>Întreabă orice despre firma ta sau Codul Fiscal</p>
-            </div>
-            <span className={styles.anaArrow}>→</span>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
-  },
-  {
-    label: "TVA Colectat (Mar)",
-    value: "28.450 lei",
-    meta: "Plată până pe 25 Apr · Prag: 300k/an",
-    icon: "📊",
-    trend: "+12%",
-    up: true,
-    href: "/manager/tva",
-  },
-  {
-    label: "Profit Net (Mar)",
-    value: "42.800 lei",
-    meta: "Forecast Apr: ~48.000 lei",
-    icon: "📈",
-    trend: "+8%",
-    up: true,
-    href: null,
-  },
-];
-
-const activities = [
-  { time: "08:02", icon: "🧾", text: "Factura #F2026-0847 (3.200 lei) validată de ANAF", type: "success" },
-  { time: "07:55", icon: "🏦", text: "Plată primită BT: 12.450 lei — reconciliată automat cu F2026-0839", type: "success" },
-  { time: "07:30", icon: "📊", text: "Decontul TVA Februarie precomplet disponibil pe e-VAT", type: "info" },
-  { time: "07:00", icon: "🤖", text: "Executive Summary generat și trimis pe email", type: "muted" },
-  { time: "Ieri 22:14", icon: "🚛", text: "UIT-2026-4421 generat pentru transportul de mâine", type: "muted" },
-  { time: "Ieri 18:30", icon: "📬", text: "Mesaj nou în SPV: Confirmare solicitare rambursare TVA", type: "info" },
-  { time: "Ieri 15:10", icon: "👥", text: "Pontaj luna curentă procesat — 12 angajați, 0 absențe nemotivate", type: "success" },
-  { time: "Ieri 09:00", icon: "💡", text: "Agent Achiziții: găsit furnizor curent 15% mai ieftin", type: "info" },
-];
-
-const quickActions = [
-  { label: "Emite Factură", icon: "🧾", href: "/manager/facturi" },
-  { label: "Calculează Salariu", icon: "👥", href: "/manager/hr" },
-  { label: "Interoghează ANA", icon: "🤖", href: "/manager/ai" },
-  { label: "Raport TVA", icon: "📊", href: "/manager/tva" },
-  { label: "Conturi bancare", icon: "🏦", href: "/manager/banci" },
-];
-
-const anafSystems = [
-  { name: "e-Factura", status: "activ", dot: "green" },
-  { name: "e-VAT", status: "activ", dot: "green" },
-  { name: "e-Transport", status: "activ", dot: "green" },
-  { name: "SPV", status: "2 mesaje noi", dot: "amber" },
-  { name: "Open Banking", status: "sincronizat", dot: "green" },
-];
-
-export default function Dashboard() {
-  return (
-    <div className={styles.page}>
-
-      {/* Header */}
-      <div className={styles.pageHeader}>
-        <div>
-          <p className={styles.pageDate}>Joi, 26 Martie 2026 · 08:00</p>
-          <h1 className={styles.pageTitle}>Bună dimineața, Demo SRL</h1>
-        </div>
-        <div className={styles.headerStatus}>
-          <span className={styles.statusPulse} />
-          <span className={styles.statusText}>Toate sistemele active</span>
-        </div>
-      </div>
-
-      {/* Alerts / Briefing */}
-      <div className={styles.briefingBox}>
-        <div className={styles.briefingHeader}>
-          <div className={styles.briefingDots}>
-            <span className={`${styles.dot} ${styles.dotRed}`} />
-            <span className={`${styles.dot} ${styles.dotAmber}`} />
-            <span className={`${styles.dot} ${styles.dotGreen}`} />
-          </div>
-          <span className={styles.briefingLabel}>Executive Summary · 26 Mar 2026</span>
-          <span className={styles.briefingAI}>generat de ANA AI</span>
-        </div>
-        <div className={styles.alertsList}>
-          {alerts.map((a, i) => (
-            <div
-              key={i}
-              className={`${styles.alert} ${styles[`alert${a.type.charAt(0).toUpperCase() + a.type.slice(1)}`]}`}
-            >
-              <span className={styles.alertIcon}>{a.icon}</span>
-              <span className={styles.alertMsg}>{a.msg}</span>
-              {a.action && (
-                <button className={styles.alertBtn}>{a.action}</button>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Stats grid */}
-      <div className={styles.statsGrid}>
-        {stats.map((s, i) => (
-          <div
-            key={s.label}
-            className={styles.statCard}
-            style={{ animationDelay: `${i * 60}ms` }}
-          >
-            {s.href ? (
-              <Link href={s.href} className={styles.statCardInner}>
-                <div className={styles.statTop}>
-                  <span className={styles.statIcon}>{s.icon}</span>
-                  <span className={`${styles.statTrend} ${s.up ? styles.trendUp : styles.trendDown}`}>
-                    {s.trend}
-                  </span>
-                </div>
-                <span className={styles.statValue}>{s.value}</span>
-                <span className={styles.statLabel}>{s.label}</span>
-                <span className={styles.statMeta}>{s.meta}</span>
-              </Link>
-            ) : (
-              <div className={styles.statCardInner}>
-                <div className={styles.statTop}>
-                  <span className={styles.statIcon}>{s.icon}</span>
-                  <span className={`${styles.statTrend} ${s.up ? styles.trendUp : styles.trendDown}`}>
-                    {s.trend}
-                  </span>
-                </div>
-                <span className={styles.statValue}>{s.value}</span>
-                <span className={styles.statLabel}>{s.label}</span>
-                <span className={styles.statMeta}>{s.meta}</span>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Main content: activity + sidebar */}
-      <div className={styles.mainGrid}>
-
-        {/* Activity Feed */}
-        <div className={styles.activitySection}>
-          <h2 className={styles.sectionTitle}>Activitate recentă</h2>
-          <div className={styles.activityList}>
-            {activities.map((a, i) => (
-              <div key={i} className={`${styles.activityItem} ${styles[`act${a.type.charAt(0).toUpperCase() + a.type.slice(1)}`]}`}>
-                <span className={styles.activityTime}>{a.time}</span>
-                <span className={styles.activityIcon}>{a.icon}</span>
-                <span className={styles.activityText}>{a.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right column */}
-        <div className={styles.rightCol}>
-
-          {/* Quick Actions */}
-          <div className={styles.widget}>
-            <h3 className={styles.widgetTitle}>Acțiuni rapide</h3>
-            <div className={styles.quickActions}>
-              {quickActions.map((q) => (
-                <Link key={q.label} href={q.href} className={styles.quickAction}>
-                  <span>{q.icon}</span>
-                  <span>{q.label}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* ANAF Systems status */}
-          <div className={styles.widget}>
-            <h3 className={styles.widgetTitle}>Status Sisteme ANAF</h3>
-            <div className={styles.systemsList}>
-              {anafSystems.map((s) => (
-                <div key={s.name} className={styles.systemRow}>
-                  <span className={styles.systemName}>{s.name}</span>
-                  <div className={styles.systemStatus}>
-                    <span className={`${styles.systemDot} ${styles[`dot${s.dot.charAt(0).toUpperCase() + s.dot.slice(1)}`]}`} />
-                    <span className={styles.systemStatusText}>{s.status}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Link href="/sisteme" className={styles.widgetLink}>
-              Detalii sisteme →
-            </Link>
-          </div>
-
-          {/* ANA hint */}
-          <Link href="/manager/ai" className={styles.anaHint}>
-            <span className={styles.anaHintIcon}>🤖</span>
-            <div>
-              <strong>ANA AI</strong>
-              <p>Întreabă orice despre firma ta sau Codul Fiscal</p>
+              <p>Asistență din guri privind impozitare și legislație</p>
             </div>
             <span className={styles.anaArrow}>→</span>
           </Link>

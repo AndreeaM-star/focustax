@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./manager.module.css";
 
 const navItems = [
@@ -16,7 +16,27 @@ const navItems = [
 
 export default function ManagerShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [companyName, setCompanyName] = useState("Demo SRL");
+  const [companyCui, setCompanyCui] = useState("RO12345678");
+
+  useEffect(() => {
+    // Check if user is on setup page
+    if (pathname === "/manager/setup") return;
+
+    // Check if company is configured
+    const companyId = localStorage.getItem("focustax_company_id");
+    const companyname = localStorage.getItem("focustax_company_name");
+
+    if (companyname) {
+      setCompanyName(companyname);
+    }
+
+    if (!companyId) {
+      router.push("/manager/setup");
+    }
+  }, [pathname, router]);
 
   return (
     <div className={styles.shell}>
@@ -56,10 +76,10 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
 
         <div className={styles.sidebarFooter}>
           <div className={styles.firmaBadge}>
-            <div className={styles.firmaAvatar}>D</div>
+            <div className={styles.firmaAvatar}>{companyName.charAt(0)}</div>
             <div>
-              <span className={styles.firmaName}>Demo SRL</span>
-              <span className={styles.firmaCui}>CUI: RO12345678</span>
+              <span className={styles.firmaName}>{companyName}</span>
+              <span className={styles.firmaCui}>CUI: {companyCui}</span>
             </div>
           </div>
           <Link href="/" className={styles.backToSite}>
