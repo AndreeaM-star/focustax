@@ -2,19 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 import { nextInvoiceNumber } from "@/lib/salary";
 
-// GET /api/facturi — list all
+// GET /api/facturi?company_id=UUID
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const companyId = searchParams.get("company_id");
+    const companyId = new URL(req.url).searchParams.get("company_id");
+    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
 
     const sb = createAdminClient();
-    let query = sb.from("facturi").select("*").order("created_at", { ascending: false });
-    if (companyId) {
-      query = query.eq("company_id", companyId);
-    }
-
-    const { data, error } = await query;
+    const { data, error } = await sb
+      .from("facturi")
+      .select("*")
+      .eq("company_id", companyId)
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return NextResponse.json(data ?? []);
@@ -24,29 +23,34 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST /api/facturi — create new
+// POST /api/facturi — body must include company_id
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    const companyId = body.company_id;
+    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
+
     const sb = createAdminClient();
 
-    // Get last invoice number to generate next
+    // Get last invoice number for this specific company
     const { data: last } = await sb
       .from("facturi")
       .select("numar")
+      .eq("company_id", companyId)
       .order("created_at", { ascending: false })
       .limit(1)
       .single();
 
-    const numar = last?.numar ? nextInvoiceNumber(last.numar) : "F2026-0001";
+    const year = new Date().getFullYear();
+    const numar = last?.numar ? nextInvoiceNumber(last.numar) : `F${year}-0001`;
 
     const { data, error } = await sb
       .from("facturi")
       .insert({
+        company_id: companyId,
         numar,
         client: body.client,
         cui_client: body.cui_client ?? "",
-        company_id: body.company_id ?? null,
         valoare: body.valoare,
         tva: body.tva,
         data: body.data,
@@ -59,12 +63,9 @@ export async function POST(req: NextRequest) {
 
     if (error) throw error;
 
-    // Simulate ANAF validation after 3 seconds using a background update
+    // Simulate ANAF validation after 3s
     setTimeout(async () => {
-      await sb
-        .from("facturi")
-        .update({ status: "validata" })
-        .eq("id", data.id);
+      await sb.from("facturi").update({ status: "validata" }).eq("id", data.id);
     }, 3000);
 
     return NextResponse.json(data, { status: 201 });
@@ -77,13 +78,11 @@ export async function POST(req: NextRequest) {
 // DELETE /api/facturi?id=UUID
 export async function DELETE(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
+    const id = new URL(req.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
     const sb = createAdminClient();
     const { error } = await sb.from("facturi").delete().eq("id", id);
-
     if (error) throw error;
     return NextResponse.json({ ok: true });
   } catch (err: unknown) {

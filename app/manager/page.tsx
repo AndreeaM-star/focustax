@@ -102,8 +102,8 @@ export default function Dashboard() {
     setCompany({ id: companyId ?? "", nume: companyName || "Companie necunoscută", cui: companyCui });
 
     Promise.all([
-      fetch("/api/facturi").then((r) => r.json()),
-      fetch("/api/angajati").then((r) => r.json()),
+      fetch(`/api/facturi?company_id=${companyId}`).then((r) => r.json()),
+      fetch(`/api/angajati?company_id=${companyId}`).then((r) => r.json()),
       fetch("/api/anaf/exchange").then((r) => r.json()),
     ])
       .then(([f, a, anaf]) => {

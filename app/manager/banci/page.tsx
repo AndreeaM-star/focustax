@@ -24,14 +24,20 @@ const banci = [
 const bancaName: Record<string, string> = { bt: "BT", bcr: "BCR", rz: "Raiffeisen", rev: "Revolut" };
 
 export default function BanciPage() {
-  const [tranzactii, setTranzactii] = useState<Tranzactie[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [tranzactii, setTranzactii]     = useState<Tranzactie[]>([]);
+  const [loading, setLoading]           = useState(true);
   const [selectedBanca, setSelectedBanca] = useState<string>("toate");
 
   useEffect(() => {
-    fetch("/api/tranzactii")
+    const id = localStorage.getItem("focustax_company_id") ?? "";
+    if (!id || id === "demo" || id === "temp") {
+      window.location.href = "/manager/setup";
+      return;
+    }
+
+    fetch(`/api/tranzactii?company_id=${id}`)
       .then((r) => r.json())
-      .then((data) => setTranzactii(Array.isArray(data) ? data : []))
+      .then((d) => setTranzactii(Array.isArray(d) ? d : []))
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
@@ -48,7 +54,7 @@ export default function BanciPage() {
 
   const totalSold = banci.reduce((s, b) => s + b.sold, 0);
   const filtered = selectedBanca === "toate" ? tranzactii : tranzactii.filter((t) => t.banca === selectedBanca);
-  const reconciliate = tranzactii.filter((t) => t.reconciliat).length;
+  const reconciliate   = tranzactii.filter((t) => t.reconciliat).length;
   const nereconciliate = tranzactii.filter((t) => !t.reconciliat).length;
   const syncTime = new Date().toLocaleTimeString("ro-RO", { hour: "2-digit", minute: "2-digit" });
 
@@ -57,9 +63,7 @@ export default function BanciPage() {
       <div className={styles.header}>
         <div>
           <h1 className={styles.pageTitle}>Open Banking</h1>
-          <p className={styles.pageSubtitle}>
-            Toate conturile tale, sincronizate via PSD2 · Reconciliere automată cu facturile
-          </p>
+          <p className={styles.pageSubtitle}>Toate conturile tale, sincronizate via PSD2 · Reconciliere automată cu facturile</p>
         </div>
         <div className={styles.syncBadge}>
           <span className={styles.syncDot} />
@@ -67,16 +71,13 @@ export default function BanciPage() {
         </div>
       </div>
 
-      {/* Total card */}
       <div className={styles.totalCard}>
         <div className={styles.totalLeft}>
           <span className={styles.totalLabel}>Sold Consolidat</span>
           <span className={styles.totalValue}>{totalSold.toLocaleString("ro-RO")} lei</span>
           <div className={styles.totalMeta}>
             <span className={styles.reconcilatPill}>✅ {reconciliate} reconciliate automat</span>
-            {nereconciliate > 0 && (
-              <span className={styles.nerecilatPill}>⚠️ {nereconciliate} necesită atenție</span>
-            )}
+            {nereconciliate > 0 && <span className={styles.nerecilatPill}>⚠️ {nereconciliate} necesită atenție</span>}
           </div>
         </div>
         <div className={styles.totalRight}>
@@ -98,7 +99,6 @@ export default function BanciPage() {
         </div>
       </div>
 
-      {/* Bank cards */}
       <div className={styles.banciGrid}>
         {banci.map((b) => (
           <div key={b.id}
@@ -109,26 +109,19 @@ export default function BanciPage() {
             <div className={styles.bancaAccentBar} />
             <div className={styles.bancaTop}>
               <div className={styles.bancaLogo} style={{ background: b.color }}>{b.logo}</div>
-              <div>
-                <div className={styles.bancaName}>{b.name}</div>
-                <div className={styles.bancaTip}>{b.tip}</div>
-              </div>
+              <div><div className={styles.bancaName}>{b.name}</div><div className={styles.bancaTip}>{b.tip}</div></div>
             </div>
             <div className={styles.bancaSold}>{b.sold.toLocaleString("ro-RO")} {b.currency}</div>
             <div className={styles.bancaIban}>{b.iban}</div>
-            <div className={styles.bancaSync}>Sincronizat: azi {syncTime}</div>
+            <div className={styles.bancaSync}>Sync: azi {syncTime}</div>
           </div>
         ))}
       </div>
 
-      {/* Transactions */}
       <div className={styles.tranzSection}>
         <div className={styles.tranzHeader}>
           <h2 className={styles.sectionTitle}>
-            Tranzacții recente
-            {selectedBanca !== "toate" && (
-              <span className={styles.bankFilter}> — {bancaName[selectedBanca]}</span>
-            )}
+            Tranzacții{selectedBanca !== "toate" && <span className={styles.bankFilter}> — {bancaName[selectedBanca]}</span>}
           </h2>
           <div className={styles.filterBtns}>
             {(["toate", "bt", "bcr", "rz", "rev"] as const).map((b) => (
@@ -147,7 +140,7 @@ export default function BanciPage() {
         <div className={styles.tranzList}>
           {!loading && filtered.length === 0 && (
             <div style={{ textAlign: "center", padding: "2rem", opacity: 0.6 }}>
-              <p>Nicio tranzacție găsită.</p>
+              <p>Nicio tranzacție. Tranzacțiile apar după sincronizarea conturilor bancare.</p>
             </div>
           )}
           {filtered.map((t) => (
@@ -160,15 +153,13 @@ export default function BanciPage() {
                   <div className={styles.tranzDesc}>{t.descriere}</div>
                   <div className={styles.tranzMeta}>
                     {t.data} · {bancaName[t.banca] ?? t.banca}
-                    {t.factura_ref && (
-                      <span className={styles.tranzFactura}> · {t.factura_ref}</span>
-                    )}
+                    {t.factura_ref && <span className={styles.tranzFactura}> · {t.factura_ref}</span>}
                   </div>
                 </div>
               </div>
               <div className={styles.tranzRight}>
                 <span className={`${styles.tranzSuma} ${t.tip === "credit" ? styles.creditText : styles.debitText}`}>
-                  {t.suma > 0 ? "+" : ""}{Number(t.suma).toLocaleString("ro-RO")} lei
+                  {Number(t.suma) > 0 ? "+" : ""}{Number(t.suma).toLocaleString("ro-RO")} lei
                 </span>
                 <button
                   className={`${styles.tranzStatus} ${t.reconciliat ? styles.reconciliat : styles.nereconciliat}`}

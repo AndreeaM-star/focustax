@@ -1,24 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 
-// GET /api/angajati
+// GET /api/angajati?company_id=UUID
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const companyId = searchParams.get("company_id");
+    const companyId = new URL(req.url).searchParams.get("company_id");
+    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
 
     const sb = createAdminClient();
-    let query = sb
+    const { data, error } = await sb
       .from("angajati")
       .select("*")
+      .eq("company_id", companyId)
       .eq("activ", true)
       .order("created_at", { ascending: false });
-
-    if (companyId) {
-      query = query.eq("company_id", companyId);
-    }
-
-    const { data, error } = await query;
 
     if (error) throw error;
     return NextResponse.json(data ?? []);
@@ -28,15 +23,18 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST /api/angajati — create
+// POST /api/angajati — body must include company_id
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const sb = createAdminClient();
+    const companyId = body.company_id;
+    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
 
+    const sb = createAdminClient();
     const { data, error } = await sb
       .from("angajati")
       .insert({
+        company_id: companyId,
         nume: body.nume,
         functie: body.functie,
         brut_lunar: body.brutLunar,
@@ -59,16 +57,11 @@ export async function POST(req: NextRequest) {
 // DELETE /api/angajati?id=UUID — soft delete
 export async function DELETE(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
+    const id = new URL(req.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
     const sb = createAdminClient();
-    const { error } = await sb
-      .from("angajati")
-      .update({ activ: false })
-      .eq("id", id);
-
+    const { error } = await sb.from("angajati").update({ activ: false }).eq("id", id);
     if (error) throw error;
     return NextResponse.json({ ok: true });
   } catch (err: unknown) {

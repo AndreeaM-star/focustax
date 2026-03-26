@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 
-// GET /api/tranzactii
-export async function GET() {
+// GET /api/tranzactii?company_id=UUID
+export async function GET(req: NextRequest) {
   try {
+    const companyId = new URL(req.url).searchParams.get("company_id");
+    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
+
     const sb = createAdminClient();
     const { data, error } = await sb
       .from("tranzactii")
       .select("*")
+      .eq("company_id", companyId)
       .order("data", { ascending: false })
       .limit(50);
 
@@ -22,8 +26,7 @@ export async function GET() {
 // PATCH /api/tranzactii?id=UUID — toggle reconciliat
 export async function PATCH(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
+    const id = new URL(req.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
     const body = await req.json();
