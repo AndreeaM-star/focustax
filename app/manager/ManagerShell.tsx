@@ -21,31 +21,33 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
   const [mobileOpen, setMobileOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [companyCui,  setCompanyCui]  = useState("");
+  const [checked, setChecked] = useState(false);
+
+  const isSetupPage = pathname === "/manager/setup" || pathname === "/manager/setup/";
 
   useEffect(() => {
-    // Don't redirect on setup/settings pages
-    if (pathname === "/manager/setup" || pathname === "/manager/setup/") return;
+    if (isSetupPage) { setChecked(true); return; }
 
     const companyId   = localStorage.getItem("focustax_company_id");
     const companyname = localStorage.getItem("focustax_company_name") ?? "";
     const companycui  = localStorage.getItem("focustax_company_cui")  ?? "";
 
-    if (companyname) setCompanyName(companyname);
-    if (companycui)  setCompanyCui(companycui);
-
-    const isInvalid =
-      !companyId ||
-      companyId === "demo" ||
-      companyId === "temp" ||
-      companyname.toLowerCase().includes("demo");
+    const isInvalid = !companyId || companyId === "demo" || companyId === "temp";
 
     if (isInvalid) {
       localStorage.removeItem("focustax_company_id");
       localStorage.removeItem("focustax_company_name");
       localStorage.removeItem("focustax_company_cui");
       router.push("/manager/setup");
+      return;
     }
-  }, [pathname, router]);
+
+    setCompanyName(companyname);
+    setCompanyCui(companycui);
+    setChecked(true);
+  }, [pathname, router, isSetupPage]);
+
+  if (!checked) return null;
 
   return (
     <div className={styles.shell}>

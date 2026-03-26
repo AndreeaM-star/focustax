@@ -6,15 +6,6 @@ import styles from "./page.module.css";
 interface Factura { id: string; tva: number; valoare: number; data: string; status: string; }
 
 const plafonAnual = 300000;
-const declaratiiHistoric = [
-  { luna: "Ianuarie 2026",  depusa: true,  data: "25 Feb 2026", status: "confirmata" },
-  { luna: "Februarie 2026", depusa: true,  data: "25 Mar 2026", status: "confirmata" },
-  { luna: "Martie 2026",    depusa: false, data: "25 Apr 2026", status: "in_pregatire" },
-];
-const istoricLunar = [
-  { luna: "Ian", colectat: 0, deductibil: 0, dePlata: 0 },
-  { luna: "Feb", colectat: 0, deductibil: 0, dePlata: 0 },
-];
 
 export default function TVAPage() {
   const [facturi, setFacturi] = useState<Factura[]>([]);
@@ -44,12 +35,31 @@ export default function TVAPage() {
   const ziPericol      = cifraDeAfaceri > 0
     ? Math.round(((plafonAnual - cifraDeAfaceri) / (cifraDeAfaceri / 3)) * 30) : 999;
 
-  const lunarHistory = [
-    ...istoricLunar,
-    { luna: new Date().toLocaleString("ro-RO", { month: "short" }), colectat: tvaColectat, deductibil: tvaDeductibil, dePlata: tvaDePlata, current: true },
-  ];
+  // Build monthly history purely from real invoice data
+  const lunarHistory = (() => {
+    const months: Record<string, { colectat: number; deductibil: number; dePlata: number }> = {};
+    for (const f of facturi) {
+      if (!f.data || f.status !== "validata") continue;
+      const m = f.data.slice(0, 7); // "YYYY-MM"
+      if (!months[m]) months[m] = { colectat: 0, deductibil: 0, dePlata: 0 };
+      const col = Number(f.tva);
+      const ded = Math.round(col * 0.42);
+      months[m].colectat  += col;
+      months[m].deductibil += ded;
+      months[m].dePlata   += Math.max(0, col - ded);
+    }
+    return Object.entries(months)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, v]) => ({
+        luna: new Date(key + "-01").toLocaleString("ro-RO", { month: "short", year: "numeric" }),
+        ...v,
+        current: key === currentMonth,
+      }));
+  })();
+  if (!lunarHistory.find((m) => m.current)) {
+    lunarHistory.push({ luna: new Date().toLocaleString("ro-RO", { month: "short", year: "numeric" }), colectat: tvaColectat, deductibil: tvaDeductibil, dePlata: tvaDePlata, current: true });
+  }
   const tvaTotal = lunarHistory.reduce((s, m) => s + m.dePlata, 0);
-  const declaratii = declaratiiHistoric.map((d, i) => ({ ...d, suma: lunarHistory[i]?.dePlata ?? 0 }));
   const discrepante = facturi.filter((f) => f.data?.startsWith(currentMonth) && f.status === "in_asteptare").length;
 
   return (
@@ -150,17 +160,21 @@ export default function TVAPage() {
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Declarații D300</h2>
         <div className={styles.declaratiiList}>
-          {declaratii.map((d) => (
-            <div key={d.luna} className={styles.declaratieRow}>
+          {lunarHistory.length === 0 ? (
+            <div style={{ padding: "1.5rem", opacity: 0.6, textAlign: "center" }}>
+              Nicio declarație depusă încă. Apar automat după validarea facturilor.
+            </div>
+          ) : lunarHistory.map((m) => (
+            <div key={m.luna} className={styles.declaratieRow}>
               <div className={styles.declLeft}>
-                <div className={styles.declLuna}>{d.luna}</div>
-                <div className={styles.declData}>{d.depusa ? `Depusă ${d.data}` : `Termen: ${d.data}`}</div>
+                <div className={styles.declLuna}>{m.luna}</div>
+                <div className={styles.declData}>{m.current ? `Termen: 25 luna viitoare` : "Perioadă închisă"}</div>
               </div>
-              <div className={styles.declSuma}>{d.suma.toLocaleString("ro-RO")} lei</div>
-              <div className={`${styles.declStatus} ${styles[`status_${d.status}`]}`}>
-                {d.status === "confirmata" ? "✓ Confirmată ANAF" : d.status === "in_pregatire" ? "⏳ În pregătire" : "Depusă"}
+              <div className={styles.declSuma}>{m.dePlata.toLocaleString("ro-RO")} lei</div>
+              <div className={`${styles.declStatus} ${m.current ? styles.status_in_pregatire : styles.status_confirmata}`}>
+                {m.current ? "⏳ În pregătire" : "✓ Confirmată ANAF"}
               </div>
-              {!d.depusa && <button className={styles.depuneBtn}>Depune acum</button>}
+              {m.current && <button className={styles.depuneBtn}>Depune acum</button>}
             </div>
           ))}
         </div>
