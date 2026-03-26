@@ -59,25 +59,28 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Get company from localStorage
-        const companyName = localStorage.getItem("focustax_company_name") || "Compania ta";
-        const companyCui = localStorage.getItem("focustax_company_id") || "RO123456";
+        const companyId = localStorage.getItem("focustax_company_id");
+        const companyName = localStorage.getItem("focustax_company_name") || "";
+        const companyCui = localStorage.getItem("focustax_company_cui") || "";
+
+        if (!companyId) {
+          window.location.href = "/manager/setup";
+          return;
+        }
 
         setCompany({
-          id: companyCui,
-          nume: companyName,
-          cui: companyCui,
+          id: companyId,
+          nume: companyName || "Companie necunoscută",
+          cui: companyCui || companyId,
         });
 
-        // Facturi
-        const facturiRes = await fetch("/api/facturi");
+        const facturiRes = await fetch(`/api/facturi?company_id=${encodeURIComponent(companyId)}`);
         const facturiData = await facturiRes.json();
-        setFacturi(facturiData.slice(0, 5)); // Show last 5
+        setFacturi(Array.isArray(facturiData) ? facturiData.slice(0, 5) : []);
 
-        // Angajati
-        const angajatiRes = await fetch("/api/angajati");
+        const angajatiRes = await fetch(`/api/angajati?company_id=${encodeURIComponent(companyId)}`);
         const angajatiData = await angajatiRes.json();
-        setAngajati(angajatiData);
+        setAngajati(Array.isArray(angajatiData) ? angajatiData : []);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -139,19 +142,19 @@ export default function Dashboard() {
       msg: `Bine ai venit, ${company?.nume || "Manager"}! Configurația inițială e completă.`,
       action: null,
     },
-    facturi.length === 0 && {
+    ...facturi.length === 0 ? [{
       type: "warning",
       icon: "💡",
       msg: "Nicio factură încă. Începe prin a emite prima factură.",
       action: "Emite factură",
-    },
+    }] : [],
     {
       type: "info",
       icon: "🤖",
       msg: "ANA AI e gata să te ajute. Întreabă orice despre Codul Fiscal.",
       action: null,
     },
-  ].filter(Boolean);
+  ];
 
   const activities = [
     facturi[0] && {

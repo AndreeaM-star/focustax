@@ -18,23 +18,23 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [companyName, setCompanyName] = useState("Demo SRL");
-  const [companyCui, setCompanyCui] = useState("RO12345678");
+  const [companyName, setCompanyName] = useState("");
+  const [companyCui, setCompanyCui] = useState("");
 
   useEffect(() => {
-    // Check if user is on setup page
+    // allow setup page without company
     if (pathname === "/manager/setup") return;
 
-    // Check if company is configured
     const companyId = localStorage.getItem("focustax_company_id");
     const companyname = localStorage.getItem("focustax_company_name");
+    const companycui = localStorage.getItem("focustax_company_cui");
 
-    if (companyname) {
-      setCompanyName(companyname);
-    }
+    if (companyname) setCompanyName(companyname);
+    if (companycui) setCompanyCui(companycui);
 
     if (!companyId) {
       router.push("/manager/setup");
+      return;
     }
   }, [pathname, router]);
 

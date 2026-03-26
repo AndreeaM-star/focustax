@@ -3,13 +3,18 @@ import { createAdminClient } from "@/lib/supabase";
 import { nextInvoiceNumber } from "@/lib/salary";
 
 // GET /api/facturi — list all
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const companyId = searchParams.get("company_id");
+
     const sb = createAdminClient();
-    const { data, error } = await sb
-      .from("facturi")
-      .select("*")
-      .order("created_at", { ascending: false });
+    let query = sb.from("facturi").select("*").order("created_at", { ascending: false });
+    if (companyId) {
+      query = query.eq("company_id", companyId);
+    }
+
+    const { data, error } = await query;
 
     if (error) throw error;
     return NextResponse.json(data ?? []);
@@ -40,7 +45,8 @@ export async function POST(req: NextRequest) {
       .insert({
         numar,
         client: body.client,
-        cui_client: body.cuiClient ?? "",
+        cui_client: body.cui_client ?? "",
+        company_id: body.company_id ?? null,
         valoare: body.valoare,
         tva: body.tva,
         data: body.data,

@@ -2,14 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 
 // GET /api/angajati
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const companyId = searchParams.get("company_id");
+
     const sb = createAdminClient();
-    const { data, error } = await sb
+    let query = sb
       .from("angajati")
       .select("*")
       .eq("activ", true)
       .order("created_at", { ascending: false });
+
+    if (companyId) {
+      query = query.eq("company_id", companyId);
+    }
+
+    const { data, error } = await query;
 
     if (error) throw error;
     return NextResponse.json(data ?? []);

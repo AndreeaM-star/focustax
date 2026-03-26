@@ -92,6 +92,7 @@ export default function SetupPage() {
       // Save to localStorage to mark setup as complete
       localStorage.setItem("focustax_company_id", company.id);
       localStorage.setItem("focustax_company_name", company.nume);
+      localStorage.setItem("focustax_company_cui", company.cui || form.cui);
 
       setSuccess("🎉 Companie configurată cu succes!");
       setTimeout(() => {
@@ -106,9 +107,10 @@ export default function SetupPage() {
   };
 
   const handleSkip = () => {
-    // Use Demo company
-    localStorage.setItem("focustax_company_id", "demo");
-    localStorage.setItem("focustax_company_name", "Demo SRL");
+    // Setup placeholder, to be replaced later with real company info
+    localStorage.setItem("focustax_company_id", "temp");
+    localStorage.setItem("focustax_company_name", "Companie temporară");
+    localStorage.setItem("focustax_company_cui", "")
     router.push("/manager");
   };
 

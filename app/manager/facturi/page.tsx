@@ -18,13 +18,7 @@ interface Factura {
   descriere?: string;
 }
 
-const seed: Factura[] = [
-  { id: "1", numar: "F2026-0847", client: "Alpha Tech SRL", cuiClient: "RO44556677", valoare: 3200, tva: 608, data: "2026-03-26", scadenta: "2026-04-25", status: "validata", descriere: "Servicii consultanță IT" },
-  { id: "2", numar: "F2026-0846", client: "Beta Construct SA", cuiClient: "RO11223344", valoare: 12450, tva: 2365.5, data: "2026-03-25", scadenta: "2026-04-24", status: "validata", descriere: "Materiale construcții" },
-  { id: "3", numar: "F2026-0845", client: "Gamma Logistic SRL", cuiClient: "RO88990011", valoare: 5800, tva: 1102, data: "2026-03-24", scadenta: "2026-04-23", status: "in_asteptare", descriere: "Transport marfă" },
-  { id: "4", numar: "F2026-0844", client: "Delta Food SRL", cuiClient: "RO22334455", valoare: 940, tva: 84.6, data: "2026-03-23", scadenta: "2026-04-22", status: "in_asteptare", descriere: "Produse alimentare (TVA 9%)" },
-  { id: "5", numar: "F2026-0843", client: "Epsilon Media SRL", cuiClient: "RO66778899", valoare: 2100, tva: 399, data: "2026-03-22", scadenta: "2026-04-21", status: "respinsa", descriere: "Servicii publicitate" },
-];
+
 
 const statusConfig: Record<Status, { label: string; color: string }> = {
   validata:      { label: "Validată ANAF", color: "green" },
@@ -57,17 +51,19 @@ function useInvoices() {
 
   const add = async (f: Omit<Factura, "id" | "numar" | "status">) => {
     try {
+      const companyId = localStorage.getItem("focustax_company_id");
       const res = await fetch("/api/facturi", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           client: f.client,
-          cuiClient: f.cui_client,
+          cui_client: f.cui_client,
           valoare: f.valoare,
           tva: f.tva,
           data: f.data,
           scadenta: f.scadenta,
           descriere: f.descriere,
+          company_id: companyId,
         }),
       });
       const newFactura = await res.json();
@@ -93,7 +89,7 @@ function useInvoices() {
 
 const emptyForm = {
   client: "",
-  cuiClient: "",
+  cui_client: "",
   valoare: "",
   cotaTVA: 19,
   data: new Date().toISOString().slice(0, 10),
@@ -124,7 +120,7 @@ export default function FacturiPage() {
     try {
       const nf = await add({
         client: form.client,
-        cui_client: form.cuiClient,
+        cui_client: form.cui_client,
         valoare: val,
         tva,
         data: form.data,
@@ -235,7 +231,7 @@ export default function FacturiPage() {
               </div>
               <div className={styles.invoiceDetails}>
                 <span className={styles.invoiceClient}>🏢 {f.client}</span>
-                <span className={styles.invoiceCUI}>CUI: {f.cuiClient}</span>
+                <span className={styles.invoiceCUI}>CUI: {f.cui_client || "-"}</span>
               </div>
               <div className={styles.invoiceDesc}>{f.descriere}</div>
               <div className={styles.invoiceFooter}>
@@ -278,8 +274,8 @@ export default function FacturiPage() {
                   CUI Client
                   <input
                     className={styles.input}
-                    value={form.cuiClient}
-                    onChange={(e) => setForm({ ...form, cuiClient: e.target.value })}
+                    value={form.cui_client}
+                    onChange={(e) => setForm({ ...form, cui_client: e.target.value })}
                     placeholder="RO12345678"
                   />
                 </label>
