@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./manager.module.css";
@@ -15,36 +15,74 @@ const navItems = [
   { href: "/manager/settings", label: "Setări",          icon: "⚙️" },
 ];
 
+const DEMO_WORDS = ["demo", "test", "exemplu", "sample", "fictiv"];
+
+function clearCompany() {
+  localStorage.removeItem("focustax_company_id");
+  localStorage.removeItem("focustax_company_name");
+  localStorage.removeItem("focustax_company_cui");
+}
+
+function isDemoName(name: string) {
+  const n = name.toLowerCase();
+  return DEMO_WORDS.some((w) => n.includes(w));
+}
+
 export default function ManagerShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [companyCui,  setCompanyCui]  = useState("");
   const [checked, setChecked] = useState(false);
+  const verifiedRef = useRef(false);
 
   const isSetupPage = pathname === "/manager/setup" || pathname === "/manager/setup/";
 
   useEffect(() => {
     if (isSetupPage) { setChecked(true); return; }
+    if (verifiedRef.current) return; // Already verified this session
 
-    const companyId   = localStorage.getItem("focustax_company_id");
-    const companyname = localStorage.getItem("focustax_company_name") ?? "";
-    const companycui  = localStorage.getItem("focustax_company_cui")  ?? "";
-
+    const companyId = localStorage.getItem("focustax_company_id") ?? "";
     const INVALID_IDS = ["", "demo", "temp", "null", "undefined"];
-    const isInvalid = !companyId || INVALID_IDS.includes(companyId);
 
-    if (isInvalid) {
-      localStorage.removeItem("focustax_company_id");
-      localStorage.removeItem("focustax_company_name");
-      localStorage.removeItem("focustax_company_cui");
+    if (!companyId || INVALID_IDS.includes(companyId)) {
+      clearCompany();
       window.location.replace("/manager/setup/");
       return;
     }
 
-    setCompanyName(companyname);
-    setCompanyCui(companycui);
-    setChecked(true);
+    // Mark as verifying to prevent concurrent calls
+    verifiedRef.current = true;
+
+    // Verify company exists in Supabase + detect demo/test companies
+    fetch(`/api/companies/${companyId}`)
+      .then((r) => r.json())
+      .then((company) => {
+        const nome = company.nome ?? company.name ?? "";
+        if (!company.id || company.error || isDemoName(nome)) {
+          clearCompany();
+          window.location.replace("/manager/setup/");
+          return;
+        }
+        // Sync localStorage with fresh DB data
+        localStorage.setItem("focustax_company_name", nome);
+        localStorage.setItem("focustax_company_cui",  company.cui ?? "");
+        setCompanyName(nome);
+        setCompanyCui(company.cui ?? "");
+        setChecked(true);
+      })
+      .catch(() => {
+        // API unavailable — fall back to localStorage, but still check name
+        const nome = localStorage.getItem("focustax_company_name") ?? "";
+        if (isDemoName(nome)) {
+          clearCompany();
+          window.location.replace("/manager/setup/");
+          return;
+        }
+        setCompanyName(nome);
+        setCompanyCui(localStorage.getItem("focustax_company_cui") ?? "");
+        setChecked(true);
+      });
   }, [pathname, isSetupPage]);
 
   if (!checked) return null;

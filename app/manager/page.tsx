@@ -80,26 +80,17 @@ export default function Dashboard() {
         .finally(() => setAnafLoading(false));
     }
 
-    // Load company from localStorage
-    const companyId   = localStorage.getItem("focustax_company_id");
-    const companyName = localStorage.getItem("focustax_company_name") || "";
-    const companyCui  = localStorage.getItem("focustax_company_cui") || "";
+    // Load company from localStorage (ManagerShell already verified it)
+    const companyId   = localStorage.getItem("focustax_company_id") ?? "";
+    const companyName = localStorage.getItem("focustax_company_name") ?? "";
+    const companyCui  = localStorage.getItem("focustax_company_cui") ?? "";
 
-    const isDemo =
-      !companyId ||
-      companyId === "demo" ||
-      companyId === "temp" ||
-      companyName.toLowerCase().includes("demo");
-
-    if (isDemo && !code) {
-      localStorage.removeItem("focustax_company_id");
-      localStorage.removeItem("focustax_company_name");
-      localStorage.removeItem("focustax_company_cui");
-      window.location.href = "/manager/setup";
+    if (!companyId && !code) {
+      window.location.replace("/manager/setup/");
       return;
     }
 
-    setCompany({ id: companyId ?? "", nume: companyName || "Companie necunoscută", cui: companyCui });
+    setCompany({ id: companyId, nume: companyName || "Companie necunoscută", cui: companyCui });
 
     Promise.all([
       fetch(`/api/facturi?company_id=${companyId}`).then((r) => r.json()),
