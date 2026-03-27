@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import styles from "./manager.module.css";
 
 const navItems = [
@@ -17,7 +17,6 @@ const navItems = [
 
 export default function ManagerShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router   = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [companyCui,  setCompanyCui]  = useState("");
@@ -32,20 +31,21 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
     const companyname = localStorage.getItem("focustax_company_name") ?? "";
     const companycui  = localStorage.getItem("focustax_company_cui")  ?? "";
 
-    const isInvalid = !companyId || companyId === "demo" || companyId === "temp";
+    const INVALID_IDS = ["", "demo", "temp", "null", "undefined"];
+    const isInvalid = !companyId || INVALID_IDS.includes(companyId);
 
     if (isInvalid) {
       localStorage.removeItem("focustax_company_id");
       localStorage.removeItem("focustax_company_name");
       localStorage.removeItem("focustax_company_cui");
-      router.push("/manager/setup");
+      window.location.replace("/manager/setup/");
       return;
     }
 
     setCompanyName(companyname);
     setCompanyCui(companycui);
     setChecked(true);
-  }, [pathname, router, isSetupPage]);
+  }, [pathname, isSetupPage]);
 
   if (!checked) return null;
 

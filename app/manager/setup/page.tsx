@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 interface FormData {
@@ -20,7 +19,6 @@ interface FormData {
 }
 
 export default function SetupPage() {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState("");
   const [success, setSuccess] = useState("");
@@ -73,7 +71,7 @@ export default function SetupPage() {
       localStorage.setItem("focustax_company_cui",  company.cui);
 
       setSuccess("🎉 Companie configurată cu succes! Se redirecționează...");
-      setTimeout(() => router.push("/manager"), 1500);
+      setTimeout(() => { window.location.replace("/manager/"); }, 1500);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Eroare necunoscută");
     } finally {
