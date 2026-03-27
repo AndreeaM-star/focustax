@@ -36,7 +36,7 @@ interface AnafStatus {
 const ANAF_AUTH_URL =
   `https://logincert.anaf.ro/anaf-oauth2/v1/authorize` +
   `?response_type=code` +
-  `&client_id=3a0d365ab88e7f6c772fa28a9cdfbe217d354e0e366fc569` +
+  `&client_id=ea20061fb8e2ee3ef2d1d2e058dbbe217d354e0e1ac8c669` +
   `&redirect_uri=https%3A%2F%2Fwww.focustax.ro%2Fmanager%2F` +
   `&token_content_type=jwt`;
 
