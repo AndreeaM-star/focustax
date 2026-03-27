@@ -58,7 +58,7 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
     fetch(`/api/companies/${companyId}`)
       .then((r) => r.json())
       .then((company) => {
-        const nome = company.nome ?? company.name ?? "";
+        const nome = company.nume ?? company.nome ?? company.name ?? "";
         if (!company.id || company.error || isDemoName(nome)) {
           clearCompany();
           window.location.replace("/manager/setup/");

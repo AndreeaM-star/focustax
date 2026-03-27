@@ -57,12 +57,22 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Handle ANAF OAuth callback — extract ?code= from URL
+    // Handle ANAF OAuth callback — extract ?code= or ?error= from URL
     const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    if (code) {
-      // Remove code from URL immediately
+    const code  = params.get("code");
+    const oauthError = params.get("error");
+
+    // Always clean URL params
+    if (code || oauthError) {
       window.history.replaceState({}, document.title, "/manager/");
+    }
+
+    if (oauthError) {
+      // access_denied = user cancelled or ANAF rejected; just show disconnected state
+      setAnafStatus({ connected: false });
+    }
+
+    if (code) {
       // Exchange code for token
       setAnafLoading(true);
       fetch("/api/anaf/exchange", {
