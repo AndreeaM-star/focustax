@@ -63,11 +63,6 @@ export async function POST(req: NextRequest) {
 
     if (error) throw error;
 
-    // Simulate ANAF validation after 3s
-    setTimeout(async () => {
-      await sb.from("facturi").update({ status: "validata" }).eq("id", data.id);
-    }, 3000);
-
     return NextResponse.json(data, { status: 201 });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "DB error";

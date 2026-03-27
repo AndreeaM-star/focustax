@@ -10,61 +10,6 @@ interface Message {
   time: string;
 }
 
-// ANA's knowledge base — Romanian fiscal Q&A
-const knowledge: Array<{ patterns: string[]; response: string }> = [
-  {
-    patterns: ["d212", "declaratia unica", "declaratia 212", "pfa"],
-    response: "**D212 — Declarația Unică** trebuie depusă până pe **25 mai** anual de persoanele fizice cu venituri din activități independente, chirii, dividende sau din străinătate. O depui online prin SPV sau pe e-anaf.ro. Baza de calcul: venitul net estimat × 35% (CAS 25% + CASS 10%) + impozit 10%.",
-  },
-  {
-    patterns: ["d112", "declaratia 112", "salarii", "angajati"],
-    response: "**D112** — Declarația privind obligațiile de plată a contribuțiilor sociale se depune lunar până pe **25 ale lunii** pentru luna precedentă. Cuprinde CAS (25%), CASS (10%) și impozitul pe salarii (10%). O pot genera automat pentru tine — mergi la **HR & Salarii** din meniu.",
-  },
-  {
-    patterns: ["tva", "taxa pe valoare", "plafon", "300000", "300k"],
-    response: "**TVA România 2026:** Cota standard este **19%** (a crescut de la 19% și rămâne la 19% în 2026). Înregistrare obligatorie când cifra de afaceri depășește **300.000 lei/an**. Cote reduse: 9% (alimente, medicamente, turism) și 5% (cărți, locuințe sociale). Declarația D300 se depune lunar sau trimestrial.",
-  },
-  {
-    patterns: ["efactura", "e-factura", "factura", "anaf", "xml", "transmitere"],
-    response: "**e-Factura** este obligatorie din 2024 pentru toți operatorii economici. Termenul de transmitere este **5 zile lucrătoare** de la data emiterii. Facturile se transmit în format XML UBL 2.1. Sistemul meu le trimite automat și primești răspunsul ANAF în timp real. Mergi la **e-Factura** să emiți una acum.",
-  },
-  {
-    patterns: ["impozit", "profit", "micro", "microintreprindere", "1%", "3%"],
-    response: "**Microîntreprinderi 2026:** Impozit pe venituri de **1%** dacă ai cel puțin 1 angajat și CA ≤ 500.000 EUR, sau **3%** fără angajat. Atenție: nu poți opta dacă activezi în domenii restricționate (consultanță, IT cu plafon special). Alternativa: **impozit pe profit 16%** dacă ești SRL obișnuit.",
-  },
-  {
-    patterns: ["dividend", "dividende", "distributie profit"],
-    response: "**Dividende 2026:** Impozit la sursă **8%** (redus de la 10% prin OUG, verifică legislația la zi). Mai ai CASS 10% dacă dividendele depășesc 6 salarii minime brute (≈14.394 lei/an). Dividendele se distribuie după aprobarea bilanțului. Recomand consultarea unui contabil pentru optimizare fiscală.",
-  },
-  {
-    patterns: ["evat", "e-vat", "decont", "decontul"],
-    response: "**RO e-VAT** — sistemul ANAF precompletează declarația D300 cu datele din e-Factura. Tu verifici și confirmi sau corectezi discrepanțele. Dacă nu intervii la timp și există diferențe, ANAF poate emite decizii de impunere. Te notific automat dacă detectez discrepanțe — mergi la **e-VAT** din meniu.",
-  },
-  {
-    patterns: ["etransport", "e-transport", "uit", "transport", "marfa"],
-    response: "**RO e-Transport** — obligatoriu pentru transportul rutier de bunuri cu risc fiscal ridicat. Se generează un cod **UIT** (Unique Identification Token) înainte de începerea transportului. Sistemul meu îl generează automat din comenzi și se integrează cu GPS-ul flotei tale.",
-  },
-  {
-    patterns: ["spv", "spatiu privat virtual", "mesaje anaf"],
-    response: "**SPV (Spațiul Privat Virtual)** este platforma ANAF unde primești notificări, decizii de impunere și alte comunicări oficiale. Ai 2 mesaje noi în SPV — unul legat de confirmarea înregistrării TVA și unul referitor la rambursarea TVA din trimestrul trecut. Vrei să le citesc?",
-  },
-  {
-    patterns: ["profit", "stare firma", "cifra de afaceri", "raport", "situatie"],
-    response: "Pe baza datelor din sistemul tău pentru luna Martie 2026:\n- **Cifră de afaceri**: ~149.700 lei\n- **Cheltuieli estimate**: ~106.900 lei\n- **Profit brut**: ~42.800 lei\n- **Impozit estimat** (micro 1%): ~1.497 lei\n\nForecast Aprilie: +12% față de martie, bazat pe comenzile confirmate.",
-  },
-  {
-    patterns: ["cas", "contributii", "pensie", "sanatate", "cass"],
-    response: "**Contribuții sociale 2026 (angajat):**\n- CAS (pensie): **25%** din brut\n- CASS (sănătate): **10%** din brut\n- Impozit venit: **10%** din baza impozabilă\n\n**Angajator:**\n- CAM (asigurare muncă): **2.25%** din brut\n\nDeducerile personale: 460 lei + 200 lei/copil (pentru salarii mici).",
-  },
-  {
-    patterns: ["scadenta", "termene", "calendar", "mai", "luna", "25"],
-    response: "**Calendar fiscal 2026 — termene apropiate:**\n- **25 Mar**: D300 TVA Februarie, D112 salarii Februarie\n- **25 Apr**: D300 TVA Martie, D112 salarii Martie, avans impozit profit T1\n- **25 Mai**: D212 Declarația Unică (persoane fizice)\n- **25 Iun**: D300 TVA Mai, D112 salarii Mai\n\nVrei să programez remindere automate?",
-  },
-  {
-    patterns: ["hello", "salut", "buna", "buna ziua", "hey", "alo"],
-    response: "Bună ziua! Sunt **ANA**, asistentul tău fiscal AI, antrenat pe Codul Fiscal român 2026. Pot să te ajut cu:\n- Informații despre declarații și termene\n- Calcularea taxelor și contribuțiilor\n- Explicarea sistemelor ANAF (e-Factura, e-VAT, SPV)\n- Situația financiară a firmei tale\n\nCe dorești să afli?",
-  },
-];
 
 const suggestions = [
   "Ce declarații am de depus în mai?",
@@ -74,16 +19,6 @@ const suggestions = [
   "Arată-mi situația financiară",
   "Explică-mi microîntreprindere vs profit",
 ];
-
-function getAnaResponse(input: string): string {
-  const lower = input.toLowerCase();
-  for (const kb of knowledge) {
-    if (kb.patterns.some((p) => lower.includes(p))) {
-      return kb.response;
-    }
-  }
-  return `Am primit întrebarea ta: *"${input}"*\n\nAceasta necesită o analiză mai detaliată a legislației fiscale actuale. Recomand consultarea unui contabil autorizat sau accesarea site-ului ANAF pentru informații oficiale. Pot ajuta cu întrebări despre: declarații (D212, D112, D300), TVA, e-Factura, contribuții sociale, microîntreprinderi, sau situația firmei tale.`;
-}
 
 function formatText(text: string): string {
   return text

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 interface Company {
@@ -21,7 +20,6 @@ interface Company {
 }
 
 export default function SettingsPage() {
-  const router = useRouter();
   const [company, setCompany] = useState<Company | null>(null);
   const [form, setForm]       = useState<Partial<Company>>({});
   const [loading, setLoading] = useState(true);
@@ -32,7 +30,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const id = localStorage.getItem("focustax_company_id") ?? "";
     if (!id || id === "demo" || id === "temp") {
-      router.push("/manager/setup");
+      window.location.replace("/manager/setup/");
       return;
     }
 
@@ -45,7 +43,7 @@ export default function SettingsPage() {
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
-  }, [router]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -87,7 +85,7 @@ export default function SettingsPage() {
     localStorage.removeItem("focustax_company_id");
     localStorage.removeItem("focustax_company_name");
     localStorage.removeItem("focustax_company_cui");
-    router.push("/manager/setup");
+    window.location.replace("/manager/setup/");
   };
 
   if (loading) return (

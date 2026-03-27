@@ -1,6 +1,6 @@
 /**
  * Romanian salary calculator — 2026 rules
- * CAS: 25% angajat | CASS: 10% angajat | Impozit: 10% | CAM: 4% angajator
+ * CAS: 25% angajat | CASS: 10% angajat | Impozit: 10% | CAM: 2.25% angajator
  */
 export interface SalaryResult {
   brut: number;
@@ -53,8 +53,8 @@ export function calcSalariu(
   // Net
   const net = brut - cas - cass - impozit;
 
-  // Costuri angajator: brut + CAM 4%
-  const camAngajator = Math.round(brut * 0.04);
+  // Costuri angajator: brut + CAM 2.25%
+  const camAngajator = Math.round(brut * 0.0225);
   const totalAngajator = brut + camAngajator;
 
   return {
@@ -91,8 +91,9 @@ export function calcPlafonTVA(
  * Genereaza numarul urmator de factura
  */
 export function nextInvoiceNumber(lastNumber: string): string {
+  const year = new Date().getFullYear();
   const match = lastNumber.match(/(\d+)$/);
-  if (!match) return "F2026-0001";
+  if (!match) return `F${year}-0001`;
   const n = parseInt(match[1], 10) + 1;
-  return `F2026-${n.toString().padStart(4, "0")}`;
+  return `F${year}-${n.toString().padStart(4, "0")}`;
 }

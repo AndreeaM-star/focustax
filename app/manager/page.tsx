@@ -43,7 +43,7 @@ const ANAF_AUTH_URL =
 const quickActions = [
   { label: "Emite Factură",      icon: "🧾", href: "/manager/facturi" },
   { label: "Calculează Salariu", icon: "👥", href: "/manager/hr" },
-  { label: "Interoghează ANA",   icon: "🤖", href: "/manager/ai" },
+  { label: "Întreabă ANA",       icon: "🤖", href: "/manager/ai" },
   { label: "Raport TVA",         icon: "📊", href: "/manager/tva" },
   { label: "Conturi bancare",    icon: "🏦", href: "/manager/banci" },
 ];
@@ -122,25 +122,30 @@ export default function Dashboard() {
   };
 
   // Computed stats
-  const totalValoare = facturi.reduce((s, f) => s + Number(f.valoare), 0);
-  const totalTVA     = facturi.reduce((s, f) => s + Number(f.tva), 0);
+  const currMonth = new Date().toISOString().slice(0, 7); // "YYYY-MM"
+  const lunaLabel = new Date().toLocaleString("ro-RO", { month: "short" });
+  const lunaDisplay = lunaLabel.charAt(0).toUpperCase() + lunaLabel.slice(1);
+
+  const facturiCurr = facturi.filter((f) => f.data?.startsWith(currMonth));
+  const totalValoare = facturiCurr.reduce((s, f) => s + Number(f.valoare), 0);
+  const totalTVA     = facturiCurr.reduce((s, f) => s + Number(f.tva), 0);
   const validate     = facturi.filter((f) => f.status === "validata").length;
 
   const stats = [
-    { label: "Facturi Emise",   value: `${facturi.length} doc.`,           meta: `${validate} validate`, icon: "🧾", trend: "+8%",  up: true,  href: "/manager/facturi" },
-    { label: "TVA Total",       value: `${totalTVA.toLocaleString()} lei`,  meta: "Colectat luna curentă", icon: "📊", trend: "+12%", up: true,  href: "/manager/tva" },
-    { label: "Angajați Activi", value: `${angajati.length} pers.`,
+    { label: "Facturi Emise",          value: `${facturi.length} doc.`,           meta: `${validate} validate`, icon: "🧾", href: "/manager/facturi" },
+    { label: "TVA Colectat",           value: `${totalTVA.toLocaleString()} lei`,  meta: "Luna curentă", icon: "📊", href: "/manager/tva" },
+    { label: "Angajați Activi",        value: `${angajati.length} pers.`,
       meta: angajati.length > 0 ? `Fond brut: ${angajati.reduce((s, a) => s + a.brut_lunar, 0).toLocaleString()} lei` : "Adaugă angajați",
-      icon: "👥", trend: "0%", up: false, href: "/manager/hr" },
-    { label: "Venituri (Mar)",  value: `${totalValoare.toLocaleString()} lei`, meta: "Total facturi emise", icon: "📈", trend: "+5%",  up: true,  href: null },
+      icon: "👥", href: "/manager/hr" },
+    { label: `Venituri (${lunaDisplay})`, value: `${totalValoare.toLocaleString()} lei`, meta: "Facturi luna curentă", icon: "📈", href: null },
   ];
 
   const anafSystems = [
     { name: "e-Factura",    status: anafStatus.connected ? "conectat" : "neconectat", dot: anafStatus.connected ? "green" : "amber" },
-    { name: "e-VAT",        status: "activ",   dot: "green" },
-    { name: "e-Transport",  status: "activ",   dot: "green" },
-    { name: "SPV",          status: "în lucru", dot: "amber" },
-    { name: "Open Banking", status: "conectat", dot: "green" },
+    { name: "e-VAT",        status: "neconfigurat", dot: "amber" },
+    { name: "e-Transport",  status: "neconfigurat", dot: "amber" },
+    { name: "SPV",          status: "neconfigurat", dot: "amber" },
+    { name: "Open Banking", status: "neconfigurat", dot: "amber" },
   ];
 
   if (loading && !anafLoading) {
@@ -244,7 +249,6 @@ export default function Dashboard() {
               <Link href={s.href} className={styles.statCardInner}>
                 <div className={styles.statTop}>
                   <span className={styles.statIcon}>{s.icon}</span>
-                  <span className={`${styles.statTrend} ${s.up ? styles.trendUp : styles.trendDown}`}>{s.trend}</span>
                 </div>
                 <span className={styles.statValue}>{s.value}</span>
                 <span className={styles.statLabel}>{s.label}</span>
@@ -254,7 +258,6 @@ export default function Dashboard() {
               <div className={styles.statCardInner}>
                 <div className={styles.statTop}>
                   <span className={styles.statIcon}>{s.icon}</span>
-                  <span className={`${styles.statTrend} ${s.up ? styles.trendUp : styles.trendDown}`}>{s.trend}</span>
                 </div>
                 <span className={styles.statValue}>{s.value}</span>
                 <span className={styles.statLabel}>{s.label}</span>

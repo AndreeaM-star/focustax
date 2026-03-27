@@ -27,7 +27,8 @@ export default function TVAPage() {
   const currentMonth = new Date().toISOString().slice(0, 7); // "2026-03"
   const facturiCurente = facturi.filter((f) => f.data?.startsWith(currentMonth) && f.status === "validata");
   const tvaColectat    = facturiCurente.reduce((s, f) => s + Number(f.tva), 0);
-  const tvaDeductibil  = Math.round(tvaColectat * 0.42);
+  // TVA deductibil = 0 până când sunt adăugate facturi de achiziție
+  const tvaDeductibil  = 0;
   const tvaDePlata     = Math.max(0, tvaColectat - tvaDeductibil);
 
   const cifraDeAfaceri = facturi.reduce((s, f) => s + Number(f.valoare), 0);
@@ -43,10 +44,9 @@ export default function TVAPage() {
       const m = f.data.slice(0, 7); // "YYYY-MM"
       if (!months[m]) months[m] = { colectat: 0, deductibil: 0, dePlata: 0 };
       const col = Number(f.tva);
-      const ded = Math.round(col * 0.42);
       months[m].colectat  += col;
-      months[m].deductibil += ded;
-      months[m].dePlata   += Math.max(0, col - ded);
+      months[m].deductibil += 0;
+      months[m].dePlata   += col;
     }
     return Object.entries(months)
       .sort(([a], [b]) => a.localeCompare(b))
@@ -101,9 +101,9 @@ export default function TVAPage() {
         </div>
         <div className={styles.statCard}>
           <span className={styles.statIcon}>📤</span>
-          <span className={styles.statLabel}>TVA Deductibil (est.)</span>
+          <span className={styles.statLabel}>TVA Deductibil</span>
           <span className={styles.statValue}>{tvaDeductibil.toLocaleString("ro-RO")} lei</span>
-          <span className={styles.statMeta}>42% din colectat (estimat)</span>
+          <span className={styles.statMeta}>Adaugă facturi de achiziție</span>
         </div>
         <div className={`${styles.statCard} ${progresPlafon > 60 ? styles.statCardWarning : ""}`}>
           <span className={styles.statIcon}>🎯</span>
@@ -130,7 +130,7 @@ export default function TVAPage() {
         <div className={styles.plafonFooter}>
           <span>Ritm: ~{Math.round(cifraDeAfaceri / 3).toLocaleString("ro-RO")} lei/lună</span>
           {progresPlafon > 60 && <span className={styles.plafonAlert}>⚠ Estimat depășire în ~{ziPericol} zile</span>}
-          <button className={styles.btnPrimary}>Înregistrare TVA voluntară →</button>
+          <a href="https://www.anaf.ro/anaf/internet/RO/inregistrare-in-scopuri-de-tva" target="_blank" rel="noopener noreferrer" className={styles.btnPrimary}>Înregistrare TVA voluntară →</a>
         </div>
       </div>
 
@@ -138,8 +138,8 @@ export default function TVAPage() {
         <h2 className={styles.sectionTitle}>Istoric lunar TVA</h2>
         <div className={styles.monthGrid}>
           {lunarHistory.map((m) => (
-            <div key={m.luna} className={`${styles.monthCard} ${"current" in m ? styles.monthCardCurrent : ""}`}>
-              {"current" in m && <div className={styles.currentBadge}>Luna curentă</div>}
+            <div key={m.luna} className={`${styles.monthCard} ${m.current ? styles.monthCardCurrent : ""}`}>
+              {m.current && <div className={styles.currentBadge}>Luna curentă</div>}
               <div className={styles.monthName}>{m.luna}</div>
               <div className={styles.monthRows}>
                 <div className={styles.monthRow}><span>TVA colectat</span><span className={styles.green}>{m.colectat.toLocaleString("ro-RO")} lei</span></div>
@@ -171,8 +171,8 @@ export default function TVAPage() {
                 <div className={styles.declData}>{m.current ? `Termen: 25 luna viitoare` : "Perioadă închisă"}</div>
               </div>
               <div className={styles.declSuma}>{m.dePlata.toLocaleString("ro-RO")} lei</div>
-              <div className={`${styles.declStatus} ${m.current ? styles.status_in_pregatire : styles.status_confirmata}`}>
-                {m.current ? "⏳ În pregătire" : "✓ Confirmată ANAF"}
+              <div className={`${styles.declStatus} ${m.current ? styles.status_in_pregatire : styles.status_inchisa}`}>
+                {m.current ? "⏳ În pregătire" : "Perioadă închisă"}
               </div>
               {m.current && <button className={styles.depuneBtn}>Depune acum</button>}
             </div>

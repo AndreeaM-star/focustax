@@ -199,8 +199,7 @@ export default function HRPage() {
                 const r = calcSalariu(Number(form.brutLunar), form.nrCopii, form.pontaj);
                 return <div className={styles.tvaPreview}>Preview: Net = <strong>{r.net.toLocaleString("ro-RO")} lei</strong> · Cost angajator: <strong>{r.totalAngajator.toLocaleString("ro-RO")} lei</strong></div>;
               })()}
-              <div className={styles.d112Note}>🤖 D112 va fi generat automat în ziua de 25 a lunii.</div>
-              <div className={styles.formActions}>
+<div className={styles.formActions}>
                 <button type="button" className={styles.btnSecondary} onClick={() => setShowForm(false)}>Anulează</button>
                 <button type="submit" className={styles.btnPrimary}>Adaugă angajat →</button>
               </div>
