@@ -83,10 +83,14 @@ export default function SetupPage() {
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1>🚀 Configurare FocusTax Manager</h1>
+          <div className={styles.logoRow}>
+            <span className={styles.logoText}>Focus<span>Tax</span></span>
+            <span className={styles.badge}>Manager</span>
+          </div>
+          <h1>Configurează firma ta</h1>
           <p>
-            Introdu datele firmei tale pentru a accesa dashboard-ul personalizat cu e-Factura,
-            HR & Salarii, e-VAT și ANA — asistentul AI fiscal.
+            Introdu datele firmei pentru a accesa dashboard-ul cu e-Factura,
+            HR &amp; Salarii, e-VAT și ANA — asistentul AI fiscal.
           </p>
         </div>
 
@@ -95,7 +99,7 @@ export default function SetupPage() {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           {/* Company Info */}
-          <div className={styles.sectionTitle}>📋 Date Companie *</div>
+          <div className={styles.sectionTitle}>📋 Date Companie</div>
           <div className={styles.fieldGroup}>
             <div className={styles.field}>
               <label>Nume Companie *</label>
@@ -183,7 +187,14 @@ export default function SetupPage() {
 
           <div className={styles.actions}>
             <button type="submit" className={styles.btnPrimary} disabled={loading}>
-              {loading ? "Se salvează..." : "✓ Intră în Manager →"}
+              {loading ? (
+                <>
+                  <span className={styles.spinner} />
+                  Se salvează...
+                </>
+              ) : (
+                "Intră în Manager →"
+              )}
             </button>
           </div>
         </form>
