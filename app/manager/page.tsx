@@ -54,6 +54,7 @@ export default function Dashboard() {
   const [company, setCompany] = useState<Company | null>(null);
   const [anafStatus, setAnafStatus] = useState<AnafStatus>({ connected: false });
   const [anafLoading, setAnafLoading] = useState(false);
+  const [anafDenied, setAnafDenied] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -68,8 +69,8 @@ export default function Dashboard() {
     }
 
     if (oauthError) {
-      // access_denied = user cancelled or ANAF rejected; just show disconnected state
       setAnafStatus({ connected: false });
+      if (oauthError === "access_denied") setAnafDenied(true);
     }
 
     if (code) {
@@ -179,17 +180,26 @@ export default function Dashboard() {
         </div>
       )}
       {!anafLoading && !anafStatus.connected && (
-        <div className={styles.briefingBox} style={{ borderColor: "#f59e0b" }}>
+        <div className={styles.briefingBox} style={{ borderColor: anafDenied ? "#dc2626" : "#f59e0b" }}>
           <div style={{ padding: "0.75rem 1rem", display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-            <span style={{ fontSize: "0.95rem" }}>
-              🔐 <strong>Conectare ANAF</strong> — autorizează accesul la e-Factura, e-VAT și SPV
-            </span>
+            {anafDenied ? (
+              <span style={{ fontSize: "0.9rem" }}>
+                🔐 <strong>ANAF: acces refuzat</strong> — Conexiunea ANAF necesită un{" "}
+                <strong>certificat digital calificat</strong> (token USB) instalat și activ în browser.{" "}
+                Asigură-te că tokenul e conectat și software-ul certificatului rulează, apoi încearcă din nou.{" "}
+                Recomandat: <strong>Firefox</strong>.
+              </span>
+            ) : (
+              <span style={{ fontSize: "0.95rem" }}>
+                🔐 <strong>Conectare ANAF</strong> — autorizează accesul la e-Factura, e-VAT și SPV
+              </span>
+            )}
             <a
               href={ANAF_AUTH_URL}
               className={styles.statusText}
-              style={{ background: "#1d4ed8", color: "#fff", padding: "0.4rem 1rem", borderRadius: "6px", textDecoration: "none", fontWeight: 600, fontSize: "0.85rem" }}
+              style={{ background: "#1d4ed8", color: "#fff", padding: "0.4rem 1rem", borderRadius: "6px", textDecoration: "none", fontWeight: 600, fontSize: "0.85rem", whiteSpace: "nowrap" }}
             >
-              Conectare ANAF →
+              {anafDenied ? "Încearcă din nou →" : "Conectare ANAF →"}
             </a>
           </div>
         </div>

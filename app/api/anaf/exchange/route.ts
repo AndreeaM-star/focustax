@@ -48,17 +48,17 @@ export async function POST(req: NextRequest) {
       Date.now() + (tokenData.expires_in ?? 3600) * 1000
     ).toISOString();
 
+    // Delete old tokens, keep only latest
+    await sb.from("anaf_tokens").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+
     const { data, error } = await sb
       .from("anaf_tokens")
-      .upsert(
-        {
-          access_token: tokenData.access_token,
-          refresh_token: tokenData.refresh_token ?? null,
-          expires_at: expiresAt,
-          cui: tokenData.cui ?? null,
-        },
-        { onConflict: "id" }
-      )
+      .insert({
+        access_token: tokenData.access_token,
+        refresh_token: tokenData.refresh_token ?? null,
+        expires_at: expiresAt,
+        cui: tokenData.cui ?? null,
+      })
       .select()
       .single();
 
