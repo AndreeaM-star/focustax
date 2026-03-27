@@ -173,49 +173,87 @@ export default function Dashboard() {
 
       {/* ANAF OAuth banner */}
       {anafLoading && (
-        <div className={styles.briefingBox} style={{ borderColor: "#f59e0b" }}>
-          <div style={{ padding: "0.75rem 1rem", color: "#92400e" }}>
-            ⏳ Se procesează autorizarea ANAF...
+        <div className={styles.anafCard} style={{ borderColor: "#f59e0b", background: "rgba(251,191,36,0.06)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "#92400e", padding: "0.25rem 0" }}>
+            <span style={{ fontSize: "1.3rem" }}>⏳</span>
+            <div>
+              <div style={{ fontWeight: 600 }}>Se procesează autorizarea ANAF...</div>
+              <div style={{ fontSize: "0.82rem", opacity: 0.75, marginTop: "0.15rem" }}>Așteptați, schimbăm codul de autorizare cu token de acces.</div>
+            </div>
           </div>
         </div>
       )}
+
+      {!anafLoading && anafStatus.connected && (
+        <div className={styles.anafCard} style={{ borderColor: "#22c55e", background: "rgba(34,197,94,0.06)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flex: 1 }}>
+            <span style={{ fontSize: "1.5rem" }}>✅</span>
+            <div>
+              <div style={{ fontWeight: 700, color: "#15803d" }}>ANAF conectat</div>
+              <div style={{ fontSize: "0.82rem", color: "#166534", marginTop: "0.15rem" }}>
+                {anafStatus.cui && `CUI: ${anafStatus.cui} · `}
+                {anafStatus.expires_at
+                  ? `Token valabil până la ${new Date(anafStatus.expires_at).toLocaleDateString("ro-RO")}`
+                  : "e-Factura, e-VAT și SPV active"}
+              </div>
+            </div>
+          </div>
+          <button onClick={disconnectAnaf}
+            style={{ background: "transparent", border: "1px solid #dc2626", color: "#dc2626", padding: "0.35rem 0.9rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600, flexShrink: 0 }}>
+            Deconectare
+          </button>
+        </div>
+      )}
+
       {!anafLoading && !anafStatus.connected && (
-        <div className={styles.briefingBox} style={{ borderColor: anafDenied ? "#dc2626" : "#f59e0b" }}>
-          <div style={{ padding: "0.75rem 1rem", display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-            {anafDenied ? (
-              <span style={{ fontSize: "0.9rem" }}>
-                🔐 <strong>ANAF: acces refuzat</strong> — Conexiunea ANAF necesită un{" "}
-                <strong>certificat digital calificat</strong> (token USB) instalat și activ în browser.{" "}
-                Asigură-te că tokenul e conectat și software-ul certificatului rulează, apoi încearcă din nou.{" "}
-                Recomandat: <strong>Firefox</strong>.
-              </span>
-            ) : (
-              <span style={{ fontSize: "0.95rem" }}>
-                🔐 <strong>Conectare ANAF</strong> — autorizează accesul la e-Factura, e-VAT și SPV
-              </span>
-            )}
-            <a
-              href={ANAF_AUTH_URL}
-              className={styles.statusText}
-              style={{ background: "#1d4ed8", color: "#fff", padding: "0.4rem 1rem", borderRadius: "6px", textDecoration: "none", fontWeight: 600, fontSize: "0.85rem", whiteSpace: "nowrap" }}
-            >
+        <div className={styles.anafCard} style={{ borderColor: anafDenied ? "#f97316" : "#3b82f6", background: anafDenied ? "rgba(249,115,22,0.05)" : "rgba(59,130,246,0.05)", flexDirection: "column", alignItems: "stretch", gap: "1rem" }}>
+          {/* Header */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+              <span style={{ fontSize: "1.3rem" }}>{anafDenied ? "⚠️" : "🔐"}</span>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: "0.95rem", color: anafDenied ? "#c2410c" : "#1e40af" }}>
+                  {anafDenied ? "Autorizare refuzată — verifică pașii de mai jos" : "Conectează-te la ANAF"}
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "#6b7280", marginTop: "0.1rem" }}>
+                  {anafDenied ? "ANAF necesită un certificat digital calificat (token USB)" : "Accesează e-Factura, e-VAT și SPV — durează 30 de secunde"}
+                </div>
+              </div>
+            </div>
+            <a href={ANAF_AUTH_URL}
+              style={{ background: anafDenied ? "#ea580c" : "#1d4ed8", color: "#fff", padding: "0.5rem 1.25rem", borderRadius: "8px", textDecoration: "none", fontWeight: 700, fontSize: "0.85rem", whiteSpace: "nowrap", flexShrink: 0 }}>
               {anafDenied ? "Încearcă din nou →" : "Conectare ANAF →"}
             </a>
           </div>
-        </div>
-      )}
-      {!anafLoading && anafStatus.connected && (
-        <div className={styles.briefingBox} style={{ borderColor: "#22c55e" }}>
-          <div style={{ padding: "0.75rem 1rem", display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-            <span style={{ fontSize: "0.95rem" }}>
-              ✅ <strong>ANAF conectat</strong>
-              {anafStatus.cui && ` — CUI: ${anafStatus.cui}`}
-              {anafStatus.expires_at && ` · Expiră: ${new Date(anafStatus.expires_at).toLocaleDateString("ro-RO")}`}
-            </span>
-            <button onClick={disconnectAnaf}
-              style={{ background: "transparent", border: "1px solid #dc2626", color: "#dc2626", padding: "0.3rem 0.8rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem" }}>
-              Deconectare
-            </button>
+
+          {/* Steps */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem" }}>
+            {(anafDenied ? [
+              { num: "1", icon: "🔌", title: "Verifică tokenul USB", desc: "Asigură-te că tokenul cu certificatul e conectat fizic la PC" },
+              { num: "2", icon: "💻", title: "Software token deschis", desc: "SafeNet / eToken trebuie să ruleze în system tray (colț dreapta-jos)" },
+              { num: "3", icon: "🦊", title: "Folosește Firefox", desc: "Chrome nu recunoaște întotdeauna certificatele românești — Firefox e mai sigur" },
+            ] : [
+              { num: "1", icon: "🔌", title: "Conectează tokenul USB", desc: "Tokenul cu certificatul digital trebuie pluguit la PC" },
+              { num: "2", icon: "🦊", title: "Deschide în Firefox", desc: "Firefox are compatibilitate maximă cu certificatele românești" },
+              { num: "3", icon: "✅", title: "Autorizare automată", desc: "Click pe buton → selectezi certificatul la ANAF → gata, revii în dashboard" },
+            ]).map((step) => (
+              <div key={step.num} style={{ background: "rgba(255,255,255,0.6)", borderRadius: "10px", padding: "0.75rem 1rem", display: "flex", gap: "0.75rem", alignItems: "flex-start", border: "1px solid rgba(255,255,255,0.8)" }}>
+                <span style={{ fontSize: "1.2rem", flexShrink: 0 }}>{step.icon}</span>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: "0.82rem", marginBottom: "0.2rem" }}>{step.title}</div>
+                  <div style={{ fontSize: "0.75rem", color: "#6b7280", lineHeight: 1.4 }}>{step.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer */}
+          <div style={{ fontSize: "0.78rem", color: "#9ca3af", borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: "0.75rem" }}>
+            Nu ai certificat digital? Obține unul de la{" "}
+            <a href="https://www.certsign.ro" target="_blank" rel="noopener noreferrer" style={{ color: "#1d4ed8", fontWeight: 600 }}>certSIGN</a>
+            {" "}sau{" "}
+            <a href="https://www.digisign.ro" target="_blank" rel="noopener noreferrer" style={{ color: "#1d4ed8", fontWeight: 600 }}>DigiSign</a>
+            {" "}(~50–70 EUR/an, obligatoriu oricum pentru e-Factura în România).
           </div>
         </div>
       )}

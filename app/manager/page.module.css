@@ -69,6 +69,23 @@
 }
 
 /* ── Briefing Box ────────────────────────────────────────── */
+/* ── ANAF Connection Card ────────────────────────────────── */
+.anafCard {
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(40px) saturate(280%) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(280%) brightness(1.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: cardIn 0.35s ease both;
+}
+
 .briefingBox {
   background: rgba(255, 255, 255, 0.28);
   backdrop-filter: blur(40px) saturate(280%) brightness(1.1);
