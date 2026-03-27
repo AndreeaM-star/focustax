@@ -10,10 +10,13 @@ export async function GET() {
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase GET companies error:", error);
+      return NextResponse.json({ error: error.message ?? "DB error" }, { status: 500 });
+    }
     return NextResponse.json(data ?? []);
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : "DB error";
+    const msg = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
@@ -43,10 +46,14 @@ export async function POST(req: NextRequest) {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase insert company error:", error);
+      return NextResponse.json({ error: error.message ?? error.code ?? "DB error" }, { status: 500 });
+    }
     return NextResponse.json(data, { status: 201 });
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : "DB error";
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("POST /api/companies threw:", msg);
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
