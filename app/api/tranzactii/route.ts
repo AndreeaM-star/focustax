@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
+import { verifySession } from "@/lib/auth";
 
-// GET /api/tranzactii?company_id=UUID
+// GET /api/tranzactii
 export async function GET(req: NextRequest) {
   try {
-    const companyId = new URL(req.url).searchParams.get("company_id");
-    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
+    const companyId = await verifySession(req);
+    if (!companyId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const sb = createAdminClient();
     const { data, error } = await sb
@@ -23,9 +24,12 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// PATCH /api/tranzactii?id=UUID — toggle reconciliat
+// PATCH /api/tranzactii?id=UUID
 export async function PATCH(req: NextRequest) {
   try {
+    const companyId = await verifySession(req);
+    if (!companyId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     const id = new URL(req.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
@@ -34,7 +38,8 @@ export async function PATCH(req: NextRequest) {
     const { error } = await sb
       .from("tranzactii")
       .update({ reconciliat: body.reconciliat })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("company_id", companyId);
 
     if (error) throw error;
     return NextResponse.json({ ok: true });

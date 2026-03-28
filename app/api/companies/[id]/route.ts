@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
+import { verifySession } from "@/lib/auth";
+
+const DEMO_WORDS = ["demo", "test", "exemplu", "sample", "fictiv", "temp"];
+function isDemoName(name: string) {
+  return DEMO_WORDS.some((w) => (name ?? "").toLowerCase().includes(w));
+}
 
 // GET /api/companies/[id]
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -8,6 +14,12 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     const sb = createAdminClient();
     const { data, error } = await sb.from("companies").select("*").eq("id", id).single();
     if (error) throw error;
+
+    // Server-side demo detection
+    if (isDemoName(data.nume ?? "")) {
+      return NextResponse.json({ error: "demo_company" }, { status: 403 });
+    }
+
     return NextResponse.json(data);
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "DB error";
@@ -19,6 +31,13 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
+
+    // Verify session matches company
+    const sessionCompanyId = await verifySession(req);
+    if (!sessionCompanyId || sessionCompanyId !== id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const sb = createAdminClient();
 

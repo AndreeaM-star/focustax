@@ -33,7 +33,7 @@ interface AnafStatus {
   cui?: string;
 }
 
-const ANAF_AUTH_URL =
+const ANAF_BASE_URL =
   `https://logincert.anaf.ro/anaf-oauth2/v1/authorize` +
   `?response_type=code` +
   `&client_id=ea20061fb8e2ee3ef2d1d2e058dbbe217d354e0e1ac8c669` +
@@ -56,6 +56,7 @@ export default function Dashboard() {
   const [anafLoading, setAnafLoading] = useState(false);
   const [anafDenied, setAnafDenied] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [anafAuthUrl, setAnafAuthUrl] = useState(ANAF_BASE_URL);
 
   useEffect(() => {
     // Handle ANAF OAuth callback — extract ?code= or ?error= from URL
@@ -73,13 +74,35 @@ export default function Dashboard() {
       if (oauthError === "access_denied") setAnafDenied(true);
     }
 
+    // Load company from localStorage (ManagerShell already verified it)
+    const companyId   = localStorage.getItem("focustax_company_id") ?? "";
+    const companyName = localStorage.getItem("focustax_company_name") ?? "";
+    const companyCui  = localStorage.getItem("focustax_company_cui") ?? "";
+    const sessionToken = localStorage.getItem("focustax_session_token") ?? "";
+
+    if (!companyId && !code) {
+      window.location.replace("/manager/setup/");
+      return;
+    }
+
+    setCompany({ id: companyId, nume: companyName || "Companie necunoscută", cui: companyCui });
+
+    // Compute ANAF auth URL with state param containing companyId
+    if (companyId) {
+      const stateParam = btoa(JSON.stringify({ cid: companyId }));
+      setAnafAuthUrl(`${ANAF_BASE_URL}&state=${encodeURIComponent(stateParam)}`);
+    }
+
+    const authHeaders: Record<string, string> = {};
+    if (sessionToken) authHeaders["x-session-token"] = sessionToken;
+
     if (code) {
       // Exchange code for token
       setAnafLoading(true);
       fetch("/api/anaf/exchange", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code }),
+        headers: { "Content-Type": "application/json", ...authHeaders },
+        body: JSON.stringify({ code, companyId }),
       })
         .then((r) => r.json())
         .then((data) => {
@@ -91,22 +114,10 @@ export default function Dashboard() {
         .finally(() => setAnafLoading(false));
     }
 
-    // Load company from localStorage (ManagerShell already verified it)
-    const companyId   = localStorage.getItem("focustax_company_id") ?? "";
-    const companyName = localStorage.getItem("focustax_company_name") ?? "";
-    const companyCui  = localStorage.getItem("focustax_company_cui") ?? "";
-
-    if (!companyId && !code) {
-      window.location.replace("/manager/setup/");
-      return;
-    }
-
-    setCompany({ id: companyId, nume: companyName || "Companie necunoscută", cui: companyCui });
-
     Promise.all([
-      fetch(`/api/facturi?company_id=${companyId}`).then((r) => r.json()),
-      fetch(`/api/angajati?company_id=${companyId}`).then((r) => r.json()),
-      fetch("/api/anaf/exchange").then((r) => r.json()),
+      fetch("/api/facturi", { headers: authHeaders }).then((r) => r.json()),
+      fetch("/api/angajati", { headers: authHeaders }).then((r) => r.json()),
+      fetch("/api/anaf/exchange", { headers: authHeaders }).then((r) => r.json()),
     ])
       .then(([f, a, anaf]) => {
         setFacturi(Array.isArray(f) ? f.slice(0, 5) : []);
@@ -119,7 +130,10 @@ export default function Dashboard() {
 
   const disconnectAnaf = async () => {
     if (!confirm("Deconectezi ANAF? Vei pierde accesul la e-Factura până la reconectare.")) return;
-    await fetch("/api/anaf/exchange", { method: "DELETE" });
+    const sessionToken = localStorage.getItem("focustax_session_token") ?? "";
+    const authHeaders: Record<string, string> = {};
+    if (sessionToken) authHeaders["x-session-token"] = sessionToken;
+    await fetch("/api/anaf/exchange", { method: "DELETE", headers: authHeaders });
     setAnafStatus({ connected: false });
   };
 
@@ -139,18 +153,18 @@ export default function Dashboard() {
     { label: "Angajați Activi",        value: `${angajati.length} pers.`,
       meta: angajati.length > 0 ? `Fond brut: ${angajati.reduce((s, a) => s + a.brut_lunar, 0).toLocaleString()} lei` : "Adaugă angajați",
       icon: "👥", href: "/manager/hr" },
-    { label: `Venituri (${lunaDisplay})`, value: `${totalValoare.toLocaleString()} lei`, meta: "Facturi luna curentă", icon: "📈", href: null },
+    { label: `Venituri (${lunaDisplay})`, value: `${totalValoare.toLocaleString()} lei`, meta: "Fără TVA, luna curentă", icon: "📈", href: null },
   ];
 
   const anafSystems = [
     { name: "e-Factura",    status: anafStatus.connected ? "conectat" : "neconectat", dot: anafStatus.connected ? "green" : "amber" },
-    { name: "e-VAT",        status: "neconfigurat", dot: "amber" },
-    { name: "e-Transport",  status: "neconfigurat", dot: "amber" },
-    { name: "SPV",          status: "neconfigurat", dot: "amber" },
+    { name: "e-VAT",        status: anafStatus.connected ? "conectat" : "neconfigurat", dot: anafStatus.connected ? "green" : "amber" },
+    { name: "e-Transport",  status: anafStatus.connected ? "conectat" : "neconfigurat", dot: anafStatus.connected ? "green" : "amber" },
+    { name: "SPV",          status: anafStatus.connected ? "conectat" : "neconfigurat", dot: anafStatus.connected ? "green" : "amber" },
     { name: "Open Banking", status: "neconfigurat", dot: "amber" },
   ];
 
-  if (loading && !anafLoading) {
+  if (loading) {
     return <div className={styles.page}>Se încarcă...</div>;
   }
 
@@ -220,7 +234,7 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-            <a href={ANAF_AUTH_URL}
+            <a href={anafAuthUrl}
               style={{ background: anafDenied ? "#ea580c" : "#1d4ed8", color: "#fff", padding: "0.5rem 1.25rem", borderRadius: "8px", textDecoration: "none", fontWeight: 700, fontSize: "0.85rem", whiteSpace: "nowrap", flexShrink: 0 }}>
               {anafDenied ? "Încearcă din nou →" : "Conectare ANAF →"}
             </a>
@@ -373,7 +387,7 @@ export default function Dashboard() {
               ))}
             </div>
             {!anafStatus.connected && (
-              <a href={ANAF_AUTH_URL} className={styles.widgetLink}>
+              <a href={anafAuthUrl} className={styles.widgetLink}>
                 Conectare ANAF →
               </a>
             )}

@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
+import { verifySession } from "@/lib/auth";
 import { nextInvoiceNumber } from "@/lib/salary";
 
-// GET /api/facturi?company_id=UUID
+// GET /api/facturi
 export async function GET(req: NextRequest) {
   try {
-    const companyId = new URL(req.url).searchParams.get("company_id");
-    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
+    const companyId = await verifySession(req);
+    if (!companyId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const sb = createAdminClient();
     const { data, error } = await sb
@@ -23,16 +24,15 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST /api/facturi — body must include company_id
+// POST /api/facturi
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const companyId = body.company_id;
-    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
+    const companyId = await verifySession(req);
+    if (!companyId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+    const body = await req.json();
     const sb = createAdminClient();
 
-    // Get last invoice number for this specific company
     const { data: last } = await sb
       .from("facturi")
       .select("numar")
@@ -62,7 +62,6 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error) throw error;
-
     return NextResponse.json(data, { status: 201 });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "DB error";
@@ -73,11 +72,20 @@ export async function POST(req: NextRequest) {
 // DELETE /api/facturi?id=UUID
 export async function DELETE(req: NextRequest) {
   try {
+    const companyId = await verifySession(req);
+    if (!companyId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     const id = new URL(req.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
     const sb = createAdminClient();
-    const { error } = await sb.from("facturi").delete().eq("id", id);
+    // Only delete if belongs to this company
+    const { error } = await sb
+      .from("facturi")
+      .delete()
+      .eq("id", id)
+      .eq("company_id", companyId);
+
     if (error) throw error;
     return NextResponse.json({ ok: true });
   } catch (err: unknown) {

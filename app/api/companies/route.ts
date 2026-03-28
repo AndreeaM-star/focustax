@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
 
+const DEMO_WORDS = ["demo", "test", "exemplu", "sample", "fictiv", "temp"];
+
+function isDemoName(name: string) {
+  const n = (name ?? "").toLowerCase();
+  return DEMO_WORDS.some((w) => n.includes(w));
+}
+
+const CUI_REGEX = /^(RO)?\d{2,10}$/i;
+
 // GET /api/companies — list all
 export async function GET() {
   try {
@@ -25,13 +34,28 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+
+    // Validate name
+    if (!body.nume?.trim()) {
+      return NextResponse.json({ error: "Numele companiei este obligatoriu" }, { status: 400 });
+    }
+    if (isDemoName(body.nume)) {
+      return NextResponse.json({ error: "Numele companiei nu poate conține cuvinte rezervate (demo, test, fictiv etc.)" }, { status: 400 });
+    }
+
+    // Validate CUI
+    const cui = (body.cui ?? "").trim().toUpperCase();
+    if (!cui || !CUI_REGEX.test(cui)) {
+      return NextResponse.json({ error: "CUI invalid. Format acceptat: RO12345678 sau 12345678 (2-10 cifre)" }, { status: 400 });
+    }
+
     const sb = createAdminClient();
 
-    const { data, error } = await sb
+    const { data: company, error } = await sb
       .from("companies")
       .insert({
-        nume: body.nume,
-        cui: body.cui,
+        nume: body.nume.trim(),
+        cui,
         forma_juridica: body.forma_juridica ?? "SRL",
         capital_social: body.capital_social ?? null,
         adresa: body.adresa ?? "",
@@ -50,7 +74,21 @@ export async function POST(req: NextRequest) {
       console.error("Supabase insert company error:", error);
       return NextResponse.json({ error: error.message ?? error.code ?? "DB error" }, { status: 500 });
     }
-    return NextResponse.json(data, { status: 201 });
+
+    // Create session for new company
+    const { data: session, error: sessionError } = await sb
+      .from("sessions")
+      .insert({ company_id: company.id })
+      .select("session_token")
+      .single();
+
+    if (sessionError) {
+      console.error("Session create error:", sessionError);
+      // Still return company, just without session token
+      return NextResponse.json(company, { status: 201 });
+    }
+
+    return NextResponse.json({ ...company, session_token: session.session_token }, { status: 201 });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("POST /api/companies threw:", msg);

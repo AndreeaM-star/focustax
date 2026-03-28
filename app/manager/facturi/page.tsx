@@ -26,9 +26,10 @@ const statusConfig: Record<Status, { label: string; color: string }> = {
 };
 
 const coteTV = [
-  { label: "19% standard",      val: 19 },
-  { label: "9% redusă (alim.)", val: 9 },
+  { label: "0% scutit",        val: 0 },
   { label: "5% redusă (cărți)", val: 5 },
+  { label: "9% redusă (alim.)", val: 9 },
+  { label: "19% standard",      val: 19 },
 ];
 
 const emptyForm = {
@@ -37,7 +38,7 @@ const emptyForm = {
 };
 
 export default function FacturiPage() {
-  const [companyId, setCompanyId] = useState<string | null>(null);
+  const [sessionToken, setSessionToken] = useState("");
   const [facturi, setFacturi]     = useState<Factura[]>([]);
   const [loading, setLoading]     = useState(true);
   const [showForm, setShowForm]   = useState(false);
@@ -52,9 +53,13 @@ export default function FacturiPage() {
       window.location.href = "/manager/setup";
       return;
     }
-    setCompanyId(id);
+    const token = localStorage.getItem("focustax_session_token") ?? "";
+    setSessionToken(token);
 
-    fetch(`/api/facturi?company_id=${id}`)
+    const authHeaders: Record<string, string> = {};
+    if (token) authHeaders["x-session-token"] = token;
+
+    fetch("/api/facturi", { headers: authHeaders })
       .then((r) => r.json())
       .then((d) => setFacturi(Array.isArray(d) ? d : []))
       .catch(console.error)
@@ -63,18 +68,19 @@ export default function FacturiPage() {
 
   const add = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!companyId) return;
     setErr("");
     const val = parseFloat(form.valoare) || 0;
     const tva = val * (form.cotaTVA / 100);
     const scadenta = form.scadenta || new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
 
+    const authHeaders: Record<string, string> = { "Content-Type": "application/json" };
+    if (sessionToken) authHeaders["x-session-token"] = sessionToken;
+
     try {
       const res = await fetch("/api/facturi", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders,
         body: JSON.stringify({
-          company_id: companyId,
           client: form.client,
           cui_client: form.cui_client,
           valoare: val,
@@ -97,7 +103,9 @@ export default function FacturiPage() {
   };
 
   const remove = async (id: string) => {
-    await fetch(`/api/facturi?id=${id}`, { method: "DELETE" });
+    const authHeaders: Record<string, string> = {};
+    if (sessionToken) authHeaders["x-session-token"] = sessionToken;
+    await fetch(`/api/facturi?id=${id}`, { method: "DELETE", headers: authHeaders });
     setFacturi((prev) => prev.filter((f) => f.id !== id));
   };
 
@@ -120,7 +128,7 @@ export default function FacturiPage() {
 
       {newlyAdded && (
         <div className={styles.notif}>
-          ⏳ Factură trimisă la ANAF — validare în curs... Statusul se actualizează în câteva secunde.
+          ✅ Factură salvată în sistem. Conectează contul ANAF din Dashboard pentru transmitere automată.
         </div>
       )}
 
@@ -170,7 +178,7 @@ export default function FacturiPage() {
                 <div>
                   <span className={styles.invoiceNum}>{f.numar}</span>
                   <span className={`${styles.statusBadge} ${styles[`status_${sc.color}`]}`}>
-                    {isNew && f.status === "in_asteptare" ? "⏳ Validare ANAF..." : sc.label}
+                    {isNew && f.status === "in_asteptare" ? "✅ Salvată" : sc.label}
                   </span>
                 </div>
                 <div className={styles.invoiceValue}>
@@ -245,11 +253,11 @@ export default function FacturiPage() {
                 <textarea className={`${styles.input} ${styles.textarea}`} value={form.descriere} onChange={(e) => setForm({ ...form, descriere: e.target.value })} placeholder="Ex: Servicii consultanță IT Martie 2026" required rows={3} />
               </label>
               <div className={styles.anafNote}>
-                🔐 Factura va fi transmisă automat în e-Factura ANAF și validată în 5 zile lucrătoare.
+                💾 Factura va fi salvată în sistem. Conectează ANAF din Dashboard pentru transmitere automată.
               </div>
               <div className={styles.formActions}>
                 <button type="button" className={styles.btnSecondary} onClick={() => setShowForm(false)}>Anulează</button>
-                <button type="submit" className={styles.btnPrimary}>Emite și trimite la ANAF →</button>
+                <button type="submit" className={styles.btnPrimary}>Salvează factura →</button>
               </div>
             </form>
           </div>

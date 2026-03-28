@@ -34,7 +34,11 @@ export default function SettingsPage() {
       return;
     }
 
-    fetch(`/api/companies/${id}`)
+    const token = localStorage.getItem("focustax_session_token") ?? "";
+    const authHeaders: Record<string, string> = {};
+    if (token) authHeaders["x-session-token"] = token;
+
+    fetch(`/api/companies/${id}`, { headers: authHeaders })
       .then((r) => r.json())
       .then((data) => {
         if (data.error) throw new Error(data.error);
@@ -58,9 +62,12 @@ export default function SettingsPage() {
     setSuccess("");
 
     try {
+      const token = localStorage.getItem("focustax_session_token") ?? "";
+      const authHeaders: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) authHeaders["x-session-token"] = token;
       const res = await fetch(`/api/companies/${company.id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders,
         body: JSON.stringify(form),
       });
       const data = await res.json();
@@ -81,10 +88,11 @@ export default function SettingsPage() {
   };
 
   const handleLogout = () => {
-    if (!confirm("Deconectare din Manager? Vei putea reveni oricând cu aceleași date.")) return;
+    if (!confirm("Deconectare din Manager? Vei putea reveni oricând cu token-ul de sesiune.")) return;
     localStorage.removeItem("focustax_company_id");
     localStorage.removeItem("focustax_company_name");
     localStorage.removeItem("focustax_company_cui");
+    localStorage.removeItem("focustax_session_token");
     window.location.replace("/manager/setup/");
   };
 

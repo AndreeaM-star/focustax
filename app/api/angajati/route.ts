@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase";
+import { verifySession } from "@/lib/auth";
 
-// GET /api/angajati?company_id=UUID
+// GET /api/angajati
 export async function GET(req: NextRequest) {
   try {
-    const companyId = new URL(req.url).searchParams.get("company_id");
-    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
+    const companyId = await verifySession(req);
+    if (!companyId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const sb = createAdminClient();
     const { data, error } = await sb
@@ -23,13 +24,13 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST /api/angajati — body must include company_id
+// POST /api/angajati
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const companyId = body.company_id;
-    if (!companyId) return NextResponse.json({ error: "company_id required" }, { status: 400 });
+    const companyId = await verifySession(req);
+    if (!companyId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+    const body = await req.json();
     const sb = createAdminClient();
     const { data, error } = await sb
       .from("angajati")
@@ -54,14 +55,22 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// DELETE /api/angajati?id=UUID — soft delete
+// DELETE /api/angajati?id=UUID
 export async function DELETE(req: NextRequest) {
   try {
+    const companyId = await verifySession(req);
+    if (!companyId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     const id = new URL(req.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
     const sb = createAdminClient();
-    const { error } = await sb.from("angajati").update({ activ: false }).eq("id", id);
+    const { error } = await sb
+      .from("angajati")
+      .update({ activ: false })
+      .eq("id", id)
+      .eq("company_id", companyId);
+
     if (error) throw error;
     return NextResponse.json({ ok: true });
   } catch (err: unknown) {

@@ -35,7 +35,11 @@ export default function HRPage() {
     }
     setCompanyId(id);
 
-    fetch(`/api/angajati?company_id=${id}`)
+    const token = localStorage.getItem("focustax_session_token") ?? "";
+    const authHeaders: Record<string, string> = {};
+    if (token) authHeaders["x-session-token"] = token;
+
+    fetch("/api/angajati", { headers: authHeaders })
       .then((r) => r.json())
       .then((d) => setAngajati(Array.isArray(d) ? d : []))
       .catch(console.error)
@@ -45,11 +49,13 @@ export default function HRPage() {
   const addAngajat = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!companyId) return;
+    const token = localStorage.getItem("focustax_session_token") ?? "";
+    const authHeaders: Record<string, string> = { "Content-Type": "application/json" };
+    if (token) authHeaders["x-session-token"] = token;
     const res = await fetch("/api/angajati", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders,
       body: JSON.stringify({
-        company_id: companyId,
         nume: form.nume,
         functie: form.functie,
         brutLunar: Number(form.brutLunar),
@@ -67,7 +73,10 @@ export default function HRPage() {
   };
 
   const removeAngajat = async (id: string) => {
-    await fetch(`/api/angajati?id=${id}`, { method: "DELETE" });
+    const token = localStorage.getItem("focustax_session_token") ?? "";
+    const authHeaders: Record<string, string> = {};
+    if (token) authHeaders["x-session-token"] = token;
+    await fetch(`/api/angajati?id=${id}`, { method: "DELETE", headers: authHeaders });
     setAngajati((prev) => prev.filter((a) => a.id !== id));
   };
 
