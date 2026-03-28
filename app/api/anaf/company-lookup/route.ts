@@ -8,13 +8,30 @@ export async function GET(req: NextRequest) {
     }
 
     const today = new Date().toISOString().slice(0, 10);
-    const res = await fetch("https://webservicesp.anaf.ro/PlatitorTvaRest/api/v8/ws/tva", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify([{ cui: parseInt(cui), data: today }]),
-    });
 
-    if (!res.ok) throw new Error(`ANAF API error: ${res.status}`);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+    let res: Response;
+    try {
+      res = await fetch("https://webservicesp.anaf.ro/PlatitorTvaRest/api/v8/ws/tva", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify([{ cui: parseInt(cui), data: today }]),
+        signal: controller.signal,
+        cache: "no-store",
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
+
+    if (!res.ok) {
+      return NextResponse.json({ error: `ANAF API: ${res.status} ${res.statusText}` }, { status: 502 });
+    }
+
     const json = await res.json();
     const found = json?.found?.[0];
 
@@ -28,7 +45,10 @@ export async function GET(req: NextRequest) {
       tva: found.scpTVA ?? false,
     });
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : "Lookup error";
-    return NextResponse.json({ error: msg }, { status: 500 });
+    const isTimeout = err instanceof Error && err.name === "AbortError";
+    const msg = isTimeout
+      ? "Serviciul ANAF nu răspunde (timeout). Completează manual datele firmei."
+      : err instanceof Error ? err.message : "Lookup error";
+    return NextResponse.json({ error: msg }, { status: isTimeout ? 503 : 500 });
   }
 }

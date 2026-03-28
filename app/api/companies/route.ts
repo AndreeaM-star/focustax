@@ -51,6 +51,26 @@ export async function POST(req: NextRequest) {
 
     const sb = createAdminClient();
 
+    // Check if CUI already exists
+    const { data: existing } = await sb
+      .from("companies")
+      .select("*")
+      .eq("cui", cui)
+      .single();
+
+    if (existing) {
+      // Create new session for existing company
+      const { data: session } = await sb
+        .from("sessions")
+        .insert({ company_id: existing.id })
+        .select("session_token")
+        .single();
+      return NextResponse.json(
+        { ...existing, session_token: session?.session_token ?? null },
+        { status: 200 }
+      );
+    }
+
     const { data: company, error } = await sb
       .from("companies")
       .insert({

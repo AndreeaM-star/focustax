@@ -127,10 +127,10 @@
 
 /* Manager special link */
 .managerLink {
-  background: rgba(124, 58, 237, 0.1) !important;
-  border: 1px solid rgba(124, 58, 237, 0.22) !important;
+  background: rgba(0, 0, 0, 0.07) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
   border-radius: 10px !important;
-  color: #7c3aed !important;
+  color: #111 !important;
   padding: 5px 12px !important;
   font-weight: 700 !important;
   transition: background 0.15s !important;
@@ -138,8 +138,8 @@
 
 .managerLink:hover,
 .managerLink.activ {
-  background: rgba(124, 58, 237, 0.18) !important;
-  color: #6d28d9 !important;
+  background: rgba(0, 0, 0, 0.12) !important;
+  color: #000 !important;
 }
 
 /* Hamburger */
