@@ -44,11 +44,10 @@ export async function GET(req: NextRequest) {
       adresa: [found.adresa_sediu_social?.sdenumire_Strada, found.adresa_sediu_social?.snumar_Strada, found.adresa_sediu_social?.sdenumire_Localitate, found.adresa_sediu_social?.sdenumire_Judet].filter(Boolean).join(", "),
       tva: found.scpTVA ?? false,
     });
-  } catch (err: unknown) {
-    const isTimeout = err instanceof Error && err.name === "AbortError";
-    const msg = isTimeout
-      ? "Serviciul ANAF nu răspunde (timeout). Completează manual datele firmei."
-      : err instanceof Error ? err.message : "Lookup error";
-    return NextResponse.json({ error: msg }, { status: isTimeout ? 503 : 500 });
+  } catch {
+    return NextResponse.json(
+      { error: "Serviciul ANAF nu este disponibil momentan. Completează manual datele firmei." },
+      { status: 503 }
+    );
   }
 }
