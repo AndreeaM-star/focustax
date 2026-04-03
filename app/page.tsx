@@ -14,12 +14,12 @@ const carduri = [
   {
     icon: "🏢",
     titlu: "Impozit pe Profit",
-    text: "Societățile comerciale (SRL, SA) plătesc 16% impozit pe profit. Microîntreprinderile pot opta pentru impozit pe cifra de afaceri de 1% sau 3%.",
+    text: "Societățile comerciale (SRL, SA) plătesc 16% impozit pe profit. Microîntreprinderile plătesc 1% din cifra de afaceri (cotă unică din 2026). Plafonul de încadrare: 100.000 EUR/an.",
   },
   {
     icon: "🧾",
     titlu: "TVA",
-    text: "Cota standard de TVA este 19%. Există cote reduse de 9% (alimente, medicamente, turism) și 5% (cărți, locuințe sociale). Înregistrarea este obligatorie peste 300.000 lei.",
+    text: "Cota standard de TVA este 21% (din august 2025). Există cote reduse de 11% (alimente, medicamente, turism, restaurante) și 9% (locuințe noi). Înregistrarea este obligatorie peste 395.000 lei/an.",
   },
   {
     icon: "🛡️",
@@ -44,6 +44,25 @@ export default function HomePage() {
       <Navbar />
       <main>
         <section className={styles.hero}>
+          <div style={{
+            background: 'rgba(234, 179, 8, 0.15)',
+            border: '1px solid rgba(234, 179, 8, 0.4)',
+            borderRadius: '12px',
+            padding: '12px 20px',
+            marginBottom: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontSize: '0.875rem',
+            color: '#78350f',
+            backdropFilter: 'blur(8px)',
+          }}>
+            <span style={{ fontSize: '1.1rem' }}>⏰</span>
+            <span>
+              <strong>Termen D212 cu bonificație 3%: 15 aprilie 2026</strong> — depune și plătește înainte de această dată pentru reducerea impozitului.{' '}
+              <Link href="/ghiduri/d212-ghid-completare" style={{ color: '#92400e', textDecoration: 'underline' }}>Ghid complet →</Link>
+            </span>
+          </div>
           <span className={styles.pill}>GHID FISCAL ROMÂNIA</span>
           <h1 className={styles.heroTitle}>
             Taxele tale,
@@ -67,7 +86,7 @@ export default function HomePage() {
               <span className={styles.statDesc}>Impozit venit</span>
             </div>
             <div className={styles.statItem}>
-              <span className={styles.statNum}>19%</span>
+              <span className={styles.statNum}>21%</span>
               <span className={styles.statDesc}>TVA standard</span>
             </div>
             <div className={styles.statItem}>
@@ -75,7 +94,7 @@ export default function HomePage() {
               <span className={styles.statDesc}>CAS pensii</span>
             </div>
             <div className={styles.statItem}>
-              <span className={styles.statNum}>300k</span>
+              <span className={styles.statNum}>395k</span>
               <span className={styles.statDesc}>Prag TVA (lei)</span>
             </div>
           </div>

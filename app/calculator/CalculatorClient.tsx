@@ -4,15 +4,17 @@ import { useState, useRef, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
+import CalculatorCrypto from "./[tip]/calcs/CryptoCalc";
 
-type Tab = "salariu" | "pfa" | "firma" | "chirii" | "tva";
+type Tab = "salariu" | "pfa" | "firma" | "chirii" | "tva" | "crypto";
 
 /* ── helpers ──────────────────────────────── */
 const fmt = (n: number) =>
   n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
 const fmtDec = (n: number) =>
   n.toLocaleString("ro-RO", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-const SMIN = 4050;
+const getSMIN = () => new Date().getMonth() >= 6 ? 4325 : 4050;
+const SMIN = getSMIN();
 
 /* ── Visual Breakdown Bar ─────────────────── */
 function BreakdownBar({ segments }: {
@@ -244,7 +246,7 @@ function CalculatorFirma() {
 
     let impozitFirma = 0;
     if (tip === "micro") {
-      const cota = salVal >= 1 ? 0.01 : 0.03;
+      const cota = 0.01; // 2026: cotă unică 1%
       impozitFirma = caVal * cota;
       const reducereMax = Math.min(impozitFirma * 0.2, caVal * 0.0075);
       const reducereSpons = Math.min(sponsVal * cota * 2, reducereMax);
@@ -261,7 +263,7 @@ function CalculatorFirma() {
     }
 
     const profitNet = tip === "micro" ? caVal - impozitFirma : Math.max(0, profitVal - impozitFirma);
-    const impDividende = divVal * 0.08;
+    const impDividende = divVal * 0.16;
     const netDupaDividende = divVal - impDividende;
     const cotaEfectiva = profitVal > 0 ? (impozitFirma / profitVal) * 100 : (impozitFirma / caVal) * 100;
     setRez({ caVal, profitVal, impozitFirma, profitNet, divVal, impDividende, netDupaDividende, cotaEfectiva });
@@ -296,15 +298,9 @@ function CalculatorFirma() {
       )}
 
       {tip === "micro" && (
-        <div className={styles.calcSection}>
-          <label className={styles.label}>Număr salariați</label>
-          <div className={styles.btnGroup}>
-            {["0", "1", "2+"].map(s => (
-              <button key={s} className={`${styles.btnOption} ${salariati === s ? styles.activ : ""}`}
-                onClick={() => setSalariati(s)}>{s} salariați</button>
-            ))}
-          </div>
-          <p className={styles.hint}>0 salariați sau consultanță &gt;20% CA → 3% | ≥1 salariat → 1%</p>
+        <div className={styles.infoBox}>
+          <span className={styles.infoIcon}>ℹ️</span>
+          <span>Din 2026: cotă unică <strong>1%</strong> pentru toate microîntreprinderile. Eliminată cota de 3%. Plafonul: <strong>100.000 EUR/an</strong> (≈510.000 lei).</span>
         </div>
       )}
 
@@ -319,7 +315,7 @@ function CalculatorFirma() {
         <label className={styles.label}>Dividende distribuite <span className={styles.optional}>opțional</span></label>
         <input className={styles.input} type="number" placeholder="ex: 50.000" value={dividende}
           onChange={e => setDividende(e.target.value)} />
-        <p className={styles.hint}>Impozit dividende: 8% reținut la sursă (D205)</p>
+        <p className={styles.hint}>Impozit dividende: 16% reținut la sursă din 2026 (D205)</p>
       </div>
 
       {rez && (
@@ -327,7 +323,7 @@ function CalculatorFirma() {
           {tip === "micro" ? (
             <BreakdownBar segments={[
               { label: "Profit net", value: rez.profitNet, color: "#059669" },
-              { label: `Impozit ${salariati === "0" ? "3%" : "1%"}`, value: rez.impozitFirma, color: "#d97706" },
+              { label: "Impozit 1%", value: rez.impozitFirma, color: "#d97706" },
             ]} />
           ) : rez.profitVal > 0 ? (
             <BreakdownBar segments={[
@@ -348,7 +344,7 @@ function CalculatorFirma() {
               <div className={styles.separator} />
               <p className={styles.rezSectionLabel}>DIVIDENDE (D205)</p>
               <Row label="Dividende distribuite" val={`${fmt(rez.divVal)} lei`} />
-              <Row label="Impozit dividende — 8%" val={`−${fmt(rez.impDividende)} lei`} neg />
+              <Row label="Impozit dividende — 16%" val={`−${fmt(rez.impDividende)} lei`} neg />
               <Row label="Dividende nete" val={`${fmt(rez.netDupaDividende)} lei`} bold green />
             </>
           )}
@@ -489,7 +485,7 @@ function CalculatorTVA() {
     total: number; ramas: number; pct: number; depasit: boolean;
     lunaDepasire: number | null; luneBp: number;
   }>(null);
-  const PLAFON = 300_000;
+  const PLAFON = 395_000;
 
   useEffect(() => {
     const vals = luni.map(v => parseFloat(v) || 0);
@@ -523,7 +519,7 @@ function CalculatorTVA() {
     <div className={styles.calcCard}>
       <div className={styles.infoBox}>
         <span className={styles.infoIcon}>📋</span>
-        <span>Plafonul de înregistrare obligatorie în scopuri de TVA este <strong>300.000 lei</strong> (cifra de afaceri din ultimele 12 luni). La depășire, ești obligat să te înregistrezi în 10 zile.</span>
+        <span>Plafonul de înregistrare obligatorie în scopuri de TVA este <strong>395.000 lei</strong> (cifra de afaceri din ultimele 12 luni, majorat de la 300.000 lei din septembrie 2025). La depășire, ești obligat să te înregistrezi în 10 zile.</span>
       </div>
 
       {rez && (
@@ -569,7 +565,7 @@ function CalculatorTVA() {
         <div className={styles.rezultate}>
           <p className={styles.rezSectionLabel}>SITUAȚIE TVA</p>
           <Row label="CA totală (12 luni)" val={`${fmt(rez.total)} lei`} bold />
-          <Row label="Plafon înregistrare TVA" val="300.000 lei" />
+          <Row label="Plafon înregistrare TVA" val="395.000 lei" />
           <Row
             label={rez.depasit ? "Depășit cu" : "Rămas până la plafon"}
             val={rez.depasit ? `${fmt(rez.total - PLAFON)} lei` : `${fmt(rez.ramas)} lei`}
@@ -657,6 +653,7 @@ export default function CalculatorClient() {
     { id: "firma", icon: "🏢", label: "SRL / Firmă" },
     { id: "chirii", icon: "🏠", label: "Chirii" },
     { id: "tva", icon: "📋", label: "Prag TVA" },
+    { id: "crypto", icon: "₿", label: "Crypto & Invest" },
   ];
 
   return (
@@ -685,10 +682,11 @@ export default function CalculatorClient() {
           {tab === "firma" && <CalculatorFirma />}
           {tab === "chirii" && <CalculatorChirii />}
           {tab === "tva" && <CalculatorTVA />}
+          {tab === "crypto" && <CalculatorCrypto />}
         </div>
 
         <p className={styles.disclaimer}>
-          Calcul orientativ conform Legii 227/2015 (Cod fiscal), actualizat 2025. Salariul minim: 4.050 lei. Consultați un contabil autorizat pentru situația dvs. exactă.
+          Calcul orientativ conform Legii 227/2015 (Cod fiscal) și modificărilor 2026. Salariu minim: 4.050 lei (ian-iun) / 4.325 lei (iul-dec). TVA standard: 21%. Consultați un contabil autorizat CECCAR pentru situația dvs. exactă.
         </p>
       </main>
       <Footer />

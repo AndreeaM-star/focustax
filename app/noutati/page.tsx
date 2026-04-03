@@ -1,115 +1,153 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
 
-export const metadata = {
-  title: "Noutăți Fiscale 2026 | FocusTax",
-  description:
-    "Ultimele modificări legislative și noutăți fiscale din România — termene D212, modificări Cod Fiscal, noutăți ANAF 2026.",
-  openGraph: {
-    title: "Noutăți Fiscale România 2026 | FocusTax",
-    description:
-      "Fii la curent cu modificările fiscale: noi cote, termene și obligații pentru contribuabilii din România.",
-  },
+const TAG_COLORS: Record<string, string> = {
+  "D212": "#dc2626",
+  "TVA": "#d97706",
+  "Crypto": "#7c3aed",
+  "Dividende": "#059669",
+  "Microîntreprinderi": "#2563eb",
+  "Salariu minim": "#059669",
+  "Impozite locale": "#6366f1",
+  "e-Factura": "#2563eb",
+  "e-Transport": "#d97706",
+  "SPV": "#374151",
+  "Penalități": "#dc2626",
+  "Cod Fiscal": "#6366f1",
+  "Impozit Venit": "#dc2626",
+  "Salarii": "#059659",
+  "Profit": "#7c3aed",
 };
 
 const noutati = [
   {
-    data: "Martie 2026",
-    tag: "Impozit Venit",
-    tagColor: "#dc2626",
-    titlu: "Termen D212 — 25 mai 2026",
-    desc: "Declarația Unică 212 pentru veniturile din 2025 se depune până pe 25 mai 2026. Se poate depune online prin SPV sau la ghișeele ANAF. Contribuabilii cu venituri estimate pentru 2026 completează și Capitolul II — estimare impozit și contribuții pentru 2026.",
-    link: "/declaratii/d212",
+    data: "Aprilie 2026",
+    categorie: "D212",
+    tag: "D212",
+    urgenta: "urgent",
+    titlu: "Bonificație 3% la D212 — termen 15 aprilie 2026",
+    desc: "Contribuabilii care depun Declarația Unică D212 și plătesc integral impozitul și contribuțiile până pe 15 aprilie 2026 beneficiază de o reducere de 3% a impozitului datorat (OUG 8/2026). Atenție: românii care închiriază spații către firme NU pot beneficia de bonificație. Dacă ai depus deja D212 fără bonificație, poți depune declarație rectificativă.",
+    link: "/ghiduri/d212-ghid-completare",
   },
   {
     data: "Ianuarie 2026",
-    tag: "Salarii",
-    tagColor: "#059669",
-    titlu: "Salariul minim brut 2026 — 4.050 lei",
-    desc: "Salariul minim brut garantat în plată rămâne la 4.050 lei/lună conform HG 1200/2023. Acesta reprezintă baza minimă de calcul pentru CAS și CASS pentru PFA-uri și activități independente. Salariul minim în construcții este 4.582 lei.",
+    categorie: "Crypto",
+    tag: "Crypto",
+    urgenta: "important",
+    titlu: "Impozit crypto crește la 16% — DAC8 intră în vigoare",
+    desc: "Din 1 ianuarie 2026, câștigurile din tranzacții cu criptomonede se impozitează cu 16% (față de 10% anterior). Scutire: câștiguri sub 200 lei/tranzacție dacă totalul anual nu depășește 600 lei. Prin DAC8, toate platformele de tranzacționare sunt obligate să raporteze automat tranzacțiile utilizatorilor români la ANAF.",
   },
   {
     data: "Ianuarie 2026",
+    categorie: "Dividende",
+    tag: "Dividende",
+    urgenta: "important",
+    titlu: "Impozit dividende: 16% din 2026",
+    desc: "Impozitul pe dividende a crescut de la 8% la 16% începând cu 1 ianuarie 2026 (Legea 239/2025). Se reține la sursă de persoana juridică distribuitor. La nivel de acționar PF: dacă dividendele + alte venituri pasive depășesc 24.300 lei, se plătește și CASS.",
+    link: "/ghiduri/dividende",
+  },
+  {
+    data: "Ianuarie 2026",
+    categorie: "Microîntreprinderi",
     tag: "Microîntreprinderi",
-    tagColor: "#059669",
-    titlu: "Impozit microîntreprinderi 2026 — cote 1% și 3%",
-    desc: "Firmele cu cel puțin un salariat și venituri sub 500.000 euro aplică cota de 1%. Cele fără salariați sau cu venituri din consultanță/management peste 20% din CA aplică 3%. Condiție nouă: acționarul poate deține maxim 25% din alte microîntreprinderi.",
+    urgenta: "important",
+    titlu: "Micro 2026: cotă unică 1%, plafon 100.000 EUR",
+    desc: "Din 2026, microîntreprinderile plătesc o cotă unică de 1% din CA (eliminată cota de 3%). Plafonul de încadrare a scăzut la 100.000 EUR/an (de la 500.000 EUR). Condiție nouă: firmele trebuie să fi depus situațiile financiare la timp pentru a accesa regimul.",
     link: "/ghiduri/srl-vs-micro",
   },
   {
     data: "Ianuarie 2026",
-    tag: "Dividende",
-    tagColor: "#dc2626",
-    titlu: "Impozit dividende 2026 — confirmarea cotei de 8%",
-    desc: "Cota de impozit pe dividende distribuise persoanelor fizice rămâne la 8%, menținută de la modificarea din 2024. Impozitul se reține la sursă de societate și se declară prin D205 până la 31 ianuarie 2026 pentru dividendele plătite în 2025.",
-    link: "/ghiduri/dividende",
+    categorie: "Impozite locale",
+    tag: "Impozite locale",
+    urgenta: "info",
+    titlu: "Impozit clădiri și auto — creșteri semnificative",
+    desc: "Impozitele pe proprietăți au crescut cu până la 150% față de 2025 în unele localități. Impozitul pe autoturisme este acum diferențiat după norma Euro și cilindree. Mașinile electrice plătesc o taxă fixă de 40 lei/an (față de 0 în 2025).",
+    link: "/ghiduri/impozite-locale-2026",
+  },
+  {
+    data: "Septembrie 2025",
+    categorie: "TVA",
+    tag: "TVA",
+    urgenta: "important",
+    titlu: "Plafonul de înregistrare TVA urcă la 395.000 lei",
+    desc: "De la 1 septembrie 2025, plafonul de înregistrare obligatorie în scopuri de TVA a crescut de la 300.000 lei la 395.000 lei. Firmele care au trecut de 300.000 lei dar sunt sub 395.000 lei pot solicita scoaterea din evidența TVA.",
+    link: "/ghiduri/inregistrare-tva",
+  },
+  {
+    data: "August 2025",
+    categorie: "TVA",
+    tag: "TVA",
+    urgenta: "important",
+    titlu: "Cota standard TVA crește la 21%",
+    desc: "Începând cu 1 august 2025, cota standard de TVA a crescut de la 19% la 21%. Cota redusă pentru alimente, medicamente, turism și restaurante este acum 11% (anterior 9%). Rămâne la 9% doar pentru locuințe noi până la 31 iulie 2026.",
+    link: "/ghiduri/inregistrare-tva",
+  },
+  {
+    data: "Martie 2026",
+    categorie: "D212",
+    tag: "D212",
+    urgenta: "info",
+    titlu: "Termen D212 normal — 25 mai 2026",
+    desc: "Declarația Unică 212 pentru veniturile din 2025 se depune până pe 25 mai 2026. Se poate depune online prin SPV sau la ghișeele ANAF. Contribuabilii cu venituri estimate pentru 2026 completează și Capitolul II.",
+    link: "/declaratii/d212",
+  },
+  {
+    data: "Iulie 2026",
+    categorie: "Salariu minim",
+    tag: "Salariu minim",
+    urgenta: "info",
+    titlu: "Salariul minim crește la 4.325 lei de la 1 iulie 2026",
+    desc: "Salariul minim brut garantat în plată devine 4.325 lei/lună de la 1 iulie 2026 (de la 4.050 lei în primul semestru). Acest lucru afectează calculul CAS și CASS pentru PFA (plafonul minim de 6 salarii minime crește la 25.950 lei).",
   },
   {
     data: "Decembrie 2025",
+    categorie: "e-Factura",
     tag: "e-Factura",
-    tagColor: "#2563eb",
-    titlu: "e-Factura — extinsă la toate tranzacțiile B2B din 2025",
+    urgenta: "info",
+    titlu: "e-Factura — extinsă la toate tranzacțiile B2B",
     desc: "Din 2025, obligația de transmitere a facturilor în sistemul RO e-Factura s-a extins la toate tranzacțiile B2B, inclusiv cu parteneri neplătitori de TVA. Termenul de transmitere rămâne 5 zile calendaristice de la data emiterii. Amenda pentru netransmitere: 5.000 lei.",
     link: "/sisteme/ro-e-factura",
   },
   {
     data: "Noiembrie 2025",
+    categorie: "TVA",
     tag: "TVA",
-    tagColor: "#d97706",
+    urgenta: "info",
     titlu: "RO e-TVA — implementare pentru contribuabilii mari",
-    desc: "ANAF a lansat sistemul RO e-TVA pentru contribuabilii mari — D300 precompletat pe baza facturilor din e-Factura. Contribuabilii verifică datele precompletate, fac corecțiile necesare și depun declarația finală. Extinderea la toți plătitorii de TVA se face gradual în 2026.",
+    desc: "ANAF a lansat sistemul RO e-TVA pentru contribuabilii mari — D300 precompletat pe baza facturilor din e-Factura. Contribuabilii verifică datele precompletate și depun declarația finală. Extinderea la toți plătitorii de TVA se face gradual în 2026.",
     link: "/sisteme/ro-e-tva",
   },
   {
-    data: "Noiembrie 2025",
-    tag: "TVA",
-    tagColor: "#d97706",
-    titlu: "Plafonul de înregistrare TVA — menținut la 300.000 lei",
-    desc: "ANAF confirmă menținerea plafonului de 300.000 lei pentru înregistrarea obligatorie în scopuri de TVA. Depășirea plafonului obligă la înregistrare în termen de 10 zile de la sfârșitul lunii calendaristice în care a fost depășit. TVA la încasare rămâne opțional pentru plătitorii sub 4.500.000 lei CA.",
-    link: "/ghiduri/inregistrare-tva",
-  },
-  {
-    data: "Octombrie 2025",
-    tag: "Profit",
-    tagColor: "#7c3aed",
-    titlu: "Impozit minim pe cifra de afaceri — clarificări ANAF",
-    desc: "ANAF a emis clarificări privind aplicarea impozitului minim pe CA pentru firmele plătitoare de impozit pe profit al căror impozit calculat (16%) este sub pragul minim stabilit pe grile de CA. Grila se aplică progresiv în funcție de cifra de afaceri: de la 1% (sub 100M lei) la 0.5% (peste 1 mld lei).",
-  },
-  {
     data: "Septembrie 2025",
+    categorie: "e-Transport",
     tag: "e-Transport",
-    tagColor: "#d97706",
+    urgenta: "info",
     titlu: "RO e-Transport — noi categorii de bunuri adăugate",
     desc: "ANAF a extins lista bunurilor cu risc fiscal ridicat supuse monitorizării e-Transport. Noile categorii includ materiale de construcții, produse cosmetice de lux și echipamente electronice. Penalitățile pentru lipsa codului UIT au crescut la 50.000 lei pentru persoane juridice.",
     link: "/sisteme/ro-e-transport",
   },
-  {
-    data: "Septembrie 2025",
-    tag: "SPV",
-    tagColor: "#374151",
-    titlu: "SPV actualizat — interfață nouă și autentificare îmbunătățită",
-    desc: "ANAF a actualizat interfața SPV cu un design mai modern și autentificare prin Face ID/Touch ID pe dispozitive mobile. Au fost adăugate funcționalități noi: vizualizare situație fiscală consolidată, descărcare documente arhivate și notificări push. Depunerea la ghișeu pentru persoane juridice nu mai este acceptată.",
-    link: "/sisteme/spv",
-  },
-  {
-    data: "Iulie 2025",
-    tag: "Penalități",
-    tagColor: "#dc2626",
-    titlu: "Dobânzi și penalități ANAF — actualizare 2025",
-    desc: "Rata dobânzii pentru obligații fiscale neachitate a fost actualizată la 0.02% pe zi de întârziere (7.3% anual). Penalitățile de întârziere sunt tot 0.01% pe zi. La depășirea a 30 de zile de la scadență se aplică o penalitate de nedeclarare de 0.08% pe zi, aplicată retroactiv.",
-  },
-  {
-    data: "Iunie 2025",
-    tag: "Cod Fiscal",
-    tagColor: "#6366f1",
-    titlu: "Modificări Cod Fiscal 2025-2026 — principalele schimbări",
-    desc: "Principalele modificări aduse Codului Fiscal prin Legea 296/2023 și OUG 115/2023 intrate în vigoare în 2025: majorarea cotei dividende 5%→8%, impozit minim CA pentru companii mari, noi condiții microîntreprinderi, extinderea e-Factura la B2B. Consultați un expert fiscal pentru situația specifică.",
-  },
 ];
 
+const FILTRE = ["Toate", "TVA", "Crypto", "Dividende", "Microîntreprinderi", "Salariu minim", "Impozite locale", "D212"];
+
+const URGENTA_BADGE: Record<string, { label: string; color: string }> = {
+  urgent: { label: "URGENT", color: "#dc2626" },
+  important: { label: "important", color: "#d97706" },
+  info: { label: "info", color: "#6b7280" },
+};
+
 export default function NoutatiPage() {
+  const [filtru, setFiltru] = useState("Toate");
+
+  const afisate = filtru === "Toate"
+    ? noutati
+    : noutati.filter(n => n.categorie === filtru);
+
   return (
     <>
       <Navbar />
@@ -119,23 +157,56 @@ export default function NoutatiPage() {
           Ultimele modificări legislative și noutăți fiscale din România, actualizate regulat.
         </p>
 
-        <div className={styles.timeline}>
-          {noutati.map((n, i) => (
-            <article key={n.titlu} className={`${styles.timelineItem} ${i % 2 === 0 ? styles.left : styles.right}`}>
-              <div className={styles.timelineDot} style={{ borderColor: n.tagColor }} />
-              <div className={styles.card}>
-                <div className={styles.cardMeta}>
-                  <span className={styles.tag} style={{ borderColor: n.tagColor, color: n.tagColor }}>{n.tag}</span>
-                  <span className={styles.data}>{n.data}</span>
-                </div>
-                <h2 className={styles.cardTitlu}>{n.titlu}</h2>
-                <p className={styles.cardDesc}>{n.desc}</p>
-                {"link" in n && n.link && (
-                  <Link href={n.link} className={styles.cardLink}>→ Citește mai mult</Link>
-                )}
-              </div>
-            </article>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "2rem", justifyContent: "center" }}>
+          {FILTRE.map(f => (
+            <button
+              key={f}
+              onClick={() => setFiltru(f)}
+              style={{
+                padding: "6px 16px",
+                borderRadius: "9999px",
+                border: `1px solid ${filtru === f ? "#6366f1" : "rgba(99,102,241,0.3)"}`,
+                background: filtru === f ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.05)",
+                color: filtru === f ? "#4338ca" : "#6b7280",
+                fontWeight: filtru === f ? 600 : 400,
+                cursor: "pointer",
+                fontSize: "0.875rem",
+                transition: "all 0.2s",
+              }}
+            >
+              {f}
+            </button>
           ))}
+        </div>
+
+        <div className={styles.timeline}>
+          {afisate.map((n, i) => {
+            const tagColor = TAG_COLORS[n.tag] ?? "#6b7280";
+            const urg = URGENTA_BADGE[n.urgenta];
+            return (
+              <article key={n.titlu} className={`${styles.timelineItem} ${i % 2 === 0 ? styles.left : styles.right}`}>
+                <div className={styles.timelineDot} style={{ borderColor: tagColor }} />
+                <div className={styles.card}>
+                  <div className={styles.cardMeta}>
+                    <span className={styles.tag} style={{ borderColor: tagColor, color: tagColor }}>{n.tag}</span>
+                    <span className={styles.data}>{n.data}</span>
+                    {urg && (
+                      <span style={{
+                        fontSize: "0.7rem", fontWeight: 700, padding: "2px 8px",
+                        borderRadius: "9999px", background: `${urg.color}20`, color: urg.color,
+                        border: `1px solid ${urg.color}40`, textTransform: "uppercase",
+                      }}>{urg.label}</span>
+                    )}
+                  </div>
+                  <h2 className={styles.cardTitlu}>{n.titlu}</h2>
+                  <p className={styles.cardDesc}>{n.desc}</p>
+                  {n.link && (
+                    <Link href={n.link} className={styles.cardLink}>→ Citește mai mult</Link>
+                  )}
+                </div>
+              </article>
+            );
+          })}
           <div className={styles.timelineLine} />
         </div>
       </main>

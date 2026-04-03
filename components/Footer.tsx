@@ -18,7 +18,11 @@ export default function Footer() {
             <nav className={styles.links}>
               <Link href="/declaratii">Declarații fiscale</Link>
               <Link href="/calculator">Calculator taxe</Link>
+              <Link href="/calculator/forme-juridice">Compară forme juridice</Link>
+              <Link href="/calendar">Calendar Fiscal 2026</Link>
               <Link href="/ghiduri">Ghiduri fiscale</Link>
+              <Link href="/glosar">Glosar Fiscal</Link>
+              <Link href="/ghiduri/impozite-locale-2026">Impozite locale 2026</Link>
               <Link href="/noutati">Noutăți</Link>
             </nav>
           </div>
