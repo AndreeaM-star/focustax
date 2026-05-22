@@ -165,7 +165,15 @@ export default function Dashboard() {
   ];
 
   if (loading) {
-    return <div className={styles.page}>Se încarcă...</div>;
+    return (
+      <div className={styles.page}>
+        <div className={styles.statsGrid}>
+          {[1,2,3,4].map(i => (
+            <div key={i} className={`${styles.statCard} ${styles.skeletonCard}`} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (

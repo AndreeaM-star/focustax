@@ -491,6 +491,24 @@
   flex-shrink: 0;
 }
 
+/* ── Skeleton ────────────────────────────────────────────── */
+.skeletonCard {
+  min-height: 110px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.25) 25%,
+    rgba(255,255,255,0.45) 50%,
+    rgba(255,255,255,0.25) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .statsGrid { grid-template-columns: repeat(2, 1fr); }
