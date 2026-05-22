@@ -47,6 +47,7 @@ export default function AIPage() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [showCommand, setShowCommand] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const messagesEnd = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -96,6 +97,13 @@ export default function AIPage() {
     } finally {
       setIsTyping(false);
     }
+  };
+
+  const copyMessage = (id: string, text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 1500);
+    });
   };
 
   const handleKey = (e: React.KeyboardEvent) => {
@@ -154,7 +162,17 @@ export default function AIPage() {
                 <span
                   dangerouslySetInnerHTML={{ __html: formatText(m.text) }}
                 />
-                <span className={styles.msgTime}>{m.time}</span>
+                <div className={styles.msgMeta}>
+                  <span className={styles.msgTime}>{m.time}</span>
+                  <button
+                    className={styles.copyBtn}
+                    onClick={() => copyMessage(m.id, m.text)}
+                    title="Copiază mesaj"
+                    aria-label="Copiază mesaj"
+                  >
+                    {copiedId === m.id ? "✓" : "⎘"}
+                  </button>
+                </div>
               </div>
               {m.role === "user" && (
                 <div className={styles.userAvatarMsg}>Tu</div>

@@ -63,11 +63,16 @@ export default function BanciPage() {
     });
   };
 
+  const [tipFilter, setTipFilter] = useState<"toate" | "credit" | "debit">("toate");
+
   const totalSold = banci.reduce((s, b) => s + b.sold, 0);
-  const filtered = selectedBanca === "toate" ? tranzactii : tranzactii.filter((t) => t.banca === selectedBanca);
+  const byBanca = selectedBanca === "toate" ? tranzactii : tranzactii.filter((t) => t.banca === selectedBanca);
+  const filtered = tipFilter === "toate" ? byBanca : byBanca.filter((t) => t.tip === tipFilter);
   const reconciliate   = tranzactii.filter((t) => t.reconciliat).length;
   const nereconciliate = tranzactii.filter((t) => !t.reconciliat).length;
   const syncTime = new Date().toLocaleTimeString("ro-RO", { hour: "2-digit", minute: "2-digit" });
+  const totalIntrani  = byBanca.filter((t) => t.tip === "credit").reduce((s, t) => s + Number(t.suma), 0);
+  const totalIesiri   = byBanca.filter((t) => t.tip === "debit").reduce((s, t) => s + Number(t.suma), 0);
 
   return (
     <div className={styles.page}>
@@ -147,22 +152,27 @@ export default function BanciPage() {
           <h2 className={styles.sectionTitle}>
             Tranzacții{selectedBanca !== "toate" && <span className={styles.bankFilter}> — {bancaName[selectedBanca] ?? selectedBanca}</span>}
           </h2>
-          {banci.length > 0 && (
-            <div className={styles.filterBtns}>
-              <button
-                className={`${styles.filterBtn} ${selectedBanca === "toate" ? styles.filterBtnActive : ""}`}
-                onClick={() => setSelectedBanca("toate")}
-              >Toate</button>
-              {banci.map((b) => (
-                <button key={b.id}
-                  className={`${styles.filterBtn} ${selectedBanca === b.id ? styles.filterBtnActive : ""}`}
-                  onClick={() => setSelectedBanca(b.id)}
-                >
-                  {b.logo}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className={styles.filterBtns}>
+            {banci.length > 0 && (
+              <>
+                <button className={`${styles.filterBtn} ${selectedBanca === "toate" ? styles.filterBtnActive : ""}`} onClick={() => setSelectedBanca("toate")}>Toate băncile</button>
+                {banci.map((b) => (
+                  <button key={b.id} className={`${styles.filterBtn} ${selectedBanca === b.id ? styles.filterBtnActive : ""}`} onClick={() => setSelectedBanca(b.id)}>{b.logo}</button>
+                ))}
+                <span className={styles.filterSep} />
+              </>
+            )}
+            <button className={`${styles.filterBtn} ${tipFilter === "toate" ? styles.filterBtnActive : ""}`} onClick={() => setTipFilter("toate")}>Toate</button>
+            <button className={`${styles.filterBtn} ${tipFilter === "credit" ? styles.filterBtnCredit : ""}`} onClick={() => setTipFilter("credit")}>↓ Intrări</button>
+            <button className={`${styles.filterBtn} ${tipFilter === "debit" ? styles.filterBtnDebit : ""}`} onClick={() => setTipFilter("debit")}>↑ Ieșiri</button>
+          </div>
+        </div>
+        <div className={styles.tranzSumar}>
+          <span className={styles.sumarCredit}>↓ Intrări: <strong>+{totalIntrani.toLocaleString("ro-RO")} lei</strong></span>
+          <span className={styles.sumarDebit}>↑ Ieșiri: <strong>−{totalIesiri.toLocaleString("ro-RO")} lei</strong></span>
+          <span className={styles.sumarNet} style={{ color: totalIntrani - totalIesiri >= 0 ? "#059669" : "#dc2626" }}>
+            Net: <strong>{(totalIntrani - totalIesiri >= 0 ? "+" : "")}{(totalIntrani - totalIesiri).toLocaleString("ro-RO")} lei</strong>
+          </span>
         </div>
 
         {loading && <div style={{ padding: "1rem", opacity: 0.6 }}>Se încarcă tranzacțiile...</div>}

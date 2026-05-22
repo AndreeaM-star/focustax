@@ -120,7 +120,7 @@ export default function HRPage() {
                 <div className={`${styles.calcItem} ${styles.calcDeduction}`}><span className={styles.calcItemLabel}>Impozit 10%</span><span className={styles.calcItemValue}>−{calcResult.impozit.toLocaleString("ro-RO")} lei</span></div>
                 <div className={`${styles.calcItem} ${styles.calcNet}`}><span className={styles.calcItemLabel}>SALARIU NET</span><span className={styles.calcItemValueBig}>{calcResult.net.toLocaleString("ro-RO")} lei</span></div>
               </div>
-              <div className={styles.calcAngajator}><span>Cost total angajator (cu CAM 4%):</span><strong>{calcResult.totalAngajator.toLocaleString("ro-RO")} lei</strong></div>
+              <div className={styles.calcAngajator}><span>Cost total angajator (cu CAM 2.25%):</span><strong>{calcResult.totalAngajator.toLocaleString("ro-RO")} lei</strong></div>
             </div>
           )}
         </div>
@@ -175,7 +175,7 @@ export default function HRPage() {
                     <div className={`${styles.salaryRow} ${styles.deductRow}`}><span>Impozit 10%</span><span>−{calc.impozit.toLocaleString("ro-RO")} lei</span></div>
                     <div className={`${styles.salaryRow} ${styles.netRow}`}><span><strong>SALARIU NET</strong></span><span><strong>{calc.net.toLocaleString("ro-RO")} lei</strong></span></div>
                   </div>
-                  <div className={styles.angajatorBox}><span>Cost angajator (+ CAM 4%):</span><strong>{calc.totalAngajator.toLocaleString("ro-RO")} lei/lună</strong></div>
+                  <div className={styles.angajatorBox}><span>Cost angajator (+ CAM 2.25%):</span><strong>{calc.totalAngajator.toLocaleString("ro-RO")} lei/lună</strong></div>
                   <div className={styles.employeeActions}>
                     <span className={styles.employeeMeta}>Angajat din: {a.data_angajare} · Pontaj: {a.pontaj}/21</span>
                     <button className={styles.deleteBtn} onClick={() => removeAngajat(a.id)}>🗑 Elimină</button>

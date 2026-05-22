@@ -7,16 +7,17 @@ const fmt    = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits:
 const fmtDec = (n: number) => n.toLocaleString("ro-RO", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const COTE = [
-  { label: "19% — standard",          val: 19 },
-  { label: "9% — alimente / turism",   val: 9  },
-  { label: "5% — cărți / locuințe",    val: 5  },
+  { label: "21% — standard",           val: 21 },
+  { label: "11% — alimente / turism",  val: 11 },
+  { label: "9% — locuințe noi",        val: 9  },
+  { label: "5% — cărți / social",      val: 5  },
   { label: "0% — scutit cu drept",     val: 0  },
 ];
 
 export default function TvaCalc() {
   const [mod,        setMod]        = useState<"adauga" | "extrage">("adauga");
   const [suma,       setSuma]       = useState(10000);
-  const [cota,       setCota]       = useState(19);
+  const [cota,       setCota]       = useState(21);
   const [colectat,   setColectat]   = useState(0);
   const [deductibil, setDeductibil] = useState(0);
 
@@ -136,7 +137,7 @@ export default function TvaCalc() {
 
         <div className={styles.infoBox}>
           Termenul de depunere D300: <strong>25 ale lunii</strong> următoare perioadei de raportare.
-          Pragul de înregistrare obligatorie în scopuri de TVA: <strong>300.000 lei/an</strong> (cifra de afaceri).
+          Pragul de înregistrare obligatorie în scopuri de TVA: <strong>395.000 lei/an</strong> (din septembrie 2025).
         </div>
       </div>
     </div>

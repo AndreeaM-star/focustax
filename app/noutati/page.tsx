@@ -141,12 +141,15 @@ const URGENTA: Record<string, { label: string; color: string; bg: string }> = {
   info:      { label: "info",      color: "#6b7280", bg: "rgba(107,114,128,0.08)" },
 };
 
+const URGENTA_SORT: Record<string, number> = { urgent: 0, important: 1, info: 2 };
+
 export default function NoutatiPage() {
   const [filtru, setFiltru] = useState("Toate");
+  const [sortare, setSortare] = useState<"noi" | "importante">("noi");
 
-  const afisate = filtru === "Toate"
-    ? noutati
-    : noutati.filter(n => n.categorie === filtru);
+  const afisate = (filtru === "Toate" ? noutati : noutati.filter(n => n.categorie === filtru))
+    .slice()
+    .sort((a, b) => sortare === "importante" ? URGENTA_SORT[a.urgenta] - URGENTA_SORT[b.urgenta] : 0);
 
   const hasUrgent = afisate.some(n => n.urgenta === "urgent");
 
@@ -172,7 +175,7 @@ export default function NoutatiPage() {
           </div>
         )}
 
-        {/* Filters */}
+        {/* Filters + Sort */}
         <div className={styles.filtrRow}>
           {FILTRE.map(f => (
             <button
@@ -183,6 +186,9 @@ export default function NoutatiPage() {
               {f}
             </button>
           ))}
+          <span style={{ flex: 1 }} />
+          <button onClick={() => setSortare("noi")} className={`${styles.filtrBtn} ${sortare === "noi" ? styles.filtrBtnActive : ""}`}>↓ Cele mai noi</button>
+          <button onClick={() => setSortare("importante")} className={`${styles.filtrBtn} ${sortare === "importante" ? styles.filtrBtnActive : ""}`}>⚡ Importante</button>
         </div>
 
         {/* Card grid */}

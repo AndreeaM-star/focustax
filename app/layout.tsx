@@ -66,7 +66,9 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <a href="#main-content" className="skip-to-content">Salt la conținut principal</a>
         <ScrollProgress />
+        <div id="main-content" style={{ position: "absolute", top: 0 }} aria-hidden="true" />
         {children}
         <ScrollToTop />
         <Analytics />

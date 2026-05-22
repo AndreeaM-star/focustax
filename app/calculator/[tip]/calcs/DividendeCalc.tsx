@@ -4,14 +4,14 @@ import { useState } from "react";
 import styles from "../../calculator.module.css";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
-const PRAG_CASS = 6 * 3300;   // 19.800 lei/an — prag minim CASS
-const PLAFON_CASS = 60 * 3300; // 198.000 lei/an — plafon CASS
+const PRAG_CASS  = 6 * 4050;   // 24.300 lei/an — prag minim CASS (2026: 6 × salariu minim)
+const PLAFON_CASS = 60 * 4050; // 243.000 lei/an — plafon CASS
 
 export default function DividendeCalc() {
   const [profitBrut, setProfitBrut] = useState(100000);
   const [alteVen,    setAlteVen]    = useState(0); // alte venituri (PFA, chirii etc.)
 
-  const impozitDiv = profitBrut * 0.08;
+  const impozitDiv = profitBrut * 0.16;
   const profitNet  = profitBrut - impozitDiv;
 
   // CASS se calculeaza pe total venituri (dividende + alte venituri)
@@ -26,7 +26,7 @@ export default function DividendeCalc() {
   const ramas     = Math.max(0, profitBrut - totalTaxe);
 
   const segments = [
-    { label: "Impozit dividende 8%", value: impozitDiv, color: "#ef4444" },
+    { label: "Impozit dividende 16%", value: impozitDiv, color: "#ef4444" },
     { label: "CASS 10%",             value: cassDiv,    color: "#f97316" },
     { label: "Dividende nete",        value: ramas,      color: "#22c55e" },
   ].filter((s) => s.value > 0);
@@ -36,7 +36,7 @@ export default function DividendeCalc() {
     <div className={styles.card}>
       <div className={styles.cardHeader}>
         <div className={styles.cardTitle}>Calculator Dividende</div>
-        <div className={styles.cardSubtitle}>Distribuire profit SRL · Impozit 8% + CASS · România 2026</div>
+        <div className={styles.cardSubtitle}>Distribuire profit SRL · Impozit 16% + CASS · România 2026</div>
       </div>
       <div className={styles.cardBody}>
         <div className={styles.inputGroup}>
@@ -67,12 +67,12 @@ export default function DividendeCalc() {
               <span className={styles.resultRowVal}>{fmt(profitBrut)} lei</span>
             </div>
             <div className={styles.resultRow}>
-              <span className={styles.resultRowLabel}>Impozit dividende 8% (reținut la sursă)</span>
+              <span className={styles.resultRowLabel}>Impozit dividende 16% (reținut la sursă)</span>
               <span className={`${styles.resultRowVal} ${styles.resultRowNeg}`}>−{fmt(impozitDiv)} lei</span>
             </div>
             <div className={styles.resultRow}>
               <span className={styles.resultRowLabel}>
-                CASS 10% {totalVen <= PRAG_CASS ? "(sub plafon — scutit)" : `(baza: ${fmt(cassBase)} lei)`}
+                CASS 10% {totalVen <= PRAG_CASS ? "(sub 24.300 lei — scutit)" : `(baza: ${fmt(cassBase)} lei)`}
               </span>
               <span className={`${styles.resultRowVal} ${cassDiv > 0 ? styles.resultRowNeg : ""}`}>
                 {cassDiv > 0 ? `−${fmt(cassDiv)} lei` : "Scutit"}
@@ -108,8 +108,8 @@ export default function DividendeCalc() {
         </div>
 
         <div className={styles.infoBox}>
-          Impozitul de <strong>8%</strong> se reține la sursă de firmă și se virează până pe 25 ale lunii următoare.
-          <strong> CASS</strong> se datorează dacă totalul veniturilor depășește <strong>19.800 lei/an</strong>, plafonat la <strong>198.000 lei/an</strong>.
+          Impozitul de <strong>16%</strong> (Legea 239/2025, aplicabil din 01.01.2026) se reține la sursă de firmă și se virează până pe 25 ale lunii următoare.
+          <strong> CASS</strong> se datorează dacă totalul veniturilor depășește <strong>24.300 lei/an</strong>, plafonat la <strong>243.000 lei/an</strong>.
         </div>
       </div>
     </div>

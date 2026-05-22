@@ -119,6 +119,20 @@ export default function CalendarPage() {
     return styles.monthCard;
   };
 
+  const upcomingTermene = termene2026
+    .filter(t => {
+      if (profilActiv && !t.profile.some(p => profiluri.has(p))) return false;
+      const d = new Date(2026, t.luna - 1, t.zi);
+      return d.getTime() >= azi.setHours(0, 0, 0, 0);
+    })
+    .map(t => {
+      const d = new Date(2026, t.luna - 1, t.zi);
+      const diffDays = Math.ceil((d.getTime() - new Date().setHours(0,0,0,0)) / 86400000);
+      return { ...t, diffDays };
+    })
+    .sort((a, b) => a.diffDays - b.diffDays)
+    .slice(0, 3);
+
   return (
     <>
       <Navbar />
@@ -149,6 +163,39 @@ export default function CalendarPage() {
             ))}
           </div>
         </div>
+
+        {/* Upcoming deadlines */}
+        {upcomingTermene.length > 0 && (
+          <div className={styles.upcomingSection}>
+            <h2 className={styles.upcomingTitle}>Urmează curând</h2>
+            <div className={styles.upcomingList}>
+              {upcomingTermene.map((t, i) => (
+                <a
+                  key={i}
+                  href={makeGCalLink(t)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.upcomingItem} ${t.diffDays <= 7 ? styles.upcomingItemUrgent : ""}`}
+                >
+                  <div className={styles.upcomingDays}>
+                    <span className={styles.upcomingDaysNum}>{t.diffDays}</span>
+                    <span className={styles.upcomingDaysLabel}>zile</span>
+                  </div>
+                  <div className={styles.upcomingInfo}>
+                    <span className={styles.upcomingCode} style={{ color: TAG_COLORS[t.declaratie] ?? "#6b7280" }}>
+                      {t.declaratie}
+                    </span>
+                    <span className={styles.upcomingName}>{t.titlu}</span>
+                    <span className={styles.upcomingDate}>
+                      {t.zi} {LUNI[t.luna - 1]} 2026
+                    </span>
+                  </div>
+                  <span className={styles.upcomingCal}>📅</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Months grid */}
         <div className={styles.monthsGrid}>

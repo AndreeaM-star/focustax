@@ -6,23 +6,24 @@ import styles from "../../calculator.module.css";
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
 const SMIN = 4050;
 
-function calc(brut: number, copii: number, pontaj: number) {
-  const brutAjustat = (brut / 21) * Math.min(pontaj, 21);
-  const cas   = brutAjustat * 0.25;
-  const cass  = brutAjustat * 0.10;
-  const bazaImpozabila = Math.max(0, brutAjustat - cas - cass - deducere(brutAjustat, copii));
-  const impozit = bazaImpozabila * 0.10;
-  const net     = brutAjustat - cas - cass - impozit;
-  const cam     = brutAjustat * 0.0225;
-  const totalAngajator = brutAjustat + cam;
-  return { brut: brutAjustat, cas, cass, impozit, net: Math.max(0, net), cam, totalAngajator };
+function deducere(brut: number, copii: number) {
+  let base = 0;
+  if (brut <= SMIN) base = 300;
+  else if (brut <= SMIN * 2) base = Math.max(0, Math.round(300 - (300 / SMIN) * (brut - SMIN)));
+  return base + copii * 100;
 }
 
-function deducere(brut: number, copii: number) {
-  if (brut > SMIN * 2) return 0;
-  if (brut <= SMIN) return 600 + copii * 300;
-  const factor = (SMIN * 2 - brut) / SMIN;
-  return Math.round((600 + copii * 300) * factor);
+function calc(brut: number, copii: number, pontaj: number) {
+  const brutAjustat = Math.round((brut / 21) * Math.min(pontaj, 21));
+  const cas   = Math.round(brutAjustat * 0.25);
+  const cass  = Math.round(brutAjustat * 0.10);
+  const ded   = deducere(brutAjustat, copii);
+  const bazaImpozabila = Math.max(0, brutAjustat - cas - cass - ded);
+  const impozit = Math.round(bazaImpozabila * 0.10);
+  const net     = brutAjustat - cas - cass - impozit;
+  const cam     = Math.round(brutAjustat * 0.0225);
+  const totalAngajator = brutAjustat + cam;
+  return { brut: brutAjustat, cas, cass, deducereVal: ded, impozit, net: Math.max(0, net), cam, totalAngajator };
 }
 
 export default function SalariuCalc() {
@@ -31,6 +32,7 @@ export default function SalariuCalc() {
   const [pontaj, setPontaj] = useState(21);
 
   const r = calc(brut, copii, pontaj);
+  const ded = deducere(r.brut, copii);
   const segments = [
     { label: "CAS 25%",    value: r.cas,     color: "#ef4444" },
     { label: "CASS 10%",   value: r.cass,    color: "#f97316" },
@@ -49,8 +51,16 @@ export default function SalariuCalc() {
         <div className={styles.inputGroup}>
           <div className={styles.field}>
             <label>Salariu Brut (lei/lună)</label>
-            <input type="number" value={brut} min={3300} step={100}
-              onChange={(e) => setBrut(Number(e.target.value))} />
+            <div className={styles.rangeWrap}>
+              <input type="range" min={4050} max={30000} step={50} value={brut}
+                onChange={(e) => setBrut(Number(e.target.value))}
+                aria-label="Salariu brut" />
+              <span className={styles.rangeValue}>{fmt(brut)} lei</span>
+            </div>
+            <input type="number" value={brut} min={4050} step={100}
+              onChange={(e) => setBrut(Math.max(4050, Number(e.target.value)))}
+              aria-label="Valoare exactă salariu brut"
+              style={{ marginTop: 6, width: 140, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
           </div>
           <div className={styles.field}>
             <label>Copii în întreținere</label>
@@ -68,7 +78,7 @@ export default function SalariuCalc() {
           </div>
         </div>
 
-        <div className={styles.results}>
+        <div className={styles.results} aria-live="polite" aria-label="Rezultate calcul salariu">
           <div className={styles.resultMain}>
             <span className={styles.resultLabel}>Salariu NET</span>
             <span className={styles.resultValue}>{fmt(r.net)}</span>
@@ -87,10 +97,10 @@ export default function SalariuCalc() {
               <span className={styles.resultRowLabel}>CASS 10% (sănătate)</span>
               <span className={`${styles.resultRowVal} ${styles.resultRowNeg}`}>−{fmt(r.cass)} lei</span>
             </div>
-            {deducere(r.brut, copii) > 0 && (
+            {ded > 0 && (
               <div className={styles.resultRow}>
                 <span className={styles.resultRowLabel}>Deducere personală{copii > 0 ? ` +${copii} copii` : ""}</span>
-                <span className={`${styles.resultRowVal} ${styles.resultRowPos}`}>−{fmt(deducere(r.brut, copii))} lei</span>
+                <span className={`${styles.resultRowVal} ${styles.resultRowPos}`}>−{fmt(ded)} lei</span>
               </div>
             )}
             <div className={styles.resultRow}>
@@ -123,8 +133,8 @@ export default function SalariuCalc() {
         </div>
 
         <div className={styles.infoBox}>
-          Salariul minim brut pe economie în 2026: <strong>3.300 lei</strong>.
-          Deducerea personală se aplică integral la salarii ≤ 4.050 lei și dispare treptat până la 8.100 lei.
+          Salariul minim brut în 2026: <strong>4.050 lei</strong> (ian–iun) · <strong>4.325 lei</strong> (iul–dec).
+          Deducerea personală (300 lei + 100/copil) se aplică la salarii ≤ 4.050 lei și dispare treptat până la 8.100 lei.
         </div>
       </div>
     </div>

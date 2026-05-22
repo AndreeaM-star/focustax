@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 
 interface Factura { id: string; tva: number; valoare: number; data: string; status: string; }
 
-const plafonAnual = 300000;
+const plafonAnual = 395000;
 
 export default function TVAPage() {
   const [facturi, setFacturi] = useState<Factura[]>([]);
@@ -108,29 +108,46 @@ export default function TVAPage() {
         <div className={`${styles.statCard} ${progresPlafon > 60 ? styles.statCardWarning : ""}`}>
           <span className={styles.statIcon}>🎯</span>
           <span className={styles.statLabel}>Risc plafon TVA</span>
-          <span className={styles.statValue}>{progresPlafon}% din 300k</span>
+          <span className={styles.statValue}>{progresPlafon}% din 395k</span>
           <span className={styles.statMeta}>{ziPericol < 300 ? `~${ziPericol} zile până la depășire` : "Plafon în siguranță"}</span>
         </div>
       </div>
 
       <div className={styles.plafonCard}>
-        <div className={styles.plafonHeader}>
-          <div>
-            <h3 className={styles.plafonTitle}>Progres Plafon TVA Anual</h3>
-            <p className={styles.plafonSubtitle}>
-              Cifră de afaceri: <strong>{cifraDeAfaceri.toLocaleString("ro-RO")} lei</strong> din <strong>300.000 lei</strong>
-            </p>
+        <div className={styles.plafonLayout}>
+          <div className={styles.gaugeWrap} aria-label={`Plafon TVA: ${progresPlafon}% atins`}>
+            {(() => {
+              const r = 54;
+              const circ = 2 * Math.PI * r;
+              const fillColor = progresPlafon > 75 ? "#ef4444" : progresPlafon > 50 ? "#f59e0b" : "#10b981";
+              return (
+                <svg viewBox="0 0 140 140" className={styles.gaugeSvg}>
+                  <circle cx="70" cy="70" r={r} fill="none" stroke="rgba(0,0,0,0.06)" strokeWidth="14" />
+                  <circle
+                    cx="70" cy="70" r={r} fill="none"
+                    stroke={fillColor} strokeWidth="14"
+                    strokeLinecap="round"
+                    strokeDasharray={circ}
+                    strokeDashoffset={circ * (1 - progresPlafon / 100)}
+                    style={{ transform: "rotate(-90deg)", transformOrigin: "70px 70px", transition: "stroke-dashoffset 1s ease-out" }}
+                  />
+                  <text x="70" y="65" textAnchor="middle" fontSize="22" fontWeight="700" fill={fillColor} fontFamily="var(--font-montserrat)">{progresPlafon}%</text>
+                  <text x="70" y="85" textAnchor="middle" fontSize="10" fill="#9ca3af">din 395k lei</text>
+                </svg>
+              );
+            })()}
           </div>
-          <span className={`${styles.plafonPct} ${progresPlafon > 60 ? styles.plafonWarn : ""}`}>{progresPlafon}%</span>
-        </div>
-        <div className={styles.progressBar}>
-          <div className={`${styles.progressFill} ${progresPlafon > 75 ? styles.progressDanger : progresPlafon > 50 ? styles.progressWarn : styles.progressOk}`}
-            style={{ width: `${progresPlafon}%` }} />
-        </div>
-        <div className={styles.plafonFooter}>
-          <span>Ritm: ~{Math.round(cifraDeAfaceri / 3).toLocaleString("ro-RO")} lei/lună</span>
-          {progresPlafon > 60 && <span className={styles.plafonAlert}>⚠ Estimat depășire în ~{ziPericol} zile</span>}
-          <a href="https://www.anaf.ro/anaf/internet/RO/inregistrare-in-scopuri-de-tva" target="_blank" rel="noopener noreferrer" className={styles.btnPrimary}>Înregistrare TVA voluntară →</a>
+          <div className={styles.plafonBody}>
+            <h3 className={styles.plafonTitle}>Plafon TVA Anual</h3>
+            <p className={styles.plafonSubtitle}>
+              Cifră de afaceri: <strong>{cifraDeAfaceri.toLocaleString("ro-RO")} lei</strong> din <strong>395.000 lei</strong>
+            </p>
+            <div className={styles.plafonFooter}>
+              <span>Ritm: ~{Math.round(cifraDeAfaceri / 3).toLocaleString("ro-RO")} lei/lună</span>
+              {progresPlafon > 60 && <span className={styles.plafonAlert}>⚠ ~{ziPericol} zile până la depășire</span>}
+            </div>
+            <a href="https://www.anaf.ro/anaf/internet/RO/inregistrare-in-scopuri-de-tva" target="_blank" rel="noopener noreferrer" className={styles.btnPrimary}>Înregistrare TVA voluntară →</a>
+          </div>
         </div>
       </div>
 

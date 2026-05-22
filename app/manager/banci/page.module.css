@@ -305,6 +305,40 @@
   color: #2563eb;
 }
 
+.filterBtnCredit {
+  background: rgba(5,150,105,0.1);
+  border-color: rgba(5,150,105,0.3);
+  color: #059669;
+}
+
+.filterBtnDebit {
+  background: rgba(220,38,38,0.08);
+  border-color: rgba(220,38,38,0.25);
+  color: #dc2626;
+}
+
+.filterSep {
+  width: 1px;
+  height: 24px;
+  background: rgba(0,0,0,0.1);
+  align-self: center;
+  margin: 0 4px;
+}
+
+.tranzSumar {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.sumarCredit { color: #059669; }
+.sumarDebit  { color: #dc2626; }
+.sumarNet    { font-weight: 600; margin-left: auto; }
+
 .tranzList {
   display: flex;
   flex-direction: column;
