@@ -164,12 +164,12 @@ export default function NoutatiPage() {
           </p>
         </div>
 
-        {/* Termen iminent banner */}
-        {hasUrgent && filtru === "Toate" && (
+        {/* Termen iminent banner — D212 termen normal */}
+        {filtru === "Toate" && (
           <div className={styles.urgentBanner}>
-            <span>🔴</span>
+            <span>⚡</span>
             <span>
-              <strong>Termen iminent:</strong> Bonificație 3% la D212 expiră pe <strong>15 aprilie 2026</strong>
+              <strong>URGENT — 3 zile rămase:</strong> Termen depunere D212 (Declarația Unică 2025) — <strong>25 mai 2026</strong>
               {" "}<Link href="/ghiduri/d212-ghid-completare" className={styles.urgentLink}>→ Ghid completare</Link>
             </span>
           </div>

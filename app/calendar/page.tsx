@@ -13,7 +13,6 @@ interface Termen {
   declaratie: string;
   titlu: string;
   profile: Profil[];
-  urgent?: boolean;
   badge?: string;
 }
 
@@ -33,8 +32,8 @@ const termene2026: Termen[] = [
   { luna: 10, zi: 25, declaratie: "D300", titlu: "TVA Q3 2026 (trimestrial)", profile: ["srl"] },
   // D101 impozit profit
   { luna: 3, zi: 25, declaratie: "D101", titlu: "Impozit pe profit 2025", profile: ["srl"] },
-  // D212 cu bonificație
-  { luna: 4, zi: 15, declaratie: "D212", titlu: "Declarația Unică 2025 (bonificație 3%)", profile: ["pfa", "chirii", "investitor"], urgent: true, badge: "BONIFICAȚIE 3%" },
+  // D212 cu bonificație (termen expirat 15 apr 2026)
+  { luna: 4, zi: 15, declaratie: "D212", titlu: "Declarația Unică 2025 (bonificație 3% — expirat)", profile: ["pfa", "chirii", "investitor"], badge: "EXPIRAT" },
   // D212 termen normal
   { luna: 5, zi: 25, declaratie: "D212", titlu: "Declarația Unică 2025 (termen normal)", profile: ["pfa", "chirii", "investitor"] },
   // D100 micro trimestrial
@@ -218,7 +217,7 @@ export default function CalendarPage() {
                 ) : (
                   <div>
                     {termLuna.map((t, j) => {
-                      const urgent = isTermenUrgent(t) || t.urgent;
+                      const urgent = isTermenUrgent(t);
                       return (
                         <a
                           key={j}

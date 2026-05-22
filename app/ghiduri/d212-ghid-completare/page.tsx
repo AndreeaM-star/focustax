@@ -67,7 +67,7 @@ const CHECKLIST = [
   { id: "semn", label: "Semnătură electronică sau token disponibil" },
   { id: "sume", label: "Sumele calculate și verificate" },
   { id: "cont", label: "Cont bancar IBAN corect pentru restituiri" },
-  { id: "bonif", label: "Am verificat dacă pot beneficia de bonificația 3% (termen 15 apr)" },
+  { id: "bonif", label: "Am notat că bonificația 3% (termen 15 apr. 2026) a expirat — termen curent: 25 mai 2026" },
 ];
 
 const STEPS = [
@@ -111,7 +111,7 @@ function CalculatorBonificatie() {
             <span>{fmt(impozitRedus)} lei</span>
           </div>
           <p className={styles.bonNote}>
-            Depunând și plătind până pe <strong>15 aprilie 2026</strong>, economisești <strong>{fmt(bonificatie)} lei</strong>.
+            Bonificația 3% era disponibilă până pe <strong>15 aprilie 2026</strong> (termen expirat). Economie posibilă era <strong>{fmt(bonificatie)} lei</strong>.
           </p>
         </>
       )}
@@ -151,7 +151,7 @@ export default function GhidD212() {
             Wizard interactiv pas cu pas pentru depunerea Declarației Unice.
           </p>
           <div className={styles.urgentBadge}>
-            ⏰ Termen cu bonificație 3%: 15 aprilie 2026
+            ⚡ Termen depunere D212: 25 mai 2026 — mai ai 3 zile!
           </div>
         </div>
 

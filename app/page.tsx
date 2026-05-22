@@ -91,11 +91,11 @@ export default function HomePage() {
           <div className={styles.heroContent}>
             {/* D212 banner */}
             <div className={styles.d212Banner}>
-              <span className={styles.d212BannerIcon}>⏰</span>
+              <span className={styles.d212BannerIcon}>⚡</span>
               <span>
-                <strong>Bonificație 3% D212 — termen: 15 apr 2026</strong>
-                {" "}— plătește impozitul înainte de această dată.{" "}
-                <Link href="/ghiduri/d212-ghid-completare" className={styles.d212BannerLink}>Ghid pas cu pas →</Link>
+                <strong>URGENT — D212 termen: 25 mai 2026</strong>
+                {" "}— mai ai 3 zile să depui Declarația Unică pentru veniturile din 2025.{" "}
+                <Link href="/ghiduri/d212-ghid-completare" className={styles.d212BannerLink}>Ghid completare →</Link>
               </span>
             </div>
 

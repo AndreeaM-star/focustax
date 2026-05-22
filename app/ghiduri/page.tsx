@@ -19,7 +19,7 @@ const ghiduri = [
     categorie: "Ghiduri noi 2026",
     culoare: "#dc2626",
     lista: [
-      { titlu: "Ghid complet D212 2026", desc: "Wizard interactiv pas cu pas. Bonificație 3% până pe 15 aprilie 2026.", slug: "d212-ghid-completare" },
+      { titlu: "Ghid complet D212 2026", desc: "Wizard interactiv pas cu pas. Termen depunere: 25 mai 2026 (bonificația 3% din 15 apr. a expirat).", slug: "d212-ghid-completare" },
       { titlu: "Facilități fiscale IT, Construcții, Agricultură", desc: "Calculator comparativ cu/fără scutire impozit venit. Condiții eligibilitate.", slug: "facilitati-fiscale" },
       { titlu: "Impozite locale 2026", desc: "Calculator impozit clădiri și autoturisme. Creșteri față de 2025.", slug: "impozite-locale-2026" },
     ],
