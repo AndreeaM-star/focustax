@@ -23,7 +23,9 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main className={styles.page}>
-        <h1 className={styles.title}>Contact</h1>
+        <h1 className={styles.title}>
+          Ia <span className={styles.titleAccent}>Legătura</span> cu Noi
+        </h1>
         <p className={styles.subtitle}>
           Ai o întrebare despre o declarație fiscală sau o sugestie pentru FocusTax?
           Scrie-ne și îți răspundem cât mai rapid.

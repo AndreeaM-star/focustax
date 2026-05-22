@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
@@ -9,7 +8,7 @@ import styles from "./page.module.css";
 const fmt = (n: number) =>
   n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
 
-const SMIN = 4050; // ian-iun 2026 (conservativ)
+const SMIN = 4050;
 
 interface FormaResult {
   label: string;
@@ -70,11 +69,10 @@ function calcPFAReal(brutAnual: number, cheltuieli: number): FormaResult {
 }
 
 function calcPFANorma(): FormaResult {
-  const norma = 50_000; // orientativ național
+  const norma = 50_000;
   const bazaCASS = Math.min(Math.max(norma, SMIN * 6), SMIN * 72);
   const cass = bazaCASS * 0.1;
-  const cas = 0; // opțional, calculăm fără
-  const impozit = Math.max(0, (norma - cas - cass) * 0.1);
+  const impozit = Math.max(0, (norma - cass) * 0.1);
   const total = cass + impozit;
   const netAnual = norma - total;
   return {
@@ -141,58 +139,36 @@ function calcSRLProfit(ca: number, cheltuieli: number): FormaResult {
   };
 }
 
+const RATE_COLORS = [
+  "#2563eb", "#7c3aed", "#6366f1", "#059669", "#d97706",
+];
+
 function FormaCard({ forma, isMax }: { forma: FormaResult; isMax: boolean }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{
-      background: "rgba(255,255,255,0.06)",
-      backdropFilter: "blur(12px)",
-      border: `1px solid ${isMax ? "rgba(5,150,105,0.6)" : "rgba(255,255,255,0.12)"}`,
-      borderRadius: "16px",
-      padding: "20px",
-      position: "relative",
-      transition: "all 0.2s",
-      boxShadow: isMax ? "0 0 24px rgba(5,150,105,0.15)" : undefined,
-    }}>
+    <div className={`${styles.formaCard} ${isMax ? styles.formaCardBest : ""}`}>
       {isMax && (
-        <div style={{
-          position: "absolute", top: -10, right: 12,
-          background: "#059669", color: "#fff",
-          fontSize: "0.7rem", fontWeight: 700, padding: "2px 10px",
-          borderRadius: "9999px",
-        }}>CEL MAI AVANTAJOS</div>
+        <span className={styles.bestBadge}>CEL MAI AVANTAJOS</span>
       )}
-      <h3 style={{ margin: "0 0 4px", fontSize: "1rem", fontWeight: 700, color: "#1e293b" }}>
-        {forma.label}
-      </h3>
-      <div style={{ fontSize: "1.6rem", fontWeight: 800, color: "#059669", margin: "8px 0 2px" }}>
-        {fmt(forma.netLunar)} <span style={{ fontSize: "0.9rem", fontWeight: 500 }}>lei/lună</span>
+      <h3 className={styles.formaLabel}>{forma.label}</h3>
+      <div className={styles.netValue}>
+        {fmt(forma.netLunar)}
+        <span className={styles.netUnit}>lei/lună</span>
       </div>
-      <div style={{ fontSize: "0.8rem", color: "#64748b" }}>
+      <div className={styles.netMeta}>
         {fmt(forma.netAnual)} lei/an · taxare {forma.pctTaxare.toFixed(1)}%
       </div>
 
-      <button
-        onClick={() => setOpen(p => !p)}
-        style={{
-          marginTop: 12, fontSize: "0.8rem", color: "#6366f1",
-          background: "none", border: "none", cursor: "pointer", padding: 0,
-        }}
-      >
+      <button className={styles.toggleBtn} onClick={() => setOpen(p => !p)}>
         {open ? "▲ Ascunde detalii" : "▼ Vezi calcul detaliat"}
       </button>
 
       {open && (
-        <div style={{ marginTop: 10 }}>
+        <div className={styles.detailsTable}>
           {forma.detalii.map((d, i) => (
-            <div key={i} style={{
-              display: "flex", justifyContent: "space-between",
-              fontSize: "0.8rem", padding: "3px 0",
-              borderBottom: i < forma.detalii.length - 1 ? "1px solid rgba(0,0,0,0.05)" : undefined,
-              color: d.neg ? "#dc2626" : "#374151",
-            }}>
-              <span>{d.label}</span>
-              <span style={{ fontWeight: 500 }}>{d.val}</span>
+            <div key={i} className={`${styles.detailRow} ${d.neg ? styles.detailRowNeg : ""}`}>
+              <span className={styles.detailLabel}>{d.label}</span>
+              <span className={styles.detailVal}>{d.val}</span>
             </div>
           ))}
         </div>
@@ -220,76 +196,78 @@ export default function FormeJuridice() {
   }, [venit, cheltuieli]);
 
   const maxNet = forme.length ? Math.max(...forme.map(f => f.netAnual)) : 0;
+  const maxPct = forme.length ? Math.max(...forme.map(f => f.pctTaxare)) : 1;
 
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "2rem 1rem 4rem" }}>
-        <h1 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 8, color: "#1e293b" }}>
-          Compară Forme Juridice 2026
-        </h1>
-        <p style={{ color: "#64748b", marginBottom: "2rem", maxWidth: 600 }}>
-          Introdu venitul tău estimat și compară instant cât rămâi net ca angajat, PFA, SRL micro sau SRL profit.
-        </p>
+      <main className={styles.page}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>
+            Compară <span className={styles.titleAccent}>Forme Juridice</span> 2026
+          </h1>
+          <p className={styles.subtitle}>
+            Introdu venitul estimat și compară instant cât rămâi net ca angajat, PFA, SRL micro sau SRL profit.
+          </p>
+        </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", maxWidth: 500, marginBottom: "2.5rem" }}>
-          <div>
-            <label style={{ fontSize: "0.875rem", fontWeight: 600, display: "block", marginBottom: 6, color: "#374151" }}>
-              Venit brut anual (lei)
-            </label>
+        <div className={styles.inputsGrid}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Venit brut anual (lei)</label>
             <input
               type="number"
-              placeholder="ex: 120.000"
+              placeholder="ex: 120000"
               value={venit}
               onChange={e => setVenit(e.target.value)}
-              style={{
-                width: "100%", padding: "10px 14px", borderRadius: 10,
-                border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.8)",
-                fontSize: "1rem", outline: "none",
-              }}
+              className={styles.input}
             />
           </div>
-          <div>
-            <label style={{ fontSize: "0.875rem", fontWeight: 600, display: "block", marginBottom: 6, color: "#374151" }}>
-              Cheltuieli deductibile/an <span style={{ fontWeight: 400, color: "#9ca3af" }}>(opțional)</span>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>
+              Cheltuieli deductibile/an
+              <span className={styles.optional}>(opțional)</span>
             </label>
             <input
               type="number"
-              placeholder="ex: 20.000"
+              placeholder="ex: 20000"
               value={cheltuieli}
               onChange={e => setCheltuieli(e.target.value)}
-              style={{
-                width: "100%", padding: "10px 14px", borderRadius: 10,
-                border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.8)",
-                fontSize: "1rem", outline: "none",
-              }}
+              className={styles.input}
             />
           </div>
         </div>
 
         {forme.length > 0 && (
           <>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "1rem",
-              marginBottom: "2rem",
-            }}>
+            <div className={styles.formsGrid}>
               {forme.map(f => (
                 <FormaCard key={f.label} forma={f} isMax={f.netAnual === maxNet} />
               ))}
             </div>
 
-            <div style={{
-              background: "rgba(234,179,8,0.08)",
-              border: "1px solid rgba(234,179,8,0.3)",
-              borderRadius: 12,
-              padding: "12px 16px",
-              fontSize: "0.8rem",
-              color: "#78350f",
-            }}>
-              ⚠ Calcul orientativ conform legislației 2026. Nu substituie consultanță fiscală autorizată CCF/CECCAR. Valorile exacte pot varia în funcție de situația specifică.
+            <div className={styles.rateChart}>
+              <div className={styles.rateTitle}>Rata de taxare comparată</div>
+              {forme.map((f, i) => (
+                <div key={f.label} className={styles.rateRow}>
+                  <span className={styles.rateLabel}>{f.label}</span>
+                  <div className={styles.rateBar}>
+                    <div
+                      className={styles.rateBarFill}
+                      style={{
+                        width: `${(f.pctTaxare / maxPct) * 100}%`,
+                        background: RATE_COLORS[i % RATE_COLORS.length],
+                      }}
+                    />
+                  </div>
+                  <span className={styles.ratePct}>{f.pctTaxare.toFixed(1)}%</span>
+                </div>
+              ))}
             </div>
+
+            <p className={styles.disclaimer}>
+              ⚠ Calcul orientativ conform legislației 2026. Nu substituie consultanță fiscală autorizată CCF/CECCAR.
+              Valorile exacte pot varia în funcție de situația specifică.
+            </p>
           </>
         )}
       </main>

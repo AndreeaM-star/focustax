@@ -6,73 +6,162 @@
   justify-content: center;
   text-align: center;
   padding: 60px 20px;
-  animation: fadeInUp 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.orb1, .orb2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%);
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.orb2 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+  bottom: 0;
+  right: 10%;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
 }
 
 .cod {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 6rem;
-  font-weight: 700;
-  color: #e5e7eb;
+  font-size: clamp(5rem, 15vw, 9rem);
+  font-weight: 800;
   line-height: 1;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 40%, #818cf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -4px;
+  animation: fadeInScale 0.5s cubic-bezier(0.22,1,0.36,1) both;
 }
 
 .titlu {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 1.8rem;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
   font-weight: 700;
   color: #1a1a2e;
   margin-bottom: 12px;
+  animation: fadeInScale 0.5s cubic-bezier(0.22,1,0.36,1) 0.08s both;
 }
 
 .desc {
   font-size: 1rem;
   color: #6b7280;
-  margin-bottom: 32px;
-}
-
-.btn {
-  background-color: #1a1a2e;
-  color: #ffffff;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 8px;
-  transition: background 0.2s;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.btn:hover {
-  background-color: #2d2d4e;
-}
-
-.btnSecundar {
-  background: transparent;
-  color: #2563eb;
-  border: 2px solid #2563eb;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 8px;
-  transition: background 0.2s, color 0.2s;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  margin-top: 12px;
-}
-
-.btnSecundar:hover {
-  background: #2563eb;
-  color: #fff;
+  margin-bottom: 36px;
+  max-width: 380px;
+  line-height: 1.6;
+  animation: fadeInScale 0.5s cubic-bezier(0.22,1,0.36,1) 0.14s both;
 }
 
 .butoane {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  animation: fadeInScale 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+}
+
+.btn {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 12px;
+  transition: opacity 0.2s, transform 0.2s;
+  min-height: 44px;
+  display: inline-flex;
   align-items: center;
-  gap: 0;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btnSecundar {
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #374151;
+  border: 1px solid rgba(255,255,255,0.8);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 12px;
+  transition: background 0.2s, transform 0.2s;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.btnSecundar:hover {
+  background: rgba(255,255,255,0.75);
+  transform: translateY(-2px);
+}
+
+.suggestions {
+  margin-top: 48px;
+  animation: fadeInScale 0.5s cubic-bezier(0.22,1,0.36,1) 0.28s both;
+}
+
+.suggestionsLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9ca3af;
+  margin-bottom: 12px;
+}
+
+.suggestionLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.suggestionLink {
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 9999px;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  color: #374151;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.suggestionLink:hover {
+  background: rgba(255,255,255,0.72);
+  transform: translateY(-1px);
 }

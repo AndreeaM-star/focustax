@@ -70,9 +70,11 @@ export default function DeclaratiiPage() {
     <>
       <Navbar />
       <main className={styles.page}>
-        <h1 className={styles.title}>Declarații Fiscale</h1>
+        <h1 className={styles.title}>
+          Declarații <span className={styles.titleAccent}>Fiscale</span>
+        </h1>
         <p className={styles.subtitle}>
-          Ghid complet al declarațiilor fiscale din România, organizat pe categorii.
+          Ghid complet al declarațiilor fiscale din România — termene, formulare și instrucțiuni actualizate 2026.
         </p>
         <D212Chenar />
 
