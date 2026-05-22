@@ -1,9 +1,26 @@
 /** @type {import('next').NextConfig} */
+
+const securityHeaders = [
+  { key: "X-DNS-Prefetch-Control", value: "on" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "X-XSS-Protection", value: "1; mode=block" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+];
+
 const nextConfig = {
-  // Removed 'output: export' — needed for API routes (Groq AI, ANAF OAuth, Supabase server-side)
-  // Vercel handles full Next.js natively — no change needed in deployment
+  // Vercel handles full Next.js natively — no changes needed for deployment
   trailingSlash: true,
   images: { unoptimized: true },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: securityHeaders,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

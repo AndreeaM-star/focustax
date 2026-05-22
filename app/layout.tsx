@@ -39,6 +39,19 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "FocusTax",
+  "url": "https://focustax.ro",
+  "description": "Platformă fiscală educativă pentru România — calculatoare taxe, ghiduri, calendar fiscal și declarații ANAF actualizate 2026.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RON" },
+  "inLanguage": "ro",
+  "publisher": { "@type": "Organization", "name": "FocusTax", "url": "https://focustax.ro" },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -46,6 +59,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ro" className={`${montserrat.variable} ${openSans.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
         <ScrollProgress />
         {children}

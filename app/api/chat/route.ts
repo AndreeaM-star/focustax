@@ -38,19 +38,50 @@ Răspunzi EXCLUSIV în română. Ești concisă, precisă, prietenoasă. Formate
 
 Data curentă: ${new Date().toLocaleDateString("ro-RO", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}.`;
 
+// In-memory rate limit: max 20 requests/min per IP
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const window = 60_000; // 1 minute
+  const maxReq = 20;
+
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + window });
+    return true;
+  }
+  if (entry.count >= maxReq) return false;
+  entry.count++;
+  return true;
+}
+
 export async function POST(req: NextRequest) {
+  // Rate limiting
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (!checkRateLimit(ip)) {
+    return NextResponse.json({ error: "Prea multe cereri. Încearcă din nou peste un minut." }, { status: 429 });
+  }
+
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const { messages } = body;
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json({ error: "Invalid messages" }, { status: 400 });
+    }
+
+    // Validate message length
+    const lastMsg = messages[messages.length - 1];
+    if (lastMsg?.content && typeof lastMsg.content === "string" && lastMsg.content.length > 1000) {
+      return NextResponse.json({ error: "Mesajul este prea lung (max 1000 caractere)." }, { status: 400 });
     }
 
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        ...messages.slice(-10), // keep last 10 messages for context
+        ...messages.slice(-10),
       ],
       max_tokens: 800,
       temperature: 0.3,
