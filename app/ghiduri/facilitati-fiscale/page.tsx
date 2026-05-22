@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import styles from "./page.module.css";
 
 const fmt = (n: number) =>
   n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
@@ -13,28 +14,22 @@ function CalculatorIT() {
   const [brut, setBrut] = useState("");
   const b = parseFloat(brut) || 0;
 
-  // Normal
   const casNorm = b * 0.25;
   const cassNorm = b * 0.1;
   const dedNorm = b <= SMIN ? 300 : b <= SMIN * 2 ? Math.max(0, 300 - (300 / SMIN) * (b - SMIN)) : 0;
   const impNorm = Math.max(0, (b - casNorm - cassNorm - dedNorm) * 0.1);
   const netNorm = b - casNorm - cassNorm - impNorm;
 
-  // Facilitate IT: fără impozit venit
   const casIT = b * 0.25;
   const cassIT = b * 0.1;
-  const netIT = b - casIT - cassIT; // fără impozit
+  const netIT = b - casIT - cassIT;
 
   const diferentaLunara = netIT - netNorm;
   const diferentaAnuala = diferentaLunara * 12;
 
   return (
-    <div style={{
-      background: "rgba(255,255,255,0.06)", backdropFilter: "blur(10px)",
-      border: "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "20px",
-      marginBottom: "1.5rem",
-    }}>
-      <h3 style={{ fontWeight: 700, fontSize: "1rem", marginBottom: 14, color: "#1e293b" }}>
+    <div className={styles.calcPanel}>
+      <h3 style={{ fontWeight: 700, fontSize: "1rem", marginBottom: 14, color: "#1a1a2e" }}>
         Calculator comparativ IT
       </h3>
       <div style={{ marginBottom: 12 }}>
@@ -44,7 +39,12 @@ function CalculatorIT() {
         <input
           type="number" placeholder="ex: 10.000"
           value={brut} onChange={e => setBrut(e.target.value)}
-          style={{ padding: "9px 12px", borderRadius: 9, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.8)", outline: "none", fontSize: "0.9rem", width: "100%", maxWidth: 220 }}
+          style={{
+            padding: "9px 12px", borderRadius: 9,
+            border: "1px solid rgba(99,102,241,0.3)",
+            background: "rgba(255,255,255,0.8)",
+            outline: "none", fontSize: "0.9rem", width: "100%", maxWidth: 220,
+          }}
         />
       </div>
       {b > 0 && (
@@ -80,29 +80,24 @@ export default function FacilitatiFiscale() {
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 860, margin: "0 auto", padding: "2rem 1rem 4rem" }}>
-        <h1 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 8, color: "#1e293b" }}>
-          Facilități Fiscale Sectoriale 2026
+      <main className={styles.page}>
+        <h1 className={styles.title}>
+          Facilități Fiscale <span className={styles.titleAccent}>Sectoriale</span> 2026
         </h1>
-        <p style={{ color: "#64748b", marginBottom: "2rem", maxWidth: 620 }}>
+        <p className={styles.subtitle}>
           Angajații din IT, construcții și agricultură beneficiază de scutiri de impozit pe venit și contribuții reduse.
         </p>
 
-        <div style={{ display: "flex", gap: 8, marginBottom: "2rem", flexWrap: "wrap" }}>
+        <div className={styles.tabs}>
           {([
             { id: "it", label: "💻 IT — Scutire impozit venit" },
             { id: "constructii", label: "🏗️ Construcții" },
             { id: "agricultura", label: "🌾 Agricultură" },
           ] as const).map(t => (
-            <button key={t.id}
+            <button
+              key={t.id}
               onClick={() => setTab(t.id)}
-              style={{
-                padding: "9px 18px", borderRadius: 10, fontSize: "0.875rem",
-                background: tab === t.id ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.06)",
-                border: `1px solid ${tab === t.id ? "rgba(99,102,241,0.5)" : "rgba(255,255,255,0.12)"}`,
-                color: tab === t.id ? "#4338ca" : "#374151",
-                fontWeight: tab === t.id ? 700 : 400, cursor: "pointer",
-              }}
+              className={`${styles.tabBtn} ${tab === t.id ? styles.tabBtnActive : ""}`}
             >
               {t.label}
             </button>
@@ -111,14 +106,8 @@ export default function FacilitatiFiscale() {
 
         {tab === "it" && (
           <div>
-            <div style={{
-              background: "rgba(255,255,255,0.06)", backdropFilter: "blur(10px)",
-              border: "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "20px",
-              marginBottom: "1.5rem",
-            }}>
-              <h2 style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: 12, color: "#1e293b" }}>
-                Facilitatea IT — Scutire impozit pe venit 10%
-              </h2>
+            <div className={styles.panel}>
+              <h2 className={styles.panelTitle}>Facilitatea IT — Scutire impozit pe venit 10%</h2>
               <p style={{ fontSize: "0.875rem", color: "#374151", marginBottom: 12 }}>
                 Angajații din IT care îndeplinesc <strong>cumulativ toate condițiile</strong> nu plătesc impozit pe venit (10%), păstrând CAS și CASS nemodificate.
               </p>
@@ -135,13 +124,8 @@ export default function FacilitatiFiscale() {
         )}
 
         {tab === "constructii" && (
-          <div style={{
-            background: "rgba(255,255,255,0.06)", backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "20px",
-          }}>
-            <h2 style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: 12, color: "#1e293b" }}>
-              Facilitatea Construcții
-            </h2>
+          <div className={styles.panel}>
+            <h2 className={styles.panelTitle}>Facilitatea Construcții</h2>
             <p style={{ fontSize: "0.875rem", color: "#374151", marginBottom: 12 }}>
               Angajații din sectorul construcții beneficiază de scutire impozit și CAS redus.
             </p>
@@ -166,13 +150,8 @@ export default function FacilitatiFiscale() {
         )}
 
         {tab === "agricultura" && (
-          <div style={{
-            background: "rgba(255,255,255,0.06)", backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "20px",
-          }}>
-            <h2 style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: 12, color: "#1e293b" }}>
-              Facilitatea Agricultură
-            </h2>
+          <div className={styles.panel}>
+            <h2 className={styles.panelTitle}>Facilitatea Agricultură</h2>
             <p style={{ fontSize: "0.875rem", color: "#374151", marginBottom: 14 }}>
               Angajații din sectorul agricol și industria alimentară beneficiază de scutire la impozitul pe venit.
             </p>
@@ -185,7 +164,7 @@ export default function FacilitatiFiscale() {
           </div>
         )}
 
-        <p style={{ marginTop: "2rem", fontSize: "0.8rem", color: "#9ca3af" }}>
+        <p className={styles.disclaimer}>
           Calcul orientativ. Nu substituie consultanță fiscală autorizată CCF/CECCAR. Condițiile se verifică individual cu angajatorul și cu un expert fiscal.
         </p>
       </main>

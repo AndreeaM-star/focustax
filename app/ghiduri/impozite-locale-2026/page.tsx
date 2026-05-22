@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import styles from "./page.module.css";
 
 const fmt = (n: number) =>
   n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
@@ -48,14 +49,8 @@ function CalculatorCladire() {
   };
 
   return (
-    <div style={{
-      background: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)",
-      border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, padding: "20px",
-      marginBottom: "2rem",
-    }}>
-      <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: 16, color: "#1e293b" }}>
-        Calculator Impozit Clădiri 2026
-      </h2>
+    <div className={styles.calcPanel}>
+      <h2 className={styles.calcTitle}>Calculator Impozit Clădiri 2026</h2>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
         <div>
@@ -148,13 +143,8 @@ function CalculatorAuto() {
   }
 
   return (
-    <div style={{
-      background: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)",
-      border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, padding: "20px",
-      marginBottom: "2rem",
-    }}>
-      <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: 16, color: "#1e293b" }}>
-        Calculator Impozit Autoturisme 2026
+    <div className={styles.calcPanel}>
+      <h2 className={styles.calcTitle}>Calculator Impozit Autoturisme 2026
       </h2>
 
       <div style={{ marginBottom: "1rem" }}>
@@ -216,32 +206,23 @@ export default function ImpoziteLocale2026() {
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 860, margin: "0 auto", padding: "2rem 1rem 4rem" }}>
-        <h1 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 8, color: "#1e293b" }}>
-          Impozite Locale 2026 — Clădiri și Mașini
+      <main className={styles.page}>
+        <h1 className={styles.title}>
+          Impozite Locale <span className={styles.titleAccent}>2026</span>
         </h1>
-        <p style={{ color: "#64748b", marginBottom: "0.5rem", maxWidth: 620 }}>
+        <p className={styles.subtitle}>
           Impozitele pe proprietăți și autoturisme au crescut semnificativ în 2026 față de 2025. Calculează estimativ cât plătești.
         </p>
-        <div style={{
-          background: "rgba(220,38,38,0.08)", border: "1px solid rgba(220,38,38,0.25)",
-          borderRadius: 10, padding: "10px 16px", marginBottom: "2rem",
-          fontSize: "0.875rem", color: "#7f1d1d",
-        }}>
+        <div className={styles.alertBanner}>
           ⚠ Creșteri de până la <strong>150%</strong> față de 2025 în unele localități. Verificați la primăria voastră cuantumul exact.
         </div>
 
         <CalculatorCladire />
         <CalculatorAuto />
 
-        <div style={{
-          background: "rgba(255,255,255,0.06)", backdropFilter: "blur(10px)",
-          border: "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: "20px",
-        }}>
-          <h3 style={{ fontWeight: 700, fontSize: "1rem", marginBottom: 12, color: "#1e293b" }}>
-            Ce s-a schimbat în 2026?
-          </h3>
-          <ul style={{ margin: 0, paddingLeft: 20, fontSize: "0.875rem", color: "#374151", lineHeight: 1.8 }}>
+        <div className={styles.infoPanel}>
+          <h3 className={styles.infoTitle}>Ce s-a schimbat în 2026?</h3>
+          <ul className={styles.infoList}>
             <li>Impozitul pe clădiri rezidențiale a crescut în medie cu <strong>50–150%</strong> față de 2025</li>
             <li>Impozitul pe mașini este acum <strong>diferențiat după norma Euro și cilindree</strong></li>
             <li>Mașinile electrice plătesc <strong>40 lei/an fix</strong> (față de 0 lei în 2025)</li>
@@ -250,7 +231,7 @@ export default function ImpoziteLocale2026() {
           </ul>
         </div>
 
-        <p style={{ marginTop: "1.5rem", fontSize: "0.8rem", color: "#9ca3af" }}>
+        <p className={styles.disclaimer}>
           Calcul orientativ. Nu substituie consultanță fiscală autorizată CCF/CECCAR. Valorile exacte se obțin de la primăria localității.
         </p>
       </main>
