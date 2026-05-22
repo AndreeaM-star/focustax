@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import styles from "./page.module.css";
 
 type Profil = "angajat_srl" | "pfa" | "srl" | "chirii" | "investitor";
 
@@ -74,7 +75,9 @@ function makeGCalLink(t: Termen, an = 2026) {
 
 export default function CalendarPage() {
   const [profiluri, setProfiluri] = useState<Set<Profil>>(new Set());
-  const lunaAzi = new Date().getMonth() + 1;
+  const azi = new Date();
+  const lunaAzi = azi.getMonth() + 1;
+  const anAzi = azi.getFullYear();
 
   function toggle(p: Profil) {
     setProfiluri(prev => {
@@ -93,47 +96,48 @@ export default function CalendarPage() {
     );
   }
 
-  function getUrgenta(luna: number) {
+  function getLunaStatus(luna: number) {
+    if (anAzi < 2026) return luna === 1 ? "current" : "future";
+    if (anAzi > 2026) return "past";
     if (luna === lunaAzi) return "current";
+    if (luna < lunaAzi) return "past";
     if (luna === lunaAzi + 1 || (lunaAzi === 12 && luna === 1)) return "next";
-    return "other";
+    return "future";
   }
+
+  function isTermenUrgent(t: Termen) {
+    if (anAzi !== 2026) return false;
+    const d = new Date(2026, t.luna - 1, t.zi);
+    const diff = (d.getTime() - azi.getTime()) / 86400000;
+    return diff >= 0 && diff <= 7;
+  }
+
+  const lunaCardClass = (status: string) => {
+    if (status === "current") return `${styles.monthCard} ${styles.monthCardCurrent}`;
+    if (status === "next") return `${styles.monthCard} ${styles.monthCardNext}`;
+    if (status === "past") return `${styles.monthCard} ${styles.monthCardPast}`;
+    return styles.monthCard;
+  };
 
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "2rem 1rem 4rem" }}>
-        <h1 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 8, color: "#1e293b" }}>
-          Calendar Fiscal 2026
-        </h1>
-        <p style={{ color: "#64748b", marginBottom: "2rem", maxWidth: 600 }}>
-          Selectează profilul tău pentru a vedea termenele relevante. Click pe orice termen pentru a-l adăuga în Google Calendar.
-        </p>
-
-        {/* Profil selector */}
-        <div style={{
-          background: "rgba(255,255,255,0.08)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.15)",
-          borderRadius: 16,
-          padding: "20px",
-          marginBottom: "2rem",
-        }}>
-          <p style={{ fontWeight: 600, marginBottom: 12, fontSize: "0.9rem", color: "#374151" }}>
-            Selectează profilul tău (poți alege mai multe):
+      <main className={styles.page}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>
+            Calendar <span className={styles.titleAccent}>Fiscal 2026</span>
+          </h1>
+          <p className={styles.subtitle}>
+            Selectează profilul tău pentru a vedea termenele relevante. Click pe orice termen pentru a-l adăuga în Google Calendar.
           </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+        </div>
+
+        {/* Profile selector */}
+        <div className={styles.profileCard}>
+          <p className={styles.profileLabel}>Selectează profilul tău (poți alege mai multe):</p>
+          <div className={styles.profileGrid}>
             {PROFILE_LABELS.map(p => (
-              <label key={p.id} style={{
-                display: "flex", alignItems: "center", gap: 8,
-                cursor: "pointer",
-                background: profiluri.has(p.id) ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.05)",
-                border: `1px solid ${profiluri.has(p.id) ? "rgba(99,102,241,0.5)" : "rgba(0,0,0,0.1)"}`,
-                borderRadius: 10, padding: "8px 14px",
-                fontSize: "0.875rem", fontWeight: profiluri.has(p.id) ? 600 : 400,
-                color: profiluri.has(p.id) ? "#4338ca" : "#374151",
-                transition: "all 0.2s",
-              }}>
+              <label key={p.id} className={`${styles.profileChip} ${profiluri.has(p.id) ? styles.profileChipActive : ""}`}>
                 <input
                   type="checkbox"
                   checked={profiluri.has(p.id)}
@@ -146,72 +150,53 @@ export default function CalendarPage() {
           </div>
         </div>
 
-        {/* Grid luni */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-          gap: "1rem",
-        }}>
+        {/* Months grid */}
+        <div className={styles.monthsGrid}>
           {LUNI.map((numeLuna, i) => {
             const luna = i + 1;
             const termLuna = termeneFiltered(luna);
-            const urg = getUrgenta(luna);
+            const status = getLunaStatus(luna);
             return (
-              <div key={luna} style={{
-                background: "rgba(255,255,255,0.06)",
-                backdropFilter: "blur(10px)",
-                border: `1px solid ${urg === "current" ? "rgba(99,102,241,0.6)" : urg === "next" ? "rgba(217,119,6,0.4)" : "rgba(255,255,255,0.1)"}`,
-                borderRadius: 14,
-                padding: "16px",
-                minHeight: 120,
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                  <span style={{ fontWeight: 700, fontSize: "0.95rem", color: "#1e293b" }}>{numeLuna}</span>
-                  {urg === "current" && (
-                    <span style={{ fontSize: "0.65rem", fontWeight: 700, background: "#6366f1", color: "#fff", padding: "2px 8px", borderRadius: 9999 }}>LUNA CURENTĂ</span>
+              <div key={luna} className={lunaCardClass(status)}>
+                <div className={styles.monthHeader}>
+                  <span className={styles.monthName}>{numeLuna}</span>
+                  {status === "current" && (
+                    <span className={styles.monthBadgeCurrent}>Luna curentă</span>
                   )}
                 </div>
                 {termLuna.length === 0 ? (
-                  <p style={{ fontSize: "0.8rem", color: "#9ca3af", fontStyle: "italic" }}>Nicio declarație{profilActiv ? " pentru profilul selectat" : ""}</p>
+                  <p className={styles.monthEmpty}>
+                    Nicio declarație{profilActiv ? " pentru profilul selectat" : ""}
+                  </p>
                 ) : (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    {termLuna.map((t, j) => (
-                      <a
-                        key={j}
-                        href={makeGCalLink(t)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: "flex", alignItems: "center", gap: 8,
-                          background: `${TAG_COLORS[t.declaratie] ?? "#6b7280"}15`,
-                          border: `1px solid ${TAG_COLORS[t.declaratie] ?? "#6b7280"}30`,
-                          borderRadius: 8, padding: "6px 10px",
-                          textDecoration: "none",
-                          transition: "opacity 0.15s",
-                        }}
-                        title="Adaugă în Google Calendar"
-                      >
-                        <span style={{
-                          fontSize: "0.7rem", fontWeight: 700,
-                          color: TAG_COLORS[t.declaratie] ?? "#6b7280",
-                          minWidth: 36,
-                        }}>{t.declaratie}</span>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: "0.78rem", color: "#374151", fontWeight: 500 }}>
-                            {t.titlu}
+                  <div>
+                    {termLuna.map((t, j) => {
+                      const urgent = isTermenUrgent(t) || t.urgent;
+                      return (
+                        <a
+                          key={j}
+                          href={makeGCalLink(t)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`${styles.termLink} ${urgent ? styles.termLinkUrgent : ""}`}
+                          title="Adaugă în Google Calendar"
+                        >
+                          <span className={styles.termCode} style={{ color: TAG_COLORS[t.declaratie] ?? "#6b7280" }}>
+                            {t.declaratie}
+                          </span>
+                          <div className={styles.termInfo}>
+                            <div className={styles.termName}>{t.titlu}</div>
+                            <div className={styles.termDate}>
+                              termen {t.zi} {numeLuna.toLowerCase()}
+                            </div>
                           </div>
-                          <div style={{ fontSize: "0.7rem", color: "#6b7280" }}>
-                            termen {t.zi} {numeLuna.toLowerCase()}
-                            {t.badge && (
-                              <span style={{ marginLeft: 6, background: "#dc262615", color: "#dc2626", border: "1px solid #dc262630", borderRadius: 4, padding: "0 4px", fontSize: "0.65rem", fontWeight: 700 }}>
-                                {t.badge}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <span style={{ fontSize: "0.75rem" }}>📅</span>
-                      </a>
-                    ))}
+                          {t.badge && (
+                            <span className={styles.termBadge}>{t.badge}</span>
+                          )}
+                          <span className={styles.calIcon}>📅</span>
+                        </a>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -219,7 +204,7 @@ export default function CalendarPage() {
           })}
         </div>
 
-        <p style={{ marginTop: "2rem", fontSize: "0.8rem", color: "#9ca3af", textAlign: "center" }}>
+        <p className={styles.footerNote}>
           Calcul orientativ. Verificați termenele exacte pe anaf.ro. Click pe orice declarație pentru a adăuga în Google Calendar.
         </p>
       </main>

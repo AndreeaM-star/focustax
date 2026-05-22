@@ -39,7 +39,12 @@
   text-decoration: none;
 }
 
-.logoLink span { color: #2563eb; }
+.logoLink span {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 .managerBadge {
   background: rgba(37, 99, 235, 0.1);
@@ -82,13 +87,14 @@
 }
 
 .navItemActive {
-  background: rgba(37, 99, 235, 0.1);
+  background: linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(124,58,237,0.08) 100%);
   color: #2563eb !important;
-  border: 1px solid rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(37, 99, 235, 0.22);
+  box-shadow: 0 2px 8px rgba(37,99,235,0.12);
 }
 
 .navItemActive:hover {
-  background: rgba(37, 99, 235, 0.14);
+  background: linear-gradient(135deg, rgba(37,99,235,0.16) 0%, rgba(124,58,237,0.12) 100%);
   transform: none;
 }
 

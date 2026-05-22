@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import styles from "./page.module.css";
 
 interface TermenFiscal {
   termen: string;
@@ -93,61 +94,47 @@ export default function GlosarPage() {
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 860, margin: "0 auto", padding: "2rem 1rem 4rem" }}>
-        <h1 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 8, color: "#1e293b" }}>
-          Glosar Fiscal România 2026
-        </h1>
-        <p style={{ color: "#64748b", marginBottom: "1.5rem", maxWidth: 600 }}>
-          {termeni.length} termeni fiscali explicați simplu. Caută orice termen fiscal românesc.
-        </p>
+      <main className={styles.page}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>
+            Glosar Fiscal <span className={styles.titleAccent}>2026</span>
+          </h1>
+          <p className={styles.subtitle}>
+            {termeni.length} termeni fiscali explicați simplu — de la A la Z.
+          </p>
+        </div>
 
-        <input
-          type="search"
-          placeholder="Caută termen fiscal (ex: TVA, PFA, deducere...)"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{
-            width: "100%", padding: "12px 18px",
-            borderRadius: 12, border: "1px solid rgba(99,102,241,0.3)",
-            background: "rgba(255,255,255,0.85)", fontSize: "1rem",
-            outline: "none", marginBottom: "2rem",
-          }}
-        />
+        <div className={styles.searchWrap}>
+          <span className={styles.searchIcon}>🔍</span>
+          <input
+            type="search"
+            className={styles.searchInput}
+            placeholder="Caută termen fiscal (ex: TVA, PFA, deducere...)"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+        </div>
 
         {filtered.length === 0 ? (
-          <p style={{ color: "#9ca3af", textAlign: "center", padding: "2rem" }}>
+          <p className={styles.emptyState}>
             Niciun termen găsit pentru „{search}".
           </p>
         ) : (
           grouped.map(([letter, items]) => (
-            <div key={letter} style={{ marginBottom: "2rem" }}>
-              <div style={{
-                fontSize: "1.5rem", fontWeight: 800, color: "#6366f1",
-                borderBottom: "2px solid rgba(99,102,241,0.2)",
-                paddingBottom: 4, marginBottom: 12,
-              }}>{letter}</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div key={letter} className={styles.group}>
+              <div className={styles.letterHeader}>{letter}</div>
+              <div className={styles.termsList}>
                 {items.map(t => (
-                  <div key={t.termen} style={{
-                    background: "rgba(255,255,255,0.07)",
-                    backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                    borderRadius: 12,
-                    padding: "14px 18px",
-                  }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
-                      <strong style={{ fontSize: "1rem", color: "#1e293b" }}>{t.termen}</strong>
+                  <div key={t.termen} className={styles.termCard}>
+                    <div className={styles.termHeader}>
+                      <strong className={styles.termName}>{t.termen}</strong>
                       {t.linkUri && (
-                        <Link href={t.linkUri} style={{ fontSize: "0.75rem", color: "#6366f1" }}>→ detalii</Link>
+                        <Link href={t.linkUri} className={styles.termLink}>→ detalii</Link>
                       )}
                     </div>
-                    <p style={{ margin: 0, fontSize: "0.875rem", color: "#374151", lineHeight: 1.6 }}>
-                      {t.definitie}
-                    </p>
+                    <p className={styles.termDef}>{t.definitie}</p>
                     {t.exemplu && (
-                      <p style={{ margin: "6px 0 0", fontSize: "0.8rem", color: "#6b7280", fontStyle: "italic" }}>
-                        Ex: {t.exemplu}
-                      </p>
+                      <p className={styles.termEx}>Ex: {t.exemplu}</p>
                     )}
                   </div>
                 ))}
