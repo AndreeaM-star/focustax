@@ -186,9 +186,10 @@
 }
 
 .btnOption.activ {
-  background: #1a1a2e;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
   color: #ffffff;
-  border-color: #1a1a2e;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.30);
 }
 
 .checkRow {
@@ -214,21 +215,23 @@
 }
 
 .btnCalc {
-  background-color: #1a1a2e;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
   color: #ffffff;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 13px 24px;
-  border-radius: 8px;
-  border: none;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   min-height: 44px;
   width: 100%;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.30);
 }
 
 .btnCalc:hover:not(:disabled) {
-  background-color: #2d2d4e;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.40);
 }
 
 .btnCalc:disabled {

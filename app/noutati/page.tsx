@@ -20,7 +20,7 @@ const TAG_COLORS: Record<string, string> = {
   "Penalități": "#dc2626",
   "Cod Fiscal": "#6366f1",
   "Impozit Venit": "#dc2626",
-  "Salarii": "#059659",
+  "Salarii": "#059669",
   "Profit": "#7c3aed",
 };
 
@@ -31,7 +31,7 @@ const noutati = [
     tag: "D212",
     urgenta: "urgent",
     titlu: "Bonificație 3% la D212 — termen 15 aprilie 2026",
-    desc: "Contribuabilii care depun Declarația Unică D212 și plătesc integral impozitul și contribuțiile până pe 15 aprilie 2026 beneficiază de o reducere de 3% a impozitului datorat (OUG 8/2026). Atenție: românii care închiriază spații către firme NU pot beneficia de bonificație. Dacă ai depus deja D212 fără bonificație, poți depune declarație rectificativă.",
+    desc: "Contribuabilii care depun D212 și plătesc integral impozitul și contribuțiile până pe 15 aprilie 2026 beneficiază de o reducere de 3% (OUG 8/2026). Românii care închiriază spații către firme NU pot beneficia. Poți depune rectificativă dacă deja ai depus.",
     link: "/ghiduri/d212-ghid-completare",
   },
   {
@@ -40,7 +40,7 @@ const noutati = [
     tag: "Crypto",
     urgenta: "important",
     titlu: "Impozit crypto crește la 16% — DAC8 intră în vigoare",
-    desc: "Din 1 ianuarie 2026, câștigurile din tranzacții cu criptomonede se impozitează cu 16% (față de 10% anterior). Scutire: câștiguri sub 200 lei/tranzacție dacă totalul anual nu depășește 600 lei. Prin DAC8, toate platformele de tranzacționare sunt obligate să raporteze automat tranzacțiile utilizatorilor români la ANAF.",
+    desc: "Din 1 ianuarie 2026, câștigurile din criptomonede se impozitează cu 16% (față de 10% anterior). Scutire: câștiguri sub 200 lei/tranzacție dacă totalul anual nu depășește 600 lei. Prin DAC8, platformele raportează automat tranzacțiile la ANAF.",
   },
   {
     data: "Ianuarie 2026",
@@ -48,7 +48,7 @@ const noutati = [
     tag: "Dividende",
     urgenta: "important",
     titlu: "Impozit dividende: 16% din 2026",
-    desc: "Impozitul pe dividende a crescut de la 8% la 16% începând cu 1 ianuarie 2026 (Legea 239/2025). Se reține la sursă de persoana juridică distribuitor. La nivel de acționar PF: dacă dividendele + alte venituri pasive depășesc 24.300 lei, se plătește și CASS.",
+    desc: "Impozitul pe dividende a crescut de la 8% la 16% din 1 ianuarie 2026 (Legea 239/2025). Se reține la sursă de persoana juridică distribuitor. CASS se datorează dacă dividendele + alte venituri pasive depășesc 24.300 lei.",
     link: "/ghiduri/dividende",
   },
   {
@@ -57,7 +57,7 @@ const noutati = [
     tag: "Microîntreprinderi",
     urgenta: "important",
     titlu: "Micro 2026: cotă unică 1%, plafon 100.000 EUR",
-    desc: "Din 2026, microîntreprinderile plătesc o cotă unică de 1% din CA (eliminată cota de 3%). Plafonul de încadrare a scăzut la 100.000 EUR/an (de la 500.000 EUR). Condiție nouă: firmele trebuie să fi depus situațiile financiare la timp pentru a accesa regimul.",
+    desc: "Din 2026, microîntreprinderile plătesc o cotă unică de 1% din CA (eliminată cota de 3%). Plafonul de încadrare a scăzut la 100.000 EUR/an. Condiție nouă: firmele trebuie să fi depus situațiile financiare la timp.",
     link: "/ghiduri/srl-vs-micro",
   },
   {
@@ -65,8 +65,8 @@ const noutati = [
     categorie: "Impozite locale",
     tag: "Impozite locale",
     urgenta: "info",
-    titlu: "Impozit clădiri și auto — creșteri semnificative",
-    desc: "Impozitele pe proprietăți au crescut cu până la 150% față de 2025 în unele localități. Impozitul pe autoturisme este acum diferențiat după norma Euro și cilindree. Mașinile electrice plătesc o taxă fixă de 40 lei/an (față de 0 în 2025).",
+    titlu: "Impozit clădiri și auto — creșteri semnificative 2026",
+    desc: "Impozitele pe proprietăți au crescut cu până la 150% față de 2025 în unele localități. Impozitul pe autoturisme este diferențiat după norma Euro și cilindree. Mașinile electrice plătesc 40 lei/an.",
     link: "/ghiduri/impozite-locale-2026",
   },
   {
@@ -75,7 +75,7 @@ const noutati = [
     tag: "TVA",
     urgenta: "important",
     titlu: "Plafonul de înregistrare TVA urcă la 395.000 lei",
-    desc: "De la 1 septembrie 2025, plafonul de înregistrare obligatorie în scopuri de TVA a crescut de la 300.000 lei la 395.000 lei. Firmele care au trecut de 300.000 lei dar sunt sub 395.000 lei pot solicita scoaterea din evidența TVA.",
+    desc: "De la 1 septembrie 2025, plafonul de înregistrare obligatorie în scopuri de TVA a crescut de la 300.000 lei la 395.000 lei. Firmele sub 395.000 lei pot solicita scoaterea din evidența TVA.",
     link: "/ghiduri/inregistrare-tva",
   },
   {
@@ -84,7 +84,7 @@ const noutati = [
     tag: "TVA",
     urgenta: "important",
     titlu: "Cota standard TVA crește la 21%",
-    desc: "Începând cu 1 august 2025, cota standard de TVA a crescut de la 19% la 21%. Cota redusă pentru alimente, medicamente, turism și restaurante este acum 11% (anterior 9%). Rămâne la 9% doar pentru locuințe noi până la 31 iulie 2026.",
+    desc: "Începând cu 1 august 2025, cota standard de TVA a crescut de la 19% la 21%. Cota redusă pentru alimente, restaurante, turism: 11%. Rămâne la 9% doar pentru locuințe noi până la 31 iulie 2026.",
     link: "/ghiduri/inregistrare-tva",
   },
   {
@@ -93,7 +93,7 @@ const noutati = [
     tag: "D212",
     urgenta: "info",
     titlu: "Termen D212 normal — 25 mai 2026",
-    desc: "Declarația Unică 212 pentru veniturile din 2025 se depune până pe 25 mai 2026. Se poate depune online prin SPV sau la ghișeele ANAF. Contribuabilii cu venituri estimate pentru 2026 completează și Capitolul II.",
+    desc: "Declarația Unică 212 pentru veniturile din 2025 se depune până pe 25 mai 2026. Se poate depune online prin SPV sau la ghișeele ANAF. Capitolul II — venituri estimate pentru 2026 — se completează în aceeași declarație.",
     link: "/declaratii/d212",
   },
   {
@@ -102,7 +102,7 @@ const noutati = [
     tag: "Salariu minim",
     urgenta: "info",
     titlu: "Salariul minim crește la 4.325 lei de la 1 iulie 2026",
-    desc: "Salariul minim brut garantat în plată devine 4.325 lei/lună de la 1 iulie 2026 (de la 4.050 lei în primul semestru). Acest lucru afectează calculul CAS și CASS pentru PFA (plafonul minim de 6 salarii minime crește la 25.950 lei).",
+    desc: "Salariul minim brut garantat în plată devine 4.325 lei/lună de la 1 iulie 2026 (de la 4.050 lei în primul semestru). Afectează calculul CAS și CASS pentru PFA — plafonul minim de 6 salarii minime crește la 25.950 lei.",
   },
   {
     data: "Decembrie 2025",
@@ -110,7 +110,7 @@ const noutati = [
     tag: "e-Factura",
     urgenta: "info",
     titlu: "e-Factura — extinsă la toate tranzacțiile B2B",
-    desc: "Din 2025, obligația de transmitere a facturilor în sistemul RO e-Factura s-a extins la toate tranzacțiile B2B, inclusiv cu parteneri neplătitori de TVA. Termenul de transmitere rămâne 5 zile calendaristice de la data emiterii. Amenda pentru netransmitere: 5.000 lei.",
+    desc: "Din 2025, obligația de transmitere în RO e-Factura s-a extins la toate tranzacțiile B2B, inclusiv cu parteneri neplătitori de TVA. Termen de transmitere: 5 zile calendaristice. Amendă pentru netransmitere: 5.000 lei.",
     link: "/sisteme/ro-e-factura",
   },
   {
@@ -119,7 +119,7 @@ const noutati = [
     tag: "TVA",
     urgenta: "info",
     titlu: "RO e-TVA — implementare pentru contribuabilii mari",
-    desc: "ANAF a lansat sistemul RO e-TVA pentru contribuabilii mari — D300 precompletat pe baza facturilor din e-Factura. Contribuabilii verifică datele precompletate și depun declarația finală. Extinderea la toți plătitorii de TVA se face gradual în 2026.",
+    desc: "ANAF a lansat sistemul RO e-TVA — D300 precompletat pe baza facturilor din e-Factura. Contribuabilii verifică datele și depun declarația finală. Extinderea la toți plătitorii de TVA se face gradual în 2026.",
     link: "/sisteme/ro-e-tva",
   },
   {
@@ -127,18 +127,18 @@ const noutati = [
     categorie: "e-Transport",
     tag: "e-Transport",
     urgenta: "info",
-    titlu: "RO e-Transport — noi categorii de bunuri adăugate",
-    desc: "ANAF a extins lista bunurilor cu risc fiscal ridicat supuse monitorizării e-Transport. Noile categorii includ materiale de construcții, produse cosmetice de lux și echipamente electronice. Penalitățile pentru lipsa codului UIT au crescut la 50.000 lei pentru persoane juridice.",
+    titlu: "RO e-Transport — noi categorii de bunuri",
+    desc: "ANAF a extins lista bunurilor cu risc fiscal supuse monitorizării e-Transport. Noile categorii includ materiale de construcții, produse cosmetice de lux și echipamente electronice. Penalitățile pentru lipsa codului UIT: 50.000 lei.",
     link: "/sisteme/ro-e-transport",
   },
 ];
 
-const FILTRE = ["Toate", "TVA", "Crypto", "Dividende", "Microîntreprinderi", "Salariu minim", "Impozite locale", "D212"];
+const FILTRE = ["Toate", "D212", "TVA", "Crypto", "Dividende", "Microîntreprinderi", "Impozite locale"];
 
-const URGENTA_BADGE: Record<string, { label: string; color: string }> = {
-  urgent: { label: "URGENT", color: "#dc2626" },
-  important: { label: "important", color: "#d97706" },
-  info: { label: "info", color: "#6b7280" },
+const URGENTA: Record<string, { label: string; color: string; bg: string }> = {
+  urgent:    { label: "URGENT",    color: "#dc2626", bg: "rgba(220,38,38,0.10)" },
+  important: { label: "important", color: "#d97706", bg: "rgba(217,119,6,0.10)" },
+  info:      { label: "info",      color: "#6b7280", bg: "rgba(107,114,128,0.08)" },
 };
 
 export default function NoutatiPage() {
@@ -148,67 +148,77 @@ export default function NoutatiPage() {
     ? noutati
     : noutati.filter(n => n.categorie === filtru);
 
+  const hasUrgent = afisate.some(n => n.urgenta === "urgent");
+
   return (
     <>
       <Navbar />
       <main className={styles.page}>
-        <h1 className={styles.title}>Noutăți Fiscale</h1>
-        <p className={styles.subtitle}>
-          Ultimele modificări legislative și noutăți fiscale din România, actualizate regulat.
-        </p>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Noutăți <span className={styles.titleGrad}>Fiscale</span></h1>
+          <p className={styles.subtitle}>
+            Ultimele modificări legislative și noutăți fiscale din România, actualizate regulat.
+          </p>
+        </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "2rem", justifyContent: "center" }}>
+        {/* Termen iminent banner */}
+        {hasUrgent && filtru === "Toate" && (
+          <div className={styles.urgentBanner}>
+            <span>🔴</span>
+            <span>
+              <strong>Termen iminent:</strong> Bonificație 3% la D212 expiră pe <strong>15 aprilie 2026</strong>
+              {" "}<Link href="/ghiduri/d212-ghid-completare" className={styles.urgentLink}>→ Ghid completare</Link>
+            </span>
+          </div>
+        )}
+
+        {/* Filters */}
+        <div className={styles.filtrRow}>
           {FILTRE.map(f => (
             <button
               key={f}
               onClick={() => setFiltru(f)}
-              style={{
-                padding: "6px 16px",
-                borderRadius: "9999px",
-                border: `1px solid ${filtru === f ? "#6366f1" : "rgba(99,102,241,0.3)"}`,
-                background: filtru === f ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.05)",
-                color: filtru === f ? "#4338ca" : "#6b7280",
-                fontWeight: filtru === f ? 600 : 400,
-                cursor: "pointer",
-                fontSize: "0.875rem",
-                transition: "all 0.2s",
-              }}
+              className={`${styles.filtrBtn} ${filtru === f ? styles.filtrBtnActive : ""}`}
             >
               {f}
             </button>
           ))}
         </div>
 
-        <div className={styles.timeline}>
-          {afisate.map((n, i) => {
+        {/* Card grid */}
+        <div className={styles.grid}>
+          {afisate.map(n => {
             const tagColor = TAG_COLORS[n.tag] ?? "#6b7280";
-            const urg = URGENTA_BADGE[n.urgenta];
+            const urg = URGENTA[n.urgenta];
             return (
-              <article key={n.titlu} className={`${styles.timelineItem} ${i % 2 === 0 ? styles.left : styles.right}`}>
-                <div className={styles.timelineDot} style={{ borderColor: tagColor }} />
-                <div className={styles.card}>
-                  <div className={styles.cardMeta}>
-                    <span className={styles.tag} style={{ borderColor: tagColor, color: tagColor }}>{n.tag}</span>
-                    <span className={styles.data}>{n.data}</span>
-                    {urg && (
-                      <span style={{
-                        fontSize: "0.7rem", fontWeight: 700, padding: "2px 8px",
-                        borderRadius: "9999px", background: `${urg.color}20`, color: urg.color,
-                        border: `1px solid ${urg.color}40`, textTransform: "uppercase",
-                      }}>{urg.label}</span>
-                    )}
-                  </div>
-                  <h2 className={styles.cardTitlu}>{n.titlu}</h2>
-                  <p className={styles.cardDesc}>{n.desc}</p>
-                  {n.link && (
-                    <Link href={n.link} className={styles.cardLink}>→ Citește mai mult</Link>
-                  )}
+              <article
+                key={n.titlu}
+                className={`${styles.card} ${n.urgenta === "urgent" ? styles.cardUrgent : ""}`}
+              >
+                <div className={styles.cardTop}>
+                  <span className={styles.tag} style={{ color: tagColor, borderColor: `${tagColor}40`, background: `${tagColor}0D` }}>
+                    {n.tag}
+                  </span>
+                  <span className={styles.urg} style={{ color: urg.color, background: urg.bg, border: `1px solid ${urg.color}30` }}>
+                    {urg.label}
+                  </span>
                 </div>
+                <span className={styles.data}>{n.data}</span>
+                <h2 className={styles.cardTitlu}>{n.titlu}</h2>
+                <p className={styles.cardDesc}>{n.desc}</p>
+                {n.link && (
+                  <Link href={n.link} className={styles.cardLink}>Citește mai mult →</Link>
+                )}
               </article>
             );
           })}
-          <div className={styles.timelineLine} />
         </div>
+
+        {afisate.length === 0 && (
+          <p style={{ color: "#9ca3af", textAlign: "center", marginTop: "2rem" }}>
+            Nicio noutate pentru filtrul selectat.
+          </p>
+        )}
       </main>
       <Footer />
     </>

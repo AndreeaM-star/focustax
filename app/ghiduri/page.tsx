@@ -16,37 +16,46 @@ export const metadata = {
 
 const ghiduri = [
   {
+    categorie: "Ghiduri noi 2026",
+    culoare: "#dc2626",
+    lista: [
+      { titlu: "Ghid complet D212 2026", desc: "Wizard interactiv pas cu pas. Bonificație 3% până pe 15 aprilie 2026.", slug: "d212-ghid-completare" },
+      { titlu: "Facilități fiscale IT, Construcții, Agricultură", desc: "Calculator comparativ cu/fără scutire impozit venit. Condiții eligibilitate.", slug: "facilitati-fiscale" },
+      { titlu: "Impozite locale 2026", desc: "Calculator impozit clădiri și autoturisme. Creșteri față de 2025.", slug: "impozite-locale-2026" },
+    ],
+  },
+  {
     categorie: "PFA & II",
     culoare: "#2563eb",
     lista: [
       { titlu: "Cum te înregistrezi ca PFA", desc: "Pași, documente necesare și costuri la ONRC.", slug: "inregistrare-pfa" },
       { titlu: "Sistem real vs normă de venit", desc: "Când este avantajoasă norma și când sistemul real.", slug: "sistem-real-norma" },
-      { titlu: "CAS și CASS pentru PFA", desc: "Calcul contribuții, plafoane și termene de plată.", slug: "contributii-sociale" },
-      { titlu: "Declarația Unică D212 pentru PFA", desc: "Ghid complet de completare și depunere.", slug: "d212-pfa" },
+      { titlu: "CAS și CASS pentru PFA", desc: "Calcul contribuții, plafoane și termene de plată 2026.", slug: "contributii-sociale" },
+      { titlu: "Declarația Unică D212 — ghid complet", desc: "Completare, depunere și bonificație 3% — pas cu pas.", slug: "d212-ghid-completare" },
     ],
   },
   {
     categorie: "SRL & Microîntreprinderi",
     culoare: "#059669",
     lista: [
-      { titlu: "SRL vs Microîntreprindere", desc: "Diferențe de impozitare, condiții de încadrare și trecere la impozit pe profit.", slug: "srl-vs-micro" },
-      { titlu: "Dividende: cum se impozitează", desc: "Impozit 8%, declarare și plată la ANAF.", slug: "dividende" },
-      { titlu: "Salarii — de la brut la net", desc: "CAS 25%, CASS 10%, impozit 10% — formulă completă și exemplu numeric.", slug: "salarii-retineri" },
-      { titlu: "Sponsorizări — reducere din impozit", desc: "20% din impozit (max 0.75% CA) — cum funcționează și cum se declară.", slug: "sponsorizari" },
+      { titlu: "SRL vs Microîntreprindere", desc: "Diferențe de impozitare, condiții de încadrare și trecere la profit.", slug: "srl-vs-micro" },
+      { titlu: "Dividende: cum se impozitează", desc: "Impozit 16% din 2026, declarare și plată la ANAF.", slug: "dividende" },
+      { titlu: "Salarii — de la brut la net", desc: "CAS 25%, CASS 10%, impozit 10% — formulă completă 2026.", slug: "salarii-retineri" },
+      { titlu: "Sponsorizări — reducere din impozit", desc: "20% din impozit (max 0.75% CA) — cum funcționează.", slug: "sponsorizari" },
     ],
   },
   {
     categorie: "TVA",
     culoare: "#d97706",
     lista: [
-      { titlu: "Ghid complet TVA", desc: "Înregistrare (plafon 300.000 lei), cote 19%/9%/5%, decontul D300 și TVA la încasare.", slug: "inregistrare-tva" },
+      { titlu: "Ghid complet TVA 2026", desc: "Înregistrare (prag 395.000 lei), cote 21%/11%/9%, decont D300.", slug: "inregistrare-tva" },
     ],
   },
   {
     categorie: "Persoane Fizice",
     culoare: "#7c3aed",
     lista: [
-      { titlu: "Impozit pe chirii", desc: "Calcul, declarare D212 și obligații fiscale.", slug: "impozit-chirii" },
+      { titlu: "Impozit pe chirii", desc: "Deducere 40%, declarare D212 și obligații fiscale.", slug: "impozit-chirii" },
       { titlu: "SPV — Spațiul Privat Virtual", desc: "Creare cont, utilizare și depunere declarații online.", slug: "spv-ghid" },
     ],
   },
