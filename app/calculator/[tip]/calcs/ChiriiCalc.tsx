@@ -2,21 +2,23 @@
 
 import { useState } from "react";
 import styles from "../../calculator.module.css";
+import CopyBtn from "@/components/CopyBtn";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
+const SMIN = 4050;
 
 export default function ChiriiCalc() {
   const [chirieAnuala, setChirieAnuala] = useState(24000);
   const [tip, setTip] = useState<"fizic" | "juridic">("fizic");
 
-  // Deducere 20% pentru persoane fizice
-  const deducere   = tip === "fizic" ? chirieAnuala * 0.20 : 0;
+  // Deducere forfetară 40% pentru persoane fizice (art. 32 Cod fiscal)
+  const deducere   = tip === "fizic" ? chirieAnuala * 0.40 : 0;
   const venNet     = chirieAnuala - deducere;
   const impozit    = venNet * 0.10;
 
-  // CASS: dacă venitul net > 6 x SMIN (6 * 3300 = 19.800)
-  const pragCASS   = 6 * 3300;
-  const cassBase   = venNet > pragCASS ? Math.min(venNet, 60 * 3300) : 0;
+  // CASS: dacă venitul net > 6 x SMIN (6 * 4050 = 24.300)
+  const pragCASS   = 6 * SMIN;
+  const cassBase   = venNet > pragCASS ? Math.min(venNet, 60 * SMIN) : 0;
   const cass       = cassBase * 0.10;
 
   const totalTaxe  = impozit + cass;
@@ -40,7 +42,7 @@ export default function ChiriiCalc() {
           <label>Chiria este în relație cu</label>
           <div className={styles.toggleRow}>
             <button className={`${styles.toggleBtn} ${tip === "fizic" ? styles.toggleBtnActive : ""}`}
-              onClick={() => setTip("fizic")}>Persoană fizică (deducere 20%)</button>
+              onClick={() => setTip("fizic")}>Persoană fizică (deducere 40%)</button>
             <button className={`${styles.toggleBtn} ${tip === "juridic" ? styles.toggleBtnActive : ""}`}
               onClick={() => setTip("juridic")}>Firmă (fără deducere)</button>
           </div>
@@ -54,7 +56,7 @@ export default function ChiriiCalc() {
           </span>
         </div>
 
-        <div className={styles.results}>
+        <div className={styles.results} aria-live="polite">
           <div className={styles.resultMain}>
             <span className={styles.resultLabel}>Chirie netă anuală</span>
             <span className={styles.resultValue}>{fmt(ramas)}</span>
@@ -67,7 +69,7 @@ export default function ChiriiCalc() {
             </div>
             {tip === "fizic" && (
               <div className={styles.resultRow}>
-                <span className={styles.resultRowLabel}>Deducere forfetară 20%</span>
+                <span className={styles.resultRowLabel}>Deducere forfetară 40%</span>
                 <span className={`${styles.resultRowVal} ${styles.resultRowPos}`}>−{fmt(deducere)} lei</span>
               </div>
             )}
@@ -112,13 +114,16 @@ export default function ChiriiCalc() {
                   </span>
                 ))}
               </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: 4 }}>
+                <CopyBtn text={`Calculator Chirii — FocusTax 2026\nChirie brută: ${fmt(chirieAnuala)} lei/an\n${tip === "fizic" ? `Deducere forfetară 40%: −${fmt(deducere)} lei\n` : ""}Venit net impozabil: ${fmt(venNet)} lei\nImpozit 10%: −${fmt(impozit)} lei\nCASS 10%: ${cass > 0 ? `−${fmt(cass)} lei` : "scutit"}\nTotal taxe: −${fmt(totalTaxe)} lei\nChirie netă/an: ${fmt(ramas)} lei (${fmt(ramas / 12)} lei/lună)`} />
+              </div>
             </div>
           )}
         </div>
 
         <div className={styles.infoBox}>
-          <strong>Deducerea forfetară de 20%</strong> se aplică automat veniturilor din chirii cu persoane fizice.
-          {" "}<strong>CASS</strong> se datorează dacă venitul net depășește <strong>19.800 lei/an</strong> (6 × salariul minim brut).
+          <strong>Deducerea forfetară de 40%</strong> se aplică automat veniturilor din chirii cu persoane fizice.
+          {" "}<strong>CASS</strong> se datorează dacă venitul net depășește <strong>24.300 lei/an</strong> (6 × salariul minim brut).
           Termenul de depunere a declarației D212: <strong>25 mai</strong>.
         </div>
       </div>

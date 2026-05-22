@@ -440,9 +440,9 @@ export const ghiduri: Record<string, GhidData> = {
     categorie: "SRL & Microîntreprinderi",
     culoare: "#059669",
     badgeBg: "#ecfdf5",
-    desc: "Ghid complet pentru impozitarea dividendelor distribuite de SRL — cota 8%, procedura de declarare la ANAF și calcul CASS.",
+    desc: "Ghid complet pentru impozitarea dividendelor distribuite de SRL — cota 16% (din 2026), procedura de declarare la ANAF și calcul CASS.",
     ceFaciAfla: [
-      "Cota de impozit pe dividende: 8%",
+      "Cota de impozit pe dividende: 16% (din 2026)",
       "Cine reține și declară impozitul",
       "CASS datorată pe dividende",
       "Procedura de distribuire legală",
@@ -451,12 +451,12 @@ export const ghiduri: Record<string, GhidData> = {
     ],
     sectiuni: [
       {
-        titlu: "Impozitul pe dividende — 8%",
+        titlu: "Impozitul pe dividende — 16%",
         continut: [
-          "Dividendele distribuite de SRL persoanelor fizice asociate se impozitează cu 8% (cotă aplicabilă din 2017).",
-          "Impozitul se reține la sursă de SRL — firma reține 8% înainte să vireze dividendele asociaților.",
+          "Dividendele distribuite de SRL persoanelor fizice asociate se impozitează cu 16% (cotă în vigoare din 2026, urcare de la 8%).",
+          "Impozitul se reține la sursă de SRL — firma reține 16% înainte să vireze dividendele asociaților.",
           "SRL-ul declară și plătește impozitul reținut prin D100, cu termenul 25 ale lunii următoare distribuției.",
-          "Exemplu: distribuiți 100.000 lei dividende → SRL reține 8.000 lei → asociatul primește 92.000 lei.",
+          "Exemplu: distribuiți 100.000 lei dividende → SRL reține 16.000 lei → asociatul primește 84.000 lei.",
         ],
       },
       {
@@ -466,7 +466,7 @@ export const ghiduri: Record<string, GhidData> = {
           "Plafoane CASS pentru dividende: 6 SM (24.300 lei), 12 SM (48.600 lei), 24 SM (97.200 lei).",
           "CASS se declară și se plătește de persoana fizică prin D212, nu de SRL.",
           "Exemplu: 100.000 lei dividende → CASS 10% × 97.200 lei = 9.720 lei (plafonul maxim este 24 SM).",
-          "Total taxe pe 100.000 lei dividende: impozit 8.000 + CASS 9.720 = 17.720 lei.",
+          "Total taxe pe 100.000 lei dividende: impozit 16.000 + CASS 9.720 = 25.720 lei.",
         ],
       },
       {
@@ -482,11 +482,11 @@ export const ghiduri: Record<string, GhidData> = {
     ],
     chart: {
       tip: "bar",
-      titlu: "Taxe pe 100.000 lei dividende distribuite",
+      titlu: "Taxe pe 100.000 lei dividende distribuite (2026)",
       bare: [
-        { label: "Impozit 8%", value: 8000, color: "#059669" },
+        { label: "Impozit 16%", value: 16000, color: "#059669" },
         { label: "CASS 10%", value: 9720, color: "#6ee7b7" },
-        { label: "Net primit", value: 82280, color: "#d1fae5" },
+        { label: "Net primit", value: 74280, color: "#d1fae5" },
       ],
       unitate: "lei",
     },
@@ -509,8 +509,8 @@ export const ghiduri: Record<string, GhidData> = {
     badgeBg: "#fffbeb",
     desc: "Tot ce trebuie să știi despre TVA în România: când te înregistrezi, cotele aplicabile, decontul D300 și sistemul TVA la încasare.",
     ceFaciAfla: [
-      "Plafonul de înregistrare TVA: 300.000 lei",
-      "Cotele TVA: 19%, 9%, 5%",
+      "Plafonul de înregistrare TVA: 395.000 lei (din septembrie 2025)",
+      "Cotele TVA: 21%, 9%, 5%, 0%",
       "Procedura de înregistrare voluntară vs obligatorie",
       "Avantajele și dezavantajele înregistrării",
       "TVA la încasare — ce este și cum funcționează",
@@ -518,9 +518,9 @@ export const ghiduri: Record<string, GhidData> = {
     ],
     sectiuni: [
       {
-        titlu: "Plafonul de înregistrare — 300.000 lei",
+        titlu: "Plafonul de înregistrare — 395.000 lei (din sept. 2025)",
         continut: [
-          "Înregistrarea în scopuri de TVA devine OBLIGATORIE când cifra de afaceri depășește 300.000 lei în cursul unui an calendaristic.",
+          "Înregistrarea în scopuri de TVA devine OBLIGATORIE când cifra de afaceri depășește 395.000 lei în cursul unui an calendaristic (prag majorat de la 300.000 lei din septembrie 2025).",
           "Termenul: în termen de 10 zile de la sfârșitul lunii în care s-a depășit plafonul.",
           "Formularul de înregistrare: Declarația D010 (persoane juridice) sau D070 (PFA/II).",
           "Înregistrare VOLUNTARĂ: poți solicita înregistrarea oricând, chiar sub plafon, dacă e avantajos (ex: dacă ai clienți plătitori de TVA).",
@@ -529,7 +529,7 @@ export const ghiduri: Record<string, GhidData> = {
       {
         titlu: "Cotele TVA aplicabile în 2026",
         continut: [
-          "COTA STANDARD 19%: se aplică la toate livrările și prestările care nu beneficiază de cote reduse.",
+          "COTA STANDARD 21%: se aplică la toate livrările și prestările care nu beneficiază de cote reduse (majorată de la 19% în august 2025).",
           "COTA REDUSĂ 9%: alimente și băuturi nealcoolice, medicamente, echipamente medicale, hoteluri și cazare, transport de persoane, acces la muzee/evenimente culturale.",
           "COTA REDUSĂ 5%: manuale și cărți școlare, locuințe sociale (sub 140.000 euro), energie termică și electrică pentru gospodării, bilete la spectacole/concerte.",
           "SCUTITE CU DREPT DE DEDUCERE (0%): exporturi, livrări intracomunitare.",
@@ -559,11 +559,11 @@ export const ghiduri: Record<string, GhidData> = {
     ],
     chart: {
       tip: "bar",
-      titlu: "Impact TVA la CA 500.000 lei (cota 19%)",
+      titlu: "Impact TVA la CA 500.000 lei (cota 21%)",
       bare: [
-        { label: "TVA colectată", value: 95000, color: "#d97706" },
+        { label: "TVA colectată", value: 105000, color: "#d97706" },
         { label: "TVA deductibilă est.", value: 38000, color: "#fbbf24" },
-        { label: "TVA de plată", value: 57000, color: "#fde68a" },
+        { label: "TVA de plată", value: 67000, color: "#fde68a" },
       ],
       unitate: "lei",
     },
@@ -573,7 +573,7 @@ export const ghiduri: Record<string, GhidData> = {
       { cod: "D394", nume: "Declarație informativă livrări/prestări", href: "/declaratii/d394" },
     ],
     atentie: [
-      "Depășirea plafonului de 300.000 lei obligă la înregistrare în 10 zile — nerespectarea atrage amendă și obligarea la plata TVA retroactiv.",
+      "Depășirea plafonului de 395.000 lei obligă la înregistrare în 10 zile — nerespectarea atrage amendă și obligarea la plata TVA retroactiv.",
       "TVA colectată eronat (la cota greșită) se corectează prin facturi de stornare.",
       "Rambursarea TVA poate dura 30-45 zile și necesită inspecție fiscală dacă suma e mare.",
     ],
@@ -765,7 +765,7 @@ export const ghiduri: Record<string, GhidData> = {
           "Baza de impozit = Brut − CAS − CASS (dacă nu sunt alte deduceri).",
           "Impozit venit = Baza × 10%.",
           "Salariu NET = Brut − CAS − CASS − Impozit.",
-          "Exemplu (5.000 lei brut): CAS=1.250, CASS=500, Baza=3.250, Impozit=325 → NET = 2.925 lei.",
+          "Exemplu (5.000 lei brut): CAS=1.250, CASS=500, Deducere≈229 lei, Baza=3.021, Impozit=302 → NET = 2.948 lei.",
         ],
       },
       {
@@ -791,8 +791,8 @@ export const ghiduri: Record<string, GhidData> = {
       {
         titlu: "Salariul minim și implicații",
         continut: [
-          "Salariul minim brut 2026: 4.050 lei/lună (HG 1200/2023).",
-          "Salariu net minim: 4.050 − (4.050×25%) − (4.050×10%) − (4.050×65%×10%) ≈ 2.370 lei.",
+          "Salariul minim brut 2026: 4.050 lei/lună (ian–iun), 4.325 lei/lună (iul–dec).",
+          "Salariu net minim (4.050 lei brut): CAS 1.013 + CASS 405 + Impozit 233 (cu deducere 300 lei) → NET ≈ 2.400 lei.",
           "Angajatorii nu pot plăti sub salariul minim brut pentru 8 ore/zi, 5 zile/săptămână.",
           "Salariul minim în construcții: 4.582 lei brut/lună (regim special).",
           "La salariul minim, CAS și CASS se calculează la cel puțin salariul minim, chiar dacă angajatul lucrează part-time sub acest prag.",
@@ -801,8 +801,8 @@ export const ghiduri: Record<string, GhidData> = {
       {
         titlu: "Deducerea personală",
         continut: [
-          "Persoanele cu venituri lunare sub 3.600 lei brut beneficiază de o deducere personală care reduce baza de impozitare.",
-          "Deducerea personală de bază: 300-500 lei/lună în funcție de venit (pentru venituri sub 3.600 lei).",
+          "Persoanele cu venituri lunare ≤ 4.050 lei brut beneficiază de o deducere personală care reduce baza de impozitare.",
+          "Deducerea personală de bază: 300 lei (la salariu ≤ SMIN), scade treptat la 0 pentru brut ≤ 8.100 lei.",
           "Persoanele cu copii în întreținere beneficiază de deduceri suplimentare.",
           "Deducerile se acordă DOAR dacă salariatul declară în scris că nu le obține de la alt angajator (formular 010).",
           "Exemplu: angajat cu 2 copii, brut 2.500 lei → deducere personală suplimentară reduce impozitul efectiv.",
@@ -823,10 +823,10 @@ export const ghiduri: Record<string, GhidData> = {
       tip: "bar",
       titlu: "Repartizarea salariului brut de 5.000 lei",
       bare: [
-        { label: "Salariu net", value: 2925, color: "#059669" },
+        { label: "Salariu net", value: 2948, color: "#059669" },
         { label: "CAS 25%", value: 1250, color: "#6ee7b7" },
         { label: "CASS 10%", value: 500, color: "#a7f3d0" },
-        { label: "Impozit 10%", value: 325, color: "#d1fae5" },
+        { label: "Impozit 10%", value: 302, color: "#d1fae5" },
       ],
       unitate: "lei/lună",
     },

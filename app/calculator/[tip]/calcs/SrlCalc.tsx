@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import styles from "../../calculator.module.css";
+import CopyBtn from "@/components/CopyBtn";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
+const SMIN = 4050;
+const PRAG_CASS_DIV = 6 * SMIN;    // 24300 lei
+const PLAFON_CASS_DIV = 60 * SMIN; // 243000 lei
 
 export default function SrlCalc() {
   const [regim,    setRegim]    = useState<"micro" | "profit">("micro");
@@ -23,10 +27,10 @@ export default function SrlCalc() {
     ? ca - impozitMicro  // simplificat
     : profit - impozitProfit;
 
-  // Dividende: impozit 8% + CASS dacă > 6 x SMIN x 12 = 237.600 lei
-  const impozitDiv = distribui ? profitNet * 0.08 : 0;
-  const cassDiv    = distribui && profitNet > 6 * 3300 * 12
-    ? Math.min(profitNet, 60 * 3300) * 0.10
+  // Dividende: impozit 16% + CASS dacă venituri pasive > 24.300 lei (6 x SMIN)
+  const impozitDiv = distribui ? profitNet * 0.16 : 0;
+  const cassDiv    = distribui && profitNet > PRAG_CASS_DIV
+    ? Math.min(profitNet, PLAFON_CASS_DIV) * 0.10
     : 0;
 
   const ramas = distribui ? Math.max(0, profitNet - impozitDiv - cassDiv) : profitNet;
@@ -36,7 +40,7 @@ export default function SrlCalc() {
   const segments = [
     { label: regim === "micro" ? `Impozit micro ${angajat ? "1%" : "3%"}` : "Impozit profit 16%",
       value: regim === "micro" ? impozitMicro : impozitProfit, color: "#ef4444" },
-    { label: "Impozit dividende 8%", value: impozitDiv,  color: "#f97316" },
+    { label: "Impozit dividende 16%", value: impozitDiv,  color: "#f97316" },
     { label: "CASS dividende",       value: cassDiv,     color: "#eab308" },
     { label: "Rămas net",            value: ramas,       color: "#22c55e" },
   ].filter((s) => s.value > 0);
@@ -96,7 +100,7 @@ export default function SrlCalc() {
           </div>
         </div>
 
-        <div className={styles.results}>
+        <div className={styles.results} aria-live="polite">
           <div className={styles.resultMain}>
             <span className={styles.resultLabel}>{distribui ? "Dividende nete" : "Profit rămas în firmă"}</span>
             <span className={styles.resultValue}>{fmt(ramas)}</span>
@@ -121,7 +125,7 @@ export default function SrlCalc() {
             {distribui && (
               <>
                 <div className={styles.resultRow}>
-                  <span className={styles.resultRowLabel}>Impozit dividende 8%</span>
+                  <span className={styles.resultRowLabel}>Impozit dividende 16%</span>
                   <span className={`${styles.resultRowVal} ${styles.resultRowNeg}`}>−{fmt(impozitDiv)} lei</span>
                 </div>
                 {cassDiv > 0 && (
@@ -159,13 +163,16 @@ export default function SrlCalc() {
                   </span>
                 ))}
               </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: 4 }}>
+                <CopyBtn text={`Calculator SRL — FocusTax 2026\nRegim: ${regim === "micro" ? `micro ${angajat ? "1%" : "3%"}` : "profit 16%"}\n${regim === "micro" ? `CA: ${fmt(ca)} lei\nImpozit micro: −${fmt(impozitMicro)} lei` : `Profit impozabil: ${fmt(profit)} lei\nImpozit profit 16%: −${fmt(impozitProfit)} lei`}\nProfit net: ${fmt(profitNet)} lei${distribui ? `\nImpozit dividende 16%: −${fmt(impozitDiv)} lei${cassDiv > 0 ? `\nCASS dividende: −${fmt(cassDiv)} lei` : ""}\nDividende nete: ${fmt(ramas)} lei` : ""}`} />
+              </div>
             </div>
           )}
         </div>
 
         <div className={styles.infoBox}>
           Microîntreprindere: CA ≤ 500.000 EUR (≈ 2,5M lei) și cel puțin 1 angajat pentru cota de <strong>1%</strong>.
-          Fără angajat: <strong>3%</strong>. CASS la dividende se aplică dacă totalul depășește 237.600 lei/an.
+          Fără angajat: <strong>3%</strong>. Impozit dividende <strong>16%</strong>. CASS la dividende se aplică dacă totalul depășește <strong>24.300 lei/an</strong>.
         </div>
       </div>
     </div>

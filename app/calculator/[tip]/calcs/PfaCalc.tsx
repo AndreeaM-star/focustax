@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import styles from "../../calculator.module.css";
+import CopyBtn from "@/components/CopyBtn";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
-const SMIN_ANUAL = 3300 * 12; // 39600 lei
+const SMIN = 4050;
+const SMIN_ANUAL = SMIN * 12; // 48600 lei
 
 export default function PfaCalc() {
   const [sistem, setSistem] = useState<"norma" | "real">("real");
@@ -16,12 +18,12 @@ export default function PfaCalc() {
     ? Math.max(0, venituri - cheltuieli)
     : normaVenit;
 
-  // CAS: 25% din venitul net, dacă > 12 salarii minime (39.600 lei/an)
-  const casBase = Math.min(venNet, 24 * 3300); // plafon 24 x SMIN
+  // CAS: 25% din venitul net, dacă > 12 salarii minime (48.600 lei/an)
+  const casBase = Math.min(venNet, 24 * SMIN); // plafon 24 x SMIN
   const cas = venNet >= SMIN_ANUAL ? casBase * 0.25 : 0;
 
   // CASS: 10% din venitul net, plafon 60 x SMIN
-  const cassBase = Math.min(venNet, 60 * 3300);
+  const cassBase = Math.min(venNet, 60 * SMIN);
   const cass = venNet > 0 ? cassBase * 0.10 : 0;
 
   // Impozit: 10% din venitul net
@@ -59,24 +61,48 @@ export default function PfaCalc() {
           <div className={styles.inputGroup}>
             <div className={styles.field}>
               <label>Venituri brute anuale (lei)</label>
+              <div className={styles.rangeWrap}>
+                <input type="range" min={0} max={500000} step={5000} value={venituri}
+                  onChange={(e) => setVenituri(Number(e.target.value))}
+                  aria-label="Venituri brute anuale" />
+                <span className={styles.rangeValue}>{fmt(venituri)} lei</span>
+              </div>
               <input type="number" value={venituri} min={0} step={1000}
-                onChange={(e) => setVenituri(Number(e.target.value))} />
+                onChange={(e) => setVenituri(Math.max(0, Number(e.target.value)))}
+                aria-label="Valoare exactă venituri brute"
+                style={{ marginTop: 6, width: 140, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
             </div>
             <div className={styles.field}>
               <label>Cheltuieli deductibile anuale (lei)</label>
+              <div className={styles.rangeWrap}>
+                <input type="range" min={0} max={Math.max(venituri, 10000)} step={1000} value={cheltuieli}
+                  onChange={(e) => setCheltuieli(Number(e.target.value))}
+                  aria-label="Cheltuieli deductibile anuale" />
+                <span className={styles.rangeValue}>{fmt(cheltuieli)} lei</span>
+              </div>
               <input type="number" value={cheltuieli} min={0} step={1000}
-                onChange={(e) => setCheltuieli(Number(e.target.value))} />
+                onChange={(e) => setCheltuieli(Math.max(0, Number(e.target.value)))}
+                aria-label="Valoare exactă cheltuieli"
+                style={{ marginTop: 6, width: 140, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
             </div>
           </div>
         ) : (
           <div className={styles.field}>
             <label>Normă de venit stabilită de ANAF (lei/an)</label>
+            <div className={styles.rangeWrap}>
+              <input type="range" min={0} max={200000} step={1000} value={normaVenit}
+                onChange={(e) => setNormaVenit(Number(e.target.value))}
+                aria-label="Normă de venit anuală" />
+              <span className={styles.rangeValue}>{fmt(normaVenit)} lei</span>
+            </div>
             <input type="number" value={normaVenit} min={0} step={1000}
-              onChange={(e) => setNormaVenit(Number(e.target.value))} />
+              onChange={(e) => setNormaVenit(Math.max(0, Number(e.target.value)))}
+              aria-label="Valoare exactă normă de venit"
+              style={{ marginTop: 6, width: 140, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
           </div>
         )}
 
-        <div className={styles.results}>
+        <div className={styles.results} aria-live="polite">
           <div className={styles.resultMain}>
             <span className={styles.resultLabel}>Rămas după taxe</span>
             <span className={styles.resultValue}>{fmt(ramas)}</span>
@@ -126,13 +152,16 @@ export default function PfaCalc() {
                   </span>
                 ))}
               </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: 4 }}>
+                <CopyBtn text={`Calculator PFA — FocusTax 2026\nSistem: ${sistem === "real" ? `real (venituri ${fmt(venituri)} lei, cheltuieli ${fmt(cheltuieli)} lei)` : `normă de venit ${fmt(normaVenit)} lei`}\nVenit net: ${fmt(venNet)} lei\nCAS 25%: −${fmt(cas)} lei\nCASS 10%: −${fmt(cass)} lei\nImpozit 10%: −${fmt(impozit)} lei\nTotal taxe: −${fmt(totalTaxe)} lei\nRămas net: ${fmt(ramas)} lei`} />
+              </div>
             </div>
           )}
         </div>
 
         <div className={styles.infoBox}>
-          <strong>CAS</strong> se datorează dacă venitul net ≥ 39.600 lei/an (12 × 3.300 lei).
-          {" "}<strong>CASS</strong> se datorează indiferent de nivelul venitului, plafonat la 60 × SMIN = 198.000 lei.
+          <strong>CAS</strong> se datorează dacă venitul net ≥ 48.600 lei/an (12 × 4.050 lei).
+          {" "}<strong>CASS</strong> se datorează indiferent de nivelul venitului, plafonat la 60 × SMIN = 243.000 lei.
         </div>
       </div>
     </div>

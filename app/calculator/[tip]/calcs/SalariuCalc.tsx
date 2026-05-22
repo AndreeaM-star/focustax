@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "../../calculator.module.css";
+import CopyBtn from "@/components/CopyBtn";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
 const SMIN = 4050;
@@ -127,6 +128,9 @@ export default function SalariuCalc() {
                     {s.label}: {fmt(s.value)} lei
                   </span>
                 ))}
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: 4 }}>
+                <CopyBtn text={`Calculator Salariu — FocusTax 2026\nBrut: ${fmt(r.brut)} lei\nCAS 25%: −${fmt(r.cas)} lei\nCASS 10%: −${fmt(r.cass)} lei\nImpozit 10%: −${fmt(r.impozit)} lei\nNET: ${fmt(r.net)} lei\nCost angajator: ${fmt(r.totalAngajator)} lei`} />
               </div>
             </div>
           )}
