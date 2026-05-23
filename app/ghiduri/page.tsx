@@ -12,6 +12,12 @@ export const metadata = {
     description:
       "Cum te înregistrezi ca PFA, CAS și CASS, TVA, impozit chirii — ghiduri pas cu pas, gratuit.",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ghiduri Fiscale România 2026 | FocusTax",
+    description: "Ghiduri practice PFA, SRL, TVA, chirii, dividende — actualizate 2026, gratuit.",
+  },
+  alternates: { canonical: "https://focustax.ro/ghiduri" },
 };
 
 const ghiduri = [

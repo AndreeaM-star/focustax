@@ -11,7 +11,7 @@ const META: Record<string, { title: string; description: string }> = {
   salariu:   { title: "Calculator Salariu Net 2026",            description: "Calculează salariul net din brut — CAS 25%, CASS 10%, impozit 10%, deducere personală." },
   pfa:       { title: "Calculator PFA / II 2026",               description: "Calculator impozite PFA norma de venit sau sistem real — CAS, CASS, impozit venit." },
   srl:       { title: "Calculator SRL / Microîntreprindere 2026", description: "Calculator impozit micro 1%/3%, impozit profit 16%, dividende." },
-  chirii:    { title: "Calculator Chirii 2026",                  description: "Calculator impozit venituri din chirii — deducere 20%, impozit 10%, CASS." },
+  chirii:    { title: "Calculator Chirii 2026",                  description: "Calculator impozit venituri din chirii — deducere forfetară 40%, impozit 10%, CASS." },
   dividende: { title: "Calculator Dividende 2026",               description: "Calculator impozit dividende 16% + CASS, distribuire profit SRL." },
   tva:       { title: "Calculator TVA 2026",                     description: "Calculează TVA colectat, deductibil, de plată — cote 21%, 9%, 5%, 0%." },
 };
@@ -24,6 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ tip: stri
     title: `${meta.title} | FocusTax`,
     description: meta.description,
     openGraph: { title: `${meta.title} | FocusTax`, description: meta.description },
+    twitter: { card: "summary_large_image", title: `${meta.title} | FocusTax`, description: meta.description },
+    alternates: { canonical: `https://focustax.ro/calculator/${tip}` },
   };
 }
 

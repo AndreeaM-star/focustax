@@ -741,7 +741,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
     id: "prag-tva",
     titlu: "Prag Înregistrare TVA",
     descriere:
-      "Comparație a pragurilor de înregistrare obligatorie în scopuri de TVA în Europa. România: 300.000 lei (~60.000 EUR).",
+      "Comparație a pragurilor de înregistrare obligatorie în scopuri de TVA în Europa. România: 395.000 lei (~79.000 EUR, majorat din septembrie 2025).",
     unitateMasura: "k EUR",
     culoare: "rgba(5, 150, 105, 0.85)",
     culoareSecundara: "rgba(5, 150, 105, 0.18)",
@@ -753,7 +753,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Cehia", codISO: "CZ", cotaStandard: 84, sistem: "flat", detalii: "2M CZK (~84k EUR)" },
       { nume: "Irlanda", codISO: "IE", cotaStandard: 80, sistem: "flat", detalii: "80.000 EUR (servicii) / 37.500 EUR (bunuri)" },
       { nume: "Suedia", codISO: "SE", cotaStandard: 80, sistem: "flat", detalii: "800.000 SEK (~80k EUR)" },
-      { nume: "România", codISO: "RO", cotaStandard: 60, sistem: "flat", detalii: "300.000 lei (~60.000 EUR)", esteRomania: true },
+      { nume: "România", codISO: "RO", cotaStandard: 79, sistem: "flat", detalii: "395.000 lei (~79.000 EUR, din sept. 2025)", esteRomania: true },
       { nume: "Slovenia", codISO: "SI", cotaStandard: 50, sistem: "flat", detalii: "50.000 EUR" },
       { nume: "Norvegia", codISO: "NO", cotaStandard: 50, sistem: "flat", detalii: "50.000 NOK (~4.5k EUR)" },
       { nume: "Polonia", codISO: "PL", cotaStandard: 47, sistem: "flat", detalii: "200.000 PLN (~47k EUR)" },
@@ -807,7 +807,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Israel", codISO: "IL", cotaStandard: 100, sistem: "flat", detalii: "ILS 120.000 (~30k EUR)", zona: "extra-europa" },
     ],
     contextRomania:
-      "România impune înregistrarea TVA obligatorie la depășirea plafonului de 300.000 lei (~60.000 EUR) anual. Aceasta este una din cele mai generoase praguri din UE. Contribuabilii sub prag pot opta voluntar pentru plata TVA. Depășirea plafonului obligă la înregistrare în termen de 10 zile de la sfârșitul lunii în care a fost depășit.",
+      "România impune înregistrarea TVA obligatorie la depășirea plafonului de 395.000 lei (~79.000 EUR) anual — majorat de la 300.000 lei din septembrie 2025. Acesta este unul dintre cele mai generoase praguri din UE. Contribuabilii sub prag pot opta voluntar pentru plata TVA. Depășirea plafonului obligă la înregistrare în termen de 10 zile de la sfârșitul lunii în care a fost depășit.",
     mediuEuropean: 45,
     istorie:
       "Pragurile de TVA au apărut pentru a reduce povara administrativă asupra micilor afaceri. UE permite statelor membre să mențină praguri naționale, cu maximum 85.000 EUR din 2025 (conform Directivei UE 2020/285). Înainte de 2025, limita UE era de 35.000 EUR, dar România a menținut un prag mai mare prin excepție. Tendința în UE este de armonizare și creștere a pragului permis.",
@@ -815,7 +815,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
       "Elveția și Liechtenstein au cel mai mare prag din Europa: 100.000 CHF (~100k EUR), protejând maximum micii antreprenori.",
       "Spania nu are prag — orice activitate economică, indiferent de cifra de afaceri, este obligatorie la TVA de la prima tranzacție.",
       "UK, post-Brexit, a crescut pragul la £90.000 (cel mai mare din Europa continentală), oferind mai multă flexibilitate micilor afaceri.",
-      "România are unul din cele mai generoase praguri din UE (~60k EUR), protejând micii antreprenori de birocrația TVA.",
+      "România are unul din cele mai generoase praguri din UE (~79k EUR din sept. 2025), protejând micii antreprenori de birocrația TVA.",
       "Danemarca are cel mai mic prag din UE (~6.7k EUR) — aproape orice activitate comercială devine plătitoare de TVA.",
     ],
   },
