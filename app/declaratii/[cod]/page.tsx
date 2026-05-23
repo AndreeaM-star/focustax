@@ -13,8 +13,11 @@ export async function generateMetadata({ params }: { params: Promise<{ cod: stri
   const data = declaratii[cod.toLowerCase()];
   if (!data) return {};
   return {
-    title: `${data.cod} | FocusTax`,
+    title: `${data.cod} — ${data.titlu} | FocusTax`,
     description: data.subtitle,
+    openGraph: { title: `${data.cod} | FocusTax`, description: data.subtitle },
+    twitter: { card: "summary_large_image" as const, title: `${data.cod} | FocusTax`, description: data.subtitle },
+    alternates: { canonical: `https://focustax.ro/declaratii/${cod.toLowerCase()}` },
   };
 }
 

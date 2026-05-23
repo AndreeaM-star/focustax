@@ -13,6 +13,12 @@ export const metadata = {
     description:
       "Toate declarațiile fiscale: TVA, impozit venit, contribuții sociale, salarii. Ghid practic gratuit.",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Declarații Fiscale România 2026 | FocusTax",
+    description: "D212, D300, D100, D112 și alte declarații — termene și instrucțiuni.",
+  },
+  alternates: { canonical: "https://focustax.ro/declaratii" },
 };
 
 const categorii = [

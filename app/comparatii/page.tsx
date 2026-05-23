@@ -10,6 +10,16 @@ export const metadata: Metadata = {
   description:
     "Compară cotele de TVA, impozit pe venit, impozit pe profit și contribuții sociale din România cu restul Europei. Date actualizate cu grafice și analize.",
   keywords: ["comparatii fiscale", "tva europa", "impozit venit comparatie", "impozit profit europa", "contributii sociale"],
+  openGraph: {
+    title: "Comparații Fiscale Europene | FocusTax",
+    description: "TVA, impozit venit, profit și contribuții sociale — România vs Europa.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Comparații Fiscale Europene | FocusTax",
+    description: "Compară taxele din România cu restul Europei — TVA, impozit venit, profit.",
+  },
+  alternates: { canonical: "https://focustax.ro/comparatii" },
 };
 
 const CARDURI = [

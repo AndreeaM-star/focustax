@@ -92,8 +92,8 @@ const noutati = [
     categorie: "D212",
     tag: "D212",
     urgenta: "urgent",
-    titlu: "URGENT — Termen D212: 25 mai 2026 (2 zile rămase!)",
-    desc: "Declarația Unică D212 pentru veniturile din 2025 se depune până pe 25 mai 2026 — mai sunt 2 zile! Se depune online prin SPV ANAF. Capitolul II (venituri estimate 2026) se completează în aceeași declarație.",
+    titlu: "URGENT — Termen D212: 25 mai 2026",
+    desc: "Declarația Unică D212 pentru veniturile din 2025 se depune până pe 25 mai 2026. Se depune online prin SPV ANAF. Capitolul II (venituri estimate 2026) se completează în aceeași declarație.",
     link: "/ghiduri/d212-ghid-completare",
   },
   {

@@ -37,7 +37,7 @@ const ghiduri = [
       { titlu: "Cum te înregistrezi ca PFA", desc: "Pași, documente necesare și costuri la ONRC.", slug: "inregistrare-pfa" },
       { titlu: "Sistem real vs normă de venit", desc: "Când este avantajoasă norma și când sistemul real.", slug: "sistem-real-norma" },
       { titlu: "CAS și CASS pentru PFA", desc: "Calcul contribuții, plafoane și termene de plată 2026.", slug: "contributii-sociale" },
-      { titlu: "Declarația Unică D212 — ghid complet", desc: "Completare, depunere și bonificație 3% — pas cu pas.", slug: "d212-ghid-completare" },
+      { titlu: "Declarația Unică D212 — ghid complet", desc: "Completare și depunere pas cu pas. Termen: 25 mai 2026 (bonificația 3% a expirat).", slug: "d212-ghid-completare" },
     ],
   },
   {

@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   title: "Sisteme Informatice ANAF | FocusTax",
   description: "Ghid complet pentru sistemele informatice ANAF: e-Factura, SPV, RO e-TVA, RO e-Transport, One Stop Shop și altele.",
   openGraph: { title: "Sisteme ANAF 2026 | FocusTax", description: "Toate sistemele digitale ANAF explicate: ce sunt, cine e obligat, cum funcționează." },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sisteme ANAF 2026 | FocusTax",
+    description: "e-Factura, SPV, RO e-TVA, RO e-Transport — ghid practic complet.",
+  },
+  alternates: { canonical: "https://focustax.ro/sisteme" },
 };
 
 export default function SistemePage() {
