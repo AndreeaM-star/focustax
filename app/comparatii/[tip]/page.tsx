@@ -20,6 +20,9 @@ export async function generateMetadata({
   return {
     title: `${date.titlu} — Comparații Europene | FocusTax`,
     description: date.descriere,
+    openGraph: { title: `${date.titlu} | FocusTax`, description: date.descriere },
+    twitter: { card: "summary_large_image" as const, title: `${date.titlu} | FocusTax`, description: date.descriere },
+    alternates: { canonical: `https://focustax.ro/comparatii/${tip}` },
   };
 }
 

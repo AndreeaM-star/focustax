@@ -16,6 +16,9 @@ export async function generateMetadata({ params }: { params: Promise<{ sistem: s
   return {
     title: `${s.titlu} — Sisteme ANAF | FocusTax`,
     description: s.descriereScurta,
+    openGraph: { title: `${s.titlu} | FocusTax`, description: s.descriereScurta },
+    twitter: { card: "summary_large_image" as const, title: `${s.titlu} | FocusTax`, description: s.descriereScurta },
+    alternates: { canonical: `https://focustax.ro/sisteme/${sistem}` },
   };
 }
 
