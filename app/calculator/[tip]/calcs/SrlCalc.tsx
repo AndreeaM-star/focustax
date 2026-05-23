@@ -13,11 +13,10 @@ export default function SrlCalc() {
   const [regim,    setRegim]    = useState<"micro" | "profit">("micro");
   const [ca,       setCa]       = useState(200000);
   const [profit,   setProfit]   = useState(50000);
-  const [angajat,  setAngajat]  = useState(true);
   const [distribui, setDistribui] = useState(true);
 
-  // Micro: 1% cu angajat, 3% fără
-  const cotaMicro   = angajat ? 0.01 : 0.03;
+  // Micro 2026: cotă unică 1% (eliminată cota 3%), plafon 100.000 EUR
+  const cotaMicro   = 0.01;
   const impozitMicro = regim === "micro" ? ca * cotaMicro : 0;
 
   // Impozit profit 16%
@@ -38,7 +37,7 @@ export default function SrlCalc() {
   const impozitTotal = (regim === "micro" ? impozitMicro : impozitProfit) + impozitDiv + cassDiv;
 
   const segments = [
-    { label: regim === "micro" ? `Impozit micro ${angajat ? "1%" : "3%"}` : "Impozit profit 16%",
+    { label: regim === "micro" ? "Impozit micro 1%" : "Impozit profit 16%",
       value: regim === "micro" ? impozitMicro : impozitProfit, color: "#ef4444" },
     { label: "Impozit dividende 16%", value: impozitDiv,  color: "#f97316" },
     { label: "CASS dividende",       value: cassDiv,     color: "#eab308" },
@@ -50,14 +49,14 @@ export default function SrlCalc() {
     <div className={styles.card}>
       <div className={styles.cardHeader}>
         <div className={styles.cardTitle}>Calculator SRL / Firmă</div>
-        <div className={styles.cardSubtitle}>Microîntreprindere 1%/3% sau Impozit profit 16% · România 2026</div>
+        <div className={styles.cardSubtitle}>Microîntreprindere 1% (cotă unică 2026) sau Impozit profit 16% · România 2026</div>
       </div>
       <div className={styles.cardBody}>
         <div className={styles.field}>
           <label>Regim fiscal</label>
           <div className={styles.toggleRow}>
             <button className={`${styles.toggleBtn} ${regim === "micro" ? styles.toggleBtnActive : ""}`}
-              onClick={() => setRegim("micro")}>Microîntreprindere (CA ≤ 500k EUR)</button>
+              onClick={() => setRegim("micro")}>Microîntreprindere (CA ≤ 100k EUR)</button>
             <button className={`${styles.toggleBtn} ${regim === "profit" ? styles.toggleBtnActive : ""}`}
               onClick={() => setRegim("profit")}>Impozit pe profit 16%</button>
           </div>
@@ -65,21 +64,10 @@ export default function SrlCalc() {
 
         {regim === "micro" ? (
           <>
-            <div className={styles.inputGroup}>
-              <div className={styles.field}>
-                <label>Cifră de afaceri anuală (lei)</label>
-                <input type="number" value={ca} min={0} step={10000}
-                  onChange={(e) => setCa(Number(e.target.value))} />
-              </div>
-              <div className={styles.field}>
-                <label>Are angajat cu normă întreagă?</label>
-                <div className={styles.toggleRow}>
-                  <button className={`${styles.toggleBtn} ${angajat ? styles.toggleBtnActive : ""}`}
-                    onClick={() => setAngajat(true)}>Da — 1%</button>
-                  <button className={`${styles.toggleBtn} ${!angajat ? styles.toggleBtnActive : ""}`}
-                    onClick={() => setAngajat(false)}>Nu — 3%</button>
-                </div>
-              </div>
+            <div className={styles.field}>
+              <label>Cifră de afaceri anuală (lei)</label>
+              <input type="number" value={ca} min={0} step={10000}
+                onChange={(e) => setCa(Number(e.target.value))} />
             </div>
           </>
         ) : (
@@ -109,7 +97,7 @@ export default function SrlCalc() {
           <div className={styles.resultRows}>
             {regim === "micro" ? (
               <div className={styles.resultRow}>
-                <span className={styles.resultRowLabel}>Impozit micro {angajat ? "1%" : "3%"}</span>
+                <span className={styles.resultRowLabel}>Impozit micro 1%</span>
                 <span className={`${styles.resultRowVal} ${styles.resultRowNeg}`}>−{fmt(impozitMicro)} lei</span>
               </div>
             ) : (
@@ -164,15 +152,15 @@ export default function SrlCalc() {
                 ))}
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: 4 }}>
-                <CopyBtn text={`Calculator SRL — FocusTax 2026\nRegim: ${regim === "micro" ? `micro ${angajat ? "1%" : "3%"}` : "profit 16%"}\n${regim === "micro" ? `CA: ${fmt(ca)} lei\nImpozit micro: −${fmt(impozitMicro)} lei` : `Profit impozabil: ${fmt(profit)} lei\nImpozit profit 16%: −${fmt(impozitProfit)} lei`}\nProfit net: ${fmt(profitNet)} lei${distribui ? `\nImpozit dividende 16%: −${fmt(impozitDiv)} lei${cassDiv > 0 ? `\nCASS dividende: −${fmt(cassDiv)} lei` : ""}\nDividende nete: ${fmt(ramas)} lei` : ""}`} />
+                <CopyBtn text={`Calculator SRL — FocusTax 2026\nRegim: ${regim === "micro" ? "micro 1%" : "profit 16%"}\n${regim === "micro" ? `CA: ${fmt(ca)} lei\nImpozit micro 1%: −${fmt(impozitMicro)} lei` : `Profit impozabil: ${fmt(profit)} lei\nImpozit profit 16%: −${fmt(impozitProfit)} lei`}\nProfit net: ${fmt(profitNet)} lei${distribui ? `\nImpozit dividende 16%: −${fmt(impozitDiv)} lei${cassDiv > 0 ? `\nCASS dividende: −${fmt(cassDiv)} lei` : ""}\nDividende nete: ${fmt(ramas)} lei` : ""}`} />
               </div>
             </div>
           )}
         </div>
 
         <div className={styles.infoBox}>
-          Microîntreprindere: CA ≤ 500.000 EUR (≈ 2,5M lei) și cel puțin 1 angajat pentru cota de <strong>1%</strong>.
-          Fără angajat: <strong>3%</strong>. Impozit dividende <strong>16%</strong>. CASS la dividende se aplică dacă totalul depășește <strong>24.300 lei/an</strong>.
+          Microîntreprindere 2026: cotă unică <strong>1%</strong>, plafon CA ≤ <strong>100.000 EUR/an</strong> (≈ 510.000 lei). Cota de 3% a fost eliminată din 2026.
+          Impozit dividende <strong>16%</strong>. CASS la dividende se aplică dacă totalul veniturilor pasive depășește <strong>24.300 lei/an</strong>.
         </div>
       </div>
     </div>

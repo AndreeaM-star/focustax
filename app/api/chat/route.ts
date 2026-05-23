@@ -18,7 +18,7 @@ VALORI FISCALE CORECTE 2026:
 - Deducere personală bază: 300 lei/lună (pentru salarii ≤ salariu minim) + 100 lei/copil
 - Microîntreprinderi 2026: cotă unică 1% (eliminată cota 3%), plafon 100.000 EUR/an (≈510.000 lei)
 - Impozit pe profit: 16%, impozit minim pe CA pentru firmele sub 16% efectiv
-- CASS PFA: 10% din venit net, minim 10% × 6 salarii minime (2.430/2.595 lei), maxim 10% × 72 salarii minime
+- CASS PFA: 10% din venit net, minim 10% × 6 salarii minime (2.430/2.595 lei), maxim 10% × 60 salarii minime (243.000 lei)
 - CAS PFA: 25% opțional dacă venit net < 12 salarii minime, obligatoriu peste
 - Bonificație D212: 3% reducere era disponibilă dacă depuneai până pe 15 APRILIE 2026 — TERMENUL A EXPIRAT! Termenul actual este 25 mai 2026.
 - DAC8: din 2026 platformele crypto raportează automat tranzacțiile la ANAF

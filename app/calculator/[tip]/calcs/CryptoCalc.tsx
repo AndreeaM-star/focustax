@@ -8,7 +8,7 @@ const COTA_ACTIUNI_LUNG = 0.03;
 const COTA_ACTIUNI_SCURT = 0.06;
 const COTA_DIVIDENDE = 0.16;
 const PLAFON_CASS_MIN = SMIN_2026 * 6; // 24.300 lei
-const PLAFON_CASS_MAX = SMIN_2026 * 72; // 291.600 lei
+const PLAFON_CASS_MAX = SMIN_2026 * 60; // 243.000 lei
 
 const fmt = (n: number) =>
   n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });

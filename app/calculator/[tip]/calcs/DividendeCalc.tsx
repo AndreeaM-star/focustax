@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "../../calculator.module.css";
+import CopyBtn from "@/components/CopyBtn";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
 const PRAG_CASS  = 6 * 4050;   // 24.300 lei/an — prag minim CASS (2026: 6 × salariu minim)
@@ -55,7 +56,7 @@ export default function DividendeCalc() {
           </div>
         </div>
 
-        <div className={styles.results}>
+        <div className={styles.results} aria-live="polite">
           <div className={styles.resultMain}>
             <span className={styles.resultLabel}>Dividende nete</span>
             <span className={styles.resultValue}>{fmt(ramas)}</span>
@@ -103,6 +104,7 @@ export default function DividendeCalc() {
                   </span>
                 ))}
               </div>
+              <CopyBtn text={`Calculator Dividende FocusTax 2026\nProfit brut distribuit: ${fmt(profitBrut)} lei\nImpozit dividende 16%: −${fmt(impozitDiv)} lei\nCASS 10% (pe dividende): ${cassDiv > 0 ? `−${fmt(cassDiv)} lei` : "Scutit"}\nTotal taxe: −${fmt(totalTaxe)} lei\nDividende nete: ${fmt(ramas)} lei\nRată efectivă: ${profitBrut > 0 ? ((totalTaxe / profitBrut) * 100).toFixed(1) : 0}%`} />
             </div>
           )}
         </div>
