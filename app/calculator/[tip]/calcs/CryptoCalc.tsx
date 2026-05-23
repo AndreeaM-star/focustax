@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "../../page.module.css";
 
-const SMIN_2026 = 4050;
+const SMIN_2026 = new Date().getMonth() >= 6 ? 4325 : 4050;
 const COTA_CRYPTO = 0.16;
 const COTA_ACTIUNI_LUNG = 0.03;
 const COTA_ACTIUNI_SCURT = 0.06;
@@ -26,10 +26,9 @@ function Row({ label, val, neg, bold, green }: {
 
 /* ── Tab Crypto ─────────────────────────────── */
 function TabCrypto() {
-  const [castig, setCastig] = useState("");
+  const [val, setVal] = useState(0);
   const [scutit, setScutit] = useState(false);
 
-  const val = parseFloat(castig) || 0;
   const impozit = scutit ? 0 : Math.round(val * COTA_CRYPTO);
   const bazaCASS = Math.min(Math.max(val, PLAFON_CASS_MIN), PLAFON_CASS_MAX);
   const cass = (!scutit && val >= PLAFON_CASS_MIN) ? Math.round(bazaCASS * 0.1) : 0;
@@ -44,8 +43,16 @@ function TabCrypto() {
 
       <div className={styles.calcSection}>
         <label className={styles.label}>Câștig net total din crypto în 2025 (lei)</label>
-        <input className={styles.input} type="number" placeholder="ex: 10.000"
-          value={castig} onChange={e => setCastig(e.target.value)} />
+        <div className={styles.rangeWrap}>
+          <input type="range" min={0} max={500000} step={1000} value={val}
+            onChange={(e) => setVal(Number(e.target.value))}
+            aria-label="Câștig net crypto" />
+          <span className={styles.rangeValue}>{fmt(val)} lei</span>
+        </div>
+        <input className={styles.inputSmall} type="number" value={val || ""} min={0} step={1000}
+          placeholder="ex: 10000"
+          onChange={(e) => setVal(Math.max(0, Number(e.target.value) || 0))}
+          aria-label="Valoare exactă câștig crypto" />
         <p className={styles.hint}>Câștiguri minus pierderi compensate din același an</p>
       </div>
 
@@ -111,11 +118,11 @@ function TabCrypto() {
 
 /* ── Tab Acțiuni Bursă ──────────────────────── */
 function TabActiuni() {
-  const [lung, setLung] = useState("");
-  const [scurt, setScurt] = useState("");
+  const [lung, setLung] = useState(0);
+  const [scurt, setScurt] = useState(0);
 
-  const valLung = parseFloat(lung) || 0;
-  const valScurt = parseFloat(scurt) || 0;
+  const valLung = lung;
+  const valScurt = scurt;
   const impLung = Math.round(valLung * COTA_ACTIUNI_LUNG);
   const impScurt = Math.round(valScurt * COTA_ACTIUNI_SCURT);
   const totalCastig = valLung + valScurt;
@@ -132,15 +139,31 @@ function TabActiuni() {
 
       <div className={styles.calcSection}>
         <label className={styles.label}>Câștig net acțiuni deținute &gt; 365 zile (lei)</label>
-        <input className={styles.input} type="number" placeholder="ex: 10.000"
-          value={lung} onChange={e => setLung(e.target.value)} />
+        <div className={styles.rangeWrap}>
+          <input type="range" min={0} max={500000} step={1000} value={lung}
+            onChange={(e) => setLung(Number(e.target.value))}
+            aria-label="Câștig acțiuni deținute peste 365 zile" />
+          <span className={styles.rangeValue}>{fmt(lung)} lei</span>
+        </div>
+        <input className={styles.inputSmall} type="number" value={lung || ""} min={0} step={1000}
+          placeholder="ex: 10000"
+          onChange={(e) => setLung(Math.max(0, Number(e.target.value) || 0))}
+          aria-label="Valoare exactă câștig acțiuni lung" />
         <p className={styles.hint}>Impozit 3% reținut la sursă de broker</p>
       </div>
 
       <div className={styles.calcSection}>
         <label className={styles.label}>Câștig net acțiuni deținute &lt; 365 zile (lei)</label>
-        <input className={styles.input} type="number" placeholder="ex: 5.000"
-          value={scurt} onChange={e => setScurt(e.target.value)} />
+        <div className={styles.rangeWrap}>
+          <input type="range" min={0} max={500000} step={1000} value={scurt}
+            onChange={(e) => setScurt(Number(e.target.value))}
+            aria-label="Câștig acțiuni deținute sub 365 zile" />
+          <span className={styles.rangeValue}>{fmt(scurt)} lei</span>
+        </div>
+        <input className={styles.inputSmall} type="number" value={scurt || ""} min={0} step={1000}
+          placeholder="ex: 5000"
+          onChange={(e) => setScurt(Math.max(0, Number(e.target.value) || 0))}
+          aria-label="Valoare exactă câștig acțiuni scurt" />
         <p className={styles.hint}>Impozit 6% reținut la sursă de broker</p>
       </div>
 
@@ -181,11 +204,9 @@ function TabActiuni() {
 
 /* ── Tab Dividende ──────────────────────────── */
 function TabDividende() {
-  const [divBrut, setDivBrut] = useState("");
-  const [alteVenituri, setAlteVenituri] = useState("");
+  const [val, setVal] = useState(0);
+  const [alte, setAlte] = useState(0);
 
-  const val = parseFloat(divBrut) || 0;
-  const alte = parseFloat(alteVenituri) || 0;
   const impDiv = Math.round(val * COTA_DIVIDENDE);
   const netDiv = val - impDiv;
   const totalVenit = val + alte;
@@ -201,14 +222,24 @@ function TabDividende() {
 
       <div className={styles.calcSection}>
         <label className={styles.label}>Dividende primite brut în 2025 (lei)</label>
-        <input className={styles.input} type="number" placeholder="ex: 50.000"
-          value={divBrut} onChange={e => setDivBrut(e.target.value)} />
+        <div className={styles.rangeWrap}>
+          <input type="range" min={0} max={1000000} step={5000} value={val}
+            onChange={(e) => setVal(Number(e.target.value))}
+            aria-label="Dividende brute" />
+          <span className={styles.rangeValue}>{fmt(val)} lei</span>
+        </div>
+        <input className={styles.inputSmall} type="number" value={val || ""} min={0} step={5000}
+          placeholder="ex: 50000"
+          onChange={(e) => setVal(Math.max(0, Number(e.target.value) || 0))}
+          aria-label="Valoare exactă dividende" />
       </div>
 
       <div className={styles.calcSection}>
         <label className={styles.label}>Alte venituri pasive (chirii, crypto, dobânzi) <span className={styles.optional}>opțional</span></label>
-        <input className={styles.input} type="number" placeholder="ex: 5.000"
-          value={alteVenituri} onChange={e => setAlteVenituri(e.target.value)} />
+        <input className={styles.input} type="number" value={alte || ""} min={0} step={1000}
+          placeholder="ex: 5000"
+          onChange={(e) => setAlte(Math.max(0, Number(e.target.value) || 0))}
+          aria-label="Alte venituri pasive" />
         <p className={styles.hint}>Necesar pentru calculul plafonului CASS cumulat</p>
       </div>
 

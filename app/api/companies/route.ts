@@ -65,10 +65,20 @@ export async function POST(req: NextRequest) {
         .insert({ company_id: existing.id })
         .select("session_token")
         .single();
-      return NextResponse.json(
+      const existingRes = NextResponse.json(
         { ...existing, session_token: session?.session_token ?? null },
         { status: 200 }
       );
+      if (session?.session_token) {
+        existingRes.cookies.set("focustax_session", session.session_token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          maxAge: 60 * 60 * 24 * 7,
+          path: "/",
+        });
+      }
+      return existingRes;
     }
 
     const { data: company, error } = await sb
@@ -108,7 +118,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(company, { status: 201 });
     }
 
-    return NextResponse.json({ ...company, session_token: session.session_token }, { status: 201 });
+    const newRes = NextResponse.json({ ...company, session_token: session.session_token }, { status: 201 });
+    newRes.cookies.set("focustax_session", session.session_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+    return newRes;
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("POST /api/companies threw:", msg);

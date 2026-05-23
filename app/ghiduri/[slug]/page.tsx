@@ -35,9 +35,20 @@ export default async function GhidPage({ params }: { params: Promise<{ slug: str
     ],
   };
 
+  const faqJsonLd = data.sectiuni.length >= 2 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": data.sectiuni.slice(0, 6).map((s) => ({
+      "@type": "Question",
+      "name": s.titlu,
+      "acceptedAnswer": { "@type": "Answer", "text": s.continut.join(" ") },
+    })),
+  } : null;
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
       <Navbar />
       <GhidClient data={data} />
       <Footer />
