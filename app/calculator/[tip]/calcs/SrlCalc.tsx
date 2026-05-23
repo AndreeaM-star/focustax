@@ -66,15 +66,48 @@ export default function SrlCalc() {
           <>
             <div className={styles.field}>
               <label>Cifră de afaceri anuală (lei)</label>
+              <div className={styles.rangeWrap}>
+                <input type="range" min={0} max={1000000} step={10000} value={ca}
+                  onChange={(e) => setCa(Number(e.target.value))}
+                  aria-label="Cifră de afaceri" />
+                <span className={styles.rangeValue}>{fmt(ca)} lei</span>
+              </div>
               <input type="number" value={ca} min={0} step={10000}
-                onChange={(e) => setCa(Number(e.target.value))} />
+                onChange={(e) => setCa(Math.max(0, Number(e.target.value)))}
+                aria-label="Valoare exactă CA"
+                style={{ marginTop: 6, width: 160, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
             </div>
+            {/* Micro threshold indicator — 100.000 EUR ≈ 510.000 lei */}
+            {ca > 0 && (() => {
+              const plafonLei = 510000;
+              const pct = Math.min((ca / plafonLei) * 100, 100);
+              const depasit = ca > plafonLei;
+              return (
+                <div style={{ margin: "2px 0 8px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.73rem", fontWeight: 600, color: depasit ? "#dc2626" : "#6b7280", marginBottom: 4 }}>
+                    <span>Plafon micro 100.000 EUR (~510.000 lei)</span>
+                    <span>{depasit ? "Depășit — treci la profit 16%" : `${fmt(ca)} / ${fmt(plafonLei)} lei`}</span>
+                  </div>
+                  <div style={{ height: 7, borderRadius: 5, background: "rgba(0,0,0,0.07)", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${pct}%`, background: depasit ? "linear-gradient(90deg,#f97316,#dc2626)" : "linear-gradient(90deg,#22c55e,#2563eb)", borderRadius: 5, transition: "width 0.5s ease" }} />
+                  </div>
+                </div>
+              );
+            })()}
           </>
         ) : (
           <div className={styles.field}>
             <label>Profit impozabil anual (lei)</label>
+            <div className={styles.rangeWrap}>
+              <input type="range" min={0} max={1000000} step={5000} value={profit}
+                onChange={(e) => setProfit(Number(e.target.value))}
+                aria-label="Profit impozabil" />
+              <span className={styles.rangeValue}>{fmt(profit)} lei</span>
+            </div>
             <input type="number" value={profit} min={0} step={5000}
-              onChange={(e) => setProfit(Number(e.target.value))} />
+              onChange={(e) => setProfit(Math.max(0, Number(e.target.value)))}
+              aria-label="Valoare exactă profit"
+              style={{ marginTop: 6, width: 160, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
           </div>
         )}
 
