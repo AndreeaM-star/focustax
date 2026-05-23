@@ -26,6 +26,15 @@ const TAG_COLORS: Record<string, string> = {
 
 const noutati = [
   {
+    data: "Mai 2026",
+    categorie: "D212",
+    tag: "D212",
+    urgenta: "important",
+    titlu: "ANAF: D212 precompletată include datele DAC8 — verificați înainte de depunere",
+    desc: "Înainte de a depune D212, ANAF recomandă verificarea în SPV a datelor precompletate, care includ acum informații DAC8 (câștiguri crypto raportate automat de platformele de tranzacționare pentru 2025). Dacă există discrepanțe față de evidența proprie, trebuie corectate înainte de termenul din 25 mai. Platformele au transmis rapoartele la ANAF conform noilor obligații DAC8 intrate în vigoare în 2026.",
+    link: "/ghiduri/d212-ghid-completare",
+  },
+  {
     data: "Aprilie 2026",
     categorie: "D212",
     tag: "D212",

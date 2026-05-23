@@ -60,8 +60,8 @@ const noutatiPreview = [
   {
     tag: "D212",
     tagColor: "#dc2626",
-    titlu: "Termen D212: 25 mai 2026",
-    desc: "Declarația Unică pentru veniturile din 2025. Depune online prin SPV ANAF.",
+    titlu: "D212 precompletată include datele DAC8",
+    desc: "ANAF a integrat rapoartele DAC8 (crypto 2025) în D212. Verificați în SPV înainte de 25 mai.",
     link: "/ghiduri/d212-ghid-completare",
   },
   {
