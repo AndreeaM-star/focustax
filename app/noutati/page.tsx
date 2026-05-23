@@ -187,15 +187,25 @@ export default function NoutatiPage() {
 
         {/* Filters + Sort */}
         <div className={styles.filtrRow}>
-          {FILTRE.map(f => (
-            <button
-              key={f}
-              onClick={() => setFiltru(f)}
-              className={`${styles.filtrBtn} ${filtru === f ? styles.filtrBtnActive : ""}`}
-            >
-              {f}
-            </button>
-          ))}
+          {FILTRE.map(f => {
+            const count = f === "Toate" ? noutatiActive.length : noutatiActive.filter(n => n.categorie === f).length;
+            return (
+              <button
+                key={f}
+                onClick={() => setFiltru(f)}
+                className={`${styles.filtrBtn} ${filtru === f ? styles.filtrBtnActive : ""}`}
+              >
+                {f}
+                {count > 0 && (
+                  <span style={{
+                    marginLeft: 5, fontSize: "0.7rem", fontWeight: 700,
+                    background: filtru === f ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.08)",
+                    borderRadius: 10, padding: "1px 6px",
+                  }}>{count}</span>
+                )}
+              </button>
+            );
+          })}
           <span style={{ flex: 1 }} />
           <button onClick={() => setSortare("noi")} className={`${styles.filtrBtn} ${sortare === "noi" ? styles.filtrBtnActive : ""}`}>↓ Cele mai noi</button>
           <button onClick={() => setSortare("importante")} className={`${styles.filtrBtn} ${sortare === "importante" ? styles.filtrBtnActive : ""}`}>⚡ Importante</button>
