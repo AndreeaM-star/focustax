@@ -154,7 +154,10 @@ export default function NoutatiPage() {
   const [sortare, setSortare] = useState<"noi" | "importante">("noi");
   const zile = d212ZileRamase();
 
-  const afisate = (filtru === "Toate" ? noutati : noutati.filter(n => n.categorie === filtru))
+  const noutatiActive = zile <= 0
+    ? noutati.filter(n => !(n.urgenta === "urgent" && n.tag === "D212"))
+    : noutati;
+  const afisate = (filtru === "Toate" ? noutatiActive : noutatiActive.filter(n => n.categorie === filtru))
     .slice()
     .sort((a, b) => sortare === "importante" ? URGENTA_SORT[a.urgenta] - URGENTA_SORT[b.urgenta] : 0);
 

@@ -3,7 +3,17 @@ import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-const SYSTEM_PROMPT = `Ești ANA, asistentul fiscal AI al platformei FocusTax.ro pentru România. Ești specializată în legislația fiscală română 2026.
+function getD212Status(): string {
+  const termen = new Date(2026, 4, 25);
+  const azi = new Date(); azi.setHours(0, 0, 0, 0);
+  const zile = Math.max(0, Math.ceil((termen.getTime() - azi.getTime()) / 86400000));
+  if (zile === 0) return "D212: termen 25 mai 2026 — TERMENUL A EXPIRAT astăzi! Sfătuiești utilizatorul să depună urgent chiar dacă expirat, deoarece pot exista zile de grație.";
+  if (zile <= 5) return `D212: anual, termen 25 mai 2026 — URGENT, mai sunt ${zile === 1 ? "1 zi" : `${zile} zile`}! (bonificația 3% a expirat pe 15 apr)`;
+  return "D212: anual, termen 25 mai 2026 (bonificația 3% a expirat pe 15 apr)";
+}
+
+function buildSystemPrompt(): string {
+  return `Ești ANA, asistentul fiscal AI al platformei FocusTax.ro pentru România. Ești specializată în legislația fiscală română 2026.
 
 VALORI FISCALE CORECTE 2026:
 - TVA standard: 21% (din august 2025, anterior 19%)
@@ -26,7 +36,7 @@ VALORI FISCALE CORECTE 2026:
 - Impozit auto 2026: diferențiat pe normă Euro și cilindree; electrice: 40 lei/an fix
 
 DECLARAȚII CHEIE:
-- D212: anual, termen 25 mai 2026 — URGENT, mai sunt 2 zile! (bonificația 3% a expirat pe 15 apr)
+- ${getD212Status()}
 - D112: lunar, termen 25 ale lunii următoare
 - D300 TVA: lunar sau trimestrial, termen 25
 - D101: anual impozit profit, termen 25 martie
@@ -37,6 +47,7 @@ DECLARAȚII CHEIE:
 Răspunzi EXCLUSIV în română. Ești concisă, precisă, prietenoasă. Formatezi sumele cu bold. Specifici întotdeauna termenele legale. Când nu știi ceva sigur, spui "Verifică cu un consultant fiscal autorizat CCF/CECCAR".
 
 Data curentă: ${new Date().toLocaleDateString("ro-RO", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}.`;
+}
 
 // In-memory rate limit: max 20 requests/min per IP
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -80,7 +91,7 @@ export async function POST(req: NextRequest) {
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
+        { role: "system", content: buildSystemPrompt() },
         ...messages.slice(-10),
       ],
       max_tokens: 800,
