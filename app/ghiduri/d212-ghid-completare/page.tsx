@@ -8,6 +8,12 @@ import styles from "./page.module.css";
 const fmt = (n: number) =>
   n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
 
+function d212ZileRamase(): number {
+  const termen = new Date(2026, 4, 25);
+  const azi = new Date(); azi.setHours(0, 0, 0, 0);
+  return Math.max(0, Math.ceil((termen.getTime() - azi.getTime()) / 86400000));
+}
+
 type TipVenit = "pfa_real" | "pfa_norma" | "chirii" | "crypto" | "strainatate";
 
 const TIP_LABELS: { id: TipVenit; label: string; capitole: string[] }[] = [
@@ -120,6 +126,7 @@ function CalculatorBonificatie() {
 }
 
 export default function GhidD212() {
+  const zile = d212ZileRamase();
   const [step, setStep] = useState(0);
   const [tipuri, setTipuri] = useState<Set<TipVenit>>(new Set());
   const [checklist, setChecklist] = useState<Set<string>>(new Set());
@@ -150,9 +157,11 @@ export default function GhidD212() {
           <p className={styles.subtitle}>
             Wizard interactiv pas cu pas pentru depunerea Declarației Unice.
           </p>
-          <div className={styles.urgentBadge}>
-            ⚡ Termen depunere D212: 25 mai 2026 — mai ai 3 zile!
-          </div>
+          {zile > 0 && (
+            <div className={styles.urgentBadge}>
+              ⚡ Termen depunere D212: 25 mai 2026 — mai ai {zile === 1 ? "1 zi" : `${zile} zile`}!
+            </div>
+          )}
         </div>
 
         <div className={styles.progressBar}>
