@@ -462,11 +462,11 @@ export const ghiduri: Record<string, GhidData> = {
       {
         titlu: "CASS pe dividende",
         continut: [
-          "Dacă dividendele depășesc 6 salarii minime (24.300 lei în 2026), se datorează și CASS 10%.",
-          "Plafoane CASS pentru dividende: 6 SM (24.300 lei), 12 SM (48.600 lei), 24 SM (97.200 lei).",
+          "Dacă dividendele (+ alte venituri pasive) depășesc 6 salarii minime (24.300 lei în 2026), se datorează și CASS 10%.",
+          "CASS se calculează pe venitul total pasiv, plafonat la 60 × SMIN (243.000 lei/an). Formula: 10% × min(total_pasiv, 243.000).",
           "CASS se declară și se plătește de persoana fizică prin D212, nu de SRL.",
-          "Exemplu: 100.000 lei dividende → CASS 10% × 97.200 lei = 9.720 lei (plafonul maxim este 24 SM).",
-          "Total taxe pe 100.000 lei dividende: impozit 16.000 + CASS 9.720 = 25.720 lei.",
+          "Exemplu: 100.000 lei dividende → CASS 10% × 100.000 lei = 10.000 lei (suma sub plafonul maxim de 243.000 lei).",
+          "Total taxe pe 100.000 lei dividende: impozit 16.000 + CASS 10.000 = 26.000 lei.",
         ],
       },
       {
@@ -485,8 +485,8 @@ export const ghiduri: Record<string, GhidData> = {
       titlu: "Taxe pe 100.000 lei dividende distribuite (2026)",
       bare: [
         { label: "Impozit 16%", value: 16000, color: "#059669" },
-        { label: "CASS 10%", value: 9720, color: "#6ee7b7" },
-        { label: "Net primit", value: 74280, color: "#d1fae5" },
+        { label: "CASS 10%", value: 10000, color: "#6ee7b7" },
+        { label: "Net primit", value: 74000, color: "#d1fae5" },
       ],
       unitate: "lei",
     },
@@ -510,7 +510,7 @@ export const ghiduri: Record<string, GhidData> = {
     desc: "Tot ce trebuie să știi despre TVA în România: când te înregistrezi, cotele aplicabile, decontul D300 și sistemul TVA la încasare.",
     ceFaciAfla: [
       "Plafonul de înregistrare TVA: 395.000 lei (din septembrie 2025)",
-      "Cotele TVA: 21%, 9%, 5%, 0%",
+      "Cotele TVA: 21% standard, 11% alimente/turism, 9% locuințe, 5% cărți/medicamente, 0%",
       "Procedura de înregistrare voluntară vs obligatorie",
       "Avantajele și dezavantajele înregistrării",
       "TVA la încasare — ce este și cum funcționează",
