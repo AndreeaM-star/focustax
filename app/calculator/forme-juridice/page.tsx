@@ -240,7 +240,7 @@ export default function FormeJuridice() {
 
         {forme.length > 0 && (
           <>
-            <div className={styles.formsGrid}>
+            <div className={styles.formsGrid} aria-live="polite">
               {forme.map(f => (
                 <FormaCard key={f.label} forma={f} isMax={f.netAnual === maxNet} />
               ))}

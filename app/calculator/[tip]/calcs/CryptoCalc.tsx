@@ -65,7 +65,7 @@ function TabCrypto() {
       )}
 
       {val > 0 && !scutit && (
-        <div className={styles.rezultate}>
+        <div className={styles.rezultate} aria-live="polite">
           <p className={styles.rezSectionLabel}>IMPOZIT CRYPTO 2026</p>
           <Row label="Câștig net" val={`${fmt(val)} lei`} />
           <Row label="Impozit 16%" val={`−${fmt(impozit)} lei`} neg />
