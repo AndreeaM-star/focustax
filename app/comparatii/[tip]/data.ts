@@ -683,9 +683,9 @@ export const COMPARATII: Record<string, TipComparatie> = {
       {
         nume: "România",
         codISO: "RO",
-        cotaStandard: 8,
+        cotaStandard: 16,
         sistem: "flat",
-        detalii: "Cotă fixă 8% din 2024 (anterior 5%)",
+        detalii: "Cotă 16% din 2026 (anterior 8% din 2024, 5% din 2017)",
         esteRomania: true,
       },
       { nume: "Bulgaria", codISO: "BG", cotaStandard: 5, sistem: "flat", detalii: "Cea mai mică din UE" },
