@@ -88,5 +88,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...declaratiiRoutes, ...ghiduriRoutes, ...comparatiiRoutes, ...sistemeRoutes];
+  const calculatorTips = ["salariu", "pfa", "srl", "chirii", "dividende", "tva"];
+  const calculatorRoutes: MetadataRoute.Sitemap = calculatorTips.map((tip) => ({
+    url: `${BASE_URL}/calculator/${tip}`,
+    lastModified: new Date(),
+    priority: 0.85,
+  }));
+
+  return [...staticRoutes, ...declaratiiRoutes, ...ghiduriRoutes, ...comparatiiRoutes, ...sistemeRoutes, ...calculatorRoutes];
 }
