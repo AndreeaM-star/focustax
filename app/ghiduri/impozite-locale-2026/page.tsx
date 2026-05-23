@@ -20,11 +20,11 @@ const tarifeEuro: Record<string, { base?: number; per200?: number; fixed?: numbe
 };
 
 function CalculatorCladire() {
-  const [valoare, setValoare] = useState("");
+  const [valoare, setValoare] = useState(200000);
   const [tip, setTip] = useState<"rezidential" | "alt_rezidential" | "nerezidential">("rezidential");
   const [an, setAn] = useState("2000");
 
-  const val = parseFloat(valoare) || 0;
+  const val = valoare;
   const vechime = new Date().getFullYear() - (parseInt(an) || 2000);
   const reducereVechime = Math.min(0.4, vechime * 0.005); // 0.5% per an, max 40%
 
@@ -58,10 +58,18 @@ function CalculatorCladire() {
             Valoare impozabilă (lei)
           </label>
           <input
-            type="number" placeholder="ex: 200.000"
-            value={valoare} onChange={e => setValoare(e.target.value)}
-            style={{ width: "100%", padding: "9px 12px", borderRadius: 9, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.8)", outline: "none", fontSize: "0.9rem" }}
+            type="range" min={50000} max={2000000} step={10000} value={valoare}
+            onChange={e => setValoare(Number(e.target.value))}
+            style={{ width: "100%", marginBottom: 6 }}
           />
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: "0.82rem", color: "#6b7280" }}>50k lei</span>
+            <input
+              type="number" min={50000} step={10000}
+              value={valoare} onChange={e => setValoare(Math.max(50000, Number(e.target.value)))}
+              style={{ width: 130, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.8)", outline: "none", fontSize: "0.88rem", textAlign: "right" }}
+            />
+          </div>
           <p style={{ fontSize: "0.75rem", color: "#9ca3af", marginTop: 4 }}>Din actul de proprietate sau evaluare primărie</p>
         </div>
         <div>
@@ -98,31 +106,44 @@ function CalculatorCladire() {
         </div>
       </div>
 
-      {val > 0 && (
-        <div style={{ borderTop: "1px solid rgba(0,0,0,0.08)", paddingTop: 14 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.875rem", padding: "4px 0", color: "#374151" }}>
-            <span>Valoare impozabilă (ajustată vechime {reducereVechime > 0 ? `−${(reducereVechime * 100).toFixed(0)}%` : ""})</span>
-            <strong>{fmt(valImpozabila)} lei</strong>
+      <div style={{ borderTop: "1px solid rgba(0,0,0,0.08)", paddingTop: 16, marginTop: 8 }}>
+        <p style={{ fontSize: "0.78rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", color: "#6b7280", marginBottom: 10 }}>Comparare 2025 vs 2026</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
+          <div style={{ background: "rgba(107,114,128,0.08)", borderRadius: 10, padding: "12px 14px", textAlign: "center" }}>
+            <p style={{ fontSize: "0.75rem", color: "#6b7280", margin: "0 0 4px" }}>Impozit 2025 (est.)</p>
+            <p style={{ fontSize: "1.15rem", fontWeight: 700, color: "#6b7280", margin: 0 }}>{fmt(impozit2025)} lei</p>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.875rem", padding: "4px 0", color: "#374151" }}>
-            <span>Cotă orientativă 2026</span>
-            <span>{cota2026}‰</span>
+          <div style={{ background: "rgba(220,38,38,0.08)", borderRadius: 10, padding: "12px 14px", textAlign: "center" }}>
+            <p style={{ fontSize: "0.75rem", color: "#dc2626", margin: "0 0 4px" }}>Impozit 2026</p>
+            <p style={{ fontSize: "1.15rem", fontWeight: 700, color: "#dc2626", margin: 0 }}>{fmt(impozit2026)} lei</p>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "1rem", padding: "8px 0", color: "#059669", fontWeight: 700, borderTop: "1px solid rgba(0,0,0,0.08)", marginTop: 4 }}>
-            <span>Impozit estimat 2026</span>
-            <span>{fmt(impozit2026)} lei/an</span>
-          </div>
-          {crestere > 0 && (
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.82rem", padding: "4px 0", color: "#dc2626" }}>
-              <span>Față de 2025 (estimat)</span>
-              <span>+{crestere.toFixed(0)}% (+{fmt(impozit2026 - impozit2025)} lei)</span>
-            </div>
-          )}
-          <p style={{ fontSize: "0.75rem", color: "#9ca3af", marginTop: 8, fontStyle: "italic" }}>
-            ⚠ Valori orientative. Cotele exacte variază pe localitate. Verificați la primăria dvs.
-          </p>
         </div>
-      )}
+        {/* Visual bar comparison */}
+        <div style={{ marginBottom: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+            <span style={{ fontSize: "0.75rem", color: "#6b7280", width: 40 }}>2025</span>
+            <div style={{ flex: 1, background: "#f3f4f6", borderRadius: 4, height: 16, overflow: "hidden" }}>
+              <div style={{ height: "100%", background: "#9ca3af", borderRadius: 4, width: impozit2026 > 0 ? `${(impozit2025 / impozit2026) * 100}%` : "0%", transition: "width 0.4s" }} />
+            </div>
+            <span style={{ fontSize: "0.75rem", color: "#6b7280", width: 55, textAlign: "right" }}>{fmt(impozit2025)} lei</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: "0.75rem", color: "#dc2626", width: 40, fontWeight: 700 }}>2026</span>
+            <div style={{ flex: 1, background: "#f3f4f6", borderRadius: 4, height: 16, overflow: "hidden" }}>
+              <div style={{ height: "100%", background: "#dc2626", borderRadius: 4, width: "100%", transition: "width 0.4s" }} />
+            </div>
+            <span style={{ fontSize: "0.75rem", color: "#dc2626", width: 55, textAlign: "right", fontWeight: 700 }}>{fmt(impozit2026)} lei</span>
+          </div>
+        </div>
+        {crestere > 0 && (
+          <div style={{ display: "flex", justifyContent: "center", padding: "8px", background: "rgba(220,38,38,0.06)", borderRadius: 8, fontSize: "0.85rem", color: "#dc2626", fontWeight: 700 }}>
+            ↑ Creștere: +{crestere.toFixed(0)}% față de 2025 (+{fmt(impozit2026 - impozit2025)} lei/an)
+          </div>
+        )}
+        <p style={{ fontSize: "0.72rem", color: "#9ca3af", marginTop: 10, fontStyle: "italic" }}>
+          ⚠ Valori orientative. Cotele exacte variază pe localitate. Verificați la primăria dvs.
+        </p>
+      </div>
     </div>
   );
 }
