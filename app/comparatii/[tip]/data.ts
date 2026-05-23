@@ -69,7 +69,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Estonia", codISO: "EE", cotaStandard: 22, coteReduse: [9], sistem: "cote-multiple" },
       { nume: "Slovenia", codISO: "SI", cotaStandard: 22, coteReduse: [5, 9.5], sistem: "cote-multiple" },
       { nume: "Italia", codISO: "IT", cotaStandard: 22, coteReduse: [4, 5, 10], sistem: "cote-multiple" },
-      { nume: "România", codISO: "RO", cotaStandard: 21, coteReduse: [5, 9], sistem: "cote-multiple", esteRomania: true, detalii: "Majorat de la 19% în ian. 2026" },
+      { nume: "România", codISO: "RO", cotaStandard: 21, coteReduse: [5, 9, 11], sistem: "cote-multiple", esteRomania: true, detalii: "Majorat de la 19% în aug. 2025; 11% alimente/turism, 9% locuințe" },
       { nume: "Germania", codISO: "DE", cotaStandard: 19, coteReduse: [7], sistem: "cote-multiple" },
       { nume: "Cipru", codISO: "CY", cotaStandard: 19, coteReduse: [5, 9], sistem: "cote-multiple" },
       { nume: "Georgia", codISO: "GE", cotaStandard: 18, coteReduse: [], sistem: "cotă-standard" },
@@ -632,7 +632,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
     id: "dividende",
     titlu: "Impozit pe Dividende",
     descriere:
-      "Comparație a cotelor de impozit pe dividende pentru persoane fizice în Europa. România aplică 8% din 2024.",
+      "Comparație a cotelor de impozit pe dividende pentru persoane fizice în Europa. România aplică 16% din 2026 (urcare de la 8% în 2024).",
     unitateMasura: "%",
     culoare: "rgba(220, 38, 38, 0.85)",
     culoareSecundara: "rgba(220, 38, 38, 0.18)",
@@ -724,15 +724,15 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Noua Zeelandă", codISO: "NZ", cotaStandard: 33, sistem: "flat", detalii: "RWT maxim 33%", zona: "extra-europa" },
     ],
     contextRomania:
-      "România a majorat cota de impozit pe dividende de la 5% la 8% în 2024. Rămâne sub media europeană, competitivă față de Germania (25%) sau Franța (30%). Dividendele se declară prin D205 (anual) și D212 dacă destinatarul e persoană fizică cu alte venituri. Impozitul se reține la sursă de societate la momentul distribuirii.",
+      "România a majorat cota de impozit pe dividende la 16% din 01.01.2026 (anterior 8% din 2024, 5% din 2017). Impozitul se reține la sursă de societate la momentul distribuirii. Dividendele se declară prin D205 (anual) de firmă și, dacă se datorează CASS, prin D212 de persoana fizică. CASS 10% se aplică dacă totalul veniturilor pasive depășește 24.300 lei/an.",
     mediuEuropean: 22,
     istorie:
-      "Impozitarea dividendelor a apărut din nevoia de a taxa distribuirea profitului corporativ la persoane fizice. Istoric, dividendele erau impozitate de două ori: odată ca profit al firmei, o dată ca venit al acționarului. Multe țări au introdus cote reduse sau scutiri pentru a evita dubla impozitare. România a introdus impozitul pe dividende în 2005 cu 10%, l-a redus la 5% în 2017 și l-a majorat la 8% în 2024 în contextul nevoilor de venituri bugetare.",
+      "Impozitarea dividendelor a apărut din nevoia de a taxa distribuirea profitului corporativ la persoane fizice. Istoric, dividendele erau impozitate de două ori: odată ca profit al firmei, o dată ca venit al acționarului. Multe țări au introdus cote reduse sau scutiri pentru a evita dubla impozitare. România a introdus impozitul pe dividende în 2005 cu 10%, l-a redus la 5% în 2017, l-a majorat la 8% în 2024 și la 16% din 2026 (Legea 239/2025) în contextul nevoilor de consolidare fiscală.",
     fapteInteresante: [
       "Cipru și Monaco scutesc complet dividendele — factori majori în atragerea companiilor holding și milionarilor.",
       "Estonia nu impozitează profitul reinvestit, ci doar cel distribuit (20%), stimulând capitalizarea companiilor.",
       "Elveția aplică 35% la sursă, dar sumele sunt recuperabile prin declarație dacă există convenție fiscală cu țara de rezidență.",
-      "Bulgaria și România au cele mai mici cote de dividende din UE — 5% și respectiv 8%.",
+      "Bulgaria (8%) și România (16% din 2026) au crescut cotele în ultimii ani. Bulgaria rămâne cea mai atractivă din UE pentru dividende.",
       "Georgia și Ucraina aplică doar 5% — atrăgând investitori din regiune.",
     ],
   },

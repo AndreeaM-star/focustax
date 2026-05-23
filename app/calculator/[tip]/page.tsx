@@ -10,7 +10,7 @@ import TvaCalc        from "./calcs/TvaCalc";
 const META: Record<string, { title: string; description: string }> = {
   salariu:   { title: "Calculator Salariu Net 2026",            description: "Calculează salariul net din brut — CAS 25%, CASS 10%, impozit 10%, deducere personală." },
   pfa:       { title: "Calculator PFA / II 2026",               description: "Calculator impozite PFA norma de venit sau sistem real — CAS, CASS, impozit venit." },
-  srl:       { title: "Calculator SRL / Microîntreprindere 2026", description: "Calculator impozit micro 1%/3%, impozit profit 16%, dividende." },
+  srl:       { title: "Calculator SRL / Microîntreprindere 2026", description: "Calculator impozit micro 1% (cotă unică 2026), impozit profit 16%, dividende 16%." },
   chirii:    { title: "Calculator Chirii 2026",                  description: "Calculator impozit venituri din chirii — deducere forfetară 40%, impozit 10%, CASS." },
   dividende: { title: "Calculator Dividende 2026",               description: "Calculator impozit dividende 16% + CASS, distribuire profit SRL." },
   tva:       { title: "Calculator TVA 2026",                     description: "Calculează TVA colectat, deductibil, de plată — cote 21%, 9%, 5%, 0%." },
