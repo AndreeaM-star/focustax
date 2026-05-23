@@ -189,17 +189,14 @@ function CalcD212({ accentCuloare }: { accentCuloare: string }) {
   const [venit, setVenit] = useState("");
   const [rezultat, setRezultat] = useState<{ impozit: number; cas: number; cass: number; total: number } | null>(null);
 
-  const SMIN = 4050;
+  const SMIN = new Date().getMonth() >= 6 ? 4325 : 4050;
 
   function calculeaza() {
     const v = parseFloat(venit.replace(/\./g, "").replace(",", ".")) || 0;
     const impozit = Math.round(v * 0.1);
     const casBase = v >= 12 * SMIN ? Math.min(v, 24 * SMIN) : 0;
     const cas = Math.round(casBase * 0.25);
-    let cassBase = 0;
-    if (v >= 24 * SMIN) cassBase = 24 * SMIN;
-    else if (v >= 12 * SMIN) cassBase = 12 * SMIN;
-    else if (v >= 6 * SMIN) cassBase = 6 * SMIN;
+    const cassBase = v >= 6 * SMIN ? Math.min(v, 60 * SMIN) : 0;
     const cass = Math.round(cassBase * 0.1);
     setRezultat({ impozit, cas, cass, total: impozit + cas + cass });
   }

@@ -53,13 +53,13 @@ export default function SalariuCalc() {
           <div className={styles.field}>
             <label>Salariu Brut (lei/lună)</label>
             <div className={styles.rangeWrap}>
-              <input type="range" min={4050} max={30000} step={50} value={brut}
+              <input type="range" min={SMIN} max={30000} step={50} value={brut}
                 onChange={(e) => setBrut(Number(e.target.value))}
                 aria-label="Salariu brut" />
               <span className={styles.rangeValue}>{fmt(brut)} lei</span>
             </div>
-            <input type="number" value={brut} min={4050} step={100}
-              onChange={(e) => setBrut(Math.max(4050, Number(e.target.value)))}
+            <input type="number" value={brut} min={SMIN} step={100}
+              onChange={(e) => setBrut(Math.max(SMIN, Number(e.target.value)))}
               aria-label="Valoare exactă salariu brut"
               style={{ marginTop: 6, width: 140, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
           </div>

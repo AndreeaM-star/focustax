@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 const fmt = (n: number) =>
   n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
 
-const SMIN = 4050;
+const SMIN = new Date().getMonth() >= 6 ? 4325 : 4050;
 
 function CalculatorIT() {
   const [brut, setBrut] = useState(7000);
@@ -37,15 +37,15 @@ function CalculatorIT() {
           Salariu brut lunar (lei)
         </label>
         <input
-          type="range" min={4050} max={20000} step={50} value={brut}
+          type="range" min={SMIN} max={20000} step={50} value={brut}
           onChange={e => setBrut(Number(e.target.value))}
           style={{ width: "100%", maxWidth: 300, marginBottom: 6 }}
         />
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{ fontSize: "0.82rem", color: "#6b7280" }}>4.050 lei</span>
+          <span style={{ fontSize: "0.82rem", color: "#6b7280" }}>{fmt(SMIN)} lei</span>
           <input
-            type="number" min={4050} step={50}
-            value={brut} onChange={e => setBrut(Math.max(4050, Number(e.target.value)))}
+            type="number" min={SMIN} step={50}
+            value={brut} onChange={e => setBrut(Math.max(SMIN, Number(e.target.value)))}
             style={{
               padding: "6px 10px", borderRadius: 8,
               border: "1px solid rgba(99,102,241,0.3)",
