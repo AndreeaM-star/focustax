@@ -20,7 +20,7 @@ const CONTEXT_EUROPEAN: Record<
     tari: [
       { nume: "Ungaria", cota: 27, flag: "🇭🇺" },
       { nume: "Polonia", cota: 23, flag: "🇵🇱" },
-      { nume: "România", cota: 19, flag: "🇷🇴" },
+      { nume: "România", cota: 21, flag: "🇷🇴" },
       { nume: "Germania", cota: 19, flag: "🇩🇪" },
       { nume: "Luxemburg", cota: 17, flag: "🇱🇺" },
     ],
