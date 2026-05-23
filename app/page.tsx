@@ -70,7 +70,15 @@ const deParceFeatures = [
   { icon: "🔍", label: "Fără jargon", desc: "Explicații clare, în română, fără termeni tehnici inutili." },
 ];
 
+function d212ZileRamase(): number {
+  const termen = new Date(2026, 4, 25); // 25 mai 2026
+  const azi = new Date();
+  azi.setHours(0, 0, 0, 0);
+  return Math.max(0, Math.ceil((termen.getTime() - azi.getTime()) / 86400000));
+}
+
 export default function HomePage() {
+  const zile = d212ZileRamase();
   return (
     <>
       <Navbar />
@@ -90,14 +98,16 @@ export default function HomePage() {
 
           <div className={styles.heroContent}>
             {/* D212 banner */}
-            <div className={styles.d212Banner}>
-              <span className={styles.d212BannerIcon}>⚡</span>
-              <span>
-                <strong>URGENT — D212 termen: 25 mai 2026</strong>
-                {" "}— mai ai 3 zile să depui Declarația Unică pentru veniturile din 2025.{" "}
-                <Link href="/ghiduri/d212-ghid-completare" className={styles.d212BannerLink}>Ghid completare →</Link>
-              </span>
-            </div>
+            {zile > 0 && (
+              <div className={styles.d212Banner}>
+                <span className={styles.d212BannerIcon}>⚡</span>
+                <span>
+                  <strong>URGENT — D212 termen: 25 mai 2026</strong>
+                  {" "}— mai {zile === 1 ? "ai o zi" : `ai ${zile} zile`} să depui Declarația Unică pentru veniturile din 2025.{" "}
+                  <Link href="/ghiduri/d212-ghid-completare" className={styles.d212BannerLink}>Ghid completare →</Link>
+                </span>
+              </div>
+            )}
 
             <span className={styles.pill}>Ghid Fiscal România 2026</span>
 
