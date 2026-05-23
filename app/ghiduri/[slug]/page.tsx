@@ -15,6 +15,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${data.titlu} | FocusTax`,
     description: data.desc,
+    twitter: { card: "summary_large_image", title: `${data.titlu} | FocusTax`, description: data.desc },
+    alternates: { canonical: `https://focustax.ro/ghiduri/${slug}` },
   };
 }
 
@@ -23,8 +25,19 @@ export default async function GhidPage({ params }: { params: Promise<{ slug: str
   const data = ghiduri[slug];
   if (!data) notFound();
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "FocusTax", "item": "https://focustax.ro" },
+      { "@type": "ListItem", "position": 2, "name": "Ghiduri Fiscale", "item": "https://focustax.ro/ghiduri" },
+      { "@type": "ListItem", "position": 3, "name": data.titlu, "item": `https://focustax.ro/ghiduri/${slug}` },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Navbar />
       <GhidClient data={data} />
       <Footer />

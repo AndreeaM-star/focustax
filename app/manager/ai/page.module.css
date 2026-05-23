@@ -89,9 +89,14 @@
 .suggestions {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   flex-shrink: 0;
+  padding-bottom: 4px;
+  scrollbar-width: none;
 }
+
+.suggestions::-webkit-scrollbar { display: none; }
 
 .suggestionBtn {
   padding: 7px 14px;

@@ -49,7 +49,7 @@ export default function AIPage() {
   const [showCommand, setShowCommand] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const messagesEnd = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     messagesEnd.current?.scrollIntoView({ behavior: "smooth" });
@@ -106,7 +106,7 @@ export default function AIPage() {
     });
   };
 
-  const handleKey = (e: React.KeyboardEvent) => {
+  const handleKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       if (input.startsWith("/")) setShowCommand(true);
@@ -221,19 +221,22 @@ export default function AIPage() {
             Scrie <code>/</code> pentru command palette sau întreabă orice fiscal
           </div>
           <div className={styles.inputRow}>
-            <input
+            <textarea
               ref={inputRef}
               className={styles.chatInput}
               value={input}
               onChange={(e) => handleInput(e.target.value)}
               onKeyDown={handleKey}
-              placeholder="Întreabă ANA... (Enter pentru a trimite)"
+              placeholder="Întreabă ANA... (Enter trimite, Shift+Enter linie nouă)"
               autoComplete="off"
+              rows={1}
+              style={{ resize: "none", overflowY: "hidden" }}
             />
             <button
               className={styles.sendBtn}
               onClick={() => { if (input.startsWith("/")) setShowCommand(true); else send(input); }}
               disabled={!input.trim() || isTyping}
+              aria-label="Trimite mesaj"
             >
               →
             </button>
