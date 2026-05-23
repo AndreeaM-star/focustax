@@ -7,6 +7,12 @@ export const metadata: Metadata = {
     title: "Glosar Fiscal România 2026 | FocusTax",
     description: "Toți termenii fiscali importanți explicați simplu și clar.",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Glosar Fiscal România 2026 | FocusTax",
+    description: "60+ termeni fiscali: TVA, CAS, CASS, PFA, SRL, D212 și alții.",
+  },
+  alternates: { canonical: "https://focustax.ro/glosar" },
 };
 
 export default function GlosarLayout({ children }: { children: React.ReactNode }) {
