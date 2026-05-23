@@ -522,7 +522,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Papua Noua Guinee", codISO: "PG", cotaStandard: 30, sistem: "flat", zona: "extra-europa" },
     ],
     contextRomania:
-      "România aplică o cotă de 16% pentru impozitul pe profit, în linie cu media europeană. Microîntreprinderile (sub 500.000 EUR cifră de afaceri) plătesc 1% pe cifra de afaceri brută, un avantaj semnificativ față de statele din vestul Europei. Din 2024, microîntreprinderile cu angajați plătesc 1%, cele fără angajați — 3%.",
+      "România aplică o cotă de 16% pentru impozitul pe profit, în linie cu media europeană. Microîntreprinderile (CA ≤ 100.000 EUR/an din 2026) plătesc o cotă unică de 1% din cifra de afaceri — avantaj major față de firmele mari. Din 2026, cota de 3% a fost eliminată (nu mai există distincție după numărul de angajați).",
     mediuEuropean: 20,
     istorie:
       "Impozitul pe profit modern a apărut la începutul secolului XX. Germania a introdus impozitul pe corporații în 1920. România a introdus impozitul pe profit în 1990, odată cu tranziția la economia de piață. Cota a variat între 38% (1991) și 16% (din 2005, odată cu introducerea cotei unice). Tendința globală a ultimilor 30 de ani este de scădere continuă a cotelor corporative — media globală a scăzut de la ~45% în 1985 la ~23% astăzi. Motivul: competiția fiscală între state pentru atragerea investițiilor străine. Irlanda este cel mai cunoscut exemplu: cota de 12.5% a atras sedii europene ale Google, Apple, Facebook și alte mari corporații tech.",

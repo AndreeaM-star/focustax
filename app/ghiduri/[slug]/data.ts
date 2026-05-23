@@ -396,8 +396,8 @@ export const ghiduri: Record<string, GhidData> = {
       {
         titlu: "Impozit pe profit 16% — când devine obligatoriu",
         continut: [
-          "Obligatoriu când depășești 500.000 euro cifră de afaceri (devii plătitor de impozit pe profit din trimestrul următor).",
-          "Obligatoriu dacă nu mai îndeplinești condițiile de micro (ex: ai pierdut singurul salariat).",
+          "Obligatoriu când depășești 100.000 euro cifră de afaceri/an (devii plătitor de impozit pe profit din trimestrul următor).",
+          "Obligatoriu dacă nu mai îndeplinești condițiile de micro (situații financiare nedepuse la termen etc.).",
           "Poți opta voluntar pentru impozit pe profit dacă activitatea e profitabilă și cheltuielile mari reduc profitul semnificativ.",
           "Trecerea se face prin depunerea Formularului D012 la ANAF.",
         ],
@@ -428,8 +428,8 @@ export const ghiduri: Record<string, GhidData> = {
       { cod: "D012", nume: "Notificare sistem plăți anticipate", href: "/declaratii/d012" },
     ],
     atentie: [
-      "Depășirea plafonului de 500.000 euro în cursul anului obligă la trecerea la impozit pe profit din trimestrul următor.",
-      "Pierderea salariatului unic te muta la cota 3% din luna imediat următoare.",
+      "Depășirea plafonului de 100.000 euro în cursul anului obligă la trecerea la impozit pe profit din trimestrul următor.",
+      "Din 2026 nu mai există cota 3% sau condiția de angajat — cota unică este 1%.",
       "Microîntreprinderea nu poate reporta pierderi fiscale — la profit poți reporta pierderile 7 ani.",
     ],
   },
