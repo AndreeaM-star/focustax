@@ -56,6 +56,30 @@ const carduri = [
   },
 ];
 
+const noutatiPreview = [
+  {
+    tag: "D212",
+    tagColor: "#dc2626",
+    titlu: "Termen D212: 25 mai 2026",
+    desc: "Declarația Unică pentru veniturile din 2025. Depune online prin SPV ANAF.",
+    link: "/ghiduri/d212-ghid-completare",
+  },
+  {
+    tag: "Dividende",
+    tagColor: "#059669",
+    titlu: "Impozit dividende: 16% din 2026",
+    desc: "Creștere de la 8% la 16% (Legea 239/2025). Se reține la sursă de firmă.",
+    link: "/ghiduri/dividende",
+  },
+  {
+    tag: "Microîntreprinderi",
+    tagColor: "#2563eb",
+    titlu: "Micro 2026: cotă unică 1%, plafon 100k EUR",
+    desc: "Cota de 3% a fost eliminată. Plafon redus la 100.000 EUR/an.",
+    link: "/ghiduri/srl-vs-micro",
+  },
+];
+
 const calcPreview = [
   { href: "/calculator", icon: "💼", label: "Calculator Salariu", preview: "6.000 lei brut → ~3.960 lei net" },
   { href: "/calculator?tab=pfa", icon: "🧾", label: "Calculator PFA", preview: "50.000 lei venit → ~36.500 lei net" },
@@ -223,6 +247,29 @@ export default function HomePage() {
         </section>
 
         {/* ─── ANA AI TEASER ────────────────────────────────── */}
+        {/* ─── ULTIMELE NOUTĂȚI ───────────────────────────────── */}
+        <section className={styles.noutatiSection}>
+          <div className={styles.sectionInner}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Ultimele noutăți fiscale</h2>
+              <p className={styles.sectionSub}>Modificări legislative 2026 care te afectează direct.</p>
+            </div>
+            <div className={styles.noutatiGrid}>
+              {noutatiPreview.map((n) => (
+                <Link key={n.titlu} href={n.link} className={styles.noutateCard}>
+                  <span className={styles.noutateTag} style={{ color: n.tagColor, borderColor: `${n.tagColor}40`, background: `${n.tagColor}0D` }}>{n.tag}</span>
+                  <h3 className={styles.noutateTitlu}>{n.titlu}</h3>
+                  <p className={styles.noutateDesc}>{n.desc}</p>
+                  <span className={styles.noutateLink}>Citește mai mult →</span>
+                </Link>
+              ))}
+            </div>
+            <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+              <Link href="/noutati" className={styles.viewAllBtn}>Toate noutățile →</Link>
+            </div>
+          </div>
+        </section>
+
         <section className={styles.anaSection}>
           <div className={styles.sectionInner}>
             <div className={styles.anaCard}>

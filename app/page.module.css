@@ -574,6 +574,95 @@
   color: #1a1a2e;
 }
 
+/* ─── ULTIMELE NOUTĂȚI ─────────────────────────────────────── */
+.noutatiSection {
+  padding: 80px 0 90px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.noutatiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .noutatiGrid { grid-template-columns: 1fr; }
+}
+
+.noutateCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255,255,255,0.34);
+  backdrop-filter: blur(40px) saturate(250%) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(250%) brightness(1.1);
+  border: 1px solid rgba(255,255,255,0.75);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+
+.noutateCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,1);
+}
+
+.noutateTag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid;
+  width: fit-content;
+}
+
+.noutateTitlu {
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.noutateDesc {
+  font-size: 0.835rem;
+  color: #6b7280;
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
+}
+
+.noutateLink {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin-top: 4px;
+}
+
+.viewAllBtn {
+  display: inline-block;
+  padding: 10px 24px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.viewAllBtn:hover {
+  background: rgba(255,255,255,0.8);
+  transform: translateY(-2px);
+}
+
 /* ─── ANA AI TEASER ─────────────────────────────────────────── */
 .anaSection {
   padding: 90px 0 100px;
