@@ -101,7 +101,7 @@ function TabCrypto() {
           <p className={styles.rezSectionLabel}>DECLARAȚII NECESARE</p>
           <div className={styles.declaratiiList}>
             <span className={styles.decTag}>D212 — termen 25 mai 2026</span>
-            <span className={styles.decTag}>Bonificație 3% (expirat 15 apr) — termen: 25 mai 2026</span>
+            <span className={styles.decTag}>Termen: 25 mai 2026 (bonificația 3% a expirat)</span>
           </div>
         </div>
       )}
@@ -236,7 +236,7 @@ function TabDividende() {
                 <Row label="CASS 10% (datorată prin D212)" val={`−${fmt(cass)} lei`} neg />
                 <div className={styles.declaratiiList} style={{ marginTop: 8 }}>
                   <span className={styles.decTag}>D212 — termen 25 mai</span>
-                  <span className={styles.decTag}>Bonificație 3% (expirat 15 apr) — termen: 25 mai 2026</span>
+                  <span className={styles.decTag}>Termen: 25 mai 2026 (bonificația 3% a expirat)</span>
                 </div>
               </>
             : <Row label={`CASS — sub plafonul de ${fmt(PLAFON_CASS_MIN)} lei`} val="scutit" />
