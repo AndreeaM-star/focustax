@@ -49,12 +49,32 @@ export default function ChiriiCalc() {
         </div>
         <div className={styles.field}>
           <label>Venit brut din chirie (lei/an)</label>
+          <div className={styles.rangeWrap}>
+            <input type="range" min={0} max={300000} step={1000} value={chirieAnuala}
+              onChange={(e) => setChirieAnuala(Number(e.target.value))}
+              aria-label="Venit brut din chirie anual" />
+            <span className={styles.rangeValue}>{fmt(chirieAnuala)} lei/an</span>
+          </div>
           <input type="number" value={chirieAnuala} min={0} step={1000}
-            onChange={(e) => setChirieAnuala(Number(e.target.value))} />
-          <span style={{ fontSize: "0.75rem", color: "#9ca3af", marginTop: "0.2rem" }}>
+            onChange={(e) => setChirieAnuala(Math.max(0, Number(e.target.value)))}
+            aria-label="Valoare exactă chirie anuală"
+            style={{ marginTop: 6, width: 160, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
+          <span style={{ fontSize: "0.75rem", color: "#9ca3af", marginTop: "0.3rem", display: "block" }}>
             Echivalent lunar: {fmt(chirieAnuala / 12)} lei/lună
           </span>
         </div>
+
+        {chirieAnuala > 0 && (
+          <div style={{ margin: "4px 0 8px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.73rem", fontWeight: 600, color: venNet >= pragCASS ? "#dc2626" : "#6b7280", marginBottom: 4 }}>
+              <span>Prag CASS ({fmt(pragCASS)} lei venit net)</span>
+              <span>{venNet >= pragCASS ? "Depășit — CASS datorată" : `${fmt(venNet)} / ${fmt(pragCASS)} lei`}</span>
+            </div>
+            <div style={{ height: 7, borderRadius: 5, background: "rgba(0,0,0,0.07)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${Math.min((venNet / pragCASS) * 100, 100)}%`, background: venNet >= pragCASS ? "linear-gradient(90deg,#f97316,#dc2626)" : "linear-gradient(90deg,#22c55e,#f59e0b)", borderRadius: 5, transition: "width 0.5s ease" }} />
+            </div>
+          </div>
+        )}
 
         <div className={styles.results} aria-live="polite">
           <div className={styles.resultMain}>
