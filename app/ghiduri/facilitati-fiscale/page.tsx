@@ -11,8 +11,8 @@ const fmt = (n: number) =>
 const SMIN = 4050;
 
 function CalculatorIT() {
-  const [brut, setBrut] = useState("");
-  const b = parseFloat(brut) || 0;
+  const [brut, setBrut] = useState(7000);
+  const b = brut;
 
   const casNorm = b * 0.25;
   const cassNorm = b * 0.1;
@@ -37,15 +37,24 @@ function CalculatorIT() {
           Salariu brut lunar (lei)
         </label>
         <input
-          type="number" placeholder="ex: 10.000"
-          value={brut} onChange={e => setBrut(e.target.value)}
-          style={{
-            padding: "9px 12px", borderRadius: 9,
-            border: "1px solid rgba(99,102,241,0.3)",
-            background: "rgba(255,255,255,0.8)",
-            outline: "none", fontSize: "0.9rem", width: "100%", maxWidth: 220,
-          }}
+          type="range" min={4050} max={20000} step={50} value={brut}
+          onChange={e => setBrut(Number(e.target.value))}
+          style={{ width: "100%", maxWidth: 300, marginBottom: 6 }}
         />
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: "0.82rem", color: "#6b7280" }}>4.050 lei</span>
+          <input
+            type="number" min={4050} step={50}
+            value={brut} onChange={e => setBrut(Math.max(4050, Number(e.target.value)))}
+            style={{
+              padding: "6px 10px", borderRadius: 8,
+              border: "1px solid rgba(99,102,241,0.3)",
+              background: "rgba(255,255,255,0.8)",
+              outline: "none", fontSize: "0.88rem", width: 120, textAlign: "right",
+            }}
+          />
+          <span style={{ fontSize: "0.82rem", color: "#6b7280" }}>lei/lună</span>
+        </div>
       </div>
       {b > 0 && (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
