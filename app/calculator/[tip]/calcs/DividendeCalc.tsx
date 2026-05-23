@@ -43,18 +43,39 @@ export default function DividendeCalc() {
         <div className={styles.inputGroup}>
           <div className={styles.field}>
             <label>Profit brut distribuit (lei)</label>
+            <div className={styles.rangeWrap}>
+              <input type="range" min={0} max={1000000} step={5000} value={profitBrut}
+                onChange={(e) => setProfitBrut(Number(e.target.value))}
+                aria-label="Profit brut distribuit" />
+              <span className={styles.rangeValue}>{fmt(profitBrut)} lei</span>
+            </div>
             <input type="number" value={profitBrut} min={0} step={5000}
-              onChange={(e) => setProfitBrut(Number(e.target.value))} />
+              onChange={(e) => setProfitBrut(Math.max(0, Number(e.target.value)))}
+              aria-label="Valoare exactă profit"
+              style={{ marginTop: 6, width: 160, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
           </div>
           <div className={styles.field}>
             <label>Alte venituri anuale (lei)</label>
             <input type="number" value={alteVen} min={0} step={1000}
-              onChange={(e) => setAlteVen(Number(e.target.value))} />
-            <span style={{ fontSize: "0.72rem", color: "#9ca3af", marginTop: "0.2rem" }}>
+              onChange={(e) => setAlteVen(Math.max(0, Number(e.target.value)))}
+              aria-label="Alte venituri anuale" />
+            <span style={{ fontSize: "0.72rem", color: "#9ca3af", marginTop: "0.2rem", display: "block" }}>
               PFA, chirii, salarii — pentru calcul corect CASS
             </span>
           </div>
         </div>
+
+        {profitBrut > 0 && (
+          <div style={{ margin: "4px 0 8px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.73rem", fontWeight: 600, color: totalVen >= PRAG_CASS ? "#dc2626" : "#6b7280", marginBottom: 4 }}>
+              <span>Prag CASS ({fmt(PRAG_CASS)} lei total venituri)</span>
+              <span>{totalVen >= PRAG_CASS ? "Depășit — CASS datorată" : `${fmt(totalVen)} / ${fmt(PRAG_CASS)} lei`}</span>
+            </div>
+            <div style={{ height: 7, borderRadius: 5, background: "rgba(0,0,0,0.07)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${Math.min((totalVen / PRAG_CASS) * 100, 100)}%`, background: totalVen >= PRAG_CASS ? "linear-gradient(90deg,#f97316,#dc2626)" : "linear-gradient(90deg,#22c55e,#f59e0b)", borderRadius: 5, transition: "width 0.5s ease" }} />
+            </div>
+          </div>
+        )}
 
         <div className={styles.results} aria-live="polite">
           <div className={styles.resultMain}>
