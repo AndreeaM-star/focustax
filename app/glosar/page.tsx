@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -68,8 +68,17 @@ const termeni: TermenFiscal[] = [
   { termen: "Valoare impozabilă", definitie: "Baza de calcul pentru impozitul pe clădiri — valoarea clădirii stabilită prin evaluare fiscală (nu valoarea de piață). Din 2027 se va trece la valoarea de piață prin sistemul e-Proprietatea." },
 ];
 
+const PLACEHOLDER_TERMS = ["TVA", "PFA", "CAS", "CASS", "D212", "microîntreprindere", "deducere", "e-Factura", "SPV", "impozit profit"];
+
 export default function GlosarPage() {
   const [search, setSearch] = useState("");
+  const [phIdx, setPhIdx] = useState(0);
+
+  useEffect(() => {
+    if (search) return;
+    const t = setInterval(() => setPhIdx(i => (i + 1) % PLACEHOLDER_TERMS.length), 2500);
+    return () => clearInterval(t);
+  }, [search]);
 
   const filtered = useMemo(() => {
     const s = search.toLowerCase().trim();
@@ -109,7 +118,7 @@ export default function GlosarPage() {
           <input
             type="search"
             className={styles.searchInput}
-            placeholder="Caută termen fiscal (ex: TVA, PFA, deducere...)"
+            placeholder={search ? "" : `Caută: ${PLACEHOLDER_TERMS[phIdx]}...`}
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
