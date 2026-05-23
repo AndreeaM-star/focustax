@@ -137,6 +137,19 @@ export default function Dashboard() {
     setAnafStatus({ connected: false });
   };
 
+  // CA lunar — last 6 months
+  const caLunar = (() => {
+    const now = new Date();
+    return Array.from({ length: 6 }, (_, i) => {
+      const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1);
+      const key = d.toISOString().slice(0, 7);
+      const label = d.toLocaleString("ro-RO", { month: "short" });
+      const val = facturi.filter(f => f.data?.startsWith(key)).reduce((s, f) => s + Number(f.valoare), 0);
+      return { key, label: label.charAt(0).toUpperCase() + label.slice(1), val };
+    });
+  })();
+  const maxCA = Math.max(...caLunar.map(m => m.val), 1);
+
   // Computed stats
   const currMonth = new Date().toISOString().slice(0, 7); // "YYYY-MM"
   const lunaLabel = new Date().toLocaleString("ro-RO", { month: "short" });
@@ -302,6 +315,30 @@ export default function Dashboard() {
             )}
           </div>
         ))}
+      </div>
+
+      {/* CA Lunar Bar Chart */}
+      <div className={styles.chartSection}>
+        <h2 className={styles.sectionTitle}>Cifra de afaceri — ultimele 6 luni</h2>
+        <div className={styles.barChart}>
+          {caLunar.map((m) => (
+            <div key={m.key} className={styles.barCol}>
+              <span className={styles.barValue}>
+                {m.val > 0 ? (m.val >= 1000 ? `${(m.val / 1000).toFixed(0)}k` : `${m.val}`) : ""}
+              </span>
+              <div className={styles.barTrack}>
+                <div
+                  className={styles.barFill}
+                  style={{ height: `${(m.val / maxCA) * 100}%` }}
+                />
+              </div>
+              <span className={styles.barLabel}>{m.label}</span>
+            </div>
+          ))}
+        </div>
+        {facturi.length === 0 && (
+          <p className={styles.chartEmpty}>Emite prima factură pentru a vedea graficul.</p>
+        )}
       </div>
 
       {/* Activity + sidebar */}
