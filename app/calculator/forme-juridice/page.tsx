@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import styles from "./page.module.css";
@@ -268,6 +269,34 @@ export default function FormeJuridice() {
               ⚠ Calcul orientativ conform legislației 2026. Nu substituie consultanță fiscală autorizată CCF/CECCAR.
               Valorile exacte pot varia în funcție de situația specifică.
             </p>
+
+            <div style={{
+              background: "linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(124,58,237,0.08) 100%)",
+              border: "1px solid rgba(99,102,241,0.2)",
+              borderRadius: 14, padding: "16px 20px",
+              display: "flex", alignItems: "center", gap: 14, marginTop: 8,
+            }}>
+              <span style={{ fontSize: "1.5rem" }}>🤖</span>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontWeight: 700, fontSize: "0.9rem", color: "#4338ca", margin: 0 }}>
+                  Ai întrebări despre rezultate?
+                </p>
+                <p style={{ fontSize: "0.8rem", color: "#6b7280", margin: "2px 0 0" }}>
+                  Întreabă-o pe ANA — asistentul fiscal AI actualizat 2026.
+                </p>
+              </div>
+              <Link
+                href={`/manager/ai`}
+                style={{
+                  background: "linear-gradient(135deg, #2563eb, #7c3aed)",
+                  color: "#fff", padding: "8px 18px", borderRadius: 10,
+                  textDecoration: "none", fontWeight: 700, fontSize: "0.82rem",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Întreabă ANA →
+              </Link>
+            </div>
           </>
         )}
       </main>
