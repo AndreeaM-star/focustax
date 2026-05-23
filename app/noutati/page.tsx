@@ -92,8 +92,8 @@ const noutati = [
     categorie: "D212",
     tag: "D212",
     urgenta: "urgent",
-    titlu: "URGENT — Termen D212: 25 mai 2026 (3 zile rămase!)",
-    desc: "Declarația Unică D212 pentru veniturile din 2025 se depune până pe 25 mai 2026 — mai sunt 3 zile! Se depune online prin SPV ANAF. Capitolul II (venituri estimate 2026) se completează în aceeași declarație.",
+    titlu: "URGENT — Termen D212: 25 mai 2026 (2 zile rămase!)",
+    desc: "Declarația Unică D212 pentru veniturile din 2025 se depune până pe 25 mai 2026 — mai sunt 2 zile! Se depune online prin SPV ANAF. Capitolul II (venituri estimate 2026) se completează în aceeași declarație.",
     link: "/ghiduri/d212-ghid-completare",
   },
   {
@@ -143,9 +143,16 @@ const URGENTA: Record<string, { label: string; color: string; bg: string }> = {
 
 const URGENTA_SORT: Record<string, number> = { urgent: 0, important: 1, info: 2 };
 
+function d212ZileRamase(): number {
+  const termen = new Date(2026, 4, 25);
+  const azi = new Date(); azi.setHours(0, 0, 0, 0);
+  return Math.max(0, Math.ceil((termen.getTime() - azi.getTime()) / 86400000));
+}
+
 export default function NoutatiPage() {
   const [filtru, setFiltru] = useState("Toate");
   const [sortare, setSortare] = useState<"noi" | "importante">("noi");
+  const zile = d212ZileRamase();
 
   const afisate = (filtru === "Toate" ? noutati : noutati.filter(n => n.categorie === filtru))
     .slice()
@@ -164,12 +171,12 @@ export default function NoutatiPage() {
           </p>
         </div>
 
-        {/* Termen iminent banner — D212 termen normal */}
-        {filtru === "Toate" && (
+        {/* Termen iminent banner — D212 */}
+        {filtru === "Toate" && zile > 0 && (
           <div className={styles.urgentBanner}>
             <span>⚡</span>
             <span>
-              <strong>URGENT — 3 zile rămase:</strong> Termen depunere D212 (Declarația Unică 2025) — <strong>25 mai 2026</strong>
+              <strong>URGENT — {zile === 1 ? "1 zi rămasă" : `${zile} zile rămase`}:</strong> Termen depunere D212 (Declarația Unică 2025) — <strong>25 mai 2026</strong>
               {" "}<Link href="/ghiduri/d212-ghid-completare" className={styles.urgentLink}>→ Ghid completare</Link>
             </span>
           </div>
