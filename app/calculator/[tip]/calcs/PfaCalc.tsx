@@ -102,6 +102,18 @@ export default function PfaCalc() {
           </div>
         )}
 
+        {venNet > 0 && (
+          <div style={{ margin: "4px 0 8px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.73rem", fontWeight: 600, color: venNet >= SMIN_ANUAL ? "#dc2626" : "#6b7280", marginBottom: 4 }}>
+              <span>Prag CAS obligatoriu ({fmt(SMIN_ANUAL)} lei/an)</span>
+              <span>{venNet >= SMIN_ANUAL ? "Depășit — CAS 25% obligatorie" : `${fmt(venNet)} / ${fmt(SMIN_ANUAL)} lei`}</span>
+            </div>
+            <div style={{ height: 7, borderRadius: 5, background: "rgba(0,0,0,0.07)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${Math.min((venNet / SMIN_ANUAL) * 100, 100)}%`, background: venNet >= SMIN_ANUAL ? "linear-gradient(90deg,#f97316,#dc2626)" : "linear-gradient(90deg,#22c55e,#f59e0b)", borderRadius: 5, transition: "width 0.5s ease" }} />
+            </div>
+          </div>
+        )}
+
         <div className={styles.results} aria-live="polite">
           <div className={styles.resultMain}>
             <span className={styles.resultLabel}>Rămas după taxe</span>
