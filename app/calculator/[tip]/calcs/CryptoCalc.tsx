@@ -65,6 +65,26 @@ function TabCrypto() {
       )}
 
       {val > 0 && !scutit && (
+        <div style={{ marginTop: 16 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", fontWeight: 600, color: val >= PLAFON_CASS_MIN ? "#dc2626" : "#6b7280", marginBottom: 5 }}>
+            <span>Prag CASS ({fmt(PLAFON_CASS_MIN)} lei)</span>
+            <span>{val >= PLAFON_CASS_MIN ? "Depășit — CASS datorată" : `${fmt(val)} / ${fmt(PLAFON_CASS_MIN)} lei`}</span>
+          </div>
+          <div style={{ height: 8, borderRadius: 6, background: "rgba(0,0,0,0.07)", overflow: "hidden" }}>
+            <div style={{
+              height: "100%",
+              width: `${Math.min((val / PLAFON_CASS_MIN) * 100, 100)}%`,
+              background: val >= PLAFON_CASS_MIN
+                ? "linear-gradient(90deg, #f97316, #dc2626)"
+                : "linear-gradient(90deg, #22c55e, #f59e0b)",
+              borderRadius: 6,
+              transition: "width 0.5s ease, background 0.3s ease",
+            }} />
+          </div>
+        </div>
+      )}
+
+      {val > 0 && !scutit && (
         <div className={styles.rezultate} aria-live="polite">
           <p className={styles.rezSectionLabel}>IMPOZIT CRYPTO 2026</p>
           <Row label="Câștig net" val={`${fmt(val)} lei`} />
@@ -131,9 +151,19 @@ function TabActiuni() {
           {valScurt > 0 && <Row label="Impozit 6% (<365 zile)" val={`${fmt(impScurt)} lei`} neg />}
           <Row label="Total impozit reținut" val={`${fmt(totalImp)} lei`} bold />
 
+          <div className={styles.separator} />
+          <div style={{ margin: "8px 0" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.72rem", fontWeight: 600, color: totalCastig >= PLAFON_CASS_MIN ? "#dc2626" : "#6b7280", marginBottom: 4 }}>
+              <span>Prag CASS</span>
+              <span>{totalCastig >= PLAFON_CASS_MIN ? "Depășit" : `${fmt(totalCastig)} / ${fmt(PLAFON_CASS_MIN)} lei`}</span>
+            </div>
+            <div style={{ height: 7, borderRadius: 5, background: "rgba(0,0,0,0.07)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${Math.min((totalCastig / PLAFON_CASS_MIN) * 100, 100)}%`, background: totalCastig >= PLAFON_CASS_MIN ? "linear-gradient(90deg,#f97316,#dc2626)" : "linear-gradient(90deg,#22c55e,#f59e0b)", borderRadius: 5, transition: "width 0.5s ease" }} />
+            </div>
+          </div>
+
           {cass > 0 && (
             <>
-              <div className={styles.separator} />
               <p className={styles.rezSectionLabel}>CASS DATORATĂ</p>
               <Row label="Total câștiguri" val={`${fmt(totalCastig)} lei`} />
               <Row label="CASS 10%" val={`−${fmt(cass)} lei`} neg />
@@ -192,6 +222,15 @@ function TabDividende() {
           <div className={styles.separator} />
           <p className={styles.rezSectionLabel}>CASS CUMULAT</p>
           <Row label="Total venituri pasive" val={`${fmt(totalVenit)} lei`} />
+          <div style={{ margin: "8px 0" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.72rem", fontWeight: 600, color: totalVenit >= PLAFON_CASS_MIN ? "#dc2626" : "#6b7280", marginBottom: 4 }}>
+              <span>Prag CASS</span>
+              <span>{totalVenit >= PLAFON_CASS_MIN ? "Depășit" : `${fmt(totalVenit)} / ${fmt(PLAFON_CASS_MIN)} lei`}</span>
+            </div>
+            <div style={{ height: 7, borderRadius: 5, background: "rgba(0,0,0,0.07)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${Math.min((totalVenit / PLAFON_CASS_MIN) * 100, 100)}%`, background: totalVenit >= PLAFON_CASS_MIN ? "linear-gradient(90deg,#f97316,#dc2626)" : "linear-gradient(90deg,#22c55e,#f59e0b)", borderRadius: 5, transition: "width 0.5s ease" }} />
+            </div>
+          </div>
           {cass > 0
             ? <>
                 <Row label="CASS 10% (datorată prin D212)" val={`−${fmt(cass)} lei`} neg />
