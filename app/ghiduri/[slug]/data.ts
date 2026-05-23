@@ -529,9 +529,10 @@ export const ghiduri: Record<string, GhidData> = {
       {
         titlu: "Cotele TVA aplicabile în 2026",
         continut: [
-          "COTA STANDARD 21%: se aplică la toate livrările și prestările care nu beneficiază de cote reduse (majorată de la 19% în august 2025).",
-          "COTA REDUSĂ 9%: alimente și băuturi nealcoolice, medicamente, echipamente medicale, hoteluri și cazare, transport de persoane, acces la muzee/evenimente culturale.",
-          "COTA REDUSĂ 5%: manuale și cărți școlare, locuințe sociale (sub 140.000 euro), energie termică și electrică pentru gospodării, bilete la spectacole/concerte.",
+          "COTA STANDARD 21%: se aplică la toate livrările și prestările care nu beneficiază de cote reduse (majorată de la 19% în 1 august 2025).",
+          "COTA REDUSĂ 11%: alimente și băuturi nealcoolice (inclusiv restaurante și catering), hoteluri și cazare, servicii de turism (din august 2025, anterior 9%).",
+          "COTA REDUSĂ 9%: locuințe noi (până la 31 iulie 2026, cu condiția prețului sub 600.000 lei).",
+          "COTA REDUSĂ 5%: manuale și cărți, medicamente, bilete la spectacole/concerte, energie termică pentru gospodării, locuințe sociale (sub 140.000 euro).",
           "SCUTITE CU DREPT DE DEDUCERE (0%): exporturi, livrări intracomunitare.",
           "SCUTITE FĂRĂ DREPT DE DEDUCERE: servicii medicale, educație, activitate bancară, asigurări.",
         ],
