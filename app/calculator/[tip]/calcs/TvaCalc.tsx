@@ -57,8 +57,16 @@ export default function TvaCalc() {
         <div className={styles.inputGroup}>
           <div className={styles.field}>
             <label>{mod === "adauga" ? "Preț fără TVA (lei)" : "Preț cu TVA (lei)"}</label>
+            <div className={styles.rangeWrap}>
+              <input type="range" min={0} max={100000} step={100} value={suma}
+                onChange={(e) => setSuma(Number(e.target.value))}
+                aria-label="Suma" />
+              <span className={styles.rangeValue}>{fmt(suma)} lei</span>
+            </div>
             <input type="number" value={suma} min={0} step={100}
-              onChange={(e) => setSuma(Number(e.target.value))} />
+              onChange={(e) => setSuma(Math.max(0, Number(e.target.value)))}
+              aria-label="Valoare exactă sumă"
+              style={{ marginTop: 6, width: 160, padding: "6px 10px", borderRadius: 8, border: "1px solid rgba(99,102,241,0.3)", background: "rgba(255,255,255,0.7)", fontSize: "0.88rem" }} />
           </div>
           <div className={styles.field}>
             <label>Cotă TVA</label>
