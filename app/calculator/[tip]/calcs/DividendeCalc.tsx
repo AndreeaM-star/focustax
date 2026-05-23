@@ -5,8 +5,9 @@ import styles from "../../calculator.module.css";
 import CopyBtn from "@/components/CopyBtn";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
-const PRAG_CASS  = 6 * 4050;   // 24.300 lei/an — prag minim CASS (2026: 6 × salariu minim)
-const PLAFON_CASS = 60 * 4050; // 243.000 lei/an — plafon CASS
+const SMIN = new Date().getMonth() >= 6 ? 4325 : 4050;
+const PRAG_CASS  = 6 * SMIN;   // 24.300 lei/an (ian-iun) / 25.950 lei (iul-dec) — 6 × salariu minim
+const PLAFON_CASS = 60 * SMIN; // plafon CASS
 
 export default function DividendeCalc() {
   const [profitBrut, setProfitBrut] = useState(100000);
