@@ -5,7 +5,7 @@ import styles from "../../calculator.module.css";
 import CopyBtn from "@/components/CopyBtn";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
-const SMIN = 4050;
+const SMIN = new Date().getMonth() >= 6 ? 4325 : 4050;
 
 export default function ChiriiCalc() {
   const [chirieAnuala, setChirieAnuala] = useState(24000);

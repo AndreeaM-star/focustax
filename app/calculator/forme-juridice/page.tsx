@@ -9,7 +9,7 @@ import styles from "./page.module.css";
 const fmt = (n: number) =>
   n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
 
-const SMIN = 4050;
+const SMIN = new Date().getMonth() >= 6 ? 4325 : 4050;
 
 interface FormaResult {
   label: string;

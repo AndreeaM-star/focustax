@@ -5,7 +5,7 @@ import styles from "../../calculator.module.css";
 import CopyBtn from "@/components/CopyBtn";
 
 const fmt = (n: number) => n.toLocaleString("ro-RO", { maximumFractionDigits: 0 });
-const SMIN = 4050;
+const SMIN = new Date().getMonth() >= 6 ? 4325 : 4050;
 const SMIN_ANUAL = SMIN * 12; // 48600 lei
 
 export default function PfaCalc() {
