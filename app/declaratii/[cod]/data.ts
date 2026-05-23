@@ -67,7 +67,7 @@ export const declaratii: Record<string, DeclaratieData> = {
         titlu: "B — Achiziții intracomunitare de bunuri",
         continut: [
           "Valoarea achizițiilor intracomunitare de bunuri (fără TVA)",
-          "TVA aferentă achizițiilor intracomunitare la cota de 19%",
+          "TVA aferentă achizițiilor intracomunitare la cota de 21%",
           "TVA aferentă achizițiilor la cota redusă (9% sau 5%)",
           "Achiziții intracomunitare de mijloace de transport noi",
         ],

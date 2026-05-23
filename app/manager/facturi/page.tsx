@@ -26,14 +26,15 @@ const statusConfig: Record<Status, { label: string; color: string }> = {
 };
 
 const coteTV = [
-  { label: "0% scutit",        val: 0 },
-  { label: "5% redusă (cărți)", val: 5 },
-  { label: "9% redusă (alim.)", val: 9 },
-  { label: "19% standard",      val: 19 },
+  { label: "0% scutit",            val: 0 },
+  { label: "5% redusă (cărți)",    val: 5 },
+  { label: "9% redusă (locuințe)", val: 9 },
+  { label: "11% redusă (alim.)",   val: 11 },
+  { label: "21% standard",         val: 21 },
 ];
 
 const emptyForm = {
-  client: "", cui_client: "", valoare: "", cotaTVA: 19,
+  client: "", cui_client: "", valoare: "", cotaTVA: 21,
   data: new Date().toISOString().slice(0, 10), scadenta: "", descriere: "",
 };
 

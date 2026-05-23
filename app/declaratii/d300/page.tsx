@@ -23,7 +23,7 @@ const capitole = [
     continut: [
       "Livrări de bunuri și prestări de servicii taxabile în România",
       "Baza de impozitare (suma fără TVA) pentru fiecare cotă aplicabilă",
-      "TVA colectată la cota standard (19%)",
+      "TVA colectată la cota standard (21%)",
       "TVA colectată la cota redusă (9% — alimente, medicamente, cazare)",
       "TVA colectată la cota redusă (5% — cărți, manuale, locuințe sociale)",
     ],

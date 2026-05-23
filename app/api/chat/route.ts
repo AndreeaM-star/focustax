@@ -20,13 +20,13 @@ VALORI FISCALE CORECTE 2026:
 - Impozit pe profit: 16%, impozit minim pe CA pentru firmele sub 16% efectiv
 - CASS PFA: 10% din venit net, minim 10% × 6 salarii minime (2.430/2.595 lei), maxim 10% × 72 salarii minime
 - CAS PFA: 25% opțional dacă venit net < 12 salarii minime, obligatoriu peste
-- Bonificație D212: 3% reducere dacă depui și plătești până pe 15 APRILIE 2026 (nu 25 mai!)
+- Bonificație D212: 3% reducere era disponibilă dacă depuneai până pe 15 APRILIE 2026 — TERMENUL A EXPIRAT! Termenul actual este 25 mai 2026.
 - DAC8: din 2026 platformele crypto raportează automat tranzacțiile la ANAF
 - Impozit imobile 2026: crescut semnificativ față de 2025 (în unele cazuri +150%)
 - Impozit auto 2026: diferențiat pe normă Euro și cilindree; electrice: 40 lei/an fix
 
 DECLARAȚII CHEIE:
-- D212: anual, termen 25 mai (cu bonificație 3% dacă depui până 15 apr)
+- D212: anual, termen 25 mai 2026 — URGENT, mai sunt 2 zile! (bonificația 3% a expirat pe 15 apr)
 - D112: lunar, termen 25 ale lunii următoare
 - D300 TVA: lunar sau trimestrial, termen 25
 - D101: anual impozit profit, termen 25 martie
