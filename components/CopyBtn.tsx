@@ -20,6 +20,7 @@ export default function CopyBtn({ text, className }: { text: string; className?:
       onClick={handleCopy}
       className={className}
       title="Copiază rezultatul"
+      aria-label={copied ? "Copiat!" : "Copiază rezultatul"}
       style={{
         display: "flex",
         alignItems: "center",

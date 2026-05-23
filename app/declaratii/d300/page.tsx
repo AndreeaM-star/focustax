@@ -24,8 +24,9 @@ const capitole = [
       "Livrări de bunuri și prestări de servicii taxabile în România",
       "Baza de impozitare (suma fără TVA) pentru fiecare cotă aplicabilă",
       "TVA colectată la cota standard (21%)",
-      "TVA colectată la cota redusă (9% — alimente, medicamente, cazare)",
-      "TVA colectată la cota redusă (5% — cărți, manuale, locuințe sociale)",
+      "TVA colectată la cota redusă (11% — alimente, restaurante, turism, cazare — din aug 2025)",
+      "TVA colectată la cota redusă (9% — locuințe noi până 31 iulie 2026)",
+      "TVA colectată la cota redusă (5% — cărți, manuale, medicamente, locuințe sociale)",
     ],
   },
   {
