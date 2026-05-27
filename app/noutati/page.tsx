@@ -22,9 +22,19 @@ const TAG_COLORS: Record<string, string> = {
   "Impozit Venit": "#dc2626",
   "Salarii": "#059669",
   "Profit": "#7c3aed",
+  "SRL": "#2563eb",
 };
 
 const noutati = [
+  {
+    data: "Mai 2026",
+    categorie: "SRL",
+    tag: "Penalități",
+    urgenta: "important",
+    titlu: "4 reguli noi pentru dividende și împrumuturi la SRL — amenzi până la 300.000 lei",
+    desc: "ANAF a publicat Comunicatul 461/13.05.2026 cu patru restricții noi introduse prin Legea 239/2025: (1) Dacă firma a distribuit dividende intermediare în cursul anului, nu poate acorda împrumuturi asociaților până la regularizarea anuală — amendă 10.000–200.000 lei; (2) Dacă activul net scade sub 50% din capitalul social subscris, firma nu poate restitui împrumuturile primite de la asociați — amendă 10.000–200.000 lei; (3) Dacă situațiile financiare anuale arată active nete sub limită, trebuie reconstituite până la finalul anului următor — ANAF verifică din 2027 pentru exercițiul 2025; (4) AGA extraordinară este obligatorie; dacă reconstituirea nu reușește și există datorii față de asociați, acestea trebuie convertite în capital social în 2 ani — amendă 40.000–300.000 lei. Regulile se aplică începând cu situațiile financiare pe 2025.",
+    link: "/ghiduri/srl-vs-micro",
+  },
   {
     data: "Mai 2026",
     categorie: "D212",
