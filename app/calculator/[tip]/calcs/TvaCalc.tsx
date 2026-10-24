@@ -8,9 +8,8 @@ const fmtDec = (n: number) => n.toLocaleString("ro-RO", { minimumFractionDigits:
 
 const COTE = [
   { label: "21% — standard",           val: 21 },
-  { label: "11% — alimente / turism",  val: 11 },
-  { label: "9% — locuințe noi",        val: 9  },
-  { label: "5% — cărți / social",      val: 5  },
+  { label: "11% — alimente / turism / cărți / medicamente", val: 11 },
+  { label: "9% — locuințe (tranzitoriu, expirat 30.09.2026)", val: 9 },
   { label: "0% — scutit cu drept",     val: 0  },
 ];
 

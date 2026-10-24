@@ -27,9 +27,8 @@ const statusConfig: Record<Status, { label: string; color: string }> = {
 
 const coteTV = [
   { label: "0% scutit",            val: 0 },
-  { label: "5% redusă (cărți)",    val: 5 },
-  { label: "9% redusă (locuințe)", val: 9 },
-  { label: "11% redusă (alim.)",   val: 11 },
+  { label: "9% locuințe (tranzitoriu)", val: 9 },
+  { label: "11% redusă",           val: 11 },
   { label: "21% standard",         val: 21 },
 ];
 

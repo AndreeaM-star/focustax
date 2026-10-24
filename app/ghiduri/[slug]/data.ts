@@ -510,7 +510,7 @@ export const ghiduri: Record<string, GhidData> = {
     desc: "Tot ce trebuie să știi despre TVA în România: când te înregistrezi, cotele aplicabile, decontul D300 și sistemul TVA la încasare.",
     ceFaciAfla: [
       "Plafonul de înregistrare TVA: 395.000 lei (din septembrie 2025)",
-      "Cotele TVA: 21% standard, 11% alimente/turism, 9% locuințe, 5% cărți/medicamente, 0%",
+      "Cotele TVA: 21% standard, 11% redusă (alimente, turism, cărți, medicamente), 0%",
       "Procedura de înregistrare voluntară vs obligatorie",
       "Avantajele și dezavantajele înregistrării",
       "TVA la încasare — ce este și cum funcționează",
@@ -530,9 +530,8 @@ export const ghiduri: Record<string, GhidData> = {
         titlu: "Cotele TVA aplicabile în 2026",
         continut: [
           "COTA STANDARD 21%: se aplică la toate livrările și prestările care nu beneficiază de cote reduse (majorată de la 19% în 1 august 2025).",
-          "COTA REDUSĂ 11%: alimente și băuturi nealcoolice (inclusiv restaurante și catering), hoteluri și cazare, servicii de turism (din august 2025, anterior 9%).",
-          "COTA REDUSĂ 9%: locuințe noi (până la 31 iulie 2026, cu condiția prețului sub 600.000 lei).",
-          "COTA REDUSĂ 5%: manuale și cărți, medicamente, bilete la spectacole/concerte, energie termică pentru gospodării, locuințe sociale (sub 140.000 euro).",
+          "COTA REDUSĂ 11% (cota redusă unică din 1 august 2025): alimente și băuturi nealcoolice, restaurante și catering, cazare, medicamente de uz uman, manuale, cărți și publicații, bilete la spectacole. Cotele de 9% și 5% au fost unificate în 11% prin Legea 141/2025.",
+          "COTA 9% LOCUINȚE (regim tranzitoriu, EXPIRAT): s-a aplicat doar livrărilor efectuate până la 30 septembrie 2026 (termen prelungit prin Legea 161/2026), pentru locuințe de max. 120 mp și 600.000 lei fără TVA, cu avans de 20% plătit până la 31 iulie 2025. După această dată se aplică 21%.",
           "SCUTITE CU DREPT DE DEDUCERE (0%): exporturi, livrări intracomunitare.",
           "SCUTITE FĂRĂ DREPT DE DEDUCERE: servicii medicale, educație, activitate bancară, asigurări.",
         ],
@@ -541,7 +540,7 @@ export const ghiduri: Record<string, GhidData> = {
         titlu: "TVA la încasare",
         continut: [
           "Sistemul TVA la încasare permite amânarea plății TVA colectate până la ÎNCASAREA efectivă a facturii (nu la emitere).",
-          "Eligibil pentru firme cu CA sub 4.500.000 lei.",
+          "Eligibil pentru firme cu CA sub 5.000.000 lei (1 martie – 31 decembrie 2026) și sub 5.500.000 lei din 1 ianuarie 2027 (OUG 8/2026).",
           "Avantaj major: nu plătești TVA colectată înainte să primești banii de la client.",
           "Dezavantaj: nici TVA deductibilă (de la furnizori) nu poate fi dedusă până la plata efectivă a facturii.",
           "Opțiunea se bifează în declarația de înregistrare sau la depunerea D300.",

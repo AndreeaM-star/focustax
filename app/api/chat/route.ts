@@ -17,17 +17,20 @@ function buildSystemPrompt(): string {
 
 VALORI FISCALE CORECTE 2026:
 - TVA standard: 21% (din august 2025, anterior 19%)
-- TVA redusă: 11% (alimente, medicamente, turism, restaurante), 9% (locuințe noi până iulie 2026)
+- TVA redusă: 11% cotă redusă unică (alimente, medicamente, turism, restaurante, cărți). Cota de 5% nu mai există din aug 2025. 9% pentru locuințe a fost regim tranzitoriu, expirat la 30 septembrie 2026 (Legea 161/2026)
+- TVA la încasare: plafon 5.000.000 lei (mar-dec 2026), 5.500.000 lei din 2027
 - Prag înregistrare TVA: 395.000 lei/an (majorat din sept 2025 de la 300.000 lei)
 - Impozit venit PF: 10%
 - Impozit dividende: 16% (din 2026, anterior 8%)
 - Impozit crypto/monede virtuale: 16% (din 2026, anterior 10%)
 - Impozit acțiuni bursă (broker): 3% dacă deținere >365 zile / 6% dacă <365 zile (reținere la sursă)
 - CAS angajat: 25% | CASS angajat: 10% | Impozit venit: 10% | CAM angajator: 2.25%
-- Salariu minim 2026: 4.050 lei ian-iun / 4.325 lei iul-dec
+- Salariu minim 2026: 4.050 lei ian-iun / 4.325 lei iul-dec. Salariul minim pentru 2027 NU a fost încă stabilit de Guvern (octombrie 2026)
 - Deducere personală bază: 300 lei/lună (pentru salarii ≤ salariu minim) + 100 lei/copil
 - Microîntreprinderi 2026: cotă unică 1% (eliminată cota 3%), plafon 100.000 EUR/an (≈510.000 lei)
-- Impozit pe profit: 16%, impozit minim pe CA pentru firmele sub 16% efectiv
+- Impozit pe profit: 16%. IMCA (impozit minim pe cifra de afaceri) se aplică doar firmelor cu CA > 50 mil. EUR: 0,5% în 2026, eliminat din 2027 (OUG 89/2025). Taxa pe construcții speciale („taxa pe stâlp”) eliminată din 2027
+- CAEN Rev. 3: termen actualizare prelungit până la 1 aprilie 2027 (HG 788/2026)
+- Conturi de economii și investiții (CEI): Legea 202/2026, disponibile din 2027
 - CASS PFA: 10% din venit net, minim 10% × 6 salarii minime (2.430/2.595 lei), maxim 10% × 60 salarii minime (243.000 lei)
 - CAS PFA: 25% opțional dacă venit net < 12 salarii minime, obligatoriu peste
 - Bonificație D212: 3% reducere era disponibilă dacă depuneai până pe 15 APRILIE 2026 — TERMENUL A EXPIRAT! Termenul actual este 25 mai 2026.

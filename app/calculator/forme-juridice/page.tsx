@@ -116,8 +116,8 @@ function calcSRLProfit(ca: number, cheltuieli: number): FormaResult {
   const ch = cheltuieli || ca * 0.3;
   const profitBrut = Math.max(0, ca - ch);
   let impozitProfit = profitBrut * 0.16;
-  const impMinim = ca <= 1_000_000 ? ca * 0.005 :
-    ca <= 5_000_000 ? ca * 0.004 : ca * 0.003;
+  // IMCA (OUG 89/2025): 0,5% din CA în 2026, doar pentru CA > 50 mil. EUR; eliminat din 2027
+  const impMinim = new Date().getFullYear() <= 2026 && ca > 50_000_000 * 5.1 ? ca * 0.005 : 0;
   impozitProfit = Math.max(impozitProfit, impMinim);
   const profitNet = Math.max(0, profitBrut - impozitProfit);
   const impDiv = profitNet * 0.16;

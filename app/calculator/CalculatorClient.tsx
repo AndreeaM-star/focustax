@@ -253,10 +253,8 @@ function CalculatorFirma() {
       impozitFirma = Math.max(0, impozitFirma - reducereSpons);
     } else {
       impozitFirma = profitVal * 0.16;
-      let impMinim = 0;
-      if (caVal <= 1_000_000) impMinim = caVal * 0.005;
-      else if (caVal <= 5_000_000) impMinim = caVal * 0.004;
-      else impMinim = caVal * 0.003;
+      // IMCA (OUG 89/2025): 0,5% din CA în 2026, doar pentru CA > 50 mil. EUR; eliminat din 2027
+      const impMinim = new Date().getFullYear() <= 2026 && caVal > 50_000_000 * 5.1 ? caVal * 0.005 : 0;
       impozitFirma = Math.max(impozitFirma, impMinim);
       const reducereSpons = Math.min(sponsVal, impozitFirma * 0.2, caVal * 0.0075);
       impozitFirma = Math.max(0, impozitFirma - reducereSpons);

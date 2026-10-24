@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgress from "@/components/ScrollProgress";
 import "./globals.css";
@@ -73,6 +74,14 @@ export default function RootLayout({
         <ScrollToTop />
         <Analytics />
         <SpeedInsights />
+        {/* Google Analytics 4 — proprietatea focustax.ro */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-5PK0G1QWLR" strategy="afterInteractive" />
+        <Script id="ga4" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-5PK0G1QWLR');`}
+        </Script>
       </body>
     </html>
   );

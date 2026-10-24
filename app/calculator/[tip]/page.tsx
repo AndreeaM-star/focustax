@@ -13,7 +13,7 @@ const META: Record<string, { title: string; description: string }> = {
   srl:       { title: "Calculator SRL / Microîntreprindere 2026", description: "Calculator impozit micro 1% (cotă unică 2026), impozit profit 16%, dividende 16%." },
   chirii:    { title: "Calculator Chirii 2026",                  description: "Calculator impozit venituri din chirii — deducere forfetară 40%, impozit 10%, CASS." },
   dividende: { title: "Calculator Dividende 2026",               description: "Calculator impozit dividende 16% + CASS, distribuire profit SRL." },
-  tva:       { title: "Calculator TVA 2026",                     description: "Calculează TVA colectat, deductibil, de plată — cote 21%, 9%, 5%, 0%." },
+  tva:       { title: "Calculator TVA 2026",                     description: "Calculează TVA colectat, deductibil, de plată — cote 21%, 11%, 0%." },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ tip: string }> }): Promise<Metadata> {

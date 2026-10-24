@@ -69,7 +69,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Estonia", codISO: "EE", cotaStandard: 22, coteReduse: [9], sistem: "cote-multiple" },
       { nume: "Slovenia", codISO: "SI", cotaStandard: 22, coteReduse: [5, 9.5], sistem: "cote-multiple" },
       { nume: "Italia", codISO: "IT", cotaStandard: 22, coteReduse: [4, 5, 10], sistem: "cote-multiple" },
-      { nume: "România", codISO: "RO", cotaStandard: 21, coteReduse: [5, 9, 11], sistem: "cote-multiple", esteRomania: true, detalii: "Majorat de la 19% în aug. 2025; 11% alimente/turism, 9% locuințe" },
+      { nume: "România", codISO: "RO", cotaStandard: 21, coteReduse: [11], sistem: "cote-multiple", esteRomania: true, detalii: "Majorat de la 19% în aug. 2025; cotă redusă unică 11%" },
       { nume: "Germania", codISO: "DE", cotaStandard: 19, coteReduse: [7], sistem: "cote-multiple" },
       { nume: "Cipru", codISO: "CY", cotaStandard: 19, coteReduse: [5, 9], sistem: "cote-multiple" },
       { nume: "Georgia", codISO: "GE", cotaStandard: 18, coteReduse: [], sistem: "cotă-standard" },
@@ -232,7 +232,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Nauru", codISO: "NR", cotaStandard: 0, sistem: "flat", detalii: "Fără TVA", zona: "extra-europa" },
     ],
     contextRomania:
-      "România aplică TVA de 21% din 1 august 2025 (majorat de la 19%). Se situează la media UE (~21%). Cote reduse: 11% (alimente, restaurante, turism), 9% (locuințe noi — până la 31 iulie 2026), 5% (cărți, medicamente, servicii sociale). Pragul de înregistrare obligatorie TVA este 395.000 lei (majorat de la 300.000 lei din septembrie 2025). Informații actualizate: mai 2026.",
+      "România aplică TVA de 21% din 1 august 2025 (majorat de la 19%). Se situează la media UE (~21%). Cotă redusă unică: 11% (alimente, restaurante, turism, cărți, medicamente) — cotele de 5% și 9% au fost unificate; regimul tranzitoriu de 9% pentru locuințe a expirat la 30 septembrie 2026. Pragul de înregistrare obligatorie TVA este 395.000 lei (majorat de la 300.000 lei din septembrie 2025). Informații actualizate: octombrie 2026.",
     mediuEuropean: 21,
     istorie:
       "TVA a fost inventată în Franța în 1954 de către Maurice Lauré, director adjunct al administrației fiscale franceze. Ideea revoluționară a fost că fiecare verigă din lanțul de producție și distribuție plătește impozit doar pe valoarea adăugată de ea, nu pe valoarea totală a tranzacției. România a introdus TVA în 1993, la scurt timp după tranziția la economia de piață, cu o cotă inițială de 18%. Cota a crescut la 19% în 1998, a urcat la 24% în 2010 (în contextul crizei economice și al acordului cu FMI), a scăzut la 20% în 2016 și la 19% în 2017, apoi a crescut din nou la 21% din 1 august 2025 ca parte din măsurile de consolidare fiscală. Uniunea Europeană impune statelor membre o cotă minimă de TVA de 15%, dar fiecare stat are libertatea să stabilească propria cotă standard.",
