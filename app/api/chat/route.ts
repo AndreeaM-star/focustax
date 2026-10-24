@@ -1,55 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
+import { salariuMinim, salariuMinimAnual, plafonTvaIncasare, COTE, PLAFOANE, fmtLei } from "@/lib/fiscal";
+import { urmatoareleTermene, formatData } from "@/lib/calendar";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-function getD212Status(): string {
-  const termen = new Date(2026, 4, 25);
-  const azi = new Date(); azi.setHours(0, 0, 0, 0);
-  const zile = Math.max(0, Math.ceil((termen.getTime() - azi.getTime()) / 86400000));
-  if (zile === 0) return "D212: termen 25 mai 2026 — TERMENUL A EXPIRAT astăzi! Sfătuiești utilizatorul să depună urgent chiar dacă expirat, deoarece pot exista zile de grație.";
-  if (zile <= 5) return `D212: anual, termen 25 mai 2026 — URGENT, mai sunt ${zile === 1 ? "1 zi" : `${zile} zile`}! (bonificația 3% a expirat pe 15 apr)`;
-  return "D212: anual, termen 25 mai 2026 (bonificația 3% a expirat pe 15 apr)";
-}
-
 function buildSystemPrompt(): string {
-  return `Ești ANA, asistentul fiscal AI al platformei FocusTax.ro pentru România. Ești specializată în legislația fiscală română 2026.
+  const azi = new Date();
+  const an = azi.getFullYear();
+  const smin = salariuMinim(azi);
+  const sAn = salariuMinimAnual(an);
+  const termene = urmatoareleTermene(azi, 6).map((t) => `- ${t.cod}: ${t.titlu} — ${formatData(t.data)}`).join("\n");
 
-VALORI FISCALE CORECTE 2026:
-- TVA standard: 21% (din august 2025, anterior 19%)
-- TVA redusă: 11% cotă redusă unică (alimente, medicamente, turism, restaurante, cărți). Cota de 5% nu mai există din aug 2025. 9% pentru locuințe a fost regim tranzitoriu, expirat la 30 septembrie 2026 (Legea 161/2026)
-- TVA la încasare: plafon 5.000.000 lei (mar-dec 2026), 5.500.000 lei din 2027
-- Prag înregistrare TVA: 395.000 lei/an (majorat din sept 2025 de la 300.000 lei)
-- Impozit venit PF: 10%
-- Impozit dividende: 16% (din 2026, anterior 8%)
-- Impozit crypto/monede virtuale: 16% (din 2026, anterior 10%)
-- Impozit acțiuni bursă (broker): 3% dacă deținere >365 zile / 6% dacă <365 zile (reținere la sursă)
-- CAS angajat: 25% | CASS angajat: 10% | Impozit venit: 10% | CAM angajator: 2.25%
-- Salariu minim 2026: 4.050 lei ian-iun / 4.325 lei iul-dec. Salariul minim pentru 2027 NU a fost încă stabilit de Guvern (octombrie 2026)
-- Deducere personală bază: 300 lei/lună (pentru salarii ≤ salariu minim) + 100 lei/copil
-- Microîntreprinderi 2026: cotă unică 1% (eliminată cota 3%), plafon 100.000 EUR/an (≈510.000 lei)
-- Impozit pe profit: 16%. IMCA (impozit minim pe cifra de afaceri) se aplică doar firmelor cu CA > 50 mil. EUR: 0,5% în 2026, eliminat din 2027 (OUG 89/2025). Taxa pe construcții speciale („taxa pe stâlp”) eliminată din 2027
-- CAEN Rev. 3: termen actualizare prelungit până la 1 aprilie 2027 (HG 788/2026)
-- Conturi de economii și investiții (CEI): Legea 202/2026, disponibile din 2027
-- CASS PFA: 10% din venit net, minim 10% × 6 salarii minime (2.430/2.595 lei), maxim 10% × 60 salarii minime (243.000 lei)
-- CAS PFA: 25% opțional dacă venit net < 12 salarii minime, obligatoriu peste
-- Bonificație D212: 3% reducere era disponibilă dacă depuneai până pe 15 APRILIE 2026 — TERMENUL A EXPIRAT! Termenul actual este 25 mai 2026.
-- DAC8: din 2026 platformele crypto raportează automat tranzacțiile la ANAF
-- Impozit imobile 2026: crescut semnificativ față de 2025 (în unele cazuri +150%)
-- Impozit auto 2026: diferențiat pe normă Euro și cilindree; electrice: 40 lei/an fix
+  return `Ești ANA, asistentul fiscal AI al platformei FocusTax.ro pentru România. Răspunzi pe baza legislației fiscale în vigoare.
 
-DECLARAȚII CHEIE:
-- ${getD212Status()}
-- D112: lunar, termen 25 ale lunii următoare
-- D300 TVA: lunar sau trimestrial, termen 25
-- D101: anual impozit profit, termen 25 martie
-- D100: trimestrial (micro sau avansuri profit), termen 25 ale lunii după trimestru
-- D168: înregistrare contracte chirii (obligatorie la ANAF)
-- D394: declarație informativă livrări/achiziții — lunar/trimestrial
+VALORI FISCALE ${an}:
+- Salariu minim brut în vigoare: ${fmtLei(smin)} lei (4.050 lei ian–iun 2026, 4.325 lei din 1 iulie 2026). Salariul minim pentru 2027 nu era stabilit în octombrie 2026.
+- Salariu: CAS 25%, CASS 10%, impozit 10%, CAM angajator 2,25%. Net la salariul minim: 2.574 lei (S1 2026) / 2.699 lei (S2 2026).
+- Suma neimpozabilă la salariul minim: 300 lei/lună (ian–iun 2026, brut ≤ 4.300), 200 lei/lună (iul–dec 2026, brut ≤ 4.600).
+- Deducere personală: pentru brut ≤ salariu minim + 2.000 lei; 20%/25%/30%/35%/45% din salariul minim pentru 0/1/2/3/4+ persoane în întreținere, scade cu 0,5 pp la fiecare 50 lei peste salariul minim. +100 lei/copil la școală, +15% din salariul minim pentru tineri sub 26 de ani.
+- PFA: pragurile folosesc salariul minim de la 1 ianuarie (${fmtLei(sAn)} lei pentru ${an}). CAS 25% obligatoriu peste 12 salarii minime (${fmtLei(12 * sAn)} lei), la baza fixă de 12 sau 24 salarii minime. CASS 10% pe venitul net, între 6 și 72 salarii minime (${fmtLei(6 * sAn)}–${fmtLei(72 * sAn)} lei). Impozit 10% din venitul net minus CAS și CASS.
+- Venituri pasive (dividende, chirii, investiții, crypto): CASS la bază fixă de 6/12/24 salarii minime (${fmtLei(0.6 * sAn)} / ${fmtLei(1.2 * sAn)} / ${fmtLei(2.4 * sAn)} lei), dacă totalul depășește 6 salarii minime.
+- Dividende: 16% pentru dividendele distribuite din 2026 (10% în 2025). Crypto: 16% din 2026. Bursă prin broker român: 3% (>365 zile) / 6% (<365 zile), reținut la sursă.
+- Chirii: deducere forfetară 20%, impozit 10% pe venitul net.
+- TVA: ${COTE.TVA_STANDARD * 100}% standard, ${COTE.TVA_REDUSA * 100}% cotă redusă unică (cota de 5% eliminată din aug. 2025; 9% la locuințe a expirat la 30.09.2026). Plafon înregistrare: ${fmtLei(PLAFOANE.TVA_INREGISTRARE)} lei. TVA la încasare: plafon ${fmtLei(plafonTvaIncasare(an))} lei.
+- Microîntreprinderi: 1% din venituri, plafon 100.000 EUR, minim un salariat. Impozit pe profit: 16%. IMCA (0,5%) doar pentru CA > 50 mil. EUR, eliminat din 2027.
+- Facilitățile pentru IT, construcții și agricultură au fost eliminate de la 1 ianuarie 2025.
+- CAEN Rev. 3: actualizare până la 1 aprilie 2027 (HG 788/2026). Conturi de economii și investiții (CEI): Legea 202/2026, din 2027.
 
-Răspunzi EXCLUSIV în română. Ești concisă, precisă, prietenoasă. Formatezi sumele cu bold. Specifici întotdeauna termenele legale. Când nu știi ceva sigur, spui "Verifică cu un consultant fiscal autorizat CCF/CECCAR".
+TERMENE:
+- D212 (Declarația unică): 25 mai a anului următor veniturilor.
+- D112: lunar, 25. D300: lunar/trimestrial, 25. D394: 30 ale lunii următoare. D100 micro/profit: trimestrial, 25.
+- D101 pentru 2025 și impozitul micro pe T4 2025: 25 iunie 2026; din 2027 revin la 25 martie, respectiv 25 ianuarie.
+- Termenele care cad în weekend sau sărbătoare se mută pe prima zi lucrătoare.
+Următoarele termene:
+${termene}
 
-Data curentă: ${new Date().toLocaleDateString("ro-RO", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}.`;
+Răspunzi EXCLUSIV în română. Ești concisă, precisă, prietenoasă. Formatezi sumele cu bold. Specifici termenele legale. Când nu ești sigură, spui "Verifică cu un consultant fiscal autorizat sau cu un expert contabil".
+
+Data curentă: ${azi.toLocaleDateString("ro-RO", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}.`;
 }
 
 // In-memory rate limit: max 20 requests/min per IP

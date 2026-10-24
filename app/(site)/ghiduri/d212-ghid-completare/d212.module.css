@@ -1,0 +1,20 @@
+.empty { color: var(--muted); margin-top: 20px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; margin-top: 20px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.card h3 { font-size: 1rem; line-height: 1.4; }
+.card p { color: var(--ink-2); font-size: 0.93rem; }
+.card ul { padding-left: 1.1em; color: var(--ink-2); font-size: 0.9rem; display: flex; flex-direction: column; gap: 4px; }
+.docsTitle { font-weight: 600; color: var(--ink) !important; margin-top: 4px; }
+
+.steps { list-style: none; counter-reset: p; display: flex; flex-direction: column; gap: 12px; max-width: 760px; }
+.steps li { counter-increment: p; position: relative; padding: 16px 18px 16px 62px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--ink-2); }
+.steps li::before { content: counter(p); position: absolute; left: 18px; top: 15px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--brand-soft); color: var(--brand); font-weight: 700; font-size: 0.85rem; }
+.steps strong { color: var(--ink); }
+
+.faq { max-width: 760px; }
+.faq details { border-bottom: 1px solid var(--border); padding: 14px 0; }
+.faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--muted); font-size: 1.2rem; line-height: 1; }
+.faq details[open] summary::after { content: "−"; }
+.faq p { color: var(--ink-2); margin-top: 8px; }

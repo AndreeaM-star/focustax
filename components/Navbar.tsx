@@ -1,208 +1,133 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import styles from "./Navbar.module.css";
+import Icon from "@/components/ui/Icon";
+import ThemeToggle from "@/components/ThemeToggle";
+import { NAV_CALCULATOARE, NAV_RESURSE, type NavItem } from "@/lib/nav";
+import s from "./Navbar.module.css";
 
-const TERMENE_APROAPE = (() => {
-  const azi = new Date();
-  const termene2026 = [
-    { luna: 1, zi: 25 }, { luna: 2, zi: 25 }, { luna: 3, zi: 25 },
-    { luna: 4, zi: 15 }, { luna: 4, zi: 25 }, { luna: 5, zi: 25 },
-    { luna: 6, zi: 25 }, { luna: 7, zi: 25 }, { luna: 8, zi: 25 },
-    { luna: 9, zi: 25 }, { luna: 10, zi: 25 }, { luna: 11, zi: 25 },
-    { luna: 12, zi: 25 },
-  ];
-  return termene2026.some(t => {
-    const d = new Date(2026, t.luna - 1, t.zi);
-    const diff = (d.getTime() - azi.getTime()) / 86400000;
-    return diff >= 0 && diff <= 7;
-  });
-})();
+function Menu({ label, items, active }: { label: string; items: NavItem[]; active: boolean }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
-const calcDropdown = [
-  { href: "/calculator", label: "Calculator salariu", icon: "💼" },
-  { href: "/calculator?tab=pfa", label: "Calculator PFA", icon: "🧾" },
-  { href: "/calculator?tab=firma", label: "Calculator SRL", icon: "🏢" },
-  { href: "/calculator?tab=crypto", label: "Crypto & Investiții", icon: "₿" },
-  { href: "/calculator/forme-juridice", label: "Compară forme juridice", icon: "⚖️" },
-];
+  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => { document.removeEventListener("mousedown", onDown); document.removeEventListener("keydown", onKey); };
+  }, [open]);
 
-const ghiduriDropdown = [
-  { href: "/ghiduri/d212-ghid-completare", label: "Ghid D212 2026", icon: "📋" },
-  { href: "/ghiduri/facilitati-fiscale", label: "Facilități IT / Construcții", icon: "🎯" },
-  { href: "/ghiduri/impozite-locale-2026", label: "Impozite locale 2026", icon: "🏠" },
-  { href: "/ghiduri", label: "Toate ghidurile", icon: "📚" },
-];
+  return (
+    <div className={s.menu} ref={ref} onMouseLeave={() => setOpen(false)}>
+      <button
+        type="button"
+        className={`${s.link} ${active ? s.active : ""}`}
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        onMouseEnter={() => setOpen(true)}
+      >
+        {label}
+        <Icon name="chevronDown" size={14} className={open ? s.chevOpen : s.chev} />
+      </button>
+      <div className={`${s.panel} ${open ? s.panelOpen : ""}`}>
+        <div className={s.panelGrid}>
+          {items.map((it) => (
+            <Link key={it.href} href={it.href} className={s.panelItem}>
+              {it.icon && <span className={s.panelIcon}><Icon name={it.icon} size={18} /></span>}
+              <span>
+                <span className={s.panelLabel}>{it.label}</span>
+                {it.desc && <span className={s.panelDesc}>{it.desc}</span>}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname() ?? "/";
+  const [drawer, setDrawer] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [calcOpen, setCalcOpen] = useState(false);
-  const [ghiduriOpen, setGhiduriOpen] = useState(false);
-  const pathname = usePathname();
-  const calcRef = useRef<HTMLDivElement>(null);
-  const ghiduriRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => setDrawer(false), [pathname]);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
   useEffect(() => {
-    const onClickOutside = (e: MouseEvent) => {
-      if (calcRef.current && !calcRef.current.contains(e.target as Node)) setCalcOpen(false);
-      if (ghiduriRef.current && !ghiduriRef.current.contains(e.target as Node)) setGhiduriOpen(false);
-    };
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
-  }, []);
-
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = drawer ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+  }, [drawer]);
 
-  const close = () => {
-    setMenuOpen(false);
-    setCalcOpen(false);
-    setGhiduriOpen(false);
-  };
+  const is = (p: string) => pathname === p || pathname.startsWith(`${p}/`);
 
   return (
     <>
-      <header className={`${styles.navbarArea} ${scrolled ? styles.navbarScrolled : ""}`}>
-        <div className={styles.navbarContainer}>
+    <header className={`${s.header} ${scrolled ? s.scrolled : ""}`}>
+      <div className={s.inner}>
+        <Link href="/" className={s.logo} aria-label="FocusTax — pagina principală">
+          <span className={s.logoMark} aria-hidden>F</span>
+          <span>Focus<span className={s.logoAccent}>Tax</span></span>
+        </Link>
 
-          <Link href="/" className={styles.navbarLogo} onClick={close}>
-            Focus<span>Tax</span>
+        <nav className={s.nav} aria-label="Navigare principală">
+          <Menu label="Calculatoare" items={NAV_CALCULATOARE} active={is("/calculator")} />
+          <Link href="/ghiduri" className={`${s.link} ${is("/ghiduri") ? s.active : ""}`}>Ghiduri</Link>
+          <Link href="/declaratii" className={`${s.link} ${is("/declaratii") ? s.active : ""}`}>Declarații</Link>
+          <Link href="/calendar" className={`${s.link} ${is("/calendar") ? s.active : ""}`}>Calendar</Link>
+          <Link href="/noutati" className={`${s.link} ${is("/noutati") ? s.active : ""}`}>Noutăți</Link>
+          <Menu label="Resurse" items={NAV_RESURSE.filter((r) => !["/ghiduri", "/declaratii", "/calendar", "/noutati"].includes(r.href))} active={is("/comparatii") || is("/sisteme") || is("/glosar")} />
+        </nav>
+
+        <div className={s.right}>
+          <ThemeToggle />
+          <Link href="/manager" className={s.manager}>Manager</Link>
+          <Link href="/calculator/salariu" className={s.cta}>
+            <Icon name="calculator" size={16} />
+            Calculează
           </Link>
-
-          {/* Desktop nav */}
-          <nav className={styles.desktopNav} aria-label="Navigare principală">
-
-            {/* Calculatoare dropdown */}
-            <div ref={calcRef} className={styles.dropdownWrapper}>
-              <button
-                className={`${styles.navLink} ${pathname.startsWith("/calculator") ? styles.activ : ""}`}
-                onClick={() => { setCalcOpen(o => !o); setGhiduriOpen(false); }}
-                aria-expanded={calcOpen}
-              >
-                Calculatoare
-                <svg className={`${styles.chevron} ${calcOpen ? styles.chevronOpen : ""}`} width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                  <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-              {calcOpen && (
-                <div className={styles.dropdown} role="menu">
-                  {calcDropdown.map(item => (
-                    <Link key={item.href} href={item.href} className={styles.dropdownItem} onClick={close} role="menuitem">
-                      <span className={styles.dropdownIcon}>{item.icon}</span>
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Ghiduri dropdown */}
-            <div ref={ghiduriRef} className={styles.dropdownWrapper}>
-              <button
-                className={`${styles.navLink} ${pathname.startsWith("/ghiduri") ? styles.activ : ""}`}
-                onClick={() => { setGhiduriOpen(o => !o); setCalcOpen(false); }}
-                aria-expanded={ghiduriOpen}
-              >
-                Ghiduri
-                <svg className={`${styles.chevron} ${ghiduriOpen ? styles.chevronOpen : ""}`} width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                  <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-              {ghiduriOpen && (
-                <div className={styles.dropdown} role="menu">
-                  {ghiduriDropdown.map(item => (
-                    <Link key={item.href} href={item.href} className={styles.dropdownItem} onClick={close} role="menuitem">
-                      <span className={styles.dropdownIcon}>{item.icon}</span>
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <Link href="/declaratii" onClick={close} className={`${styles.navLink} ${pathname.startsWith("/declaratii") ? styles.activ : ""}`}>Declarații</Link>
-            <Link href="/comparatii" onClick={close} className={`${styles.navLink} ${pathname.startsWith("/comparatii") ? styles.activ : ""}`}>Comparații</Link>
-            <Link href="/sisteme" onClick={close} className={`${styles.navLink} ${pathname.startsWith("/sisteme") ? styles.activ : ""}`}>Sisteme</Link>
-            <Link href="/calendar" onClick={close} className={`${styles.navLink} ${pathname === "/calendar" ? styles.activ : ""}`}>
-              Calendar
-              {TERMENE_APROAPE && <span className={styles.calendarDot} aria-label="Termen iminent" />}
-            </Link>
-            <Link href="/glosar" onClick={close} className={`${styles.navLink} ${pathname === "/glosar" ? styles.activ : ""}`}>Glosar</Link>
-            <Link href="/noutati" onClick={close} className={`${styles.navLink} ${pathname === "/noutati" ? styles.activ : ""}`}>Noutăți</Link>
-          </nav>
-
-          <div className={styles.navbarRight}>
-            <Link href="/manager" className={`${styles.managerBtn} ${pathname.startsWith("/manager") ? styles.managerBtnActive : ""}`} onClick={close}>
-              Manager
-            </Link>
-            <Link href="/calculator" className={styles.ctaBtn} onClick={close}>
-              <span className={styles.ctaBtnShimmer} aria-hidden />
-              Calculator Taxe
-            </Link>
-            <button
-              className={styles.hamburger}
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={menuOpen ? "Închide meniu" : "Deschide meniu"}
-              aria-expanded={menuOpen}
-            >
-              <span className={`${styles.bar} ${menuOpen ? styles.barOpen1 : ""}`} />
-              <span className={`${styles.bar} ${menuOpen ? styles.barOpen2 : ""}`} />
-              <span className={`${styles.bar} ${menuOpen ? styles.barOpen3 : ""}`} />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Drawer Overlay */}
-      {menuOpen && (
-        <div className={styles.drawerOverlay} onClick={close} aria-hidden />
-      )}
-
-      {/* Mobile Drawer */}
-      <div className={`${styles.drawer} ${menuOpen ? styles.drawerOpen : ""}`} aria-hidden={!menuOpen}>
-        <div className={styles.drawerHeader}>
-          <span className={styles.drawerLogo}>Focus<span>Tax</span></span>
-          <button className={styles.drawerClose} onClick={close} aria-label="Închide meniu">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M3 3l12 12M15 3L3 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+          <button type="button" className={s.burger} onClick={() => setDrawer(true)} aria-label="Deschide meniul" aria-expanded={drawer}>
+            <Icon name="menu" size={22} />
           </button>
         </div>
-
-        <nav className={styles.drawerNav}>
-          <Link href="/calculator" className={`${styles.drawerLink} ${pathname.startsWith("/calculator") ? styles.drawerLinkActive : ""}`} onClick={close}>💼 Calculator Taxe</Link>
-          <Link href="/calculator/forme-juridice" className={`${styles.drawerLink} ${pathname === "/calculator/forme-juridice" ? styles.drawerLinkActive : ""}`} onClick={close}>⚖️ Compară forme juridice</Link>
-          <div className={styles.drawerDivider} />
-          <Link href="/ghiduri" className={`${styles.drawerLink} ${pathname.startsWith("/ghiduri") ? styles.drawerLinkActive : ""}`} onClick={close}>📚 Ghiduri Fiscale</Link>
-          <Link href="/declaratii" className={`${styles.drawerLink} ${pathname.startsWith("/declaratii") ? styles.drawerLinkActive : ""}`} onClick={close}>📄 Declarații</Link>
-          <Link href="/comparatii" className={`${styles.drawerLink} ${pathname.startsWith("/comparatii") ? styles.drawerLinkActive : ""}`} onClick={close}>🌍 Comparații</Link>
-          <Link href="/sisteme" className={`${styles.drawerLink} ${pathname.startsWith("/sisteme") ? styles.drawerLinkActive : ""}`} onClick={close}>🔧 Sisteme ANAF</Link>
-          <Link href="/calendar" className={`${styles.drawerLink} ${pathname === "/calendar" ? styles.drawerLinkActive : ""}`} onClick={close}>
-            📅 Calendar Fiscal
-            {TERMENE_APROAPE && <span className={styles.calendarDotSmall}>•</span>}
-          </Link>
-          <Link href="/glosar" className={`${styles.drawerLink} ${pathname === "/glosar" ? styles.drawerLinkActive : ""}`} onClick={close}>📖 Glosar Fiscal</Link>
-          <Link href="/noutati" className={`${styles.drawerLink} ${pathname === "/noutati" ? styles.drawerLinkActive : ""}`} onClick={close}>📰 Noutăți</Link>
-          <div className={styles.drawerDivider} />
-          <Link href="/contact" className={`${styles.drawerLink} ${pathname === "/contact" ? styles.drawerLinkActive : ""}`} onClick={close}>✉️ Contact</Link>
-          <Link href="/manager" className={`${styles.drawerLink} ${styles.drawerLinkManager} ${pathname.startsWith("/manager") ? styles.drawerLinkActive : ""}`} onClick={close}>⚡ Manager 2026</Link>
-        </nav>
       </div>
+    </header>
+
+      <div className={`${s.overlay} ${drawer ? s.overlayOpen : ""}`} onClick={() => setDrawer(false)} aria-hidden />
+      <aside className={`${s.drawer} ${drawer ? s.drawerOpen : ""}`} aria-hidden={!drawer} aria-label="Meniu">
+        <div className={s.drawerHead}>
+          <span className={s.logo}><span>Focus<span className={s.logoAccent}>Tax</span></span></span>
+          <button type="button" className={s.burger} onClick={() => setDrawer(false)} aria-label="Închide meniul">
+            <Icon name="x" size={22} />
+          </button>
+        </div>
+        <p className={s.drawerTitle}>Calculatoare</p>
+        {NAV_CALCULATOARE.map((it) => (
+          <Link key={it.href} href={it.href} className={`${s.drawerLink} ${pathname === it.href ? s.drawerActive : ""}`} tabIndex={drawer ? 0 : -1}>
+            {it.icon && <Icon name={it.icon} size={18} />}{it.label}
+          </Link>
+        ))}
+        <p className={s.drawerTitle}>Resurse</p>
+        {NAV_RESURSE.map((it) => (
+          <Link key={it.href} href={it.href} className={`${s.drawerLink} ${is(it.href) ? s.drawerActive : ""}`} tabIndex={drawer ? 0 : -1}>
+            {it.icon && <Icon name={it.icon} size={18} />}{it.label}
+          </Link>
+        ))}
+        <div className={s.drawerFoot}>
+          <Link href="/contact" className={s.drawerLink} tabIndex={drawer ? 0 : -1}><Icon name="mail" size={18} />Contact</Link>
+          <Link href="/manager" className={s.drawerLink} tabIndex={drawer ? 0 : -1}><Icon name="chart" size={18} />Manager firmă</Link>
+        </div>
+      </aside>
     </>
   );
 }

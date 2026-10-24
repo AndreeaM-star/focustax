@@ -16,13 +16,13 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.9rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   letter-spacing: -0.5px;
 }
 
 .pageSubtitle {
   font-size: 0.87rem;
-  color: #6b7280;
+  color: var(--muted);
   margin-top: 4px;
 }
 
@@ -30,28 +30,26 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: var(--ok-soft);
+  border: 1px solid var(--ok);
   padding: 8px 16px;
   border-radius: 24px;
   font-size: 0.82rem;
   font-weight: 600;
-  color: #059669;
+  color: var(--ok);
 }
 
 .syncDot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #10b981;
+  background: var(--ok);
 }
 
 /* ── Total Card ──────────────────────────────────────────── */
 .totalCard {
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(40px) saturate(280%);
-  -webkit-backdrop-filter: blur(40px) saturate(280%);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px 28px;
   box-shadow: 0 8px 40px rgba(0,0,0,0.09);
@@ -68,7 +66,7 @@
   display: block;
   font-size: 0.78rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--faint);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 6px;
@@ -79,7 +77,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 2.4rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   line-height: 1;
   margin-bottom: 12px;
 }
@@ -91,9 +89,9 @@
 }
 
 .reconcilatPill {
-  background: rgba(16,185,129,0.1);
-  border: 1px solid rgba(16,185,129,0.2);
-  color: #059669;
+  background: var(--ok-soft);
+  border: 1px solid var(--ok);
+  color: var(--ok);
   font-size: 0.78rem;
   font-weight: 600;
   padding: 3px 10px;
@@ -101,9 +99,9 @@
 }
 
 .nerecilatPill {
-  background: rgba(245,158,11,0.1);
-  border: 1px solid rgba(245,158,11,0.2);
-  color: #d97706;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  color: var(--accent);
   font-size: 0.78rem;
   font-weight: 600;
   padding: 3px 10px;
@@ -141,7 +139,7 @@
   align-items: center;
   gap: 5px;
   font-size: 0.78rem;
-  color: #6b7280;
+  color: var(--muted);
   font-weight: 600;
 }
 
@@ -159,10 +157,8 @@
 }
 
 .bancaCard {
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 18px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.07);
@@ -178,15 +174,15 @@
 }
 
 .bancaCardSelected {
-  border-color: var(--accent, #2563eb);
-  background: rgba(255,255,255,0.38);
+  border-color: var(--accent, var(--brand));
+  background: var(--surface);
 }
 
 .bancaAccentBar {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: var(--accent, #2563eb);
+  background: var(--accent, var(--brand));
 }
 
 .bancaTop {
@@ -200,7 +196,7 @@
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  color: #fff;
+  color: var(--brand-ink);
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   font-size: 0.75rem;
@@ -214,12 +210,12 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 
 .bancaTip {
   font-size: 0.72rem;
-  color: #9ca3af;
+  color: var(--faint);
   margin-top: 1px;
 }
 
@@ -227,13 +223,13 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 6px;
 }
 
 .bancaIban {
   font-size: 0.7rem;
-  color: #9ca3af;
+  color: var(--faint);
   font-family: monospace;
   margin-bottom: 4px;
   overflow: hidden;
@@ -243,16 +239,14 @@
 
 .bancaSync {
   font-size: 0.72rem;
-  color: #10b981;
+  color: var(--ok);
   font-weight: 600;
 }
 
 /* ── Transactions ────────────────────────────────────────── */
 .tranzSection {
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -271,11 +265,11 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 
 .bankFilter {
-  color: #2563eb;
+  color: var(--brand);
   font-weight: 700;
 }
 
@@ -288,39 +282,39 @@
 .filterBtn {
   padding: 5px 12px;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.4);
+  border: 1px solid var(--border);
+  background: var(--surface);
   font-size: 0.78rem;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--muted);
   cursor: pointer;
   transition: all 0.15s;
 }
 
-.filterBtn:hover { background: rgba(255,255,255,0.65); color: #1a1a2e; }
+.filterBtn:hover { background: var(--surface); color: var(--ink); }
 
 .filterBtnActive {
-  background: rgba(37,99,235,0.1);
-  border-color: rgba(37,99,235,0.3);
-  color: #2563eb;
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
+  color: var(--brand);
 }
 
 .filterBtnCredit {
-  background: rgba(5,150,105,0.1);
-  border-color: rgba(5,150,105,0.3);
-  color: #059669;
+  background: var(--ok-soft);
+  border-color: var(--ok);
+  color: var(--ok);
 }
 
 .filterBtnDebit {
-  background: rgba(220,38,38,0.08);
-  border-color: rgba(220,38,38,0.25);
-  color: #dc2626;
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
 }
 
 .filterSep {
   width: 1px;
   height: 24px;
-  background: rgba(0,0,0,0.1);
+  background: var(--surface-2);
   align-self: center;
   margin: 0 4px;
 }
@@ -330,13 +324,13 @@
   gap: 20px;
   flex-wrap: wrap;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid var(--border);
   font-size: 0.82rem;
-  color: #6b7280;
+  color: var(--muted);
 }
 
-.sumarCredit { color: #059669; }
-.sumarDebit  { color: #dc2626; }
+.sumarCredit { color: var(--ok); }
+.sumarDebit  { color: var(--danger); }
 .sumarNet    { font-weight: 600; margin-left: auto; }
 
 .tranzList {
@@ -350,7 +344,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 13px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid var(--border);
   gap: 12px;
   flex-wrap: wrap;
 }
@@ -376,31 +370,31 @@
 }
 
 .credit {
-  background: rgba(16,185,129,0.1);
-  color: #059669;
-  border: 1px solid rgba(16,185,129,0.2);
+  background: var(--ok-soft);
+  color: var(--ok);
+  border: 1px solid var(--ok);
 }
 
 .debit {
-  background: rgba(239,68,68,0.1);
-  color: #dc2626;
-  border: 1px solid rgba(239,68,68,0.2);
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid var(--danger);
 }
 
 .tranzDesc {
   font-size: 0.87rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--ink-2);
   margin-bottom: 3px;
 }
 
 .tranzMeta {
   font-size: 0.76rem;
-  color: #9ca3af;
+  color: var(--faint);
 }
 
 .tranzFactura {
-  color: #2563eb;
+  color: var(--brand);
   font-weight: 600;
 }
 
@@ -417,8 +411,8 @@
   margin-bottom: 3px;
 }
 
-.creditText { color: #059669; }
-.debitText  { color: #dc2626; }
+.creditText { color: var(--ok); }
+.debitText  { color: var(--danger); }
 
 .tranzStatus {
   font-size: 0.72rem;
@@ -428,13 +422,13 @@
 }
 
 .reconciliat {
-  background: rgba(16,185,129,0.1);
-  color: #059669;
+  background: var(--ok-soft);
+  color: var(--ok);
 }
 
 .nereconciliat {
-  background: rgba(245,158,11,0.1);
-  color: #d97706;
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
 /* ── Responsive ──────────────────────────────────────────── */

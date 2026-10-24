@@ -208,7 +208,7 @@ export default function FacturiPage() {
               <h2>Factură nouă</h2>
               <button className={styles.closeBtn} onClick={() => setShowForm(false)}>✕</button>
             </div>
-            {err && <div style={{ color: "#dc2626", padding: "0.5rem 1rem", fontSize: "0.85rem" }}>❌ {err}</div>}
+            {err && <div style={{ color: "var(--danger)", padding: "0.5rem 1rem", fontSize: "0.85rem" }}>❌ {err}</div>}
             <form className={styles.form} onSubmit={add}>
               <div className={styles.formRow}>
                 <label className={styles.label}>

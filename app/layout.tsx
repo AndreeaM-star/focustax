@@ -1,32 +1,34 @@
-import type { Metadata } from "next";
-import { Montserrat, Open_Sans } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Script from "next/script";
-import ScrollToTop from "@/components/ScrollToTop";
-import ScrollProgress from "@/components/ScrollProgress";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-montserrat",
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-open-sans",
-});
+const GA_ID = "G-5PK0G1QWLR";
+
+const DESCRIERE =
+  "Calculatoare de taxe, ghiduri și termene fiscale pentru România, actualizate 2026: salariu net, PFA, SRL, dividende, chirii, TVA și declarații ANAF.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://focustax.ro"),
-  title: "FocusTax | Claritate în taxe",
-  description:
-    "Înțelege ce declarații trebuie să depui și când. Ghid complet al declarațiilor fiscale din România — gratuit.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "FocusTax — calculatoare de taxe și ghiduri fiscale pentru România",
+    template: "%s | FocusTax",
+  },
+  description: DESCRIERE,
+  applicationName: "FocusTax",
   openGraph: {
-    title: "FocusTax | Claritate în taxe",
-    description:
-      "Înțelege ce declarații trebuie să depui și când. Ghid complet al declarațiilor fiscale din România.",
+    title: "FocusTax — claritate în taxe",
+    description: DESCRIERE,
+    url: SITE_URL,
     type: "website",
     locale: "ro_RO",
     siteName: "FocusTax",
@@ -34,53 +36,60 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FocusTax | Claritate în taxe",
-    description: "Ghid complet al declarațiilor fiscale din România — gratuit.",
+    title: "FocusTax — claritate în taxe",
+    description: DESCRIERE,
     images: ["/og-image.png"],
   },
+  robots: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f6f3" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c1210" },
+  ],
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "FocusTax",
-  "url": "https://focustax.ro",
-  "description": "Platformă fiscală educativă pentru România — calculatoare taxe, ghiduri, calendar fiscal și declarații ANAF actualizate 2026.",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Web",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RON" },
-  "inLanguage": "ro",
-  "publisher": { "@type": "Organization", "name": "FocusTax", "url": "https://focustax.ro" },
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#org`,
+      name: "FocusTax",
+      url: `${SITE_URL}/`,
+      email: "focustaxro@gmail.com",
+      logo: `${SITE_URL}/icon.svg`,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "FocusTax",
+      url: `${SITE_URL}/`,
+      inLanguage: "ro-RO",
+      publisher: { "@id": `${SITE_URL}/#org` },
+    },
+  ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+/** Aplică tema salvată înainte de primul render, ca să nu clipească pagina */
+const themeScript = `try{var t=localStorage.getItem("ft-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ro" className={`${montserrat.variable} ${openSans.variable}`}>
+    <html lang="ro" className={inter.variable} suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>
-        <a href="#main-content" className="skip-to-content">Salt la conținut principal</a>
-        <ScrollProgress />
-        <div id="main-content" style={{ position: "absolute", top: 0 }} aria-hidden="true" />
+        <a href="#continut" className="skip-to-content">Salt la conținut</a>
         {children}
-        <ScrollToTop />
         <Analytics />
         <SpeedInsights />
-        {/* Google Analytics 4 — proprietatea focustax.ro */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-5PK0G1QWLR" strategy="afterInteractive" />
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="ga4" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-5PK0G1QWLR');`}
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
         </Script>
       </body>
     </html>

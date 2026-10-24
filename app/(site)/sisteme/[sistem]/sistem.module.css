@@ -1,0 +1,25 @@
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; align-items: start; }
+.layout > div > section:first-child { margin-top: 0; }
+.checks { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.checks li { display: flex; gap: 12px; color: var(--ink-2); }
+.checks svg { color: var(--brand); margin-top: 3px; }
+.plain { padding-left: 1.1em; display: flex; flex-direction: column; gap: 6px; }
+
+.steps { list-style: none; counter-reset: p; display: flex; flex-direction: column; gap: 12px; }
+.steps li { counter-increment: p; position: relative; padding: 16px 18px 16px 62px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.steps li::before { content: counter(p); position: absolute; left: 18px; top: 16px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--brand-soft); color: var(--brand); font-weight: 700; font-size: 0.85rem; }
+.steps p { color: var(--ink-2); margin-top: 4px; font-size: 0.95rem; }
+
+.aside { position: sticky; top: calc(var(--nav-h) + 20px); display: flex; flex-direction: column; gap: 14px; margin-top: 72px; }
+.box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.boxTitle { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.timeline { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem; color: var(--ink-2); }
+.timeline li { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.ext { display: flex; align-items: center; gap: 8px; color: var(--ink-2); font-size: 0.9rem; font-weight: 500; padding: 4px 0; }
+.ext:hover { color: var(--brand); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 14px; }
+
+@media (max-width: 960px) {
+  .layout { grid-template-columns: 1fr; gap: 0; }
+  .aside { position: static; margin-top: 40px; }
+}

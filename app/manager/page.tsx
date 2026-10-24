@@ -208,8 +208,8 @@ export default function Dashboard() {
 
       {/* ANAF OAuth banner */}
       {anafLoading && (
-        <div className={styles.anafCard} style={{ borderColor: "#f59e0b", background: "rgba(251,191,36,0.06)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "#92400e", padding: "0.25rem 0" }}>
+        <div className={styles.anafCard} style={{ borderColor: "var(--accent)", background: "rgba(251,191,36,0.06)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "var(--accent)", padding: "0.25rem 0" }}>
             <span style={{ fontSize: "1.3rem" }}>⏳</span>
             <div>
               <div style={{ fontWeight: 600 }}>Se procesează autorizarea ANAF...</div>
@@ -220,11 +220,11 @@ export default function Dashboard() {
       )}
 
       {!anafLoading && anafStatus.connected && (
-        <div className={styles.anafCard} style={{ borderColor: "#22c55e", background: "rgba(34,197,94,0.06)" }}>
+        <div className={styles.anafCard} style={{ borderColor: "var(--ok)", background: "var(--ok-soft)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flex: 1 }}>
             <span style={{ fontSize: "1.5rem" }}>✅</span>
             <div>
-              <div style={{ fontWeight: 700, color: "#15803d" }}>ANAF conectat</div>
+              <div style={{ fontWeight: 700, color: "var(--ok)" }}>ANAF conectat</div>
               <div style={{ fontSize: "0.82rem", color: "#166534", marginTop: "0.15rem" }}>
                 {anafStatus.cui && `CUI: ${anafStatus.cui} · `}
                 {anafStatus.expires_at
@@ -234,25 +234,25 @@ export default function Dashboard() {
             </div>
           </div>
           <button onClick={disconnectAnaf}
-            style={{ background: "transparent", border: "1px solid #dc2626", color: "#dc2626", padding: "0.35rem 0.9rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600, flexShrink: 0 }}>
+            style={{ background: "transparent", border: "1px solid var(--danger)", color: "var(--danger)", padding: "0.35rem 0.9rem", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600, flexShrink: 0 }}>
             Deconectare
           </button>
         </div>
       )}
 
       {!anafLoading && !anafStatus.connected && (
-        <div className={styles.anafCard} style={{ borderColor: "#3b82f6", background: "rgba(59,130,246,0.05)" }}>
+        <div className={styles.anafCard} style={{ borderColor: "var(--brand)", background: "var(--brand-soft)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flex: 1 }}>
             <span style={{ fontSize: "1.3rem" }}>🔐</span>
             <div>
-              <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "#1e40af" }}>Conectează-te la ANAF</div>
-              <div style={{ fontSize: "0.78rem", color: "#6b7280", marginTop: "0.1rem" }}>
+              <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--brand)" }}>Conectează-te la ANAF</div>
+              <div style={{ fontSize: "0.78rem", color: "var(--muted)", marginTop: "0.1rem" }}>
                 {anafDenied ? "Autorizare refuzată — încearcă din nou." : "Accesează e-Factura, e-VAT și SPV"}
               </div>
             </div>
           </div>
           <a href={anafAuthUrl}
-            style={{ background: "#1d4ed8", color: "#fff", padding: "0.5rem 1.25rem", borderRadius: "8px", textDecoration: "none", fontWeight: 700, fontSize: "0.85rem", whiteSpace: "nowrap", flexShrink: 0 }}>
+            style={{ background: "var(--brand)", color: "var(--brand-ink)", padding: "0.5rem 1.25rem", borderRadius: "8px", textDecoration: "none", fontWeight: 700, fontSize: "0.85rem", whiteSpace: "nowrap", flexShrink: 0 }}>
             {anafDenied ? "Încearcă din nou →" : "Conectare ANAF →"}
           </a>
         </div>

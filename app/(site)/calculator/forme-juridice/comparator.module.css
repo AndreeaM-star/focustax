@@ -1,0 +1,18 @@
+.inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+.inputs > * + * { margin-top: 0 !important; }
+@media (max-width: 720px) { .inputs { grid-template-columns: 1fr; } .inputs > * + * { margin-top: 22px !important; } }
+
+.bars { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+.best { border-color: var(--brand-line); box-shadow: 0 0 0 3px var(--brand-soft); }
+.barHead { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-family: var(--font-display); }
+.track { height: 12px; border-radius: 99px; background: var(--surface-2); margin: 14px 0 10px; overflow: hidden; }
+.track span { display: block; height: 100%; border-radius: 99px; background: var(--brand); transition: width 0.4s var(--ease); }
+.barNums { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 0.95rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.barNums b { color: var(--ink); font-size: 1.1rem; }
+.taxe { color: var(--muted); }
+.unavailable { color: var(--muted); margin-top: 8px; font-size: 0.925rem; }
+.details { margin-top: 10px; font-size: 0.9rem; }
+.details summary { cursor: pointer; color: var(--brand); font-weight: 600; }
+.details ul { list-style: none; margin-top: 8px; }
+.details li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--border); font-variant-numeric: tabular-nums; }

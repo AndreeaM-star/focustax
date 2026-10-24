@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       { userAgent: "*", allow: "/", disallow: "/manager/" },
     ],
-    sitemap: "https://focustax.ro/sitemap.xml",
+    sitemap: "https://www.focustax.ro/sitemap.xml",
   };
 }

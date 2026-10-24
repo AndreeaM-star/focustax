@@ -16,13 +16,13 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.9rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   letter-spacing: -0.5px;
 }
 
 .pageSubtitle {
   font-size: 0.87rem;
-  color: #6b7280;
+  color: var(--muted);
   margin-top: 4px;
 }
 
@@ -30,20 +30,20 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(16,185,129,0.08);
-  border: 1px solid rgba(16,185,129,0.2);
+  background: var(--ok-soft);
+  border: 1px solid var(--ok);
   padding: 8px 16px;
   border-radius: 24px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #059669;
+  color: var(--ok);
 }
 
 .syncDot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #10b981;
+  background: var(--ok);
 }
 
 /* ── Alert ───────────────────────────────────────────────── */
@@ -51,8 +51,8 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  background: rgba(245,158,11,0.08);
-  border: 1px solid rgba(245,158,11,0.25);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
   border-radius: 16px;
   padding: 16px 20px;
   flex-wrap: wrap;
@@ -63,21 +63,21 @@
 .alertBox strong {
   display: block;
   font-size: 0.9rem;
-  color: #92400e;
+  color: var(--accent);
   margin-bottom: 3px;
 }
 
 .alertBox p {
   font-size: 0.83rem;
-  color: #b45309;
+  color: var(--accent);
   margin: 0;
 }
 
 .alertBtn {
   margin-left: auto;
-  background: rgba(245,158,11,0.15);
-  border: 1px solid rgba(245,158,11,0.3);
-  color: #d97706;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  color: var(--accent);
   font-size: 0.82rem;
   font-weight: 700;
   padding: 7px 14px;
@@ -87,7 +87,7 @@
   white-space: nowrap;
 }
 
-.alertBtn:hover { background: rgba(245,158,11,0.25); }
+.alertBtn:hover { background: var(--accent-soft); }
 
 /* ── Stats ───────────────────────────────────────────────── */
 .statsGrid {
@@ -97,10 +97,8 @@
 }
 
 .statCard {
-  background: rgba(255,255,255,0.28);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255,255,255,0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 18px;
   padding: 18px 20px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.07);
@@ -110,8 +108,8 @@
 }
 
 .statCardWarning {
-  background: rgba(245,158,11,0.08);
-  border-color: rgba(245,158,11,0.25);
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
 .statIcon { font-size: 1.3rem; margin-bottom: 4px; }
@@ -119,7 +117,7 @@
 .statLabel {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--faint);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -128,22 +126,20 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   line-height: 1;
 }
 
 .statMeta {
   font-size: 0.76rem;
-  color: #6b7280;
+  color: var(--muted);
   margin-top: 4px;
 }
 
 /* ── Plafon Card ─────────────────────────────────────────── */
 .plafonCard {
-  background: rgba(255,255,255,0.28);
-  backdrop-filter: blur(40px) saturate(280%);
-  -webkit-backdrop-filter: blur(40px) saturate(280%);
-  border: 1px solid rgba(255,255,255,0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px 28px;
   box-shadow: 0 8px 36px rgba(0,0,0,0.09);
@@ -179,12 +175,12 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 
 .plafonSubtitle {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--muted);
   line-height: 1.5;
 }
 
@@ -194,18 +190,18 @@
   gap: 14px;
   flex-wrap: wrap;
   font-size: 0.83rem;
-  color: #6b7280;
+  color: var(--muted);
 }
 
 .plafonAlert {
-  color: #d97706;
+  color: var(--accent);
   font-weight: 600;
 }
 
 .btnPrimary {
   margin-left: auto;
-  background: rgba(37,99,235,0.82);
-  color: #fff;
+  background: var(--brand);
+  color: var(--brand-ink);
   border: none;
   border-radius: 10px;
   padding: 9px 16px;
@@ -219,10 +215,8 @@
 
 /* ── Sections ────────────────────────────────────────────── */
 .section {
-  background: rgba(255,255,255,0.22);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255,255,255,0.7);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.07);
@@ -232,7 +226,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 18px;
 }
 
@@ -244,30 +238,30 @@
 }
 
 .monthCard {
-  background: rgba(255,255,255,0.35);
-  border: 1px solid rgba(255,255,255,0.7);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
   position: relative;
 }
 
 .monthCardCurrent {
-  background: rgba(37,99,235,0.06);
-  border-color: rgba(37,99,235,0.2);
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
 }
 
 .monthCardTotal {
-  background: rgba(37,99,235,0.06);
-  border-color: rgba(37,99,235,0.2);
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
 }
 
 .currentBadge {
   position: absolute;
   top: -8px;
   left: 12px;
-  background: rgba(37,99,235,0.15);
-  border: 1px solid rgba(37,99,235,0.3);
-  color: #2563eb;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  color: var(--brand);
   font-size: 0.65rem;
   font-weight: 700;
   padding: 2px 8px;
@@ -280,7 +274,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 12px;
 }
 
@@ -294,18 +288,18 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.82rem;
-  color: #6b7280;
+  color: var(--muted);
 }
 
 .monthTotal {
-  border-top: 1px solid rgba(255,255,255,0.6);
+  border-top: 1px solid var(--border);
   padding-top: 6px;
   margin-top: 4px;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 
-.green { color: #059669; font-weight: 600; }
-.red   { color: #dc2626; font-weight: 600; }
+.green { color: var(--ok); font-weight: 600; }
+.red   { color: var(--danger); font-weight: 600; }
 
 /* ── Declarations ────────────────────────────────────────── */
 .declaratiiList {
@@ -319,7 +313,7 @@
   align-items: center;
   gap: 16px;
   padding: 14px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
 }
 
@@ -331,20 +325,20 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 2px;
 }
 
 .declData {
   font-size: 0.78rem;
-  color: #9ca3af;
+  color: var(--faint);
 }
 
 .declSuma {
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   min-width: 120px;
   text-align: right;
 }
@@ -358,27 +352,27 @@
 }
 
 .status_confirmata {
-  background: rgba(16,185,129,0.1);
-  color: #059669;
-  border: 1px solid rgba(16,185,129,0.2);
+  background: var(--ok-soft);
+  color: var(--ok);
+  border: 1px solid var(--ok);
 }
 
 .status_in_pregatire {
-  background: rgba(245,158,11,0.1);
-  color: #d97706;
-  border: 1px solid rgba(245,158,11,0.2);
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
 .status_inchisa {
   background: rgba(107,114,128,0.08);
-  color: #6b7280;
+  color: var(--muted);
   border: 1px solid rgba(107,114,128,0.15);
 }
 
 .depuneBtn {
-  background: rgba(37,99,235,0.1);
-  border: 1px solid rgba(37,99,235,0.25);
-  color: #2563eb;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  color: var(--brand);
   font-size: 0.82rem;
   font-weight: 700;
   padding: 7px 14px;
@@ -388,7 +382,7 @@
   white-space: nowrap;
 }
 
-.depuneBtn:hover { background: rgba(37,99,235,0.18); }
+.depuneBtn:hover { background: var(--brand-soft); }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 900px) {

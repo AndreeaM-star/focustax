@@ -26,7 +26,7 @@
 
 .pageDate {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--faint);
   font-weight: 600;
   letter-spacing: 0.3px;
   margin-bottom: 4px;
@@ -37,7 +37,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.9rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   letter-spacing: -0.5px;
 }
 
@@ -45,10 +45,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   padding: 8px 16px;
   border-radius: 24px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
@@ -58,23 +56,21 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #10b981;
+  background: var(--ok);
   animation: pulse 2s ease-in-out infinite;
 }
 
 .statusText {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #059669;
+  color: var(--ok);
 }
 
 /* ── Briefing Box ────────────────────────────────────────── */
 /* ── ANAF Connection Card ────────────────────────────────── */
 .anafCard {
-  background: rgba(255, 255, 255, 0.32);
-  backdrop-filter: blur(40px) saturate(280%) brightness(1.1);
-  -webkit-backdrop-filter: blur(40px) saturate(280%) brightness(1.1);
-  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
   border-radius: 20px;
   box-shadow:
     0 8px 40px rgba(0, 0, 0, 0.1),
@@ -87,10 +83,8 @@
 }
 
 .briefingBox {
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(40px) saturate(280%) brightness(1.1);
-  -webkit-backdrop-filter: blur(40px) saturate(280%) brightness(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   box-shadow:
     0 8px 40px rgba(0, 0, 0, 0.1),
@@ -103,8 +97,8 @@
   align-items: center;
   gap: 10px;
   padding: 12px 20px;
-  background: rgba(0, 0, 0, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
 }
 
 .briefingDots { display: flex; gap: 6px; }
@@ -115,24 +109,24 @@
   border-radius: 50%;
 }
 
-.dotRed    { background: #ef4444; }
-.dotAmber  { background: #f59e0b; }
-.dotGreen  { background: #10b981; }
+.dotRed    { background: var(--danger); }
+.dotAmber  { background: var(--accent); }
+.dotGreen  { background: var(--ok); }
 
 .briefingLabel {
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #6b7280;
+  color: var(--muted);
   flex: 1;
 }
 
 .briefingAI {
   font-size: 0.72rem;
-  color: #9ca3af;
-  background: rgba(124, 58, 237, 0.08);
-  border: 1px solid rgba(124, 58, 237, 0.15);
-  color: #7c3aed;
+  color: var(--faint);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  color: var(--brand);
   padding: 2px 8px;
   border-radius: 8px;
   font-weight: 600;
@@ -156,30 +150,30 @@
 }
 
 .alertSuccess {
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  color: #065f46;
+  background: var(--ok-soft);
+  border: 1px solid var(--ok);
+  color: var(--ok);
 }
 
 .alertInfo {
-  background: rgba(37, 99, 235, 0.08);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  color: #1e40af;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  color: var(--brand);
 }
 
 .alertWarning {
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  color: #92400e;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  color: var(--accent);
 }
 
 .alertIcon { font-size: 1rem; flex-shrink: 0; }
 .alertMsg  { flex: 1; line-height: 1.5; }
 
 .alertBtn {
-  background: rgba(37, 99, 235, 0.12);
-  border: 1px solid rgba(37, 99, 235, 0.25);
-  color: #2563eb;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  color: var(--brand);
   font-size: 0.78rem;
   font-weight: 700;
   padding: 5px 12px;
@@ -191,7 +185,7 @@
 }
 
 .alertBtn:hover {
-  background: rgba(37, 99, 235, 0.2);
+  background: var(--brand-soft);
 }
 
 /* ── Stats Grid ──────────────────────────────────────────── */
@@ -202,10 +196,8 @@
 }
 
 .statCard {
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.95);
   animation: cardIn 0.4s ease-out both;
@@ -242,20 +234,20 @@
 }
 
 .trendUp {
-  background: rgba(16, 185, 129, 0.12);
-  color: #059669;
+  background: var(--ok-soft);
+  color: var(--ok);
 }
 
 .trendDown {
-  background: rgba(239, 68, 68, 0.12);
-  color: #dc2626;
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
 .statValue {
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.35rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   line-height: 1;
   margin-bottom: 5px;
 }
@@ -263,7 +255,7 @@
 .statLabel {
   font-size: 0.78rem;
   font-weight: 700;
-  color: #6b7280;
+  color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 6px;
@@ -271,7 +263,7 @@
 
 .statMeta {
   font-size: 0.76rem;
-  color: #9ca3af;
+  color: var(--faint);
   line-height: 1.4;
   margin-top: auto;
 }
@@ -279,10 +271,8 @@
 /* ── Main Grid (Activity + Right col) ───────────────────── */
 /* ── CA Lunar Chart ─────────────────────────────────────── */
 .chartSection {
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -308,7 +298,7 @@
 .barValue {
   font-size: 0.65rem;
   font-weight: 700;
-  color: #2563eb;
+  color: var(--brand);
   min-height: 14px;
   line-height: 14px;
 }
@@ -316,7 +306,7 @@
 .barTrack {
   flex: 1;
   width: 100%;
-  background: rgba(37, 99, 235, 0.08);
+  background: var(--brand-soft);
   border-radius: 5px 5px 0 0;
   display: flex;
   align-items: flex-end;
@@ -324,7 +314,7 @@
 
 .barFill {
   width: 100%;
-  background: linear-gradient(180deg, #2563eb 0%, #7c3aed 100%);
+  background: var(--brand);
   border-radius: 5px 5px 0 0;
   min-height: 3px;
   transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1);
@@ -333,14 +323,14 @@
 .barLabel {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #9ca3af;
+  color: var(--faint);
   text-transform: capitalize;
   white-space: nowrap;
 }
 
 .chartEmpty {
   font-size: 0.82rem;
-  color: #9ca3af;
+  color: var(--faint);
   text-align: center;
   margin-top: 12px;
 }
@@ -354,10 +344,8 @@
 
 /* ── Activity Feed ───────────────────────────────────────── */
 .activitySection {
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -367,7 +355,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 16px;
 }
 
@@ -383,7 +371,7 @@
   align-items: center;
   gap: 10px;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid var(--border);
   font-size: 0.85rem;
 }
 
@@ -391,7 +379,7 @@
 
 .activityTime {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--faint);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -399,13 +387,13 @@
 .activityIcon { font-size: 1rem; text-align: center; }
 
 .activityText {
-  color: #374151;
+  color: var(--ink-2);
   line-height: 1.45;
 }
 
-.actSuccess .activityText { color: #065f46; }
-.actInfo    .activityText { color: #1e40af; }
-.actMuted   .activityText { color: #9ca3af; }
+.actSuccess .activityText { color: var(--ok); }
+.actInfo    .activityText { color: var(--brand); }
+.actMuted   .activityText { color: var(--faint); }
 
 /* ── Right Column Widgets ───────────────────────────────── */
 .rightCol {
@@ -415,10 +403,8 @@
 }
 
 .widget {
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 18px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.07);
@@ -428,7 +414,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -447,19 +433,19 @@
   gap: 10px;
   padding: 9px 12px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.4);
-  border: 1px solid rgba(255,255,255,0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   font-size: 0.85rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--ink-2);
   text-decoration: none;
   transition: all 0.15s;
 }
 
 .quickAction:hover {
-  background: rgba(37, 99, 235, 0.08);
-  border-color: rgba(37, 99, 235, 0.2);
-  color: #2563eb;
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
+  color: var(--brand);
   transform: translateX(3px);
 }
 
@@ -478,7 +464,7 @@
   font-size: 0.84rem;
 }
 
-.systemName { font-weight: 600; color: #374151; }
+.systemName { font-weight: 600; color: var(--ink-2); }
 
 .systemStatus {
   display: flex;
@@ -493,23 +479,23 @@
   flex-shrink: 0;
 }
 
-.dotGreen  { background: #10b981; }
-.dotAmber  { background: #f59e0b; }
-.dotRed    { background: #ef4444; }
+.dotGreen  { background: var(--ok); }
+.dotAmber  { background: var(--accent); }
+.dotRed    { background: var(--danger); }
 
 .systemStatusText {
   font-size: 0.78rem;
-  color: #6b7280;
+  color: var(--muted);
 }
 
 .widgetLink {
   display: block;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #2563eb;
+  color: var(--brand);
   text-decoration: none;
   padding-top: 10px;
-  border-top: 1px solid rgba(255,255,255,0.5);
+  border-top: 1px solid var(--border);
 }
 
 .widgetLink:hover { text-decoration: underline; }
@@ -519,8 +505,8 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  background: rgba(124, 58, 237, 0.08);
-  border: 1px solid rgba(124, 58, 237, 0.2);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
   border-radius: 18px;
   padding: 16px;
   text-decoration: none;
@@ -529,7 +515,7 @@
 }
 
 .anaHint:hover {
-  background: rgba(124, 58, 237, 0.13);
+  background: var(--brand-soft);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(124,58,237,0.12);
 }
@@ -541,13 +527,13 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 3px;
 }
 
 .anaHint p {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--muted);
   margin: 0;
   line-height: 1.4;
 }
@@ -555,14 +541,14 @@
 .anaArrow {
   margin-left: auto;
   font-size: 1.1rem;
-  color: #7c3aed;
+  color: var(--brand);
   flex-shrink: 0;
 }
 
 /* ── Skeleton ────────────────────────────────────────────── */
 .skeletonCard {
   min-height: 110px;
-  background: linear-gradient(
+  background: var(--surface)
     90deg,
     rgba(255,255,255,0.25) 25%,
     rgba(255,255,255,0.45) 50%,

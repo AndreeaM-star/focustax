@@ -92,7 +92,7 @@ export default function BanciPage() {
           <p style={{ fontSize: "2rem", marginBottom: "1rem" }}>🏦</p>
           <p style={{ fontWeight: 600, marginBottom: "0.5rem" }}>Niciun cont bancar conectat</p>
           <p style={{ fontSize: "0.9rem" }}>Adaugă conturile firmei din Setări pentru a vedea soldurile și tranzacțiile.</p>
-          <a href="/manager/settings" style={{ display: "inline-block", marginTop: "1rem", background: "#1d4ed8", color: "#fff", padding: "0.5rem 1.25rem", borderRadius: "6px", textDecoration: "none", fontWeight: 600 }}>
+          <a href="/manager/settings" style={{ display: "inline-block", marginTop: "1rem", background: "var(--brand)", color: "var(--brand-ink)", padding: "0.5rem 1.25rem", borderRadius: "6px", textDecoration: "none", fontWeight: 600 }}>
             Adaugă cont bancar →
           </a>
         </div>

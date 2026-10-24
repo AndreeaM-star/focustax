@@ -16,13 +16,13 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.9rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   letter-spacing: -0.5px;
 }
 
 .pageSubtitle {
   font-size: 0.87rem;
-  color: #6b7280;
+  color: var(--muted);
   margin-top: 4px;
 }
 
@@ -34,9 +34,9 @@
 }
 
 .btnPrimary {
-  background: rgba(37, 99, 235, 0.82);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.3);
+  background: var(--brand);
+  color: var(--brand-ink);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 11px 22px;
   font-size: 0.9rem;
@@ -48,25 +48,22 @@
 .btnPrimary:hover { transform: translateY(-2px); }
 
 .btnSecondary {
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.9);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 11px 18px;
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
-  color: #374151;
+  color: var(--ink-2);
   transition: background 0.15s;
 }
-.btnSecondary:hover { background: rgba(255,255,255,0.8); }
+.btnSecondary:hover { background: var(--surface); }
 
 /* ── Quick Calculator ────────────────────────────────────── */
 .quickCalc {
-  background: rgba(255,255,255,0.32);
-  backdrop-filter: blur(40px) saturate(280%);
-  -webkit-backdrop-filter: blur(40px) saturate(280%);
-  border: 1px solid rgba(255,255,255,0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px 28px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.09);
@@ -76,7 +73,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 18px;
 }
 
@@ -93,25 +90,25 @@
   gap: 6px;
   font-size: 0.82rem;
   font-weight: 700;
-  color: #374151;
+  color: var(--ink-2);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .calcInput {
-  background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(255,255,255,0.9);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.95rem;
-  color: #1a1a2e;
+  color: var(--ink);
   outline: none;
   font-family: var(--font-open-sans), sans-serif;
   transition: border-color 0.15s;
 }
 
 .calcInput:focus {
-  border-color: rgba(37,99,235,0.4);
+  border-color: var(--brand-line);
   box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
 }
 
@@ -125,8 +122,8 @@
 }
 
 .calcItem {
-  background: rgba(255,255,255,0.4);
-  border: 1px solid rgba(255,255,255,0.7);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 12px 14px;
   text-align: center;
@@ -134,15 +131,15 @@
 
 .calcDeduction { opacity: 0.8; }
 .calcNet {
-  background: rgba(37,99,235,0.08);
-  border-color: rgba(37,99,235,0.2);
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
 }
 
 .calcItemLabel {
   display: block;
   font-size: 0.72rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--faint);
   text-transform: uppercase;
   letter-spacing: 0.3px;
   margin-bottom: 6px;
@@ -153,7 +150,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 
 .calcItemValueBig {
@@ -161,16 +158,16 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #2563eb;
+  color: var(--brand);
 }
 
 .calcAngajator {
-  background: rgba(245,158,11,0.08);
-  border: 1px solid rgba(245,158,11,0.2);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.84rem;
-  color: #92400e;
+  color: var(--accent);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -184,10 +181,8 @@
 }
 
 .summaryCard {
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(24px) saturate(250%);
-  -webkit-backdrop-filter: blur(24px) saturate(250%);
-  border: 1px solid rgba(255,255,255,0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px 18px;
   text-align: center;
@@ -199,15 +194,15 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-bottom: 5px;
 }
 
-.numGreen { color: #059669; }
+.numGreen { color: var(--ok); }
 
 .summaryLabel {
   font-size: 0.72rem;
-  color: #9ca3af;
+  color: var(--faint);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -221,10 +216,8 @@
 }
 
 .employeeCard {
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255,255,255,0.7);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.07);
@@ -234,8 +227,8 @@
 .employeeCard:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
 
 .employeeCardSelected {
-  border-color: rgba(37,99,235,0.3);
-  background: rgba(255,255,255,0.32);
+  border-color: var(--brand-line);
+  background: var(--surface);
 }
 
 .employeeHeader {
@@ -258,8 +251,8 @@
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: #fff;
+  background: var(--brand);
+  color: var(--brand-ink);
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   font-size: 0.9rem;
@@ -273,12 +266,12 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 
 .employeeFunctie {
   font-size: 0.82rem;
-  color: #6b7280;
+  color: var(--muted);
   margin-top: 2px;
 }
 
@@ -286,34 +279,34 @@
 
 .employeeBrut {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--muted);
 }
 
 .employeeNet {
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #059669;
+  color: var(--ok);
 }
 
 .pontajWarn {
   font-size: 0.76rem;
-  color: #d97706;
+  color: var(--accent);
   font-weight: 600;
   margin-top: 2px;
 }
 
 .expandIcon {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--faint);
   flex-shrink: 0;
 }
 
 /* ── Salary Details ──────────────────────────────────────── */
 .salaryDetails {
-  border-top: 1px solid rgba(255,255,255,0.6);
+  border-top: 1px solid var(--border);
   padding: 16px 20px 20px;
-  background: rgba(255,255,255,0.12);
+  background: var(--surface);
 }
 
 .salaryGrid {
@@ -329,16 +322,16 @@
   font-size: 0.88rem;
   padding: 6px 10px;
   border-radius: 8px;
-  color: #374151;
+  color: var(--ink-2);
 }
 
-.deductRow { color: #9ca3af; }
-.benefitRow { color: #059669 !important; }
+.deductRow { color: var(--faint); }
+.benefitRow { color: var(--ok) !important; }
 
 .netRow {
-  background: rgba(37,99,235,0.06);
-  border: 1px solid rgba(37,99,235,0.15);
-  color: #1a1a2e !important;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  color: var(--ink) !important;
   font-size: 0.95rem;
   margin-top: 4px;
 }
@@ -346,12 +339,12 @@
 .angajatorBox {
   display: flex;
   justify-content: space-between;
-  background: rgba(245,158,11,0.08);
-  border: 1px solid rgba(245,158,11,0.2);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
   border-radius: 10px;
   padding: 10px 12px;
   font-size: 0.84rem;
-  color: #92400e;
+  color: var(--accent);
   margin-bottom: 14px;
 }
 
@@ -365,13 +358,13 @@
 
 .employeeMeta {
   font-size: 0.78rem;
-  color: #9ca3af;
+  color: var(--faint);
 }
 
 .deleteBtn {
-  background: rgba(239,68,68,0.08);
-  border: 1px solid rgba(239,68,68,0.2);
-  color: #dc2626;
+  background: var(--danger-soft);
+  border: 1px solid var(--danger);
+  color: var(--danger);
   border-radius: 8px;
   padding: 6px 12px;
   font-size: 0.8rem;
@@ -379,14 +372,13 @@
   cursor: pointer;
   transition: background 0.15s;
 }
-.deleteBtn:hover { background: rgba(239,68,68,0.15); }
+.deleteBtn:hover { background: var(--danger-soft); }
 
 /* ── Modal ───────────────────────────────────────────────── */
 .modalOverlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(8px);
   z-index: 500;
   display: flex;
   align-items: center;
@@ -396,9 +388,7 @@
 
 .modal {
   background: rgba(240,245,255,0.92);
-  backdrop-filter: blur(48px) saturate(300%);
-  -webkit-backdrop-filter: blur(48px) saturate(300%);
-  border: 1px solid rgba(255,255,255,0.9);
+  border: 1px solid var(--border);
   border-radius: 24px;
   box-shadow: 0 24px 80px rgba(0,0,0,0.2);
   width: 100%;
@@ -412,23 +402,23 @@
   align-items: center;
   justify-content: space-between;
   padding: 22px 28px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.6);
+  border-bottom: 1px solid var(--border);
 }
 
 .modalHeader h2 {
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 
 .closeBtn {
-  background: rgba(0,0,0,0.06);
+  background: var(--surface-2);
   border: none;
   border-radius: 8px;
   padding: 6px 10px;
   cursor: pointer;
-  color: #6b7280;
+  color: var(--muted);
 }
 
 .form {
@@ -450,18 +440,18 @@
   gap: 6px;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #374151;
+  color: var(--ink-2);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .input {
-  background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(255,255,255,0.9);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.9rem;
-  color: #1a1a2e;
+  color: var(--ink);
   outline: none;
   font-family: var(--font-open-sans), sans-serif;
   transition: border-color 0.15s;
@@ -469,26 +459,26 @@
 }
 
 .input:focus {
-  border-color: rgba(37,99,235,0.4);
+  border-color: var(--brand-line);
   box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
 }
 
 .tvaPreview {
-  background: rgba(37,99,235,0.06);
-  border: 1px solid rgba(37,99,235,0.15);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.85rem;
-  color: #374151;
+  color: var(--ink-2);
 }
 
 .d112Note {
-  background: rgba(16,185,129,0.07);
-  border: 1px solid rgba(16,185,129,0.2);
+  background: var(--ok-soft);
+  border: 1px solid var(--ok);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.82rem;
-  color: #065f46;
+  color: var(--ok);
   font-weight: 500;
 }
 

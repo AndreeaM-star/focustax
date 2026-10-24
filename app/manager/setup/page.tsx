@@ -186,7 +186,7 @@ export default function SetupPage() {
 
         {tab === "existing" ? (
           <div className={styles.existingSection}>
-            <p style={{ fontSize: "0.88rem", color: "#64748b", marginBottom: "1.25rem" }}>
+            <p style={{ fontSize: "0.88rem", color: "var(--muted)", marginBottom: "1.25rem" }}>
               Introdu token-ul de sesiune primit la configurarea firmei pentru a accesa contul existent.
             </p>
             {existingError && <div className={styles.error}>❌ {existingError}</div>}
@@ -207,8 +207,8 @@ export default function SetupPage() {
                 </button>
               </div>
             </form>
-            <p style={{ textAlign: "center", fontSize: "0.8rem", color: "#9ca3af", marginTop: "1rem" }}>
-              Nu ai token? <button onClick={() => setTab("new")} style={{ background: "none", border: "none", color: "#2563eb", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600 }}>Creează o firmă nouă</button>
+            <p style={{ textAlign: "center", fontSize: "0.8rem", color: "var(--faint)", marginTop: "1rem" }}>
+              Nu ai token? <button onClick={() => setTab("new")} style={{ background: "none", border: "none", color: "var(--brand)", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600 }}>Creează o firmă nouă</button>
             </p>
           </div>
         ) : (
@@ -225,11 +225,11 @@ export default function SetupPage() {
                     <input type="text" name="cui" value={form.cui} onChange={handleChange}
                       placeholder="ex: RO12345678" required style={{ flex: 1 }} />
                     <button type="button" onClick={lookupCUI} disabled={cuiLoading}
-                      style={{ padding: "0.65rem 0.9rem", background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: "10px", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600, color: "#1d4ed8", whiteSpace: "nowrap", flexShrink: 0 }}>
+                      style={{ padding: "0.65rem 0.9rem", background: "var(--surface-2)", border: "1px solid #bfdbfe", borderRadius: "10px", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600, color: "var(--brand)", whiteSpace: "nowrap", flexShrink: 0 }}>
                       {cuiLoading ? "..." : "🔍 Caută"}
                     </button>
                   </div>
-                  <span style={{ fontSize: "0.72rem", color: "#9ca3af", marginTop: "0.2rem" }}>Completează CUI și apasă Caută pentru date automate din ANAF</span>
+                  <span style={{ fontSize: "0.72rem", color: "var(--faint)", marginTop: "0.2rem" }}>Completează CUI și apasă Caută pentru date automate din ANAF</span>
                 </div>
                 <div className={styles.field}>
                   <label>Nume Companie *</label>
@@ -281,8 +281,8 @@ export default function SetupPage() {
                   <label>IBAN</label>
                   <input type="text" name="iban" value={form.iban} onChange={handleChange}
                     placeholder="RO49 BTRL xxxx xxxx xxxx xxxx"
-                    style={ibanError ? { borderColor: "#ef4444" } : {}} />
-                  {ibanError && <span style={{ fontSize: "0.72rem", color: "#ef4444", marginTop: "0.2rem" }}>{ibanError}</span>}
+                    style={ibanError ? { borderColor: "var(--danger)" } : {}} />
+                  {ibanError && <span style={{ fontSize: "0.72rem", color: "var(--danger)", marginTop: "0.2rem" }}>{ibanError}</span>}
                 </div>
               </div>
 

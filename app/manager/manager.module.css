@@ -1,267 +1,58 @@
-/* ── Manager Shell Layout ───────────────────────────────── */
-.shell {
-  display: grid;
-  grid-template-columns: 256px 1fr;
-  min-height: 100dvh;
-}
+.shell { display: flex; min-height: 100vh; background: var(--bg); }
 
-/* ── Sidebar ────────────────────────────────────────────── */
 .sidebar {
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(48px) saturate(300%) brightness(1.1);
-  -webkit-backdrop-filter: blur(48px) saturate(300%) brightness(1.1);
-  border-right: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  padding: 20px 14px 20px;
-  position: sticky;
-  top: 0;
-  height: 100dvh;
-  overflow-y: auto;
-  z-index: 100;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: 248px;
+  display: flex; flex-direction: column;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 18px 12px;
+  z-index: 60;
+  transition: transform 0.25s var(--ease);
 }
+.sidebarLogo { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 8px 18px; }
+.logoLink { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.1rem; letter-spacing: -0.03em; color: var(--ink); }
+.logoMark { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: var(--brand); color: var(--brand-ink); font-size: 0.9rem; }
+.logoAccent { color: var(--brand); }
+.managerBadge { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand); background: var(--brand-soft); padding: 3px 8px; border-radius: 99px; }
 
-.sidebarLogo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 10px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  margin-bottom: 14px;
-}
-
-.logoLink {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  text-decoration: none;
-}
-
-.logoLink span {
-  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.managerBadge {
-  background: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.22);
-  color: #2563eb;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  padding: 2px 8px;
-  border-radius: 8px;
-  text-transform: uppercase;
-}
-
-/* ── Nav items ───────────────────────────────────────────── */
-.sidebarNav {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  flex: 1;
-}
-
-.navItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: #6b7280;
-  text-decoration: none;
-  transition: all 0.15s ease;
-  position: relative;
-}
-
-.navItem:hover {
-  background: rgba(255, 255, 255, 0.55);
-  color: #1a1a2e;
-  transform: translateX(2px);
-}
-
-.navItemActive {
-  background: linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(124,58,237,0.08) 100%);
-  color: #2563eb !important;
-  border: 1px solid rgba(37, 99, 235, 0.22);
-  box-shadow: 0 2px 8px rgba(37,99,235,0.12);
-}
-
-.navItemActive:hover {
-  background: linear-gradient(135deg, rgba(37,99,235,0.16) 0%, rgba(124,58,237,0.12) 100%);
-  transform: none;
-}
-
-.navIcon {
-  font-size: 1.05rem;
-  width: 22px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
+.sidebarNav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.navItem { display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 8px; color: var(--ink-2); font-weight: 500; font-size: 0.925rem; transition: background 0.15s, color 0.15s; }
+.navItem:hover { background: var(--surface-2); color: var(--ink); }
+.navItemActive { background: var(--brand-soft); color: var(--brand); font-weight: 600; }
+.navIcon { color: var(--muted); }
+.navItemActive .navIcon { color: var(--brand); }
 .navLabel { flex: 1; }
 
-.navDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #2563eb;
-  flex-shrink: 0;
-}
+.sidebarFooter { border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.firmaBadge { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 10px; }
+.firmaBadge:hover { background: var(--surface-2); }
+.firmaAvatar { width: 34px; height: 34px; flex-shrink: 0; border-radius: 9px; display: grid; place-items: center; background: var(--ink); color: var(--bg); font-weight: 700; }
+.firmaName { display: block; font-weight: 600; font-size: 0.875rem; color: var(--ink); line-height: 1.3; }
+.firmaCui { display: block; font-size: 0.75rem; color: var(--muted); }
+.footerRow { display: flex; align-items: center; justify-content: space-between; padding: 0 4px; }
+.backToSite { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+.backToSite:hover { color: var(--brand); }
 
-/* ── Sidebar Footer ─────────────────────────────────────── */
-.sidebarFooter {
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.contentWrap { flex: 1; min-width: 0; margin-left: 248px; }
+.content { padding: 32px clamp(16px, 3vw, 40px) 64px; max-width: 1240px; }
 
-.firmaBadge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 12px;
-  padding: 10px 12px;
-}
+.mobileTopbar { display: none; }
+.overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.35); z-index: 55; }
 
-.firmaAvatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: #fff;
-  font-family: var(--font-montserrat), sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.firmaName {
-  display: block;
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #1a1a2e;
-}
-
-.firmaCui {
-  display: block;
-  font-size: 0.72rem;
-  color: #9ca3af;
-  margin-top: 1px;
-}
-
-.backToSite {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #9ca3af;
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  transition: color 0.15s, background 0.15s;
-}
-
-.backToSite:hover {
-  color: #6b7280;
-  background: rgba(255, 255, 255, 0.4);
-}
-
-/* ── Content Area ────────────────────────────────────────── */
-.contentWrap {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
-}
-
-.content {
-  flex: 1;
-  padding: 32px 36px 60px;
-  max-width: 1100px;
-  width: 100%;
-}
-
-/* ── Mobile Topbar ────────────────────────────────────────── */
-.mobileTopbar {
-  display: none;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 20px;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.menuBtn {
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #1a1a2e;
-}
-
-.mobileTitle {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1a1a2e;
-}
-
-.mobileTitle span { color: #2563eb; }
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  z-index: 99;
-}
-
-/* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .shell {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: fixed;
-    left: -270px;
-    top: 0;
-    height: 100dvh;
-    width: 256px;
-    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .sidebarOpen {
-    left: 0;
-    box-shadow: 8px 0 40px rgba(0, 0, 0, 0.2);
-  }
-
+  .sidebar { transform: translateX(-100%); box-shadow: var(--shadow-lg); }
+  .sidebarOpen { transform: none; }
+  .contentWrap { margin-left: 0; }
   .mobileTopbar {
-    display: flex;
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; gap: 12px;
+    height: 56px; padding: 0 12px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
   }
-
-  .content {
-    padding: 20px 16px 60px;
-  }
+  .menuBtn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 8px; color: var(--ink); }
+  .menuBtn:hover { background: var(--surface-2); }
+  .mobileTitle { font-weight: 800; letter-spacing: -0.02em; }
+  .mobileTitle span { color: var(--brand); }
+  .content { padding-top: 20px; }
 }

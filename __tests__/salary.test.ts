@@ -1,32 +1,25 @@
 import { calcSalariu, calcTVA, calcPlafonTVA, nextInvoiceNumber } from '../lib/salary';
 
-describe('Salary Calculations', () => {
-  test('calculates salary correctly for employee with 1 child', () => {
-    const result = calcSalariu(5000, 1, 21, 21);
+describe('Salary adapter (Manager HR)', () => {
+  const OCT_2026 = new Date('2026-10-15T12:00:00Z');
 
-    expect(result.brut).toBe(5000);
-    expect(result.cas).toBe(1250); // 25% of 5000
-    expect(result.cass).toBe(500);  // 10% of 5000
-    expect(result.deducere).toBe(759); // 459 base + 300 for child
-    expect(result.bazaImpozit).toBe(2491); // 5000 - 1250 - 500 - 759
-    expect(result.impozit).toBe(249); // 10% of 2491
-    expect(result.net).toBe(3001); // 5000 - 1250 - 500 - 249
-    expect(result.camAngajator).toBe(200); // 4% of 5000
-    expect(result.totalAngajator).toBe(5200);
+  test('delegates to lib/fiscal and maps employer cost', () => {
+    const r = calcSalariu(10000, 0, 21, 21, OCT_2026);
+    expect(r.net).toBe(5850);
+    expect(r.camAngajator).toBe(225);
+    expect(r.totalAngajator).toBe(10225);
   });
 
-  test('calculates salary with partial attendance', () => {
-    const result = calcSalariu(5000, 0, 15, 21);
-
-    expect(result.brut).toBe(3571); // 5000 * (15/21)
-    expect(result.net).toBe(2149); // actual calculation
+  test('prorates gross by attendance', () => {
+    const r = calcSalariu(5000, 0, 15, 21, OCT_2026);
+    expect(r.brut).toBe(3571);
   });
 
-  test('calculates salary for minimum wage', () => {
-    const result = calcSalariu(4050, 0, 21, 21);
-
-    expect(result.brut).toBe(4050);
-    expect(result.deducere).toBe(600); // minimum deduction
+  test('dependents raise the personal deduction', () => {
+    const fara = calcSalariu(4500, 0, 21, 21, OCT_2026);
+    const cu = calcSalariu(4500, 2, 21, 21, OCT_2026);
+    expect(cu.deducere).toBeGreaterThan(fara.deducere);
+    expect(cu.net).toBeGreaterThan(fara.net);
   });
 });
 
@@ -49,6 +42,6 @@ describe('Invoice Number Generation', () => {
   });
 
   test('handles malformed numbers', () => {
-    expect(nextInvoiceNumber('INVALID')).toBe('F2026-0001');
+    expect(nextInvoiceNumber('INVALID')).toBe(`F${new Date().getFullYear()}-0001`);
   });
 });

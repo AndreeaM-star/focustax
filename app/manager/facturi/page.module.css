@@ -27,23 +27,21 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.9rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   letter-spacing: -0.5px;
 }
 
 .pageSubtitle {
   font-size: 0.87rem;
-  color: #6b7280;
+  color: var(--muted);
   margin-top: 4px;
 }
 
 /* ── Buttons ─────────────────────────────────────────────── */
 .btnPrimary {
-  background: rgba(37, 99, 235, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.3);
+  background: var(--brand);
+  color: var(--brand-ink);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 11px 22px;
   font-size: 0.9rem;
@@ -59,30 +57,28 @@
 }
 
 .btnSecondary {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.9);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 11px 22px;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  color: #374151;
+  color: var(--ink-2);
   transition: background 0.15s;
 }
 
-.btnSecondary:hover { background: rgba(255,255,255,0.8); }
+.btnSecondary:hover { background: var(--surface); }
 
 /* ── Notification ────────────────────────────────────────── */
 .notif {
-  background: rgba(37, 99, 235, 0.08);
-  border: 1px solid rgba(37, 99, 235, 0.2);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
   border-radius: 12px;
   padding: 12px 18px;
   font-size: 0.87rem;
   font-weight: 500;
-  color: #1e40af;
+  color: var(--brand);
   animation: slideIn 0.3s ease-out;
 }
 
@@ -94,10 +90,8 @@
 }
 
 .summaryCard {
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(24px) saturate(250%);
-  -webkit-backdrop-filter: blur(24px) saturate(250%);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px 18px;
   box-shadow: 0 3px 16px rgba(0,0,0,0.07);
@@ -109,16 +103,16 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   line-height: 1;
   margin-bottom: 5px;
 }
 
-.numGreen { color: #059669; }
+.numGreen { color: var(--ok); }
 
 .summaryLabel {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--faint);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -134,24 +128,24 @@
 .filterBtn {
   padding: 7px 14px;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.4);
+  border: 1px solid var(--border);
+  background: var(--surface);
   font-size: 0.82rem;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--muted);
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .filterBtn:hover {
-  background: rgba(255,255,255,0.65);
-  color: #1a1a2e;
+  background: var(--surface);
+  color: var(--ink);
 }
 
 .filterBtnActive {
-  background: rgba(37, 99, 235, 0.1);
-  border-color: rgba(37, 99, 235, 0.3);
-  color: #2563eb;
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
+  color: var(--brand);
 }
 
 /* ── Invoice List ────────────────────────────────────────── */
@@ -162,10 +156,8 @@
 }
 
 .invoiceCard {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(32px) saturate(280%);
-  -webkit-backdrop-filter: blur(32px) saturate(280%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 18px 20px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.07);
@@ -179,7 +171,7 @@
 
 .invoiceCardNew {
   animation: glow 1.5s ease-in-out 2;
-  border-color: rgba(37, 99, 235, 0.35);
+  border-color: var(--brand-line);
 }
 
 .invoiceTop {
@@ -195,7 +187,7 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
   margin-right: 10px;
 }
 
@@ -208,10 +200,10 @@
   letter-spacing: 0.3px;
 }
 
-.status_green  { background: rgba(16,185,129,0.12); color: #059669; border: 1px solid rgba(16,185,129,0.25); }
-.status_amber  { background: rgba(245,158,11,0.12); color: #d97706; border: 1px solid rgba(245,158,11,0.25); }
-.status_red    { background: rgba(239,68,68,0.12);  color: #dc2626; border: 1px solid rgba(239,68,68,0.25); }
-.status_gray   { background: rgba(156,163,175,0.12); color: #6b7280; border: 1px solid rgba(156,163,175,0.25); }
+.status_green  { background: var(--ok-soft); color: var(--ok); border: 1px solid var(--ok); }
+.status_amber  { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); }
+.status_red    { background: var(--danger-soft);  color: var(--danger); border: 1px solid var(--danger); }
+.status_gray   { background: rgba(156,163,175,0.12); color: var(--muted); border: 1px solid rgba(156,163,175,0.25); }
 
 .invoiceValue  { text-align: right; }
 .invoiceAmount {
@@ -219,12 +211,12 @@
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 .invoiceTVA {
   display: block;
   font-size: 0.78rem;
-  color: #9ca3af;
+  color: var(--faint);
 }
 
 .invoiceDetails {
@@ -237,17 +229,17 @@
 .invoiceClient {
   font-size: 0.88rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--ink-2);
 }
 
 .invoiceCUI {
   font-size: 0.82rem;
-  color: #9ca3af;
+  color: var(--faint);
 }
 
 .invoiceDesc {
   font-size: 0.84rem;
-  color: #6b7280;
+  color: var(--muted);
   margin-bottom: 12px;
   line-height: 1.4;
 }
@@ -258,8 +250,8 @@
   gap: 16px;
   flex-wrap: wrap;
   font-size: 0.78rem;
-  color: #9ca3af;
-  border-top: 1px solid rgba(255,255,255,0.5);
+  color: var(--faint);
+  border-top: 1px solid var(--border);
   padding-top: 10px;
 }
 
@@ -280,7 +272,7 @@
 .emptyState {
   text-align: center;
   padding: 48px;
-  color: #9ca3af;
+  color: var(--faint);
 }
 .emptyState span { display: block; font-size: 2.5rem; margin-bottom: 12px; }
 .emptyState p { font-size: 0.9rem; }
@@ -290,8 +282,6 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   z-index: 500;
   display: flex;
   align-items: center;
@@ -301,9 +291,7 @@
 
 .modal {
   background: rgba(240, 245, 255, 0.92);
-  backdrop-filter: blur(48px) saturate(300%);
-  -webkit-backdrop-filter: blur(48px) saturate(300%);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
   border-radius: 24px;
   box-shadow: 0 24px 80px rgba(0,0,0,0.2);
   width: 100%;
@@ -318,27 +306,27 @@
   align-items: center;
   justify-content: space-between;
   padding: 22px 28px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.6);
+  border-bottom: 1px solid var(--border);
 }
 
 .modalHeader h2 {
   font-family: var(--font-montserrat), sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--ink);
 }
 
 .closeBtn {
-  background: rgba(0,0,0,0.06);
+  background: var(--surface-2);
   border: none;
   border-radius: 8px;
   padding: 6px 10px;
   cursor: pointer;
   font-size: 0.9rem;
-  color: #6b7280;
+  color: var(--muted);
   transition: background 0.15s;
 }
-.closeBtn:hover { background: rgba(0,0,0,0.12); }
+.closeBtn:hover { background: var(--surface-2); }
 
 /* ── Form ────────────────────────────────────────────────── */
 .form {
@@ -360,18 +348,18 @@
   gap: 6px;
   font-size: 0.82rem;
   font-weight: 700;
-  color: #374151;
+  color: var(--ink-2);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .input {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.9rem;
-  color: #1a1a2e;
+  color: var(--ink);
   outline: none;
   font-family: var(--font-open-sans), sans-serif;
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -379,28 +367,28 @@
 }
 
 .input:focus {
-  border-color: rgba(37, 99, 235, 0.4);
+  border-color: var(--brand-line);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
 .textarea { resize: vertical; min-height: 72px; }
 
 .tvaPreview {
-  background: rgba(37,99,235,0.06);
-  border: 1px solid rgba(37,99,235,0.15);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.85rem;
-  color: #374151;
+  color: var(--ink-2);
 }
 
 .anafNote {
-  background: rgba(16,185,129,0.07);
-  border: 1px solid rgba(16,185,129,0.2);
+  background: var(--ok-soft);
+  border: 1px solid var(--ok);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 0.82rem;
-  color: #065f46;
+  color: var(--ok);
   font-weight: 500;
 }
 

@@ -1,99 +1,43 @@
 import { MetadataRoute } from "next";
+import { absUrl } from "@/lib/site";
+import { ghiduri } from "./(site)/ghiduri/[slug]/data";
+import { declaratii } from "./(site)/declaratii/[cod]/data";
+import { COMPARATII_IDS } from "./(site)/comparatii/[tip]/data";
+import { SISTEME_IDS } from "./(site)/sisteme/[sistem]/data";
+import { CALCULATOARE_IDS } from "./(site)/calculator/[tip]/meta";
+import { NOUTATI } from "@/lib/noutati";
 
 export const dynamic = "force-static";
 
-const BASE_URL = "https://focustax.ro";
+type Freq = MetadataRoute.Sitemap[number]["changeFrequency"];
 
-const ghiduriSlugs = [
-  "inregistrare-pfa",
-  "sistem-real-norma",
-  "contributii-sociale",
-  "d212-pfa",
-  "srl-vs-micro",
-  "dividende",
-  "inregistrare-tva",
-  "impozit-chirii",
-  "spv-ghid",
-  "salarii-retineri",
-  "sponsorizari",
-];
-
-const comparatiiIds = [
-  "tva",
-  "impozit-venit",
-  "impozit-profit",
-  "contributii-sociale",
-  "dividende",
-  "prag-tva",
-  "impozit-avere",
-];
-
-const sistemeSlugs = [
-  "ro-e-factura",
-  "spv",
-  "ro-e-tva",
-  "ro-e-transport",
-  "one-stop-shop",
-  "sme-ss",
-  "e-filing",
-  "ro-e-sigiliu",
-];
-
-const declaratiiCoduri = [
-  "d300", "d301", "d390", "d394",
-  "d101", "d012", "d100",
-  "d200", "d212", "d220", "d230",
-  "d112", "d204", "d216",
-];
+const entry = (path: string, priority: number, changeFrequency: Freq = "monthly") => ({
+  url: absUrl(path),
+  lastModified: new Date(),
+  changeFrequency,
+  priority,
+});
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes: MetadataRoute.Sitemap = [
-    { url: BASE_URL, lastModified: new Date(), priority: 1.0 },
-    { url: `${BASE_URL}/declaratii`, lastModified: new Date(), priority: 0.9 },
-    { url: `${BASE_URL}/ghiduri`, lastModified: new Date(), priority: 0.9 },
-    { url: `${BASE_URL}/comparatii`, lastModified: new Date(), priority: 0.85 },
-    { url: `${BASE_URL}/sisteme`, lastModified: new Date(), priority: 0.85 },
-    { url: `${BASE_URL}/calculator`, lastModified: new Date(), priority: 0.9 },
-    { url: `${BASE_URL}/calculator/forme-juridice`, lastModified: new Date(), priority: 0.9 },
-    { url: `${BASE_URL}/calendar`, lastModified: new Date(), priority: 0.85 },
-    { url: `${BASE_URL}/glosar`, lastModified: new Date(), priority: 0.8 },
-    { url: `${BASE_URL}/ghiduri/impozite-locale-2026`, lastModified: new Date(), priority: 0.85 },
-    { url: `${BASE_URL}/ghiduri/facilitati-fiscale`, lastModified: new Date(), priority: 0.8 },
-    { url: `${BASE_URL}/ghiduri/d212-ghid-completare`, lastModified: new Date(), priority: 0.9 },
-    { url: `${BASE_URL}/noutati`, lastModified: new Date(), priority: 0.8 },
-    { url: `${BASE_URL}/contact`, lastModified: new Date(), priority: 0.6 },
+  return [
+    entry("/", 1.0, "weekly"),
+    entry("/calculator/forme-juridice", 0.9),
+    entry("/declaratii", 0.9),
+    entry("/ghiduri", 0.9),
+    entry("/ghiduri/d212-ghid-completare", 0.9),
+    entry("/ghiduri/impozite-locale-2026", 0.85),
+    entry("/ghiduri/facilitati-fiscale", 0.8),
+    entry("/noutati", 0.85, "weekly"),
+    entry("/calendar", 0.85),
+    entry("/comparatii", 0.8),
+    entry("/sisteme", 0.8),
+    entry("/glosar", 0.75),
+    entry("/contact", 0.5, "yearly"),
+    ...CALCULATOARE_IDS.map((tip) => entry(`/calculator/${tip}`, 0.85)),
+    ...Object.keys(declaratii).map((cod) => entry(`/declaratii/${cod}`, 0.7)),
+    ...Object.keys(ghiduri).map((slug) => entry(`/ghiduri/${slug}`, 0.8)),
+    ...COMPARATII_IDS.map((id) => entry(`/comparatii/${id}`, 0.7)),
+    ...SISTEME_IDS.map((id) => entry(`/sisteme/${id}`, 0.7)),
+    ...NOUTATI.map((n) => entry(`/noutati/${n.slug}`, 0.6, "yearly")),
   ];
-
-  const comparatiiRoutes: MetadataRoute.Sitemap = comparatiiIds.map((id) => ({
-    url: `${BASE_URL}/comparatii/${id}`,
-    lastModified: new Date(),
-    priority: 0.8,
-  }));
-
-  const declaratiiRoutes: MetadataRoute.Sitemap = declaratiiCoduri.map((cod) => ({
-    url: `${BASE_URL}/declaratii/${cod}`,
-    lastModified: new Date(),
-    priority: 0.7,
-  }));
-
-  const ghiduriRoutes: MetadataRoute.Sitemap = ghiduriSlugs.map((slug) => ({
-    url: `${BASE_URL}/ghiduri/${slug}`,
-    lastModified: new Date(),
-    priority: 0.75,
-  }));
-
-  const sistemeRoutes: MetadataRoute.Sitemap = sistemeSlugs.map((slug) => ({
-    url: `${BASE_URL}/sisteme/${slug}`,
-    lastModified: new Date(),
-    priority: 0.8,
-  }));
-
-  const calculatorTips = ["salariu", "pfa", "srl", "chirii", "dividende", "tva"];
-  const calculatorRoutes: MetadataRoute.Sitemap = calculatorTips.map((tip) => ({
-    url: `${BASE_URL}/calculator/${tip}`,
-    lastModified: new Date(),
-    priority: 0.85,
-  }));
-
-  return [...staticRoutes, ...declaratiiRoutes, ...ghiduriRoutes, ...comparatiiRoutes, ...sistemeRoutes, ...calculatorRoutes];
 }

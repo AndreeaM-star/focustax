@@ -3,16 +3,18 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Icon, { type IconName } from "@/components/ui/Icon";
+import ThemeToggle from "@/components/ThemeToggle";
 import styles from "./manager.module.css";
 
-const navItems = [
-  { href: "/manager",          label: "Dashboard",       icon: "📊", exact: true },
-  { href: "/manager/facturi",  label: "e-Factura",       icon: "🧾" },
-  { href: "/manager/tva",      label: "e-VAT",           icon: "📈" },
-  { href: "/manager/banci",    label: "Open Banking",    icon: "🏦" },
-  { href: "/manager/hr",       label: "HR & Salarii",    icon: "👥" },
-  { href: "/manager/ai",       label: "ANA — Asistent AI", icon: "🤖" },
-  { href: "/manager/settings", label: "Setări",          icon: "⚙️" },
+const navItems: { href: string; label: string; icon: IconName; exact?: boolean }[] = [
+  { href: "/manager",          label: "Panou general",     icon: "chart", exact: true },
+  { href: "/manager/facturi",  label: "Facturi",           icon: "receipt" },
+  { href: "/manager/tva",      label: "TVA",               icon: "percent" },
+  { href: "/manager/banci",    label: "Bănci",             icon: "bank" },
+  { href: "/manager/hr",       label: "Salariați",         icon: "users" },
+  { href: "/manager/ai",       label: "Asistent ANA",      icon: "bot" },
+  { href: "/manager/settings", label: "Setări",            icon: "settings" },
 ];
 
 function clearCompany() {
@@ -88,7 +90,8 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
       <aside className={`${styles.sidebar} ${mobileOpen ? styles.sidebarOpen : ""}`}>
         <div className={styles.sidebarLogo}>
           <Link href="/" className={styles.logoLink} onClick={() => setMobileOpen(false)}>
-            Focus<span>Tax</span>
+            <span className={styles.logoMark} aria-hidden>F</span>
+            <span>Focus<span className={styles.logoAccent}>Tax</span></span>
           </Link>
           <span className={styles.managerBadge}>Manager</span>
         </div>
@@ -103,9 +106,8 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
                 onClick={() => setMobileOpen(false)}
                 className={`${styles.navItem} ${isActive ? styles.navItemActive : ""}`}
               >
-                <span className={styles.navIcon}>{item.icon}</span>
+                <Icon name={item.icon} size={18} className={styles.navIcon} />
                 <span className={styles.navLabel}>{item.label}</span>
-                {isActive && <span className={styles.navDot} />}
               </Link>
             );
           })}
@@ -121,18 +123,21 @@ export default function ManagerShell({ children }: { children: React.ReactNode }
               </div>
             </Link>
           )}
-          <Link href="/" className={styles.backToSite}>← Înapoi la focustax.ro</Link>
+          <div className={styles.footerRow}>
+            <Link href="/" className={styles.backToSite}><Icon name="arrowLeft" size={16} />Înapoi la site</Link>
+            <ThemeToggle />
+          </div>
         </div>
       </aside>
 
       <div className={styles.contentWrap}>
         <div className={styles.mobileTopbar}>
           <button className={styles.menuBtn} onClick={() => setMobileOpen(!mobileOpen)} aria-label="Meniu">
-            {mobileOpen ? "✕" : "☰"}
+            <Icon name={mobileOpen ? "x" : "menu"} size={22} />
           </button>
-          <span className={styles.mobileTitle}>Focus<span>Tax</span> Manager</span>
+          <span className={styles.mobileTitle}>Focus<span>Tax</span> · Manager</span>
         </div>
-        <main className={styles.content}>{children}</main>
+        <main id="continut" className={styles.content}>{children}</main>
       </div>
     </div>
   );
