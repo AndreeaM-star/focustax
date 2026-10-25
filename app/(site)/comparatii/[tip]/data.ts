@@ -29,7 +29,7 @@ export const COMPARATII: Record<string, TipComparatie> = {
     id: "tva",
     titlu: "TVA — Taxa pe Valoare Adăugată",
     descriere:
-      "Comparație internațională a cotelor standard de TVA. România aplică 21% din ianuarie 2026 — la media europeană. Date actualizate martie 2026.",
+      "Comparație internațională a cotelor standard de TVA. România aplică 21% din august 2025 — la media europeană. Date actualizate martie 2026.",
     unitateMasura: "%",
     culoare: "rgba(37, 99, 235, 0.85)",
     culoareSecundara: "rgba(37, 99, 235, 0.18)",
@@ -537,9 +537,9 @@ export const COMPARATII: Record<string, TipComparatie> = {
 
   "contributii-sociale": {
     id: "contributii-sociale",
-    titlu: "Contribuții Sociale — Angajat + Angajator",
+    titlu: "Contribuții sociale și costul real al unui salariu",
     descriere:
-      "Comparație a totalului contribuțiilor sociale (angajat + angajator) în Europa. România: CAS 25% + CASS 10% (angajat).",
+      "La salariul mediu din fiecare țară europeană: cât plătește angajatorul în total, cât merge la stat (contribuții și impozit) și cât ajunge în mâna angajatului. Sume în euro, 2025.",
     unitateMasura: "%",
     culoare: "rgba(217, 119, 6, 0.85)",
     culoareSecundara: "rgba(217, 119, 6, 0.18)",
@@ -616,15 +616,15 @@ export const COMPARATII: Record<string, TipComparatie> = {
       { nume: "Kazahstan", codISO: "KZ", cotaStandard: 13, sistem: "proporțional", detalii: "10% angajat pensie + 3% angajator", zona: "extra-europa" },
     ],
     contextRomania:
-      "În România, contribuțiile sociale sunt suportate integral de angajat: CAS 25% (pensie) și CASS 10% (sănătate) din salariul brut. Angajatorul plătește doar 2.25% CAM (contribuția asiguratorie pentru muncă). Această structură, introdusă în 2018, transferă povara fiscală asupra salariatului, crescând transparența costurilor.",
+      "Din 2018, aproape toate contribuțiile sunt plătite formal de angajat: CAS 25% (pensie) și CASS 10% (sănătate) din salariul brut, iar angajatorul plătește doar CAM de 2,25%. De aceea netul pare mic raportat la brut (circa 58%). Comparat corect, la costul total al angajatorului, din fiecare 100 € cheltuiți ajung la angajat circa 57 € — un nivel apropiat de Țările de Jos, Finlanda sau Cehia, mai bun decât în Germania sau Belgia și mai slab decât în Bulgaria sau Polonia.",
     mediuEuropean: 36,
     istorie:
       "Contribuțiile sociale moderne au apărut în Germania lui Bismarck, în 1883, odată cu introducerea primei asigurări de sănătate obligatorii la nivel național. Sistemul a fost extins treptat pentru a include pensiile (1889) și asigurarea de șomaj (1927). România a adoptat sistemul de asigurări sociale obligatorii în 1912, sub regele Carol I. Reformele majore post-1990 au restructurat sistemul spre un model contributiv. Marea reformă din 2018 a transferat contribuțiile de la angajator la angajat — salariile brute au crescut compensator, dar rata efectivă a rămas similară.",
     fapteInteresante: [
-      "Franța are cel mai mare nivel de contribuții sociale din Europa (~68% combinat), dar și cel mai generos sistem de protecție socială.",
-      "Danemarca are contribuții sociale foarte mici (~8%), dar finanțează sănătatea și pensiile în principal din impozite pe venit ridicate.",
-      "Georgia are contribuții sociale aproape inexistente (2%) — unul din cele mai mici niveluri din Europa.",
-      "Kosovo aplică doar 5%+5% pentru pensie — modelul contribuțional cel mai simplu din continent.",
+      "Procentele de contribuții nu se pot aduna între angajat și angajator, pentru că se aplică la baze diferite. Comparația corectă se face la costul total plătit de angajator.",
+      "Danemarca are contribuții sociale aproape zero, dar impozit pe venit mare: sănătatea și pensiile sunt finanțate din impozite.",
+      "Lituania a făcut în 2019 aceeași mutare ca România: contribuțiile au trecut aproape integral pe angajat, iar salariile brute au fost majorate compensator.",
+      "În Regatul Unit sănătatea (NHS) e finanțată din impozitele generale, fără o contribuție separată, iar primele £12.570 pe an sunt neimpozabile.",
     ],
   },
 

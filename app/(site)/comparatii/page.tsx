@@ -31,7 +31,7 @@ export default function ComparatiiPage() {
                   title={c.titlu}
                   desc={c.descriere}
                   icon="globe"
-                  meta={ro ? `România: ${ro.cotaStandard}${c.unitateMasura === "%" ? "%" : ` ${c.unitateMasura}`} · media ${c.mediuEuropean}${c.unitateMasura === "%" ? "%" : ` ${c.unitateMasura}`}` : "Compară"}
+                  meta={id === "contributii-sociale" ? "Cost total, taxe și net în euro" : ro ? `România: ${ro.cotaStandard}${c.unitateMasura === "%" ? "%" : ` ${c.unitateMasura}`} · media ${c.mediuEuropean}${c.unitateMasura === "%" ? "%" : ` ${c.unitateMasura}`}` : "Compară"}
                 />
               );
             })}

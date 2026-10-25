@@ -1,0 +1,45 @@
+.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.sortLabel { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--muted); font-weight: 500; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.825rem; color: var(--ink-2); margin-bottom: 12px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+.table th small { display: block; font-size: 0.7rem; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--faint); margin-top: 2px; }
+.table thead th { vertical-align: bottom; white-space: normal; min-width: 88px; padding: 10px 12px; }
+.table td, .table tbody th { padding: 9px 12px; vertical-align: middle; font-size: 0.9rem; }
+.table tbody th.country {
+  position: sticky; left: 0; z-index: 1;
+  background: var(--surface);
+  text-transform: none; letter-spacing: 0;
+  font-size: 0.925rem; font-weight: 600; color: var(--ink);
+  white-space: nowrap; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.table thead th:first-child { position: sticky; left: 0; z-index: 2; }
+.country sup { color: var(--muted); margin-left: 2px; }
+.rank { display: inline-block; width: 22px; color: var(--faint); font-weight: 500; font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-2); }
+.strong { font-weight: 700; color: var(--ink); }
+.net { font-weight: 700; color: var(--brand); }
+.key { font-weight: 700; color: var(--ink); background: var(--brand-soft); }
+.ro td { background: var(--accent-soft); }
+.table tbody .ro th.country { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+.ro .key { background: var(--accent-soft); }
+
+.barCol { min-width: 160px; }
+.bar { display: flex; height: 12px; width: 100%; border-radius: 99px; overflow: hidden; background: var(--surface-2); }
+.bar span { display: block; height: 100%; }
+
+.foot { font-size: 0.825rem; color: var(--muted); margin-top: 10px; }
+
+/* Cum am calculat */
+.method { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+.formula { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.formula li { padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--ink-2); font-size: 0.95rem; }
+.formula b { color: var(--ink); }
+.example { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.example h3 { font-size: 1rem; margin-bottom: 10px; }
+.sources { color: var(--ink-2); font-size: 0.925rem; display: flex; flex-direction: column; gap: 6px; padding-left: 1.1em; }
+.sources a { color: var(--brand); text-decoration: underline; text-underline-offset: 2px; }
+
+@media (max-width: 860px) { .method { grid-template-columns: 1fr; } }
