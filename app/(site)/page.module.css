@@ -70,17 +70,7 @@
 .newsMeta { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--muted); }
 .newsTitle { display: block; margin-top: 8px; font-weight: 600; color: var(--ink); line-height: 1.4; }
 
-.ana {
-  margin-top: 72px;
-  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
-  padding: 32px;
-  border-radius: var(--radius-lg);
-  background: var(--ink);
-  color: var(--bg);
-}
-.ana h2 { color: var(--bg); font-size: 1.5rem; margin-top: 6px; }
-.ana p { color: color-mix(in srgb, var(--bg) 75%, transparent); margin-top: 6px; max-width: 60ch; }
-.anaEyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem !important; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--brand) !important; }
+.alerte { margin-top: 72px; }
 
 @media (max-width: 900px) {
   .heroGrid { grid-template-columns: 1fr; gap: 36px; }

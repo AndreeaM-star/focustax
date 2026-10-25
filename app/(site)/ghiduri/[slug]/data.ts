@@ -37,6 +37,189 @@ export type GhidData = {
 };
 
 export const ghiduri: Record<string, GhidData> = {
+  "investitii-broker-strain-d212": {
+    slug: "investitii-broker-strain-d212",
+    titlu: "Impozitul pe acțiuni și ETF-uri: broker român vs broker străin (XTB, Revolut, IBKR)",
+    categorie: "Persoane Fizice",
+    culoare: "#0b6e4f",
+    badgeBg: "#e3f2ea",
+    desc: "Cât impozit plătești în 2026 pe câștigurile din acțiuni și ETF-uri, de ce contează unde e brokerul, cum declari în D212 câștigurile de la brokeri străini și când datorezi CASS.",
+    ceFaciAfla: [
+      "Diferența dintre brokerii români (3% / 6% reținut) și cei străini (16% declarat de tine)",
+      "Cum se calculează câștigul anual și cum folosești pierderile",
+      "Cum declari dividendele străine și creditul fiscal",
+      "Cum se calculează CASS pe investiții",
+    ],
+    sectiuni: [
+      {
+        titlu: "Unde e brokerul schimbă totul",
+        continut: [
+          "Din 2026, câștigurile din acțiuni și ETF-uri se impozitează diferit în funcție de broker (Legea 239/2025).",
+          "BROKER CU SEDIU ÎN ROMÂNIA (ex. BT Capital Partners, Tradeville, Estinvest, Goldring, XTB prin sucursala din București): brokerul reține impozitul la fiecare câștig — 3% dacă ai deținut titlurile cel puțin 365 de zile, 6% sub 365 de zile. Nu mai declari impozitul în D212.",
+          "BROKER FĂRĂ SEDIU ÎN ROMÂNIA (ex. Interactive Brokers, Trading 212, eToro, Revolut): nu se reține nimic pentru fiscul român. Declari singur câștigul net anual în D212 și plătești 16% până la 25 mai a anului următor.",
+          "Verifică statutul brokerului tău în documentele lui fiscale: dacă primești de la el un certificat de impozit reținut pentru România, e tratat ca intermediar rezident.",
+        ],
+      },
+      {
+        titlu: "Câștigul anual și pierderile (broker străin)",
+        continut: [
+          "Câștigul se calculează pe fiecare vânzare: preț de vânzare minus costul de achiziție, cu comisioanele incluse. Costul se stabilește prin metoda prețului mediu ponderat pe fiecare titlu.",
+          "Sumele în valută se transformă în lei la cursul mediu anual comunicat de BNR pentru anul respectiv.",
+          "Câștigul net anual = toate câștigurile minus toate pierderile realizate în același an.",
+          "Pierderile nete se pot reporta 5 ani, separat pe fiecare țară, și pot acoperi cel mult 70% din câștigul net al fiecărui an următor.",
+          "Pierderile realizate prin brokeri români, cu impozit reținut, nu se mai compensează și nu se reportează.",
+        ],
+      },
+      {
+        titlu: "Dividende din străinătate",
+        continut: [
+          "Dividendele de la companii străine se impozitează cu 16% în România (pentru sume încasate din 2026), indiferent de broker.",
+          "Dacă în țara sursă s-a reținut deja impozit (ex. 10% în SUA, cu formularul W-8BEN depus), îl scazi ca credit fiscal, dar nu mai mult decât impozitul românesc pe acel dividend.",
+          "Exemplu: dividend 1.000 lei, 100 lei reținuți în SUA → impozit de plată în România 160 − 100 = 60 lei.",
+          "Ai nevoie de dovada impozitului reținut (raportul anual al brokerului).",
+        ],
+      },
+      {
+        titlu: "CASS pe investiții",
+        continut: [
+          "CASS (10%) se datorează dacă totalul veniturilor din investiții și al altor venituri pasive (chirii, dividende, dobânzi, crypto) depășește 6 salarii minime: 24.300 lei pentru 2026.",
+          "Nu se plătește 10% din tot venitul, ci o sumă fixă pe trepte: 2.430 lei (24.300–48.599 lei), 4.860 lei (48.600–97.199 lei) sau 9.720 lei (peste 97.200 lei).",
+          "Pentru brokerii străini se ia în calcul câștigul net; pentru cei români, câștigul brut realizat. CASS se declară întotdeauna prin D212, chiar dacă impozitul a fost reținut de broker.",
+        ],
+      },
+    ],
+    timeline: [
+      { pas: 1, titlu: "Descarcă raportul anual de la broker", detaliu: "Tranzacții realizate, dividende și impozit reținut în străinătate.", durata: "15 min" },
+      { pas: 2, titlu: "Convertește în lei", detaliu: "La cursul mediu anual BNR al anului fiscal.", durata: "15 min" },
+      { pas: 3, titlu: "Calculează impozitul și CASS", detaliu: "Folosește calculatorul FocusTax pentru Declarația unică.", durata: "10 min" },
+      { pas: 4, titlu: "Completează D212 în SPV", detaliu: "Secțiunea pentru venituri din străinătate, pe țară și tip de venit, apoi datele privind CASS.", durata: "30 min" },
+      { pas: 5, titlu: "Plătește până la 25 mai", detaliu: "În contul unic, din SPV sau prin Ghișeul.ro.", durata: "5 min" },
+    ],
+    declaratiiAferente: [
+      { cod: "D212", nume: "Declarația unică", href: "/declaratii/d212" },
+    ],
+    atentie: [
+      "Câștigurile din 2025 prin brokeri străini se impozitau cu 10%; cota de 16% se aplică veniturilor din 2026, declarate până la 25 mai 2027.",
+      "D212 precompletată din SPV poate conține date raportate de brokeri, dar trebuie verificată și completată de tine.",
+      "Informații generale: pentru situații complexe (mai mulți brokeri, opțiuni, CFD-uri) consultă un expert contabil.",
+    ],
+  },
+
+  "cass-venituri-pasive": {
+    slug: "cass-venituri-pasive",
+    titlu: "CASS pe chirii, dividende și investiții: pragurile din 2026 explicate",
+    categorie: "Persoane Fizice",
+    culoare: "#0b6e4f",
+    badgeBg: "#e3f2ea",
+    desc: "Când datorezi CASS pe venituri din chirii, dividende, investiții și crypto, cum se adună veniturile și de ce plătești o sumă fixă, nu 10% din tot.",
+    ceFaciAfla: [
+      "Pragurile CASS de 6, 12 și 24 de salarii minime",
+      "Ce venituri se adună pentru prag",
+      "Ce se schimbă dacă ești și salariat sau ai PFA",
+      "Exemple de calcul",
+    ],
+    sectiuni: [
+      {
+        titlu: "Regula de bază",
+        continut: [
+          "Pe veniturile din afara salariilor și a activităților independente — chirii, dividende, dobânzi, câștiguri din investiții, crypto — CASS (10%) se datorează doar peste un prag de 6 salarii minime pe an.",
+          "Pentru veniturile din 2026 se folosește salariul minim de la 1 ianuarie 2026: 4.050 lei. Pragul este deci 24.300 lei.",
+          "CASS nu este 10% din tot venitul, ci 10% dintr-o bază fixă: 6, 12 sau 24 de salarii minime, după treapta în care te încadrezi.",
+        ],
+      },
+      {
+        titlu: "Treptele pentru 2026",
+        continut: [
+          "Sub 24.300 lei: nu datorezi CASS.",
+          "Între 24.300 și 48.599 lei: CASS = 10% × 24.300 = 2.430 lei.",
+          "Între 48.600 și 97.199 lei: CASS = 10% × 48.600 = 4.860 lei.",
+          "De la 97.200 lei în sus: CASS = 10% × 97.200 = 9.720 lei (plafonul maxim).",
+        ],
+      },
+      {
+        titlu: "Ce se adună pentru prag",
+        continut: [
+          "Chirii: venitul net (chiria minus deducerea forfetară de 20%).",
+          "Dividende: suma brută distribuită.",
+          "Dobânzi și câștiguri din investiții: câștigul net pentru brokerii străini, câștigul brut pentru cei români.",
+          "Criptomonede: câștigul net anual.",
+          "Veniturile din activități independente (PFA) au un calcul separat de CASS, proporțional, între 6 și 72 de salarii minime, și nu se adună la aceste trepte.",
+        ],
+      },
+      {
+        titlu: "Exemple",
+        continut: [
+          "Chirie 2.000 lei/lună (venit net 19.200 lei) + dividende 20.000 lei = 39.200 lei → CASS 2.430 lei.",
+          "Dividende 100.000 lei → peste 97.200 lei → CASS 9.720 lei (nu 10.000 lei).",
+          "Chirie 1.500 lei/lună (venit net 14.400 lei), fără alte venituri pasive → sub prag, fără CASS.",
+        ],
+      },
+      {
+        titlu: "Dacă ești și salariat sau pensionar",
+        continut: [
+          "CASS pe veniturile pasive se datorează și dacă ești deja asigurat ca salariat. Statutul de salariat contează la PFA (unde nu mai plătești minimul de 6 salarii), nu la aceste trepte.",
+          "CASS se declară și se plătește prin Declarația unică (D212), până la 25 mai a anului următor.",
+        ],
+      },
+    ],
+    declaratiiAferente: [
+      { cod: "D212", nume: "Declarația unică", href: "/declaratii/d212" },
+    ],
+    atentie: [
+      "Pentru veniturile din 2026 pragul rămâne 24.300 lei tot anul, chiar dacă salariul minim a crescut la 4.325 lei din iulie.",
+      "Informații generale: verifică pentru situația ta concretă cu un expert contabil.",
+    ],
+  },
+
+  "crypto-impozit-dac8": {
+    slug: "crypto-impozit-dac8",
+    titlu: "Impozitul pe crypto în 2026 și ce înseamnă DAC8",
+    categorie: "Persoane Fizice",
+    culoare: "#0b6e4f",
+    badgeBg: "#e3f2ea",
+    desc: "Cât impozit plătești pe câștigurile din criptomonede, când ești scutit, cum declari în D212 și ce se schimbă când platformele încep să raporteze la ANAF prin DAC8.",
+    ceFaciAfla: [
+      "Cota de 16% pe câștigurile din 2026",
+      "Scutirea pentru câștigurile mici",
+      "Cum calculezi câștigul și ce faci cu pierderile",
+      "Ce raportează platformele la ANAF prin DAC8",
+    ],
+    sectiuni: [
+      {
+        titlu: "Cât impozit plătești",
+        continut: [
+          "Câștigurile din transferul monedelor virtuale realizate în 2026 se impozitează cu 16% (10% pentru cele din 2025).",
+          "Se impozitează câștigul net anual: prețul de vânzare minus costul de achiziție, pentru toate tranzacțiile încheiate în an.",
+          "Scutire: câștigurile sub 200 lei pe tranzacție nu se impozitează, cu condiția ca totalul lor în an să nu depășească 600 lei.",
+          "Pierderile din crypto nu se reportează în anii următori.",
+        ],
+      },
+      {
+        titlu: "Cum declari",
+        continut: [
+          "Declari câștigul în Declarația unică (D212) până la 25 mai a anului următor și plătești tot atunci impozitul.",
+          "Câștigul intră și la calculul CASS pe venituri pasive, împreună cu chiriile, dividendele și investițiile.",
+          "Păstrează istoricul tranzacțiilor de pe fiecare platformă și dovezile costului de achiziție.",
+        ],
+      },
+      {
+        titlu: "DAC8: ANAF va vedea tranzacțiile",
+        continut: [
+          "Directiva europeană DAC8 (transpusă prin OUG 71/2025) obligă platformele crypto să raporteze tranzacțiile utilizatorilor către autoritățile fiscale.",
+          "Primele raportări către ANAF sunt programate în 2027, pentru tranzacțiile din 2026.",
+          "Asta înseamnă că neconcordanțele dintre ce raportează platformele și ce ai declarat vor fi ușor de găsit. Declară corect de la început; dacă ai omis venituri, poți depune o declarație rectificativă.",
+        ],
+      },
+    ],
+    declaratiiAferente: [
+      { cod: "D212", nume: "Declarația unică", href: "/declaratii/d212" },
+    ],
+    atentie: [
+      "Schimbul între două criptomonede și plățile cu crypto pot avea un tratament fiscal particular — verifică situația concretă cu un specialist.",
+      "Informații generale, nu consultanță fiscală.",
+    ],
+  },
+
   "inregistrare-pfa": {
     slug: "inregistrare-pfa",
     titlu: "Cum te înregistrezi ca PFA",

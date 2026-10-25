@@ -4,6 +4,7 @@ export interface NavItem { href: string; label: string; desc?: string; icon?: Ic
 
 /** Structura de navigare comună pentru meniu, footer și pagina principală */
 export const NAV_CALCULATOARE: NavItem[] = [
+  { href: "/calculator/declaratie-unica", label: "Declarația unică", desc: "Investiții, dividende, chirii, crypto + CASS", icon: "file" },
   { href: "/calculator/salariu",   label: "Salariu net",         desc: "Din brut în net și invers, cu deduceri", icon: "briefcase" },
   { href: "/calculator/pfa",       label: "PFA / II",            desc: "CAS, CASS și impozit pe venitul net",      icon: "user" },
   { href: "/calculator/srl",       label: "SRL / Micro",         desc: "Impozit micro 1% sau profit 16%",          icon: "building" },

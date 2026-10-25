@@ -18,6 +18,9 @@ const CALCULATOR_PENTRU: Record<string, { href: string; label: string }> = {
   "inregistrare-tva": { href: "/calculator/tva", label: "Calculator TVA" },
   "impozit-chirii": { href: "/calculator/chirii", label: "Calculator chirii" },
   "salarii-retineri": { href: "/calculator/salariu", label: "Calculator salariu" },
+  "investitii-broker-strain-d212": { href: "/calculator/declaratie-unica", label: "Calculator Declarația unică" },
+  "cass-venituri-pasive": { href: "/calculator/declaratie-unica", label: "Calculator Declarația unică" },
+  "crypto-impozit-dac8": { href: "/calculator/crypto", label: "Calculator crypto" },
 };
 
 const ACTUALIZAT = "2026-10-25";

@@ -1,0 +1,26 @@
+.banner {
+  position: fixed;
+  left: 16px; right: 16px; bottom: 16px;
+  z-index: 150;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex; align-items: center; gap: 16px 20px; flex-wrap: wrap;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+.text { flex: 1 1 320px; font-size: 0.9rem; color: var(--ink-2); line-height: 1.5; }
+.text a { color: var(--brand); text-decoration: underline; text-underline-offset: 2px; }
+.actions { display: flex; gap: 8px; flex: 0 0 auto; }
+/* Ambele butoane identice: refuzul e la fel de ușor ca acceptul */
+.btn {
+  min-width: 96px; height: 40px; padding: 0 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-weight: 600; font-size: 0.9rem;
+}
+.btn:hover { border-color: var(--ink-2); }

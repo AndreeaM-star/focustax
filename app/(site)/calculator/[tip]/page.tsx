@@ -8,6 +8,7 @@ import ChiriiCalc from "./calcs/ChiriiCalc";
 import DividendeCalc from "./calcs/DividendeCalc";
 import TvaCalc from "./calcs/TvaCalc";
 import CryptoCalc from "./calcs/CryptoCalc";
+import D212Calc from "./calcs/D212Calc";
 import { CALCULATOARE } from "./meta";
 import { absUrl } from "@/lib/site";
 import s from "../calculator.module.css";
@@ -20,6 +21,7 @@ const COMPONENTE: Record<string, () => React.ReactElement> = {
   dividende: DividendeCalc,
   tva: TvaCalc,
   crypto: CryptoCalc,
+  "declaratie-unica": D212Calc,
 };
 
 export function generateStaticParams() {

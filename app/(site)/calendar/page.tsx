@@ -3,6 +3,7 @@ import { Container, PageHeader, Main, Callout } from "@/components/ui";
 import { termeneAn } from "@/lib/calendar";
 import { absUrl } from "@/lib/site";
 import CalendarView from "./CalendarView";
+import AlerteForm from "@/components/AlerteForm";
 
 export const revalidate = 86400;
 
@@ -25,6 +26,7 @@ export default function CalendarPage() {
       />
       <Container>
         <CalendarView termene={Object.fromEntries(ani.map((a) => [a, termeneAn(a)]))} ani={ani} />
+        <div style={{ marginTop: 40 }}><AlerteForm sursa="calendar" /></div>
         <div style={{ marginTop: 32 }}>
           <Callout tone="info" title="Ultimul an cu termenul de 25 iunie">
             Impozitul pe profit anual (D101) și impozitul micro pe trimestrul IV 2025 au avut termen 25 iunie 2026. Din 2027 se revine la termenele standard: 25 martie pentru D101 și 25 ianuarie pentru trimestrul IV la microîntreprinderi.

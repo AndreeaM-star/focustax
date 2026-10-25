@@ -13,7 +13,7 @@ const navItems: { href: string; label: string; icon: IconName; exact?: boolean }
   { href: "/manager/tva",      label: "TVA",               icon: "percent" },
   { href: "/manager/banci",    label: "Bănci",             icon: "bank" },
   { href: "/manager/hr",       label: "Salariați",         icon: "users" },
-  { href: "/manager/ai",       label: "Asistent ANA",      icon: "bot" },
+  { href: "/manager/ai",       label: "Asistent AI",      icon: "bot" },
   { href: "/manager/settings", label: "Setări",            icon: "settings" },
 ];
 

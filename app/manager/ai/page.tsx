@@ -40,7 +40,7 @@ export default function AIPage() {
     {
       id: "0",
       role: "ana",
-      text: "Bună! Sunt **ANA**, asistentul tău fiscal AI. Sunt antrenată pe Codul Fiscal român 2026 și știu tot ce ține de declarații, taxe, sisteme ANAF și situația firmei tale. Ce dorești să afli?",
+      text: "Bună! Sunt **Iris**, asistentul AI al FocusTax. Îți explic regulile fiscale din România — impozite, contribuții, declarații, termene. Răspunsurile mele sunt informative și generate automat, nu înlocuiesc un expert contabil. Nu sunt afiliată ANAF. Ce vrei să afli?",
       time: "08:00",
     },
   ]);
@@ -124,11 +124,11 @@ export default function AIPage() {
     <div className={styles.page}>
       <div className={styles.header}>
         <div className={styles.headerLeft}>
-          <div className={styles.anaAvatar}>A</div>
+          <div className={styles.anaAvatar}>I</div>
           <div>
-            <h1 className={styles.pageTitle}>ANA — Asistent Fiscal AI</h1>
+            <h1 className={styles.pageTitle}>Iris — asistent fiscal AI</h1>
             <p className={styles.pageSubtitle}>
-              Antrenată pe Codul Fiscal România 2026 · Răspunde în timp real
+              Vorbești cu un sistem de inteligență artificială · informații generale, nu consultanță fiscală · nu e afiliat ANAF
             </p>
           </div>
         </div>
@@ -156,12 +156,17 @@ export default function AIPage() {
               className={`${styles.messageRow} ${m.role === "user" ? styles.userRow : styles.anaRow}`}
             >
               {m.role === "ana" && (
-                <div className={styles.msgAvatar}>A</div>
+                <div className={styles.msgAvatar}>I</div>
               )}
               <div className={`${styles.bubble} ${m.role === "user" ? styles.userBubble : styles.anaBubble}`}>
                 <span
                   dangerouslySetInnerHTML={{ __html: formatText(m.text) }}
                 />
+                {m.role === "ana" && (
+                  <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: 8 }}>
+                    Răspuns generat de AI, cu caracter informativ. Poate conține erori — verifică pentru situația ta sau întreabă un expert contabil.
+                  </p>
+                )}
                 <div className={styles.msgMeta}>
                   <span className={styles.msgTime}>{m.time}</span>
                   <button
@@ -182,7 +187,7 @@ export default function AIPage() {
 
           {isTyping && (
             <div className={`${styles.messageRow} ${styles.anaRow}`}>
-              <div className={styles.msgAvatar}>A</div>
+              <div className={styles.msgAvatar}>I</div>
               <div className={`${styles.bubble} ${styles.anaBubble} ${styles.typingBubble}`}>
                 <span className={styles.dot1} />
                 <span className={styles.dot2} />
@@ -227,7 +232,7 @@ export default function AIPage() {
               value={input}
               onChange={(e) => handleInput(e.target.value)}
               onKeyDown={handleKey}
-              placeholder="Întreabă ANA... (Enter trimite, Shift+Enter linie nouă)"
+              placeholder="Întreabă-o pe Iris… (nu scrie CNP sau date personale)"
               autoComplete="off"
               rows={1}
               style={{ resize: "none", overflowY: "hidden" }}

@@ -12,7 +12,14 @@ function buildSystemPrompt(): string {
   const sAn = salariuMinimAnual(an);
   const termene = urmatoareleTermene(azi, 6).map((t) => `- ${t.cod}: ${t.titlu} — ${formatData(t.data)}`).join("\n");
 
-  return `Ești ANA, asistentul fiscal AI al platformei FocusTax.ro pentru România. Răspunzi pe baza legislației fiscale în vigoare.
+  return `Ești Iris, asistentul AI informativ al platformei FocusTax.ro (România). NU ești afiliată ANAF sau vreunei autorități și nu spui niciodată că ești „ANA” sau un serviciu ANAF.
+
+ROLUL TĂU (obligatoriu, din motive legale):
+- Oferi doar informații generale despre regulile fiscale și explici cum funcționează calculele. Nu oferi consultanță fiscală personalizată.
+- Nu formulezi recomandări de decizie de tipul „în cazul tău alege X / fă Y”. Poți explica variantele, cu avantajele și dezavantajele lor, și poți arăta cum se calculează.
+- Pentru calcule concrete trimiți la calculatoarele FocusTax (ex: /calculator/pfa/, /calculator/salariu/, /calculator/dividende/). Pentru decizii și situații particulare recomanzi un consultant fiscal autorizat (CCF) sau un expert contabil (CECCAR).
+- Nu ceri și nu repeți date personale (CNP, adrese, IBAN).
+- Închei răspunsurile cu o propoziție scurtă care amintește că informația e generală și trebuie verificată pentru situația concretă.
 
 VALORI FISCALE ${an}:
 - Salariu minim brut în vigoare: ${fmtLei(smin)} lei (4.050 lei ian–iun 2026, 4.325 lei din 1 iulie 2026). Salariul minim pentru 2027 nu era stabilit în octombrie 2026.
@@ -80,11 +87,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Mesajul este prea lung (max 1000 caractere)." }, { status: 400 });
     }
 
+    // Minimizare date (GDPR): CNP-urile și IBAN-urile nu ajung la furnizorul AI
+    const curat = messages.slice(-10).map((m: { role: string; content: unknown }) => ({
+      role: m.role === "assistant" ? "assistant" as const : "user" as const,
+      content: String(m.content ?? "")
+        .replace(/\b[1-9]\d{12}\b/g, "[CNP ascuns]")
+        .replace(/\bRO\d{2}[A-Z]{4}[A-Z0-9]{16}\b/gi, "[IBAN ascuns]"),
+    }));
+
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [
         { role: "system", content: buildSystemPrompt() },
-        ...messages.slice(-10),
+        ...curat,
       ],
       max_tokens: 800,
       temperature: 0.3,

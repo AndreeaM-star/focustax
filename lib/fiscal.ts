@@ -248,6 +248,92 @@ export function calcCrypto(castig: number, alteVenituriPasive = 0, an?: number) 
   return { castig: c, scutit, impozit, cass, bazaCass: baza, treapta, totalTaxe: impozit + cass, ramas: c - impozit - cass };
 }
 
+// ─── Declarația unică cu venituri mixte (investiții, chirii, crypto) ──
+
+/** Toate sumele în lei, pe anul fiscal (convertite la cursul mediu anual BNR) */
+export interface VenituriD212 {
+  /** Câștig net anual prin brokeri fără sediu în România (IBKR, Trading 212, eToro, Revolut) */
+  castigBrokerStrain?: number;
+  /** Pierderi din anii anteriori, brokeri străini (se compensează max. 70% din câștig) */
+  pierderiReportate?: number;
+  /** Câștig brut prin intermediari români (impozit 3%/6% deja reținut) — contează doar la CASS */
+  castigBrokerRomanBrut?: number;
+  /** Dividende brute de la firme din România (16% reținut de firmă) */
+  dividendeRO?: number;
+  /** Dividende brute din străinătate */
+  dividendeStrainatate?: number;
+  /** Impozit reținut în străinătate pe dividende (ex. 15%/10% în SUA cu W-8BEN) */
+  impozitStrainDividende?: number;
+  /** Câștig net din crypto */
+  castigCrypto?: number;
+  /** Chirie încasată pe an */
+  chirii?: number;
+  /** Dobânzi brute (bănci din România, 10% reținut) */
+  dobanziRO?: number;
+  /** Dobânzi din străinătate */
+  dobanziStrainatate?: number;
+  /** Ești asigurat la sănătate ca salariat/pensionar — nu schimbă CASS pe venituri pasive, doar informativ */
+  an?: number;
+}
+
+export interface LinieD212 {
+  sursa: string;
+  baza: number;
+  impozitDePlata: number;
+  /** Impozit deja reținut la sursă (nu se mai plătește) */
+  retinut: number;
+  bazaCass: number;
+}
+
+export function calcD212(v: VenituriD212) {
+  const an = v.an ?? new Date().getFullYear();
+  const linii: LinieD212[] = [];
+  const pos = (x?: number) => Math.max(0, x ?? 0);
+
+  if (pos(v.castigBrokerStrain) > 0) {
+    const castig = pos(v.castigBrokerStrain);
+    const compensare = Math.min(pos(v.pierderiReportate), castig * 0.7);
+    const baza = castig - compensare;
+    linii.push({ sursa: "Câștiguri broker străin", baza, impozitDePlata: lei(baza * COTE.DIVIDENDE), retinut: 0, bazaCass: castig });
+  }
+  if (pos(v.castigBrokerRomanBrut) > 0) {
+    linii.push({ sursa: "Câștiguri broker român", baza: pos(v.castigBrokerRomanBrut), impozitDePlata: 0, retinut: 0, bazaCass: pos(v.castigBrokerRomanBrut) });
+  }
+  if (pos(v.dividendeRO) > 0) {
+    const d = pos(v.dividendeRO);
+    linii.push({ sursa: "Dividende din România", baza: d, impozitDePlata: 0, retinut: lei(d * COTE.DIVIDENDE), bazaCass: d });
+  }
+  if (pos(v.dividendeStrainatate) > 0) {
+    const d = pos(v.dividendeStrainatate);
+    const impozitRO = d * COTE.DIVIDENDE;
+    const credit = Math.min(pos(v.impozitStrainDividende), impozitRO);
+    linii.push({ sursa: "Dividende din străinătate", baza: d, impozitDePlata: lei(impozitRO - credit), retinut: lei(credit), bazaCass: d });
+  }
+  if (pos(v.castigCrypto) > 0) {
+    const c = calcCrypto(pos(v.castigCrypto), 0, an);
+    linii.push({ sursa: "Criptomonede", baza: c.castig, impozitDePlata: c.impozit, retinut: 0, bazaCass: c.castig });
+  }
+  if (pos(v.chirii) > 0) {
+    const ch = calcChirii(pos(v.chirii), 0, an);
+    linii.push({ sursa: "Chirii", baza: ch.venitNet, impozitDePlata: ch.impozit, retinut: 0, bazaCass: ch.venitNet });
+  }
+  if (pos(v.dobanziRO) > 0) {
+    const d = pos(v.dobanziRO);
+    linii.push({ sursa: "Dobânzi din România", baza: d, impozitDePlata: 0, retinut: lei(d * COTE.IMPOZIT_VENIT), bazaCass: d });
+  }
+  if (pos(v.dobanziStrainatate) > 0) {
+    const d = pos(v.dobanziStrainatate);
+    linii.push({ sursa: "Dobânzi din străinătate", baza: d, impozitDePlata: lei(d * COTE.IMPOZIT_VENIT), retinut: 0, bazaCass: d });
+  }
+
+  const totalCass = linii.reduce((a, l) => a + l.bazaCass, 0);
+  const cass = cassVenituriPasive(totalCass, an);
+  const impozit = linii.reduce((a, l) => a + l.impozitDePlata, 0);
+  const retinut = linii.reduce((a, l) => a + l.retinut, 0);
+  const trebuieDepusa = impozit > 0 || cass.cass > 0;
+  return { linii, totalCass, cass, impozit, retinut, totalDePlata: impozit + cass.cass, trebuieDepusa };
+}
+
 // ─── Firme ─────────────────────────────────────────────────────────────
 
 export function calcMicro(cifraAfaceri: number) {

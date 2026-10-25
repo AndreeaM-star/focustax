@@ -171,7 +171,7 @@ export default function SetupPage() {
             <span className={styles.badge}>Manager</span>
           </div>
           <h1>Configurează firma ta</h1>
-          <p>Introdu datele firmei pentru a accesa dashboard-ul cu e-Factura, HR &amp; Salarii, e-VAT și ANA — asistentul AI fiscal.</p>
+          <p>Introdu datele firmei pentru a accesa dashboard-ul cu e-Factura, HR &amp; Salarii, e-VAT și asistentul AI fiscal.</p>
         </div>
 
         {/* Tabs */}

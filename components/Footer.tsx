@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NAV_CALCULATOARE, NAV_RESURSE } from "@/lib/nav";
+import CookieSettingsLink from "./CookieSettingsLink";
 import s from "./Footer.module.css";
 
 export default function Footer() {
@@ -30,6 +31,9 @@ export default function Footer() {
           <Link href="/ghiduri/srl-vs-micro">SRL vs micro</Link>
           <Link href="/declaratii/d300">Decontul de TVA D300</Link>
           <Link href="/contact">Contact</Link>
+          <Link href="/confidentialitate">Confidențialitate</Link>
+          <Link href="/termeni">Termeni de utilizare</Link>
+          <CookieSettingsLink className={s.linkBtn} />
         </nav>
       </div>
 

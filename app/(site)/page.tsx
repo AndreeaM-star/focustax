@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Container, Section, LinkCard, ButtonLink, Badge, Icon, Main } from "@/components/ui";
+import { Container, Section, LinkCard, ButtonLink, Badge, Main } from "@/components/ui";
 import { NAV_CALCULATOARE } from "@/lib/nav";
 import { NOUTATI, lunaAn } from "@/lib/noutati";
 import { urmatoareleTermene, formatData, zileRamase } from "@/lib/calendar";
 import { salariuMinim, COTE, PLAFOANE, fmtLei } from "@/lib/fiscal";
 import { absUrl } from "@/lib/site";
 import QuickCalc from "./QuickCalc";
+import AlerteForm from "@/components/AlerteForm";
 import s from "./page.module.css";
 
 export const revalidate = 86400;
@@ -114,13 +115,8 @@ export default function HomePage() {
           </div>
         </Section>
 
-        <section className={s.ana}>
-          <div>
-            <p className={s.anaEyebrow}><Icon name="bot" size={16} /> Asistent fiscal</p>
-            <h2>Ai o întrebare care nu încape într-un calculator?</h2>
-            <p>ANA răspunde la întrebări despre PFA, SRL, salarii și investiții, pe baza regulilor fiscale din 2026.</p>
-          </div>
-          <ButtonLink href="/manager/ai" icon="arrowRight">Întreabă-o pe ANA</ButtonLink>
+        <section className={s.alerte}>
+          <AlerteForm sursa="home" />
         </section>
       </Container>
     </Main>

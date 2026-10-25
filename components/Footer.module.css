@@ -20,7 +20,8 @@
 .col { display: flex; flex-direction: column; gap: 9px; }
 .col h2 { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
 .col a { color: var(--ink-2); font-size: 0.925rem; }
-.col a:hover { color: var(--brand); }
+.col a:hover, .linkBtn:hover { color: var(--brand); }
+.linkBtn { color: var(--ink-2) !important; font-size: 0.925rem !important; cursor: pointer; }
 
 .bottom {
   max-width: var(--container);

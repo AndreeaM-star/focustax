@@ -43,7 +43,7 @@ const ANAF_BASE_URL =
 const quickActions = [
   { label: "Emite Factură",      icon: "🧾", href: "/manager/facturi" },
   { label: "Calculează Salariu", icon: "👥", href: "/manager/hr" },
-  { label: "Întreabă ANA",       icon: "🤖", href: "/manager/ai" },
+  { label: "Asistent AI",       icon: "🤖", href: "/manager/ai" },
   { label: "Raport TVA",         icon: "📊", href: "/manager/tva" },
   { label: "Conturi bancare",    icon: "🏦", href: "/manager/banci" },
 ];
@@ -285,7 +285,7 @@ export default function Dashboard() {
           )}
           <div className={`${styles.alert} ${styles.alertInfo}`}>
             <span className={styles.alertIcon}>🤖</span>
-            <span className={styles.alertMsg}>ANA AI e gata — întreabă orice despre Codul Fiscal.</span>
+            <span className={styles.alertMsg}>Asistentul AI Iris răspunde la întrebări generale despre Codul fiscal (informativ, nu consultanță).</span>
           </div>
         </div>
       </div>
@@ -403,12 +403,12 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* ANA hint */}
+          {/* Asistent AI */}
           <Link href="/manager/ai" className={styles.anaHint}>
             <span className={styles.anaHintIcon}>🤖</span>
             <div>
-              <strong>ANA AI</strong>
-              <p>Asistență privind impozitare și legislație</p>
+              <strong>Iris — asistent AI</strong>
+              <p>Informații generale despre impozite și legislație</p>
             </div>
             <span className={styles.anaArrow}>→</span>
           </Link>

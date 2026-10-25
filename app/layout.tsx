@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SITE_URL } from "@/lib/site";
+import CookieBanner from "@/components/CookieBanner";
 import "./globals.css";
 
 const inter = Inter({
@@ -72,6 +73,12 @@ const jsonLd = {
   ],
 };
 
+/**
+ * Google Consent Mode v2: totul refuzat implicit; analytics se activează doar după „Accept”
+ * în bannerul de cookie-uri (alegerea e păstrată în localStorage „ft-consent”).
+ */
+const consentScript = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});try{if(localStorage.getItem('ft-consent')==='da')gtag('consent','update',{analytics_storage:'granted'})}catch(e){}gtag('js',new Date());gtag('config','${GA_ID}',{anonymize_ip:true});`;
+
 /** Aplică tema salvată înainte de primul render, ca să nu clipească pagina */
 const themeScript = `try{var t=localStorage.getItem("ft-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
@@ -80,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ro" className={inter.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: consentScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>
@@ -88,9 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Analytics />
         <SpeedInsights />
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-        <Script id="ga4" strategy="afterInteractive">
-          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
-        </Script>
+        <CookieBanner />
       </body>
     </html>
   );

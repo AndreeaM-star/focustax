@@ -1,7 +1,7 @@
 import {
   calcSalariu, brutDinNet, deducerePersonala, salariuMinim, salariuMinimAnual,
   calcPfa, cassVenituriPasive, calcDividende, calcChirii, calcCrypto,
-  calcImpozitProfit, plafonTvaIncasare, tvaDinBrut, tvaDinNet,
+  calcImpozitProfit, plafonTvaIncasare, tvaDinBrut, tvaDinNet, calcD212,
 } from "../lib/fiscal";
 
 const IAN_2026 = new Date("2026-03-15T12:00:00Z");
@@ -136,5 +136,35 @@ describe("firme și TVA", () => {
   test("TVA din net și din brut", () => {
     expect(tvaDinNet(100, 21).brut).toBe(121);
     expect(tvaDinBrut(121, 21).net).toBeCloseTo(100);
+  });
+});
+
+describe("calcD212 — venituri mixte", () => {
+  test("broker străin 16%, cu compensare de pierderi max. 70%", () => {
+    const r = calcD212({ castigBrokerStrain: 10000, pierderiReportate: 9000, an: 2026 });
+    expect(r.linii[0].baza).toBe(3000);
+    expect(r.impozit).toBe(480);
+    expect(r.cass.cass).toBe(0);
+  });
+
+  test("dividende străine: credit fiscal limitat la impozitul român", () => {
+    const r = calcD212({ dividendeStrainatate: 10000, impozitStrainDividende: 1000, an: 2026 });
+    expect(r.impozit).toBe(600);
+    expect(r.retinut).toBe(1000);
+  });
+
+  test("CASS se calculează pe toate veniturile pasive cumulate", () => {
+    const r = calcD212({ chirii: 24000, dividendeRO: 20000, castigBrokerRomanBrut: 10000, an: 2026 });
+    // chirii nete 19.200 + 20.000 + 10.000 = 49.200 → treapta de 12 salarii minime
+    expect(r.totalCass).toBe(49200);
+    expect(r.cass.cass).toBe(4860);
+    expect(r.impozit).toBe(1920);
+    expect(r.trebuieDepusa).toBe(true);
+  });
+
+  test("doar dividende românești sub prag: nu e nimic de plată", () => {
+    const r = calcD212({ dividendeRO: 15000, an: 2026 });
+    expect(r.totalDePlata).toBe(0);
+    expect(r.trebuieDepusa).toBe(false);
   });
 });

@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 const SPECIALE = [
   { href: "/ghiduri/d212-ghid-completare", titlu: "Declarația unică D212, pas cu pas", desc: "Completarea interactivă a declarației: venituri, CAS, CASS și estimarea pentru anul următor." },
   { href: "/ghiduri/impozite-locale-2026", titlu: "Impozite locale 2026", desc: "Calculează impozitul pe clădiri și pe mașină după noile reguli." },
+  { href: "/ghiduri/erori-e-factura", titlu: "Erori e-Factura explicate", desc: "Ce înseamnă BR-RO-100, BR-CO-15, BR-07 și celelalte erori de validare, plus soluția." },
   { href: "/ghiduri/facilitati-fiscale", titlu: "Facilități fiscale", desc: "Scutiri și reduceri pentru IT, construcții, agricultură și alte domenii." },
 ];
 

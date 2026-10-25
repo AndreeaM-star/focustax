@@ -110,6 +110,24 @@ export const CALCULATOARE: Record<string, CalculatorMeta> = {
       { q: "Mai există cota de 9% pentru locuințe?", a: "Nu. Regimul tranzitoriu de 9% s-a aplicat doar livrărilor efectuate până la 30 septembrie 2026. De la 1 octombrie 2026 locuințele se vând cu TVA de 21%." },
     ],
   },
+  "declaratie-unica": {
+    title: "Calculator Declarația unică (D212) 2026 — investiții, dividende, chirii, crypto și CASS",
+    h1: "Calculator Declarația unică (D212)",
+    description: "Calculează ce ai de plată prin Declarația unică pentru veniturile din 2026: câștiguri prin brokeri străini (16%), dividende străine cu credit fiscal, chirii, crypto, dobânzi și CASS pe trepte.",
+    lead: "Pentru cine are venituri din mai multe surse: brokeri români sau străini, dividende, chirii, crypto. Vezi impozitul pe fiecare sursă, CASS-ul și totalul de plată până la 25 mai.",
+    cum: [
+      "Câștigurile prin brokeri străini (IBKR, Trading 212, eToro, Revolut) se impozitează cu 16% pe câștigul net anual; pierderile din anii trecuți acoperă cel mult 70% din câștig.",
+      "La brokerii români, impozitul de 3% sau 6% e reținut la sursă; câștigul contează doar pentru pragul CASS.",
+      "Dividendele din străinătate: 16%, minus impozitul deja reținut în țara sursă (credit fiscal), dar nu mai mult decât impozitul românesc.",
+      "Chiriile: impozit 10% pe chiria minus 20%. Crypto: 16%. Dobânzile din străinătate: 10%.",
+      "CASS: dacă totalul acestor venituri depășește 6 salarii minime (24.300 lei pentru 2026), plătești o sumă fixă: 2.430, 4.860 sau 9.720 lei.",
+    ],
+    faq: [
+      { q: "Trebuie să depun D212 dacă brokerul a reținut impozitul?", a: "Pentru impozit, nu. Dar dacă veniturile pasive totale trec de 24.300 lei (2026), declari și plătești CASS prin D212." },
+      { q: "Ce curs valutar folosesc?", a: "Cursul mediu anual comunicat de BNR pentru anul în care ai obținut veniturile, atât pentru venituri, cât și pentru impozitul plătit în străinătate." },
+      { q: "Până când plătesc?", a: "Declarația și plata pentru veniturile din 2026 se fac până la 25 mai 2027." },
+    ],
+  },
   crypto: {
     title: "Calculator impozit crypto 2026 — 16% pe câștiguri și CASS",
     h1: "Calculator impozit crypto 2026",

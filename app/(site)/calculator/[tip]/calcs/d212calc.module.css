@@ -1,0 +1,16 @@
+.group { border: 0; padding: 0; margin: 0 0 26px; }
+.group legend { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand); margin-bottom: 12px; }
+
+.cass { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+.cassHead { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--ink-2); }
+.cassHead b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.track { position: relative; height: 10px; border-radius: 99px; background: var(--surface-2); margin: 12px 0 6px; overflow: visible; }
+.track span { position: absolute; inset: 0 auto 0 0; border-radius: 99px; background: var(--accent); transition: width 0.4s var(--ease); }
+.track i { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--border-strong); z-index: 1; }
+.ticks { position: relative; height: 16px; font-size: 0.72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+
+.next { margin-top: 20px; padding: 16px; background: var(--surface-2); border-radius: var(--radius-sm); }
+.nextTitle { font-weight: 600; margin-bottom: 8px; }
+.next ul { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; color: var(--ink-2); }
+.next li { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
