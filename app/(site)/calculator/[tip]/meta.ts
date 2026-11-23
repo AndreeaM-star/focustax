@@ -25,6 +25,7 @@ export const CALCULATOARE: Record<string, CalculatorMeta> = {
     ],
     faq: [
       { q: "Cât este salariul minim net în 2026?", a: "Pentru salariul minim de 4.050 lei brut (ianuarie–iunie 2026) netul este 2.574 lei, iar pentru 4.325 lei brut (din iulie 2026) netul este 2.699 lei, cu suma neimpozabilă inclusă." },
+      { q: "Ce se schimbă la salariul minim în 2027?", a: "Ministerul Muncii a anunțat că salariul minim brut rămâne 4.325 lei la 1 ianuarie 2027. Scutirea de 200 lei expiră la 31 decembrie 2026; dacă nu este prelungită, netul la salariul minim devine 2.616 lei. O eventuală majorare în cursul lui 2027 nu fusese decisă în noiembrie 2026." },
       { q: "Cine primește deducere personală?", a: "Angajații cu salariul brut de cel mult salariul minim + 2.000 lei, la funcția de bază. Procentul pornește de la 20% din salariul minim fără persoane în întreținere și ajunge la 45% pentru 4 sau mai multe, scăzând treptat la salarii mai mari." },
       { q: "Ce este deducerea suplimentară de 100 lei?", a: "Se acordă pentru fiecare copil minor înscris într-o unitate de învățământ, unuia dintre părinți, indiferent de nivelul salariului." },
     ],
@@ -140,7 +141,7 @@ export const CALCULATOARE: Record<string, CalculatorMeta> = {
       "CASS se adaugă dacă totalul veniturilor pasive depășește 6 salarii minime.",
     ],
     faq: [
-      { q: "Ce este DAC8?", a: "Directiva europeană prin care platformele crypto raportează automat tranzacțiile la ANAF, începând cu 2026. Datele apar în D212 precompletată." },
+      { q: "Ce este DAC8?", a: "Directiva europeană prin care platformele crypto raportează anual tranzacțiile utilizatorilor la ANAF. Se aplică din 2026, iar prima raportare, pentru tranzacțiile din 2026, se face până la 15 martie 2027 (formularul F8000)." },
       { q: "Schimbul între două criptomonede se impozitează?", a: "Se impozitează câștigul realizat la transferul dreptului de proprietate. Verifică cu un consultant fiscal situația concretă a schimburilor crypto-crypto." },
     ],
   },

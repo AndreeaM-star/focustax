@@ -27,6 +27,7 @@ export const PROFILE: { id: Profil; label: string }[] = [
 const SARBATORI: Record<number, string[]> = {
   2026: ["01-01", "01-02", "01-06", "01-07", "01-24", "04-10", "04-12", "04-13", "05-01", "05-31", "06-01", "08-15", "11-30", "12-01", "12-25", "12-26"],
   2027: ["01-01", "01-02", "01-06", "01-07", "01-24", "04-30", "05-01", "05-02", "05-03", "06-01", "06-20", "06-21", "08-15", "11-30", "12-01", "12-25", "12-26"],
+  2028: ["01-01", "01-02", "01-06", "01-07", "01-24", "04-14", "04-16", "04-17", "05-01", "06-01", "06-04", "06-05", "08-15", "11-30", "12-01", "12-25", "12-26"],
 };
 
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -76,14 +77,15 @@ export function termeneAn(an: number): Termen[] {
   add(7, 25, "D300", `Decont TVA trimestrial — T2 ${an}`, ["tva"], "/declaratii/d300");
   add(10, 25, "D300", `Decont TVA trimestrial — T3 ${an}`, ["tva"], "/declaratii/d300");
 
-  // Trimestrul IV și declarația anuală: 25 iunie până în 2026 (OUG 153/2020), apoi termenele standard
+  // Micro, trimestrul IV: 25 iunie până în 2026 (derogare OUG 153/2020), apoi revine la 25 ianuarie.
+  // Impozitul pe profit anual (D101): 25 iunie, termen devenit definitiv prin OUG 8/2026
+  // începând cu declarația pentru anul 2026.
   if (an <= 2026) {
     add(6, 25, "D100", `Impozit microîntreprindere — T4 ${an - 1}`, ["micro"], "/declaratii/d100");
-    add(6, 25, "D101", `Declarația anuală privind impozitul pe profit ${an - 1}`, ["profit"], "/declaratii/d101");
   } else {
     add(1, 25, "D100", `Impozit microîntreprindere — T4 ${an - 1}`, ["micro"], "/declaratii/d100");
-    add(3, 25, "D101", `Declarația anuală privind impozitul pe profit ${an - 1}`, ["profit"], "/declaratii/d101");
   }
+  add(6, 25, "D101", `Declarația anuală privind impozitul pe profit ${an - 1}`, ["profit"], "/declaratii/d101");
 
   add(2, 28, "D205", `Declarația informativă privind impozitul reținut la sursă — ${an - 1}`, ["angajator", "micro", "profit"]);
   add(5, 25, "D212", `Declarația unică — venituri ${an - 1} și estimare ${an}`, ["pfa", "persoana_fizica"], "/ghiduri/d212-ghid-completare");

@@ -34,6 +34,13 @@ describe("calcSalariu", () => {
     expect(r.net).toBe(2699);
   });
 
+  test("ianuarie 2027: 4.325 lei, fără scutirea de 200 lei → net 2.616 lei", () => {
+    const r = calcSalariu(4325, { data: new Date(Date.UTC(2027, 0, 15)) });
+    expect(r.salariuMinim).toBe(4325);
+    expect(r.sumaNeimpozabila).toBe(0);
+    expect(r.net).toBe(2616);
+  });
+
   test("brut 10.000 lei: fără deducere, fără sumă neimpozabilă", () => {
     const r = calcSalariu(10000, { data: OCT_2026 });
     expect(r.sumaNeimpozabila).toBe(0);

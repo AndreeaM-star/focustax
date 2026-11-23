@@ -8,6 +8,12 @@
  *   în vigoare la 1 ianuarie al anului (4.050 lei pentru tot 2026)
  * - Suma neimpozabilă la salariul minim: 300 lei (ian–iun 2026, brut ≤ 4.300),
  *   200 lei (iul–dec 2026, brut ≤ 4.600) — OUG 89/2025
+ *
+ * Situația pentru 2027 (verificată la 23 noiembrie 2026):
+ * - Salariul minim rămâne 4.325 lei la 1 ianuarie 2027 (anunț MMFTSS, 24.10.2026); nu există încă
+ *   o HG nouă. Dacă apare, se adaugă în ISTORIC_SALARIU_MINIM.
+ * - Suma neimpozabilă expiră la 31.12.2026 și nu fusese prelungită → 0 din 2027 (net la minim: 2.616 lei).
+ * - IMCA dispare din 2027; plafonul TVA la încasare urcă la 5.500.000 lei.
  */
 
 // ─── Cote ──────────────────────────────────────────────────────────────
@@ -45,7 +51,11 @@ export const PLAFOANE = {
   MICRO_EUR: 100_000,
   /** Prag IMCA */
   IMCA_EUR: 50_000_000,
-  /** Curs orientativ EUR/RON folosit pentru conversia plafoanelor în calculatoare */
+  /**
+   * Curs orientativ EUR/RON pentru conversia plafoanelor în calculatoare. Plafonul micro se convertește
+   * la cursul BNR de la închiderea anului precedent (≈5,1 la 31.12.2025). Pentru plafonul din 2027 se va
+   * folosi cursul de la 31.12.2026 (în noiembrie 2026 cursul era ≈5,35) — de actualizat în ianuarie 2027.
+   */
   CURS_EUR: 5.1,
   /** Scutire crypto: câștig sub 200 lei/tranzacție, dacă totalul anual ≤ 600 lei */
   CRYPTO_TRANZACTIE: 200,

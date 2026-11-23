@@ -13,13 +13,13 @@ export const metadata: Metadata = {
 export default function FacilitatiPage() {
   const sm = salariuMinim();
   const FACILITATI = [
-    { t: "Suma neimpozabilă la salariul minim", d: "300 lei/lună (ianuarie–iunie 2026) și 200 lei/lună (iulie–decembrie 2026) sunt scutite de impozit, CAS și CASS pentru angajații cu normă întreagă plătiți cu salariul minim (brut până la 4.300, respectiv 4.600 lei)." },
+    { t: "Suma neimpozabilă la salariul minim", d: "300 lei/lună (ianuarie–iunie 2026) și 200 lei/lună (iulie–decembrie 2026) sunt scutite de impozit, CAS și CASS pentru angajații cu normă întreagă plătiți cu salariul minim (brut până la 4.300, respectiv 4.600 lei). Facilitatea expiră la 31 decembrie 2026; la 20 noiembrie 2026 nu fusese prelungită pentru 2027." },
     { t: "Deducerea personală", d: `Pentru salarii de până la salariul minim + 2.000 lei: între 20% și 45% din salariul minim (${fmtLei(0.2 * sm)}–${fmtLei(0.45 * sm)} lei), în funcție de persoanele aflate în întreținere.` },
     { t: "Deducere pentru tinerii sub 26 de ani", d: `15% din salariul minim (${fmtLei(0.15 * sm)} lei/lună), pentru salarii de până la salariul minim + 2.000 lei.` },
     { t: "Deducere pentru copii la școală", d: "100 lei/lună pentru fiecare copil minor înscris într-o unitate de învățământ, acordată unui singur părinte, indiferent de salariu." },
     { t: "Persoane cu handicap grav sau accentuat", d: "Veniturile din salarii sunt scutite de impozitul pe venit. Din 2026, impozitul pe locuința de domiciliu se reduce cu 50% (handicap grav) sau 25% (accentuat)." },
     { t: "Pensii facultative și abonamente medicale", d: "Contribuțiile la pensia facultativă (pilonul III) și abonamentele medicale sunt deductibile, fiecare până la echivalentul a 400 EUR pe an." },
-    { t: "Sponsorizări din impozitul firmei", d: "Firmele pot direcționa sponsorizări din impozit: până la 20% din impozitul pe profit (limitat la 0,75% din cifra de afaceri) sau din impozitul micro." },
+    { t: "Sponsorizări din impozitul firmei", d: "Firmele pot scădea sponsorizările din impozit: microîntreprinderile până la 20% din impozitul micro, iar plătitorii de impozit pe profit în limita minimului dintre 20% din impozit și 0,75% din cifra de afaceri." },
     { t: "Redirecționarea a 3,5% din impozit", d: "Persoanele fizice pot direcționa 3,5% din impozitul pe venit către un ONG sau o unitate de cult, prin formularul 230 sau prin D212." },
   ];
 
@@ -27,7 +27,7 @@ export default function FacilitatiPage() {
     <main id="continut">
       <PageHeader
         crumbs={[{ label: "Ghiduri", href: "/ghiduri" }, { label: "Facilități fiscale" }]}
-        eyebrow="Ghid · actualizat octombrie 2026"
+        eyebrow="Ghid · actualizat noiembrie 2026"
         title="Facilități fiscale în 2026"
         lead="Ce scutiri și deduceri mai există pentru salariați, persoane fizice și firme și ce s-a eliminat."
       />

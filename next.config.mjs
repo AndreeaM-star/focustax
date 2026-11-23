@@ -27,6 +27,15 @@ const nextConfig = {
   // Vercel handles full Next.js natively — no changes needed for deployment
   trailingSlash: true,
   images: { unoptimized: true },
+  // Noutăți retrase în noiembrie 2026 pentru că erau inexacte; linkurile vechi duc la articolul corect
+  async redirects() {
+    return [
+      { source: "/noutati/e-factura-extinsa-la-toate-tranzactiile-b2b", destination: "/noutati/e-factura-termen-de-5-zile-lucratoare-din-2026/", permanent: true },
+      { source: "/noutati/ro-e-tva-implementare-pentru-contribuabilii-mari", destination: "/noutati/ro-e-tva-notificarea-de-conformare-a-fost-eliminata/", permanent: true },
+      { source: "/noutati/anaf-d212-precompletata-include-datele-dac8-verificati-inainte-de", destination: "/noutati/dac8-platformele-crypto-raporteaza-la-anaf-pana-la-15-martie-2027/", permanent: true },
+      { source: "/noutati/ro-e-transport-noi-categorii-de-bunuri", destination: "/sisteme/ro-e-transport/", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

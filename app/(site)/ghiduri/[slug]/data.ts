@@ -206,7 +206,7 @@ export const ghiduri: Record<string, GhidData> = {
         titlu: "DAC8: ANAF va vedea tranzacțiile",
         continut: [
           "Directiva europeană DAC8 (transpusă prin OUG 71/2025) obligă platformele crypto să raporteze tranzacțiile utilizatorilor către autoritățile fiscale.",
-          "Primele raportări către ANAF sunt programate în 2027, pentru tranzacțiile din 2026.",
+          "Prima raportare, pentru tranzacțiile din 2026, se depune până la 15 martie 2027, prin formularul F8000 (Ordinul ANAF 750/2026).",
           "Asta înseamnă că neconcordanțele dintre ce raportează platformele și ce ai declarat vor fi ușor de găsit. Declară corect de la început; dacă ai omis venituri, poți depune o declarație rectificativă.",
         ],
       },
@@ -862,6 +862,7 @@ export const ghiduri: Record<string, GhidData> = {
           "Disponibil 24/7, elimină deplasarea la ghișeele ANAF.",
           "Persoanele juridice au OBLIGAȚIA de a folosi SPV (depunerea la ghișeu nu mai este acceptată pentru firme).",
           "Persoanele fizice pot folosi SPV sau ghișeul ANAF, dar SPV este recomandat.",
+          "ANAF a anunțat lansarea parțială a unui portal nou și a unui SPV modernizat pentru 26 noiembrie 2026; la 17 noiembrie data nu fusese confirmată printr-un comunicat oficial.",
         ],
       },
       {
@@ -965,10 +966,10 @@ export const ghiduri: Record<string, GhidData> = {
       {
         titlu: "Tichete de masă",
         continut: [
-          "Valoarea maximă legală a unui tichet de masă în 2026: 40 lei/zi lucrătoare.",
-          "Tichetele de masă sunt scutite de impozit pe venit și CASS, dar NU de CAS.",
+          "Valoarea maximă a unui tichet de masă: 45 lei pe zi lucrată, valabilă din noiembrie 2025 și menținută pentru octombrie 2026 – martie 2027 (Ordinul MF 1254/2026).",
+          "Din valoarea tichetelor se rețin CASS 10% și impozit pe venit 10% (calculat după scăderea CASS). Nu se datorează CAS și nici CAM.",
           "Angajatorul deduce costul tichetelor ca și cheltuială.",
-          "Exemplu: 21 zile lucrătoare × 40 lei = 840 lei/lună în tichete de masă, netaxabile cu impozit.",
+          "Exemplu: 21 de zile × 45 lei = 945 lei/lună în tichete. CASS = 95 lei, impozit = 10% × (945 − 95) = 85 lei, deci angajatul primește efectiv 765 lei.",
           "Tichetele se acordă SUPLIMENTAR față de salariul net — cresc puterea de cumpărare efectivă.",
         ],
       },
@@ -977,6 +978,7 @@ export const ghiduri: Record<string, GhidData> = {
         continut: [
           "Salariul minim brut 2026: 4.050 lei/lună (ian–iun), 4.325 lei/lună (iul–dec).",
           "Salariu net la minim: 2.574 lei pentru 4.050 lei brut (ian–iun 2026, cu 300 lei neimpozabili) și 2.699 lei pentru 4.325 lei brut (iul–dec 2026, cu 200 lei neimpozabili).",
+          "2027: Ministerul Muncii a anunțat că salariul minim rămâne 4.325 lei la 1 ianuarie 2027. Scutirea de 200 lei expiră la 31 decembrie 2026 și, la 20 noiembrie, nu fusese prelungită; fără prelungire, netul la minim devine 2.616 lei.",
           "Angajatorii nu pot plăti sub salariul minim brut pentru 8 ore/zi, 5 zile/săptămână.",
           "La salariul minim, CAS și CASS se calculează la cel puțin salariul minim, chiar dacă angajatul lucrează part-time sub acest prag.",
         ],
@@ -1019,7 +1021,7 @@ export const ghiduri: Record<string, GhidData> = {
     ],
     atentie: [
       "CAS și CASS se calculează la cel puțin salariul minim brut, chiar dacă salariul contractual e mai mic.",
-      "Tichetele de masă NU sunt scutite de CAS — angajatorul reține CAS și din valoarea tichetelor.",
+      "Tichetele de masă nu intră în baza CAS, dar din valoarea lor se rețin CASS 10% și impozit pe venit 10%.",
       "Angajatorul răspunde solidar pentru neplata obligațiilor sociale la termen.",
     ],
   },
@@ -1030,10 +1032,10 @@ export const ghiduri: Record<string, GhidData> = {
     categorie: "SRL & Microîntreprinderi",
     culoare: "#d97706",
     badgeBg: "#fef3c7",
-    desc: "Ghid complet pentru reducerea impozitului prin sponsorizări — 20% din impozit (max 0.75% CA) pentru microîntreprinderi și persoane juridice plătitoare de impozit pe profit.",
+    desc: "Ghid complet pentru reducerea impozitului prin sponsorizări — până la 20% din impozitul micro, respectiv minimul dintre 20% din impozitul pe profit și 0,75% din cifra de afaceri.",
     ceFaciAfla: [
       "Cum funcționează deducerea sponsorizărilor din impozit",
-      "Limita de 20% din impozit și max 0.75% din cifra de afaceri",
+      "Limitele: 20% din impozitul micro; la profit, minimul dintre 20% din impozit și 0,75% din CA",
       "Cine poate primi sponsorizare (entități eligibile)",
       "Documentele necesare — contractul de sponsorizare",
       "Exemplu numeric pentru microîntreprindere și impozit pe profit",
@@ -1045,16 +1047,17 @@ export const ghiduri: Record<string, GhidData> = {
         continut: [
           "Sponsorizarea permite firmelor să direcționeze o parte din impozit către organizații non-profit, culte, sport, cultură.",
           "NU este o cheltuială suplimentară — reduci impozitul datorat cu suma sponsorizată.",
-          "Limita: MINIM dintre (20% din impozitul datorat) și (0.75% din cifra de afaceri anuală).",
+          "Microîntreprinderi: scad sponsorizarea din impozitul micro, în limita a 20% din impozitul datorat pentru trimestrul respectiv. Plafonul de 0,75% din cifra de afaceri nu se aplică.",
+          "Impozit pe profit: limita este MINIMUL dintre 20% din impozitul pe profit și 0,75% din cifra de afaceri.",
           "Dacă suma sponsorizată e mai mică decât limita, reduci impozitul cu suma exactă sponsorizată.",
-          "Dacă suma sponsorizată depășește limita, diferența se reportează în următorii 7 ani fiscali.",
+          "La impozitul pe profit, partea care depășește limita se reportează în următorii 7 ani.",
         ],
       },
       {
         titlu: "Exemplu microîntreprindere",
         continut: [
-          "Firmă cu CA = 500.000 lei și impozit micro 1% = 5.000 lei.",
-          "Limita sponsorizare: min(20% × 5.000 lei; 0.75% × 500.000 lei) = min(1.000 lei; 3.750 lei) = 1.000 lei.",
+          "Firmă cu CA = 500.000 lei pe an (125.000 lei pe trimestru) → impozit micro 1% = 1.250 lei pe trimestru, 5.000 lei pe an.",
+          "Limita sponsorizare: 20% × 1.250 lei = 250 lei pe trimestru, adică 1.000 lei pe an dacă sponsorizezi în fiecare trimestru.",
           "Dacă sponsorizezi cu 1.000 lei: impozit de plată = 5.000 − 1.000 = 4.000 lei.",
           "Ai cheltuit 1.000 lei efectiv dar ai economisit 1.000 lei din impozit → cost net zero!",
           "Practic: dai 1.000 lei organizației, ANAF acceptă să scadă 1.000 lei din impozit.",
@@ -1068,7 +1071,7 @@ export const ghiduri: Record<string, GhidData> = {
           "Limita: min(20% × 96.000; 0.75% × 2.000.000) = min(19.200; 15.000) = 15.000 lei.",
           "Poți sponsoriza max 15.000 lei și reduce impozitul cu aceeași sumă.",
           "Impozit de plată: 96.000 − 15.000 = 81.000 lei.",
-          "Diferența față de limita de 20% (19.200 lei) = 4.200 lei reportați în anii următori.",
+          "Dacă ai sponsorizat mai mult, de exemplu 19.200 lei, cei 4.200 lei peste limită se reportează în următorii 7 ani.",
         ],
       },
       {

@@ -42,7 +42,8 @@ export const declaratii: Record<string, DeclaratieData> = {
     legislatie: [
       "Se depune de persoanele impozabile înregistrate în scopuri de TVA, conform art. 323 din Codul fiscal (Legea 227/2015).",
       "Contribuabilii care fac doar operațiuni în interiorul țării pot completa decontul simplificat.",
-      "Din 2025–2026, ANAF pune la dispoziție decontul precompletat (RO e-TVA), pe baza facturilor din e-Factura.",
+      "ANAF pune la dispoziție în SPV decontul precompletat RO e-TVA (P300), cu rol informativ; din 2026 nu mai există obligația de a răspunde la notificările de conformare.",
+      "Dacă nu depui D300 la termen, ANAF te notifică și, după 15 zile, poate stabili TVA din oficiu pe baza datelor din RO e-TVA, e-Factura și casele de marcat (Ordinul ANAF 1022/2026).",
       "Cote în vigoare: 21% standard și 11% redusă (din 1 august 2025).",
     ],
     durata: "15–45 minute",
@@ -320,7 +321,7 @@ export const declaratii: Record<string, DeclaratieData> = {
     subtitle:
       "Declarația privind impozitul pe profit — documentul anual prin care contribuabilii plătitori de impozit pe profit stabilesc impozitul datorat pentru exercițiul financiar încheiat.",
     periodicitate: "Anual",
-    termen: "25 iunie 2026 pentru anul fiscal 2025; din 2027, 25 martie a anului următor",
+    termen: "25 iunie a anului următor (termen definitiv prin OUG 8/2026; pentru anul 2026: 25 iunie 2027)",
     depunere: "SPV (online) sau ghișeu ANAF",
     legislatie: [
       "Se depune de contribuabilii plătitori de impozit pe profit: SRL, SA, RA, alte persoane juridice române.",

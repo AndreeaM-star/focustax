@@ -28,8 +28,9 @@ export default function CalendarPage() {
         <CalendarView termene={Object.fromEntries(ani.map((a) => [a, termeneAn(a)]))} ani={ani} />
         <div style={{ marginTop: 40 }}><AlerteForm sursa="calendar" /></div>
         <div style={{ marginTop: 32 }}>
-          <Callout tone="info" title="Ultimul an cu termenul de 25 iunie">
-            Impozitul pe profit anual (D101) și impozitul micro pe trimestrul IV 2025 au avut termen 25 iunie 2026. Din 2027 se revine la termenele standard: 25 martie pentru D101 și 25 ianuarie pentru trimestrul IV la microîntreprinderi.
+          <Callout tone="info" title="Din 2027, termenele micro și profit se despart">
+            Microîntreprinderile revin la termenul din ianuarie: impozitul pe trimestrul IV 2026 se declară și se plătește până la 25 ianuarie 2027.
+            Pentru impozitul pe profit, termenul de 25 iunie a devenit definitiv prin OUG 8/2026: declarația D101 pentru anul 2026 se depune până la 25 iunie 2027.
           </Callout>
         </div>
       </Container>

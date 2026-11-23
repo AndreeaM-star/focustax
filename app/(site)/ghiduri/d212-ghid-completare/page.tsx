@@ -49,7 +49,7 @@ export default function D212Page() {
         <Section title="2. Cum o depui">
           <ol className={s.steps}>
             <li><strong>Intră în SPV</strong> pe anaf.ro, cu cont de persoană fizică (sau cu certificat digital).</li>
-            <li><strong>Verifică D212 precompletată</strong> — ANAF include deja venituri raportate de terți: dividende, dobânzi, câștiguri de la brokeri și platforme crypto (DAC8).</li>
+            <li><strong>Verifică D212 precompletată</strong> — poate conține venituri raportate de terți, de exemplu dividende, dobânzi sau câștiguri de la brokeri. Datele DAC8 de la platformele crypto ajung la ANAF abia până la 15 martie 2027, pentru tranzacțiile din 2026.</li>
             <li><strong>Completează sau corectează</strong> capitolele de mai sus și estimarea pentru anul în curs, dacă e cazul.</li>
             <li><strong>Trimite declarația</strong> și păstrează recipisa de depunere.</li>
             <li><strong>Plătește</strong> până la 25 mai, prin Ghișeul.ro, bancă sau la trezorerie, în contul unic al ANAF.</li>

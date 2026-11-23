@@ -27,6 +27,7 @@ export default function ImpoziteLocalePage() {
             <li><strong>Reduceri pentru clădiri vechi:</strong> OUG 9/2026 a reintrodus reducerea valorii impozabile: −15% pentru locuințele de 50–100 de ani și −25% pentru cele de peste 100 de ani.</li>
             <li><strong>Persoane cu dizabilități:</strong> impozitul pe locuința de domiciliu se reduce cu 50% (handicap grav) sau 25% (handicap accentuat).</li>
             <li><strong>Din 2027:</strong> toate clădirile firmelor vor fi tratate ca nerezidențiale, iar impozitul pe construcții speciale („taxa pe stâlp”) dispare.</li>
+            <li><strong>Valoarea de piață:</strong> legea prevede trecerea la impozitarea locuințelor după valoarea de piață (sistemul e-Proprietatea), dar pe 9 noiembrie 2026 ministrul Finanțelor a declarat că aceasta nu va fi introdusă în 2027.</li>
           </ul>
         </Section>
 
@@ -39,6 +40,7 @@ export default function ImpoziteLocalePage() {
             <li><strong>Formula:</strong> numărul de grupe de 200 cm³ (rotunjit în sus) × suma pe grupă, care depinde acum și de norma de poluare Euro.</li>
             <li><strong>Exemplu:</strong> 1.598 cm³, Euro 6 → 8 grupe × 16,5 lei ≈ 132 lei pe an, la care se poate adăuga cota suplimentară a primăriei.</li>
             <li><strong>Mașinile mai vechi și mai poluante</strong> plătesc mai mult pe grupă decât cele Euro 6.</li>
+            <li><strong>Mașinile electrice</strong>, scutite până în 2025, plătesc din 2026 un impozit fix de 40 lei pe an.</li>
           </ul>
         </Section>
 

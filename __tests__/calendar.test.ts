@@ -18,11 +18,13 @@ describe("calendar fiscal", () => {
     expect(gasit(2026, "D212", "2025")?.data).toBe("2026-05-25");
   });
 
-  test("D101 și micro T4: 25 iunie în 2026, termene standard din 2027", () => {
+  test("D101 rămâne definitiv pe 25 iunie (OUG 8/2026); micro T4 revine la 25 ianuarie din 2027", () => {
     expect(gasit(2026, "D101", "2025")?.data).toBe("2026-06-25");
     expect(gasit(2026, "D100", "T4 2025")?.data).toBe("2026-06-25");
-    expect(gasit(2027, "D101", "2026")?.data).toBe("2027-03-25");
+    expect(gasit(2027, "D101", "2026")?.data).toBe("2027-06-25");
     expect(gasit(2027, "D100", "T4 2026")?.data).toBe("2027-01-25");
+    // 25 iunie 2028 e duminică → luni, 26 iunie
+    expect(gasit(2028, "D101", "2027")?.data).toBe("2028-06-26");
   });
 
   test("D394 pe 30, iar în februarie în ultima zi lucrătoare de după", () => {
